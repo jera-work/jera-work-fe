@@ -6,12 +6,12 @@ jera-work is application blablabla
 
 ### As Admin:
 
-On terminal, write **ng s admin**
+On terminal, write **"ng s admin"**.  
 Open browser http://localhost:4200
 
 ### As Candidate:
 
-On terminal, write **ng s candidate --port 4201**
+On terminal, write **"ng s candidate --port 4201"**.  
 Open browser http://localhost:4201
 
 # FProjects
