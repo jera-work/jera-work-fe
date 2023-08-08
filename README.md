@@ -1,6 +1,6 @@
-# JERA-WORK
+# JERA-WORKS
 
-jera-work is application blablabla
+jera-works is application blablabla
 
 ## How to run:
 
