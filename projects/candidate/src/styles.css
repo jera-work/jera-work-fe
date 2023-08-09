@@ -1,3 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --PRIMARY: #3fbdf1;
+  --SECONDARY: #89d4f4;
+  --DARK: #2e2e2e;
+}
 
+html {
+  font-family: "Poppins", sans-serif;
+}
 
+.PRIMARY_COLOR {
+  color: var(--PRIMARY);
+}
+
+.SECONDARY_COLOR {
+  color: var(--SECONDARY);
+}
+
+.DARK_COLOR {
+  color: var(--DARK);
+}

@@ -1,40 +1,61 @@
 <div
   class="flex h-screen align-items-center justify-content-center flex-column container"
 >
-  <h3>Login Bootcamp Test</h3>
-  <form>
-    <!-- email -->
-    <div class="my-3 grid align-items-center gy-md-2">
-      <div class="col-12">
-        <label for="email-address" class="form-label">Email address</label>
-      </div>
-      <div class="col-12">
-        <input
-          pInputText
-          type="email"
-          class="form-control col-12"
-          id="email-address"
-          placeholder="name@example.com"
-        />
-      </div>
+  <h3>Welcome to <span class="PRIMARY_COLOR"> JERA-WORK </span></h3>
+  <div
+    class="flex flex-column md:flex-row mx-5 justify-content-center align-items-center column-gap-8"
+  >
+    <img src="/assets/login-img.svg" class="md:w-4 w-6" alt="img" />
+    <form>
+      <!-- email -->
+      <div class="my-3 grid align-items-center gy-md-2">
+        <div class="col-10">
+          <label
+            for="email-address"
+            class="form-label PRIMARY_COLOR font-semibold"
+            >Email address</label
+          >
+        </div>
+        <div class="col-12">
+          <input
+            pInputText
+            type="email"
+            class="form-control col-12"
+            id="email-address"
+            placeholder="name@example.com"
+          />
+        </div>
 
-      <!-- password -->
-      <div class="col-12">
-        <label for="password" class="form-label">Password</label>
+        <!-- password -->
+        <div class="col-12">
+          <label for="password" class="form-label PRIMARY_COLOR font-semibold"
+            >Password</label
+          >
+        </div>
+        <div class="col-12">
+          <input
+            pInputText
+            type="password"
+            class="form-control col-12"
+            id="password"
+            placeholder="password"
+          />
+        </div>
+        <div class="col-12">
+          <app-button
+            type="submit"
+            classBtn="PRIMARY_COLOR"
+            label="Login"
+            backgroundColor="var(--PRIMARY)"
+          >
+          </app-button>
+        </div>
       </div>
-      <div class="col-12">
-        <input
-          pInputText
-          type="password"
-          class="form-control col-12"
-          id="password"
-          placeholder="password"
-        />
-      </div>
-      <div class="col-12">
-        <app-button type="submit" class="btn btn-primary" label="Login">
-        </app-button>
-      </div>
-    </div>
-  </form>
+    </form>
+  </div>
+  <div>
+    <a routerLink="/dashboard" class="DARK_COLOR"
+      >Don't have an account? Register Here!</a
+    >
+  </div>
 </div>

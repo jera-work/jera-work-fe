@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from '../../../services/users.service';
-import { UsersResDto } from 'src/app/dto/user/users.res.dto';
-import { AuthService } from 'src/app/services/auth.service';
+import { UsersService } from '@services/users.service';
+import { UsersResDto } from '@dto/user/users.res.dto';
+import { AuthService } from '@services/auth.service';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
