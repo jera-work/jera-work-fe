@@ -19,10 +19,14 @@
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
-    "lib": [
-      "ES2022",
-      "dom"
-    ]
+    "lib": ["ES2022", "dom"],
+    "paths": {
+      "@dto/*": ["projects/base/src/app/dto/*"],
+      "@components/*": ["projects/base/src/app/components/*"],
+      "@pipes/*": ["projects/base/src/app/pipes/*"],
+      "@shared/*": ["projects/base/src/app/shared/*"],
+      "@constant/*": ["projects/base/src/app/constant/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
