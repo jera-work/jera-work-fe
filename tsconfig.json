@@ -25,7 +25,8 @@
       "@components/*": ["projects/base/src/app/components/*"],
       "@pipes/*": ["projects/base/src/app/pipes/*"],
       "@shared/*": ["projects/base/src/app/shared/*"],
-      "@constant/*": ["projects/base/src/app/constant/*"]
+      "@constant/*": ["projects/base/src/app/constant/*"],
+      "@services/*": ["projects/base/src/app/services/*"]
     }
   },
   "angularCompilerOptions": {
