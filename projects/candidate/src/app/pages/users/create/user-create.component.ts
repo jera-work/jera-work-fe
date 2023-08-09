@@ -8,9 +8,9 @@ import {
 } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RoleResDto } from '../../../dto/role/role.res.dto';
-import { RoleService } from '../../../services/role.service';
-import { UsersService } from '../../../services/users.service';
+import { RoleResDto } from '@dto/role/role.res.dto';
+import { RoleService } from '@services/role.service';
+import { UsersService } from '@services/users.service';
 
 @Component({
   selector: 'user-create',

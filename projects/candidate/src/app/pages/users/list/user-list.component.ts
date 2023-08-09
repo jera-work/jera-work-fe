@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersResDto } from '../../../dto/user/users.res.dto';
-import { UsersService } from '../../../services/users.service';
+import { UsersResDto } from '@dto/user/users.res.dto';
+import { UsersService } from '@services/users.service';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 
 @Component({

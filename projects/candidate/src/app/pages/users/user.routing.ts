@@ -9,7 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 
 import { SharedModule } from '@shared/shared.module';
-import { ButtonComponent } from 'src/app/components/button/button.component';
+import { ButtonComponent } from '@components/button/button.component';
 
 const routes: Routes = [
   {

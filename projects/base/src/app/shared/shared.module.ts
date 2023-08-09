@@ -14,6 +14,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { CalendarModule } from 'primeng/calendar';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { FileUploadModule } from 'primeng/fileupload';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     CalendarModule,
     InputNumberModule,
     FileUploadModule,
+    TooltipModule,
   ],
   exports: [
     MenubarModule,
@@ -49,6 +51,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     CalendarModule,
     InputNumberModule,
     FileUploadModule,
+    TooltipModule,
   ],
 })
 export class SharedModule {}
