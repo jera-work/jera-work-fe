@@ -15,4 +15,4 @@ On terminal, write **"ng s candidate --port 4201"**.
 Open browser http://localhost:4201
 
 
-test-josep
+test-josep 22
