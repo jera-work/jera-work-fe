@@ -4,13 +4,8 @@
       <p-overlayPanel #op>
         <p-menu [model]="profile"> </p-menu>
       </p-overlayPanel>
-      <p-image
-        src="{{ imgUrl }}"
-        alt="Image"
-        width="50"
-        (click)="op.toggle($event)"
-      >
-      </p-image>
+      <!-- src="{{ imgUrl }}" -->
+      <p-image alt="Image" width="50" (click)="op.toggle($event)"> </p-image>
     </ng-template>
   </p-menubar>
 </nav>

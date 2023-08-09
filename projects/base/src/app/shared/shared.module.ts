@@ -15,6 +15,8 @@ import { CalendarModule } from 'primeng/calendar';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TooltipModule } from 'primeng/tooltip';
+import { StepsModule } from 'primeng/steps';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @NgModule({
   imports: [
@@ -34,6 +36,8 @@ import { TooltipModule } from 'primeng/tooltip';
     InputNumberModule,
     FileUploadModule,
     TooltipModule,
+    StepsModule,
+    InputTextareaModule,
   ],
   exports: [
     MenubarModule,
@@ -52,6 +56,8 @@ import { TooltipModule } from 'primeng/tooltip';
     InputNumberModule,
     FileUploadModule,
     TooltipModule,
+    StepsModule,
+    InputTextareaModule,
   ],
 })
 export class SharedModule {}

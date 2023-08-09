@@ -17,13 +17,13 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonComponent } from '@components/button/button.component';
 
 const routes: Routes = [
-  // {
-  //   path: 'users',
-  //   component: BaseComponent,
-  //   loadChildren: () =>
-  //     import('./pages/users/user.module').then((u) => u.UserModule),
-  //   canMatch: [authNonLoginValidation],
-  // },
+  {
+    path: 'users',
+    component: BaseComponent,
+    loadChildren: () =>
+      import('./pages/users/user.module').then((u) => u.UserModule),
+    // canMatch: [authNonLoginValidation],
+  },
 
   {
     path: 'login',
