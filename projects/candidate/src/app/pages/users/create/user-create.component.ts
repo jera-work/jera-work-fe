@@ -16,49 +16,79 @@ import { UsersService } from '@services/users.service';
   selector: 'user-create',
   templateUrl: './user-create.component.html',
 })
-export class UserCreateComponent implements OnInit, AfterViewChecked {
-  userInsertReqDto = this.fb.group({
-    username: ['', Validators.required],
-    roleId: [0, Validators.required],
-    fullName: ['', Validators.required],
-    phoneNumb: ['', Validators.required],
+export class UserCreateComponent {
+  test = this.fb.group({
+    name: '',
   });
 
-  sending = false;
+  steps = [
+    {
+      label: 'Email',
+    },
+    {
+      label: 'Profile',
+    },
+    {
+      label: 'Edu and Exp',
+    },
+  ];
 
-  constructor(
-    private roleService: RoleService,
-    private fb: NonNullableFormBuilder,
-    private userService: UsersService,
-    private router: Router,
-    private cd: ChangeDetectorRef
-  ) {}
+  activeIndex: number = 0;
 
-  roles: RoleResDto[] = [];
-
-  selectedCity: RoleResDto | undefined;
-
-  ngOnInit(): void {
-    this.roleService.getAllRole().subscribe((res) => {
-      this.roles = res;
-    });
+  onActiveIndexChange(event: number) {
+    console.log(event);
+    this.activeIndex = event;
   }
 
-  ngAfterViewChecked(): void {
-    this.cd.detectChanges();
+  onNext() {
+    this.activeIndex += 1;
   }
 
-  onCreate() {
-    if (this.userInsertReqDto.valid) {
-      const data = this.userInsertReqDto.getRawValue();
-      this.sending = true;
-      this.userService.insert(data).subscribe((res) => {
-        console.log('SUCCESSSSS');
-        this.router.navigateByUrl('/users');
-      });
-    } else {
-      console.log('ISI DULU');
-      this.sending = false;
-    }
+  onSkip() {
+    this.activeIndex = 2;
   }
+
+  onBack() {
+    this.activeIndex -= 1;
+  }
+
+  constructor(private fb: NonNullableFormBuilder) {}
+
+  // userInsertReqDto = this.fb.group({
+  //   username: ['', Validators.required],
+  //   roleId: [0, Validators.required],
+  //   fullName: ['', Validators.required],
+  //   phoneNumb: ['', Validators.required],
+  // });
+  // sending = false;
+  // constructor(
+  //   private roleService: RoleService,
+  //   private fb: NonNullableFormBuilder,
+  //   private userService: UsersService,
+  //   private router: Router,
+  //   private cd: ChangeDetectorRef
+  // ) {}
+  // roles: RoleResDto[] = [];
+  // selectedCity: RoleResDto | undefined;
+  // ngOnInit(): void {
+  //   this.roleService.getAllRole().subscribe((res) => {
+  //     this.roles = res;
+  //   });
+  // }
+  // ngAfterViewChecked(): void {
+  //   this.cd.detectChanges();
+  // }
+  // onCreate() {
+  //   if (this.userInsertReqDto.valid) {
+  //     const data = this.userInsertReqDto.getRawValue();
+  //     this.sending = true;
+  //     this.userService.insert(data).subscribe((res) => {
+  //       console.log('SUCCESSSSS');
+  //       this.router.navigateByUrl('/users');
+  //     });
+  //   } else {
+  //     console.log('ISI DULU');
+  //     this.sending = false;
+  //   }
+  // }
 }

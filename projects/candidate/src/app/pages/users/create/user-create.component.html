@@ -1,15 +1,24 @@
 <pre>
-  {{ userInsertReqDto.value | json }}
+  {{ test.value | json }}
 </pre>
 
+<h2 class="text-center" style="letter-spacing: 3px">Create Account</h2>
 <div
-  class="flex align-items-center justify-content-center flex-column container"
+  class="flex flex-column md:flex-row mx-5 justify-content-center align-items-center column-gap-8"
 >
-  <h3>Create Account</h3>
-  <form [formGroup]="userInsertReqDto" (ngSubmit)="onCreate()" class="w-10">
+  <div class="flex-1 flex justify-content-center align-items-center">
+    <img src="/assets/register-img.svg" class="md:w-8 w-5" alt="register" />
+  </div>
+
+  <form
+    class="flex justify-content-center align-items-center flex-1"
+    [formGroup]="test"
+  >
     <!-- email -->
     <div class="my-3 grid align-items-center">
-      <div class="col-12 md:col-3">
+      <!-- EMAIL STEPPER -->
+
+      <div class="col-12">
         <label for="email-address" class="form-label"
           >Username <span class="text-red-600">*</span></label
         >
@@ -20,31 +29,28 @@
           class="form-control col-12"
           id="email-address"
           placeholder="name@example.com"
-          formControlName="username"
           pInputText
+          formControlName="name"
         />
       </div>
-
-      <div class="col-12 md:col-3">
-        <label for="phone" class="form-label"
-          >Phone Number <span class="text-red-600">*</span></label
+      <div class="col-12">
+        <label for="password" class="form-label"
+          >Password <span class="text-red-600">*</span></label
         >
       </div>
       <div class="col-12 md:col-9">
         <input
-          type="number"
+          type="password"
           class="form-control col-12"
-          id="phone"
-          placeholder="08xxxx"
-          formControlName="phoneNumb"
+          id="password"
           pInputText
         />
       </div>
 
-      <!-- fullName -->
-      <div class="col-12 md:col-3">
+      <!-- Full Name -->
+      <div class="col-12">
         <label for="fullname" class="form-label"
-          >User Fullname <span class="text-red-600">*</span></label
+          >Fullname <span class="text-red-600">*</span></label
         >
       </div>
       <div class="col-12 md:col-9">
@@ -52,41 +58,22 @@
           type="text"
           class="form-control col-12"
           id="fullname"
-          placeholder="fullname"
-          formControlName="fullName"
           pInputText
         />
       </div>
 
-      <!-- Select Role -->
-      <div class="col-12 md:col-3">
-        <label for="role" class="form-label"
-          >Role <span class="text-red-600">*</span></label
-        >
-      </div>
-      <div class="col-12 md:col-9">
-        <div class="card">
-          <p-dropdown
-            [options]="roles"
-            optionLabel="roleName"
-            optionValue="id"
-            formControlName="roleId"
-            placeholder="Select Role"
-          ></p-dropdown>
-        </div>
-      </div>
-      <div class="col-12">
-        <app-button type="submit" [loading]="sending" label="Create">
-        </app-button>
-      </div>
-
       <div class="col-12">
         <app-button
-          routerLink="/users"
-          classBtn="p-button-secondary p-button-text"
-          label="Back"
+          type="submit"
+          label="Create Account"
+          backgroundColor="var(--PRIMARY)"
         >
         </app-button>
+      </div>
+      <div>
+        <a routerLink="/login" class="DARK_COLOR"
+          >Already have account? Login here!</a
+        >
       </div>
     </div>
   </form>
