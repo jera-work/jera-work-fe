@@ -19,6 +19,7 @@ import { StepsModule } from 'primeng/steps';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CardModule } from 'primeng/card';
 import { FormsModule } from '@angular/forms';
+import { CarouselModule } from 'primeng/carousel';
 
 @NgModule({
   imports: [
@@ -42,6 +43,7 @@ import { FormsModule } from '@angular/forms';
     InputTextareaModule,
     CardModule,
     FormsModule,
+    CarouselModule,
   ],
   exports: [
     MenubarModule,
@@ -64,6 +66,7 @@ import { FormsModule } from '@angular/forms';
     InputTextareaModule,
     CardModule,
     FormsModule,
+    CarouselModule,
   ],
 })
 export class SharedModule {}
