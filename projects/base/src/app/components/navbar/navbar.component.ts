@@ -29,6 +29,10 @@ export class NavbarComponent implements OnInit {
       {
         label: 'Bootcamp Test',
         routerLink: '/dashboard',
+        style: {
+          color: 'white',
+        },
+        styleClass: 'text-white',
       },
       {
         label: 'Master Data',

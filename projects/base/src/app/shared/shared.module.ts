@@ -17,6 +17,8 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { TooltipModule } from 'primeng/tooltip';
 import { StepsModule } from 'primeng/steps';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { CardModule } from 'primeng/card';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -38,6 +40,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     TooltipModule,
     StepsModule,
     InputTextareaModule,
+    CardModule,
+    FormsModule,
   ],
   exports: [
     MenubarModule,
@@ -58,6 +62,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     TooltipModule,
     StepsModule,
     InputTextareaModule,
+    CardModule,
+    FormsModule,
   ],
 })
 export class SharedModule {}

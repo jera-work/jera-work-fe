@@ -1,11 +1,22 @@
 <nav>
-  <p-menubar [model]="navbar">
+  <p-menubar
+    [model]="navbar"
+    [style]="{ 'background-color': 'var(--PRIMARY)' }"
+  >
+    <ng-template pTemplate="start">
+      <img
+        src="/assets/logo-light.svg"
+        height="30"
+        class="mx-2 cursor-pointer"
+      />
+    </ng-template>
     <ng-template pTemplate="end">
       <p-overlayPanel #op>
         <p-menu [model]="profile"> </p-menu>
       </p-overlayPanel>
       <!-- src="{{ imgUrl }}" -->
       <p-image alt="Image" width="50" (click)="op.toggle($event)"> </p-image>
+      <span class="text-white">Log In</span>
     </ng-template>
   </p-menubar>
 </nav>

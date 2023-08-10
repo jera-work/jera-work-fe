@@ -15,6 +15,7 @@ import { Roles } from './constant/role.constant';
 // } from './validation/auth.validation';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonComponent } from '@components/button/button.component';
+import { SharedModule } from '@shared/shared.module';
 
 const routes: Routes = [
   {
@@ -53,7 +54,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, DashboardComponent],
   imports: [
     RouterModule.forRoot(routes),
     BaseModule,
@@ -61,6 +62,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     InputTextModule,
     ButtonComponent,
+    SharedModule,
   ],
   exports: [RouterModule],
 })

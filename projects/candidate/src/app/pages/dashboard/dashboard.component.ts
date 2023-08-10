@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class DashboardComponent {
   fullName: string = '';
 
+  ingredient!: string;
+
   // constructor(private authService: AuthService) {}
 
   // ngOnInit(): void {
