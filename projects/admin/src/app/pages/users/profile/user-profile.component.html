@@ -1,86 +1,65 @@
-<pre>
-  {{ profile.value | json }}
-</pre>
+<p-card styleClass="mt-2">
+  <div class="flex flex-column justify-content-center pl-2 md:pl-6 r-2">
+    <p class="text-5xl">Profile</p>
+    <form >
+        <div class="grid">
+            <div class="md:col-2 col-3">
+                <label for="email" class="form-label">Email </label>
+            </div>
+            <div class="md:col-10 col-9">
+                <input [value]="" pInputText id="email" class="w-full" disabled>
+            </div>
 
-<div
-  class="flex align-items-center justify-content-center flex-column container mt-4"
->
-  <h3>Update User</h3>
-  <form [formGroup]="profile" (ngSubmit)="onUpdate()" class="w-10">
-    <!-- email -->
-    <div class="my-3 grid align-items-center gy-md-4 container gy-3">
-      <!-- Photo Profile -->
-      <div class="col-12 col-md-3 align-items-start d-flex flex-column">
-        <img [src]="imgUrl" alt="profile" class="w-1" />
-      </div>
-      <div class="col-12 col-md-9">
-        <p-fileUpload
-          mode="basic"
-          chooseLabel="Choose Photo"
-          #file
-          (onSelect)="fileUpload($event)"
-        ></p-fileUpload>
-      </div>
+            <div class="md:col-2 col-3">
+                <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+            </div>
+            <div class="md:col-10 col-9">
+                <input type="text" pInputText id="name" class="w-full" required>
+            </div>
 
-      <div class="col-12 col-md-3">
-        <label for="email-address" class="form-label">Username</label>
-      </div>
-      <div class="col-12 col-md-9">
-        <!-- disabled -->
-        <input
-          type="email"
-          [value]="profile.get('username')?.value"
-          pInputText
-          class="form-control col-12"
-          id="email-address"
-          disabled
-        />
-        <!-- [value]="profile.username" -->
-      </div>
+            <div class="md:col-2 col-3">
+                <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
+            </div>
+            <div class="md:col-10 col-9">
+                <input type="text" id="phone" pInputText class="w-full" required>
+            </div>
 
-      <!-- fullname -->
-      <div class="col-12 col-md-3">
-        <label for="fullname" class="form-label"
-          >User Fullname <span class="text-red-600">*</span></label
-        >
-      </div>
-      <div class="col-12 col-md-9">
-        <input
-          type="text"
-          formControlName="fullName"
-          class="form-control col-12"
-          id="fullname"
-          pInputText
-          placeholder="fullname"
-        />
-      </div>
+            <div class="md:col-2 col-3">
+                <label for="address" class="form-label">Address <span class="text-danger">*</span></label>
+            </div>
+            <div class="md:col-10 col-9">
+                <textarea id="address" rows="3" pInputTextarea class="w-full"
+                    required></textarea>
+            </div>
 
-      <!-- phoneNumb -->
-      <div class="col-12 col-md-3">
-        <label for="fullname" class="form-label"
-          >Phone Number <span class="text-red-600">*</span></label
-        >
-      </div>
-      <div class="col-12 col-md-9">
-        <input
-          type="text"
-          pInputText
-          formControlName="phoneNumb"
-          class="form-control col-12"
-          id="phoneNumb"
-          placeholder="phoneNumb"
-        />
-      </div>
-      <div class="col-12">
-        <app-button type="submit" label="Update"></app-button>
-      </div>
-      <div class="col-12">
-        <app-button
-          routerLink="/users"
-          classBtn="p-button-secondary p-button-text"
-          label="Cancel"
-        ></app-button>
-      </div>
-    </div>
-  </form>
+            <div class="md:col-2 col-3">
+                <label for="company" class="form-label">Company : </label>
+            </div>
+            <div class="md:col-10 col-9">
+                <input [value]="" type="text" id="company" pInputText class="w-full" disabled>
+            </div>
+
+            <div class="md:col-2 col-3">
+                <label for="role" class="form-label">Role : </label>
+            </div>
+            <div class="md:col-10 col-9">
+                <input [value]="" type="text" id="role" pInputText class="w-full" disabled>
+            </div>
+        </div>
+        <app-button [loading]="loading" label="SAVE" btnType="submit"></app-button>
+    </form>
+
+    <p class="text-5xl">Profile Picture</p>
+    <form >
+        <div class="grid">
+            <div class="md:col-2 col-3">
+                <label for="profile-picture" class="form-label">Profile Picture </label>
+            </div>
+            <div class="md:col-10 col-9">
+                <p-fileUpload #file mode="basic" chooseLabel="Upload" accept="image/*"></p-fileUpload>
+            </div>
+        </div>
+        <app-button [loading]="loading" label="SAVE" btnType="submit"></app-button>
+    </form>
 </div>
+</p-card>
