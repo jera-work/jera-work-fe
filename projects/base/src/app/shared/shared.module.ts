@@ -20,6 +20,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CardModule } from 'primeng/card';
 import { FormsModule } from '@angular/forms';
 import { CarouselModule } from 'primeng/carousel';
+import { EditorModule } from 'primeng/editor';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -44,6 +46,8 @@ import { CarouselModule } from 'primeng/carousel';
     CardModule,
     FormsModule,
     CarouselModule,
+    EditorModule,
+    ReactiveFormsModule,
   ],
   exports: [
     MenubarModule,
@@ -67,6 +71,8 @@ import { CarouselModule } from 'primeng/carousel';
     CardModule,
     FormsModule,
     CarouselModule,
+    EditorModule,
+    ReactiveFormsModule,
   ],
 })
 export class SharedModule {}

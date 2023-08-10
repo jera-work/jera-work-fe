@@ -21,11 +21,11 @@ const routes: Routes = [
     path: 'users',
     component: BaseComponent,
     loadChildren: () =>
-      import('./pages/users/user.module').then((u) => u.UserModule)
+      import('./pages/users/user.module').then((u) => u.UserModule),
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
   },
   {
     path: 'dashboard',
@@ -35,7 +35,7 @@ const routes: Routes = [
         path: '',
         component: DashboardComponent,
       },
-    ]
+    ],
   },
   {
     path: '',
@@ -57,7 +57,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     InputTextModule,
     ButtonComponent,
-    SharedModule
+    SharedModule,
   ],
   exports: [RouterModule],
 })

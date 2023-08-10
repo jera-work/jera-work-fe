@@ -25,6 +25,15 @@ const routes: Routes = [
       import('./pages/users/user.module').then((u) => u.UserModule),
     // canMatch: [authNonLoginValidation],
   },
+  {
+    path: 'job',
+    component: BaseComponent,
+    loadChildren: () =>
+      import('./pages/job-details/job-details.module').then(
+        (u) => u.JobDetailsModule
+      ),
+    // canMatch: [authNonLoginValidation],
+  },
 
   {
     path: 'login',
