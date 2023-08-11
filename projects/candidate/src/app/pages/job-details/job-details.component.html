@@ -1,5 +1,104 @@
-<div>
+<app-button
+  label="Back"
+  icon="pi pi-arrow-left"
+  classBtn="p-button-secondary p-button-outlined my-4"
+  border=""
+  routerLink="/dashboard"
+></app-button>
+<div class="mx-8 px-8 shadow-3 py-2 relative">
+  <!-- company img -->
+  <div class="flex justify-content-center align-items-center">
+    <img src="/assets/company.svg" alt="company" />
+  </div>
+  <!-- company name -->
   <h2>LiLaine Official</h2>
-  <p>Open for you!</p>
-  <h1>Live Host</h1>
+  <!-- company desc -->
+  <p>
+    PT. Conviction Group adalah perusahaan baru didaerah Jabodetabek. Sebelumnya
+    perusahaan kita sudah berjalan di kota Medan, Pekanbaru dan Batam.
+    Perusahaan kita bergerak dalam bidang Event organizer dan menempatkan team
+    kita di beberapa SPBU milik Pertamina di indonesia.
+  </p>
+
+  <!-- job title -->
+  <p>Open for you:</p>
+  <h2>Live Host</h2>
+  <!-- buttons -->
+  <div>
+    <app-button label="Apply" backgroundColor="var(--PRIMARY)"> </app-button>
+  </div>
+
+  <div>
+    <h4>Details:</h4>
+    <div class="flex flex-column gap-2">
+      <!-- Degree -->
+      <div class="flex">
+        <span class="w-10rem">
+          <i class="pi pi-user"></i>
+          Degree
+        </span>
+        <span>: SMA / SMK</span>
+      </div>
+
+      <!-- Gender -->
+      <div class="flex">
+        <span class="w-10rem">
+          <i class="pi pi-question"></i>
+          Gender
+        </span>
+        <span>: Pria / Wanita</span>
+      </div>
+
+      <!-- Ages -->
+      <div class="flex">
+        <span class="w-10rem">
+          <i class="pi pi-id-card"></i>
+          Ages
+        </span>
+        <span>: 18-28 tahun</span>
+      </div>
+
+      <!-- Job Type -->
+      <div class="flex">
+        <span class="w-10rem">
+          <i class="pi pi-briefcase"></i>
+          Job Type
+        </span>
+        <span>: Full Time</span>
+      </div>
+
+      <!-- Payload -->
+      <div class="flex">
+        <span class="w-10rem">
+          <i class="pi pi-money-bill"></i>
+          Payload
+        </span>
+        <span>: 3 - 4 Juta</span>
+      </div>
+
+      <!-- Map -->
+      <div class="flex">
+        <span class="w-10rem">
+          <i class="pi pi-map-marker"></i>
+          Location
+        </span>
+        <span>
+          : Jakarta Pusat, Jakarta Barat, Jakarta Timur, Jakarta Selatan,
+          Jakarta Utara, Bogor, Tangerang, Bekasi, Depok
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- job desc -->
+  <div>
+    <h4>Description</h4>
+  </div>
+
+  <!-- save and share -->
+  <div class="absolute top-0 right-0 mr-4 mt-4 flex gap-3">
+    <i class="pi pi-bookmark text-2xl"></i>
+    <i class="pi pi-bookmark-fill text-2xl"></i>
+    <i class="pi pi-share-alt text-2xl"></i>
+  </div>
 </div>

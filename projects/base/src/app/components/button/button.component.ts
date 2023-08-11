@@ -12,7 +12,8 @@ import { ButtonModule } from 'primeng/button';
       (click)="clickBtn()"
       [loading]="loading"
       [label]="label"
-      [style]="{ 'background-color': backgroundColor, border: 'none' }"
+      [style]="{ 'background-color': backgroundColor, border: border }"
+      icon="{{ icon }}"
     >
     </p-button>
   `,
@@ -26,6 +27,8 @@ export class ButtonComponent {
   @Input() loading = false;
   @Input() show = true;
   @Input() backgroundColor = '';
+  @Input() icon = '';
+  @Input() border = 'none';
 
   @Output() clickChange = new EventEmitter<void>();
 
