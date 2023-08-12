@@ -16,6 +16,7 @@ import { Roles } from './constant/role.constant';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonComponent } from '@components/button/button.component';
 import { SharedModule } from '@shared/shared.module';
+import { JobCardComponent } from '@components/job-card/job-card.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,24 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/job-details/job-details.module').then(
         (u) => u.JobDetailsModule
+      ),
+    // canMatch: [authNonLoginValidation],
+  },
+  {
+    path: 'saved-job',
+    component: BaseComponent,
+    loadChildren: () =>
+      import('./pages/saved-job/saved-job.module').then(
+        (u) => u.SavedJobModule
+      ),
+    // canMatch: [authNonLoginValidation],
+  },
+  {
+    path: 'applied-job',
+    component: BaseComponent,
+    loadChildren: () =>
+      import('./pages/applied-job/applied-job.module').then(
+        (u) => u.AppliedJobModule
       ),
     // canMatch: [authNonLoginValidation],
   },
@@ -72,6 +91,7 @@ const routes: Routes = [
     InputTextModule,
     ButtonComponent,
     SharedModule,
+    JobCardComponent,
   ],
   exports: [RouterModule],
 })

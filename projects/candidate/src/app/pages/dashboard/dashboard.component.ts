@@ -10,8 +10,6 @@ export class DashboardComponent {
 
   ingredient!: string;
 
-  // responsiveOptions: any[] | undefined;
-
   // constructor(private authService: AuthService) {}
 
   // ngOnInit(): void {
