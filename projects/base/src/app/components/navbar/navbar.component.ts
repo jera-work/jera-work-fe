@@ -28,12 +28,12 @@ export class NavbarComponent implements OnInit {
 
     this.navbar = [
       {
-        label: 'Bootcamp Test',
-        routerLink: '/dashboard',
-        style: {
-          color: 'white',
-        },
-        styleClass: 'text-white',
+        label: 'Applied Job',
+        routerLink: '/applied-job',
+      },
+      {
+        label: 'Saved Job',
+        routerLink: '/saved-job',
       },
       {
         label: 'Master Data',
