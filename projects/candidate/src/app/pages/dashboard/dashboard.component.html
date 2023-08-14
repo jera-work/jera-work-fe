@@ -1,127 +1,131 @@
-<h1>Job Vacancy</h1>
+<div class="min-h-screen md:mx-8 sm:mx-6 mx-2">
+  <h1>Job Vacancy</h1>
 
-<!-- Filter Jobs -->
-<div class="flex justify-content-center align-items-center mb-4">
-  <form class="shadow-2 hover:shadow-3 p-2 border-round-xl">
-    <div class="flex sm:flex-row flex-column gap-4 mb-3">
-      <input type="text" pInputText placeholder="Find your job type" />
-      <p-dropdown optionLabel="location" placeholder="Location"></p-dropdown>
-      <p-dropdown optionLabel="degree" placeholder="Degree"></p-dropdown>
-    </div>
-    <div class="flex gap-3">
-      <!-- Job Type -->
-      <div class="flex align-items-center">
-        <p-radioButton
-          name="pizza"
-          value="Cheese"
-          [(ngModel)]="ingredient"
-          inputId="ingredient1"
-        ></p-radioButton>
-        <label for="ingredient1" class="ml-2">Full Time</label>
+  <!-- Filter Jobs -->
+  <div class="flex justify-content-center align-items-center mb-4">
+    <p>belum responsif</p>
+    <form class="shadow-2 hover:shadow-3 p-2 border-round-xl">
+      <div class="flex sm:flex-row flex-column gap-4 mb-3">
+        <input type="text" pInputText placeholder="Find your job type" />
+        <p-dropdown optionLabel="location" placeholder="Location"></p-dropdown>
+        <p-dropdown optionLabel="degree" placeholder="Degree"></p-dropdown>
       </div>
+      <div class="flex gap-3">
+        <!-- Job Type -->
+        <div class="flex align-items-center">
+          <p-radioButton
+            name="pizza"
+            value="Cheese"
+            [(ngModel)]="ingredient"
+            inputId="ingredient1"
+          ></p-radioButton>
+          <label for="ingredient1" class="ml-2">Full Time</label>
+        </div>
 
-      <div class="flex align-items-center">
-        <p-radioButton
-          name="pizza"
-          value="Mushroom"
-          [(ngModel)]="ingredient"
-          inputId="ingredient2"
-        ></p-radioButton>
-        <label for="ingredient2" class="ml-2">Part Time</label>
+        <div class="flex align-items-center">
+          <p-radioButton
+            name="pizza"
+            value="Mushroom"
+            [(ngModel)]="ingredient"
+            inputId="ingredient2"
+          ></p-radioButton>
+          <label for="ingredient2" class="ml-2">Part Time</label>
+        </div>
+
+        <div class="flex align-items-center">
+          <p-radioButton
+            name="pizza"
+            value="Pepper"
+            [(ngModel)]="ingredient"
+            inputId="ingredient3"
+          ></p-radioButton>
+          <label for="ingredient3" class="ml-2">Internship</label>
+        </div>
+
+        <div>
+          <app-button
+            btnType="submit"
+            label="Find Jobs"
+            backgroundColor="var(--PRIMARY)"
+          ></app-button>
+        </div>
       </div>
+    </form>
+  </div>
 
-      <div class="flex align-items-center">
-        <p-radioButton
-          name="pizza"
-          value="Pepper"
-          [(ngModel)]="ingredient"
-          inputId="ingredient3"
-        ></p-radioButton>
-        <label for="ingredient3" class="ml-2">Internship</label>
-      </div>
+  <!-- Carousel Job List -->
+  <div class="md:mx-8">
+    <p-carousel
+      [value]="jobs"
+      [numVisible]="4"
+      [numScroll]="4"
+      [circular]="true"
+      [responsiveOptions]="responsiveOptions"
+      autoPlayInterval="3000"
+    >
+      <ng-template let-job pTemplate="item" let-i="rowIndex">
+        <div
+          routerLink="/job/{{ job.id }}"
+          class="border-3 p-3 surface-border border-round m-2 flex flex-column gap-2 shadow-2 hover:shadow-5 cursor-pointer"
+        >
+          <div class="mb-3">
+            <div>
+              <span class="font-bold text-xl">
+                {{ job.title }}
+              </span>
+            </div>
+            <div class="flex justify-content-center">
+              <img
+                src="https://primefaces.org/cdn/primeng/images/demo/product/{{
+                  job.image
+                }}"
+                [alt]="job.name"
+                class="md:w-full w-full sm:w-7"
+              />
+            </div>
+          </div>
 
-      <div>
-        <app-button
-          btnType="submit"
-          label="Find Jobs"
-          backgroundColor="var(--PRIMARY)"
-        ></app-button>
-      </div>
-    </div>
-  </form>
-</div>
-
-<!-- Carousel Job List -->
-<div class="md:mx-8">
-  <p-carousel
-    [value]="jobs"
-    [numVisible]="4"
-    [numScroll]="4"
-    [circular]="true"
-    [responsiveOptions]="responsiveOptions"
-    autoPlayInterval="3000"
-  >
-    <ng-template let-job pTemplate="item">
-      <div
-        class="border-3 p-3 surface-border border-round m-2 flex flex-column gap-2 shadow-2 hover:shadow-5 cursor-pointer"
-      >
-        <div class="mb-3">
-          <div>
-            <span class="font-bold text-xl">
-              {{ job.title }}
+          <!-- Company Name -->
+          <div class="border-bottom-1">
+            <span>
+              <i class="pi pi-building"> </i>
+              {{ job.company }}
             </span>
           </div>
-          <div class="flex justify-content-center">
-            <img
-              src="https://primefaces.org/cdn/primeng/images/demo/product/{{
-                job.image
-              }}"
-              [alt]="job.name"
-              class="md:w-full w-full sm:w-7"
-            />
+
+          <!-- Job Req -->
+          <div class="border-bottom-1 flex justify-content-between">
+            <span>
+              <i class="pi pi-user"></i>
+              {{ job.degree }}
+            </span>
+            <span>
+              <i class="pi pi-briefcase"></i>
+              {{ job.type }}
+            </span>
+          </div>
+
+          <!-- Location -->
+          <div>
+            <span>
+              <i class="pi pi-map-marker"></i>
+              {{ job.location }}
+            </span>
           </div>
         </div>
-
-        <!-- Company Name -->
-        <div class="border-bottom-1">
-          <span>
-            <i class="pi pi-building"> </i>
-            {{ job.company }}
-          </span>
-        </div>
-
-        <!-- Job Req -->
-        <div class="border-bottom-1 flex justify-content-between">
-          <span>
-            <i class="pi pi-user"></i>
-            {{ job.degree }}
-          </span>
-          <span>
-            <i class="pi pi-briefcase"></i>
-            {{ job.type }}
-          </span>
-        </div>
-
-        <!-- Location -->
-        <div>
-          <span>
-            <i class="pi pi-map-marker"></i>
-            {{ job.location }}
-          </span>
-        </div>
-      </div>
-    </ng-template>
-  </p-carousel>
-</div>
-
-<h2>Job List</h2>
-<!-- Job Vacancies -->
-<div class="grid">
-  <!-- Job Vacancy Card -->
-  <div class="col-12 lg:col-6">
-    <job-card routerLink="/job/2"></job-card>
+      </ng-template>
+    </p-carousel>
   </div>
-  <div class="col-12 lg:col-6">
-    <job-card routerLink="/job/2"></job-card>
+
+  <h2>Job List</h2>
+  <!-- Job Vacancies -->
+  <div class="grid">
+    <!-- Job Vacancy Card -->
+    <div class="col-12 lg:col-6">
+      <job-card routerLink="/job/2"></job-card>
+    </div>
+    <div class="col-12 lg:col-6">
+      <job-card routerLink="/job/2"></job-card>
+    </div>
   </div>
 </div>

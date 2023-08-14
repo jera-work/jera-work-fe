@@ -2,3 +2,7 @@
   background-color: #89d4f4;
   color: white;
 }
+
+::ng-deep .p-steps ul {
+  flex-wrap: wrap;
+}

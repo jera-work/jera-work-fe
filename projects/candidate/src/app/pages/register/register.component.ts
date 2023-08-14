@@ -7,52 +7,26 @@ import {
   OnInit,
 } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RoleResDto } from '@dto/role/role.res.dto';
 import { RoleService } from '@services/role.service';
 import { UsersService } from '@services/users.service';
 
 @Component({
-  selector: 'user-create',
-  templateUrl: './user-create.component.html',
+  selector: 'register',
+  templateUrl: './register.component.html',
 })
-export class UserCreateComponent {
+export class RegisterComponent implements OnInit {
   test = this.fb.group({
     name: '',
   });
 
-  steps = [
-    {
-      label: 'Email',
-    },
-    {
-      label: 'Profile',
-    },
-    {
-      label: 'Edu and Exp',
-    },
-  ];
+  constructor(private fb: NonNullableFormBuilder, private title: Title) {}
 
-  activeIndex: number = 0;
-
-  onActiveIndexChange(event: number) {
-    console.log(event);
-    this.activeIndex = event;
+  ngOnInit(): void {
+    this.title.setTitle('Register');
   }
-
-  onNext() {
-    this.activeIndex += 1;
-  }
-
-  onSkip() {
-    this.activeIndex = 2;
-  }
-
-  onBack() {
-    this.activeIndex -= 1;
-  }
-
-  constructor(private fb: NonNullableFormBuilder) {}
 
   // userInsertReqDto = this.fb.group({
   //   username: ['', Validators.required],

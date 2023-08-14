@@ -1,154 +1,246 @@
-<app-button
-  label="Back"
-  icon="pi pi-arrow-left"
-  classBtn="p-button-secondary p-button-outlined my-4 ml-6"
-  border=""
-  routerLink="/applied-job"
-></app-button>
-<div class="mx-6 py-2">
-  <div class="my-4">
-    <p-steps
-      [model]="jobStatus"
-      [readonly]="false"
-      [activeIndex]="activeIndex"
-      (activeIndexChange)="onActiveIndexChange($event)"
-    ></p-steps>
-    <h1 class="text-center">{{ jobStatus[activeIndex].label }}</h1>
+<div class="min-h-screen md:mx-8 sm:mx-6 mx-2">
+  <app-button
+    label="Back"
+    icon="pi pi-arrow-left"
+    classBtn="p-button-secondary p-button-outlined my-4"
+    border=""
+    routerLink="/applied-job"
+  ></app-button>
+  <div class="py-2">
+    <div class="my-4">
+      <p-steps
+        [model]="jobStatus"
+        [readonly]="false"
+        [activeIndex]="activeIndex"
+        (activeIndexChange)="onActiveIndexChange($event)"
+      ></p-steps>
+      <h1 class="text-center">{{ jobStatus[activeIndex].label }}</h1>
 
-    <!-- Application -->
-    <div
-      *ngIf="activeIndex == 0"
-      class="flex justify-content-center align-items-center flex-column"
-    >
-      <img src="/assets/application.svg" alt="application" />
-      <p>Your profile is being reviewed</p>
-      <p>Please check your email periodically</p>
-    </div>
-
-    <!-- Assesment -->
-    <div *ngIf="activeIndex == 1">
-      <img src="/assets/assesment.svg" alt="interview-assesment" />
-      <p>Great!, you passed the application step</p>
-      <p>Please check your email for interview datetime and more details!</p>
-    </div>
-
-    <!-- Interview User -->
-    <div *ngIf="activeIndex == 2">
-      <img src="/assets/interview.svg" alt="interview-assesment" />
-      <p>Great!, you passed the assesment step</p>
-      <p>Please check your email for interview with user and more details!</p>
-    </div>
-
-    <!-- MCU -->
-    <div *ngIf="activeIndex == 3">
-      <img src="/assets/mcu.svg" alt="interview-assesment" />
-      <p>Great!, you passed the interview user step</p>
-      <p>Please check your email for interview with user and more details!</p>
-    </div>
-
-    <!-- Offering -->
-    <div *ngIf="activeIndex == 4">
-      <img src="/assets/offering.svg" alt="interview-assesment" />
-      <p>
-        Congratulations!, you passed the last step, which is the medical check
-        up.
-      </p>
-      <p>Please check your email for the offering letter and more details!</p>
-    </div>
-
-    <!-- Hired -->
-    <div *ngIf="activeIndex == 5">
-      <img src="/assets/hired.svg" alt="interview-assesment" />
-      <p>
-        Congratulations!, you passed the last step, which is the medical check
-        up.
-      </p>
-      <p>Please check your email for the offering letter and more details!</p>
-    </div>
-  </div>
-
-  <!-- company img -->
-  <div>
-    <img src="/assets/company.svg" alt="company" />
-  </div>
-  <!-- company name -->
-  <h2>LiLaine Official</h2>
-  <!-- company desc -->
-  <p>
-    PT. Conviction Group adalah perusahaan baru didaerah Jabodetabek. Sebelumnya
-    perusahaan kita sudah berjalan di kota Medan, Pekanbaru dan Batam.
-    Perusahaan kita bergerak dalam bidang Event organizer dan menempatkan team
-    kita di beberapa SPBU milik Pertamina di indonesia.
-  </p>
-
-  <!-- job title -->
-  <p>Open for you:</p>
-  <h2>Live Host</h2>
-
-  <div>
-    <h4>Details:</h4>
-    <div class="flex flex-column gap-2">
-      <!-- Degree -->
-      <div class="flex">
-        <span class="w-10rem">
-          <i class="pi pi-user"></i>
-          Degree
-        </span>
-        <span>: SMA / SMK</span>
+      <!-- Application -->
+      <div
+        *ngIf="activeIndex == 0"
+        class="flex justify-content-around align-items-center md:flex-row flex-column"
+        style="min-height: 50vh"
+      >
+        <img
+          src="/assets/application.svg"
+          class="fadeinleft animation-duration-1000 md:w-20rem sm:w-15rem w-13rem"
+          alt="application"
+        />
+        <div
+          class="fadeinright animation-duration-1000 flex flex-column row-gap-3"
+        >
+          <p
+            class="font-bold flex justify-content-center align-items-center column-gap-2"
+          >
+            Your profile is being reviewed!
+            <i class="pi pi-spin pi-cog" style="font-size: 2rem"></i>
+          </p>
+          <p
+            class="flex justify-content-center align-items-center column-gap-2"
+          >
+            Please check your email periodically
+            <i class="pi pi-envelope"></i>
+          </p>
+        </div>
       </div>
 
-      <!-- Gender -->
-      <div class="flex">
-        <span class="w-10rem">
-          <i class="pi pi-question"></i>
-          Gender
-        </span>
-        <span>: Pria / Wanita</span>
+      <!-- Assesment -->
+      <div
+        *ngIf="activeIndex == 1"
+        class="flex justify-content-center align-items-center md:flex-row flex-column"
+        style="min-height: 50vh"
+      >
+        <img
+          src="/assets/assesment.svg"
+          class="w-20rem fadeinleft animation-duration-1000 w-20rem"
+          alt="interview-assesment"
+        />
+        <div class="fadeinright animation-duration-1000 w-20rem">
+          <p>Great!, you passed the application step</p>
+          <p>
+            Please check your email for interview datetime and more details!
+          </p>
+        </div>
       </div>
 
-      <!-- Ages -->
-      <div class="flex">
-        <span class="w-10rem">
-          <i class="pi pi-id-card"></i>
-          Ages
-        </span>
-        <span>: 18-28 tahun</span>
+      <!-- Interview User -->
+      <div
+        *ngIf="activeIndex == 2"
+        class="flex justify-content-center align-items-center md:flex-row flex-column"
+        style="min-height: 50vh"
+      >
+        <img
+          src="/assets/interview.svg"
+          class="w-20rem fadeinleft animation-duration-1000 w-20rem"
+          alt="interview-assesment"
+        />
+        <div class="fadeinright animation-duration-1000 w-20rem">
+          <p>Great!, you passed the assesment step</p>
+          <p>
+            Please check your email for interview with user and more details!
+          </p>
+        </div>
       </div>
 
-      <!-- Job Type -->
-      <div class="flex">
-        <span class="w-10rem">
-          <i class="pi pi-briefcase"></i>
-          Job Type
-        </span>
-        <span>: Full Time</span>
+      <!-- MCU -->
+      <div
+        *ngIf="activeIndex == 3"
+        class="flex justify-content-center align-items-center md:flex-row flex-column"
+        style="min-height: 50vh"
+      >
+        <img
+          src="/assets/mcu.svg"
+          class="w-20rem fadeinleft animation-duration-1000 w-20rem"
+          alt="interview-assesment"
+        />
+        <div class="fadeinright animation-duration-1000 w-20rem">
+          <p>Great!, you passed the interview user step</p>
+          <p>
+            Please check your email for interview with user and more details!
+          </p>
+          <p-fileUpload
+            mode="basic"
+            chooseLabel="Choose File"
+            #file
+          ></p-fileUpload>
+          <!-- (onSelect)="fileUpload($event, f.id, i)" -->
+        </div>
       </div>
 
-      <!-- Payload -->
-      <div class="flex">
-        <span class="w-10rem">
-          <i class="pi pi-money-bill"></i>
-          Payload
-        </span>
-        <span>: 3 - 4 Juta</span>
+      <!-- Offering -->
+      <div
+        *ngIf="activeIndex == 4"
+        class="flex justify-content-center align-items-center md:flex-row flex-column"
+        style="min-height: 50vh"
+      >
+        <img
+          src="/assets/offering.svg"
+          class="w-24rem fadeinleft animation-duration-1000 w-20rem"
+          alt="interview-assesment"
+        />
+        <div class="fadeinright animation-duration-1000 w-20rem">
+          <p>
+            Congratulations!, you passed the last step, which is the medical
+            check up.
+          </p>
+          <p>
+            Please check your email for the offering letter and more details!
+          </p>
+        </div>
       </div>
 
-      <!-- Map -->
-      <div class="flex">
-        <span class="w-10rem">
-          <i class="pi pi-map-marker"></i>
-          Location
-        </span>
-        <span>
-          : Jakarta Pusat, Jakarta Barat, Jakarta Timur, Jakarta Selatan,
-          Jakarta Utara, Bogor, Tangerang, Bekasi, Depok
-        </span>
+      <!-- Hired -->
+      <div
+        *ngIf="activeIndex == 5"
+        class="flex justify-content-center align-items-center md:flex-row flex-column"
+        style="min-height: 50vh"
+      >
+        <img
+          src="/assets/hired.svg"
+          class="fadeinleft animation-duration-1000 w-18rem"
+          alt="interview-assesment"
+        />
+        <div class="fadeinright animation-duration-1000">
+          <p>
+            Congratulations!, you passed the last step, which is the medical
+            check up.
+          </p>
+          <p>
+            Please check your email for the offering letter and more details!
+          </p>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- job desc -->
-  <div>
-    <h4>Description</h4>
+    <!-- company img -->
+    <div>
+      <img src="/assets/company.svg" alt="company" class="w-2" />
+    </div>
+    <!-- company name -->
+    <h2>LiLaine Official</h2>
+    <!-- company desc -->
+    <p>
+      PT. Conviction Group adalah perusahaan baru didaerah Jabodetabek.
+      Sebelumnya perusahaan kita sudah berjalan di kota Medan, Pekanbaru dan
+      Batam. Perusahaan kita bergerak dalam bidang Event organizer dan
+      menempatkan team kita di beberapa SPBU milik Pertamina di indonesia.
+    </p>
+
+    <!-- job title -->
+    <p>Open for you:</p>
+    <h2>Live Host</h2>
+
+    <div>
+      <h4>Details:</h4>
+      <div class="flex flex-column gap-2">
+        <!-- Degree -->
+        <div class="flex">
+          <span class="w-10rem">
+            <i class="pi pi-user"></i>
+            Degree
+          </span>
+          <span>: SMA / SMK</span>
+        </div>
+
+        <!-- Gender -->
+        <div class="flex">
+          <span class="w-10rem">
+            <i class="pi pi-question"></i>
+            Gender
+          </span>
+          <span>: Pria / Wanita</span>
+        </div>
+
+        <!-- Ages -->
+        <div class="flex">
+          <span class="w-10rem">
+            <i class="pi pi-id-card"></i>
+            Ages
+          </span>
+          <span>: 18-28 tahun</span>
+        </div>
+
+        <!-- Job Type -->
+        <div class="flex">
+          <span class="w-10rem">
+            <i class="pi pi-briefcase"></i>
+            Job Type
+          </span>
+          <span>: Full Time</span>
+        </div>
+
+        <!-- Payload -->
+        <div class="flex">
+          <span class="w-10rem">
+            <i class="pi pi-money-bill"></i>
+            Payload
+          </span>
+          <span>: 3 - 4 Juta</span>
+        </div>
+
+        <!-- Map -->
+        <div class="flex">
+          <span class="mr-26rem">
+            <i class="pi pi-map-marker"></i>
+            Location
+          </span>
+          <span class="text-justify">
+            : Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati
+            amet praesentium pariatur assumenda deserunt voluptatem non
+            similique iusto autem. Hic, voluptatum odit. Eaque, cumque
+            dignissimos? Illum officiis animi modi vel. Ipsa facilis obcaecati
+            dicta nulla excepturi, aperiam animi saepe voluptatum, sunt
+            voluptatem vel, iste earum asperiores non eius velit.
+            Necessitatibus.
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- job desc -->
+    <div>
+      <h4>Description</h4>
+    </div>
   </div>
 </div>
