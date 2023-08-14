@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 // import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -10,17 +11,15 @@ export class DashboardComponent {
 
   ingredient!: string;
 
-  // constructor(private authService: AuthService) {}
+  constructor(private title: Title) {}
 
-  // ngOnInit(): void {
-  //   const profile = this.authService.getProfile();
-  //   if (profile) {
-  //     this.fullName = profile.fullName;
-  //   }
-  // }
+  ngOnInit(): void {
+    this.title.setTitle('Jera - Work');
+  }
 
   jobs = [
     {
+      id: 1,
       title: 'Accounting Staff',
       company: 'Bearology Cafe',
       degree: 'S1',
@@ -29,6 +28,7 @@ export class DashboardComponent {
       location: 'Jakarta Pusat',
     },
     {
+      id: 2,
       title: 'Staff Admin',
       company: 'Berkat Mandiri',
       degree: 'S1',
@@ -37,6 +37,7 @@ export class DashboardComponent {
       location: 'Jakarta Utara',
     },
     {
+      id: 3,
       title: 'Barista',
       company: 'Bearology Cafe',
       degree: 'SMA/SMK',
@@ -45,6 +46,7 @@ export class DashboardComponent {
       location: 'Jakarta Pusat',
     },
     {
+      id: 4,
       title: 'Marketing',
       company: 'PT. Naga Mulia',
       degree: 'SMA/SMK',
@@ -53,6 +55,7 @@ export class DashboardComponent {
       location: 'Jakarta Barat',
     },
     {
+      id: 5,
       title: 'Host Live',
       company: 'PT. Naga Mulia',
       degree: 'SMA/SMK',

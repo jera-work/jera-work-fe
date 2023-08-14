@@ -17,6 +17,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonComponent } from '@components/button/button.component';
 import { SharedModule } from '@shared/shared.module';
 import { JobCardComponent } from '@components/job-card/job-card.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 const routes: Routes = [
   {
@@ -60,6 +61,11 @@ const routes: Routes = [
     // canMatch: [authValidation],
   },
   {
+    path: 'register',
+    component: RegisterComponent,
+    // canMatch: [authValidation],
+  },
+  {
     path: 'dashboard',
     component: BaseComponent,
     children: [
@@ -82,7 +88,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [LoginComponent, DashboardComponent],
+  declarations: [LoginComponent, DashboardComponent, RegisterComponent],
   imports: [
     RouterModule.forRoot(routes),
     BaseModule,

@@ -66,16 +66,6 @@ export class NavbarComponent implements OnInit {
         routerLink: '/assign-candidate',
         visible: this.isHr,
       },
-      {
-        label: 'Candidate Answer',
-        routerLink: '/candidates/files',
-        visible: this.isCandidate,
-      },
-      {
-        label: 'Review',
-        routerLink: '/reviews',
-        visible: this.isReviewer,
-      },
     ];
 
     this.profile = [

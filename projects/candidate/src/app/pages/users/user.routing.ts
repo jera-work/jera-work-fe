@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { UserListComponent } from './list/user-list.component';
-import { UserCreateComponent } from './create/user-create.component';
 import { UserProfileComponent } from './profile/user-profile.component';
 import { UserChangePasswordComponent } from './change-password/user-changepassword.component';
 import { CommonModule } from '@angular/common';
@@ -13,14 +11,6 @@ import { ButtonComponent } from '@components/button/button.component';
 
 const routes: Routes = [
   {
-    path: '',
-    component: UserListComponent,
-  },
-  {
-    path: 'create',
-    component: UserCreateComponent,
-  },
-  {
     path: 'profile',
     component: UserProfileComponent,
   },
@@ -31,12 +21,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    UserListComponent,
-    UserCreateComponent,
-    UserProfileComponent,
-    UserChangePasswordComponent,
-  ],
+  declarations: [UserProfileComponent, UserChangePasswordComponent],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
