@@ -4,11 +4,7 @@ import { CardModule } from 'primeng/card';
 @Component({
   selector: 'job-card',
   template: `
-    <p-card
-      class="w-full relative cursor-pointer"
-      styleClass="hover:shadow-4"
-      routerLink="/job/2"
-    >
+    <p-card class="w-full relative cursor-pointer" styleClass="hover:shadow-4">
       <span class="absolute top-0 right-0 mr-3 mt-3">
         <i class="pi pi-clock"></i>
         Today
@@ -73,5 +69,4 @@ export class JobCardComponent {
   @Input() degree = '';
   @Input() jobType = '';
   @Input() location = '';
-  @Input() routerLink = '';
 }
