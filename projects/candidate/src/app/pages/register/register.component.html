@@ -1,6 +1,6 @@
-<!-- <pre>
-  {{ test.value | json }}
-</pre> -->
+<pre>
+  {{ createCandidateReq.value | json }}
+</pre>
 
 <div
   class="flex flex-column justify-content-center align-items-center h-screen"
@@ -15,7 +15,8 @@
 
     <form
       class="flex justify-content-center align-items-center flex-1"
-      [formGroup]="test"
+      [formGroup]="createCandidateReq"
+      (ngSubmit)="onCreate()"
     >
       <!-- email -->
       <div class="my-3 grid align-items-center">
@@ -36,7 +37,7 @@
             id="email-address"
             placeholder="name@example.com"
             pInputText
-            formControlName="name"
+            formControlName="candidateEmail"
           />
         </div>
         <div class="col-12">
@@ -52,6 +53,7 @@
             type="password"
             class="form-control col-12"
             id="password"
+            formControlName="candidatePassword"
             pInputText
           />
         </div>
@@ -70,6 +72,7 @@
             type="text"
             class="form-control col-12"
             id="fullname"
+            formControlName="profileName"
             pInputText
           />
         </div>
@@ -79,6 +82,7 @@
             type="submit"
             label="Create Account"
             backgroundColor="var(--PRIMARY)"
+            [loading]="sending"
           >
           </app-button>
         </div>

@@ -1,5 +1,5 @@
 export interface RegisterInsertReqDto {
-  username: string;
-  password: string;
-  fullname: string;
+  candidateEmail: string;
+  candidatePassword: string;
+  profileName: string;
 }

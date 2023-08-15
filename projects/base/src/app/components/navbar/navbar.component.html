@@ -12,7 +12,7 @@
       />
     </ng-template>
     <ng-template pTemplate="end">
-      <div>
+      <div *ngIf="isLogin">
         <p-overlayPanel #op>
           <p-menu [model]="profile"> </p-menu>
         </p-overlayPanel>
@@ -20,11 +20,16 @@
           alt="Image"
           width="50"
           (click)="op.toggle($event)"
-          src="{{ imgUrl }}"
+          [src]="imgUrl"
         >
         </p-image>
       </div>
-      <span class="text-white">Log In</span>
+      <app-button
+        *ngIf="!isLogin"
+        label="Log In"
+        backgroundColor="var(--PRIMARY)"
+        routerLink="/login"
+      ></app-button>
     </ng-template>
   </p-menubar>
 </nav>

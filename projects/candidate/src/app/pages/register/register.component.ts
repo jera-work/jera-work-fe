@@ -18,51 +18,43 @@ import { UsersService } from '@services/users.service';
   templateUrl: './register.component.html',
 })
 export class RegisterComponent implements OnInit {
-  test = this.fb.group({
-    name: '',
+  createCandidateReq = this.fb.group({
+    candidateEmail: ['', Validators.required],
+    candidatePassword: ['', Validators.required],
+    profileName: ['', Validators.required],
   });
 
-  constructor(private fb: NonNullableFormBuilder, private title: Title) {}
+  constructor(
+    private fb: NonNullableFormBuilder,
+    private title: Title,
+    private userService: UsersService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.title.setTitle('Register');
   }
 
-  // userInsertReqDto = this.fb.group({
-  //   username: ['', Validators.required],
-  //   roleId: [0, Validators.required],
-  //   fullName: ['', Validators.required],
-  //   phoneNumb: ['', Validators.required],
-  // });
-  // sending = false;
-  // constructor(
-  //   private roleService: RoleService,
-  //   private fb: NonNullableFormBuilder,
-  //   private userService: UsersService,
-  //   private router: Router,
-  //   private cd: ChangeDetectorRef
-  // ) {}
-  // roles: RoleResDto[] = [];
-  // selectedCity: RoleResDto | undefined;
-  // ngOnInit(): void {
-  //   this.roleService.getAllRole().subscribe((res) => {
-  //     this.roles = res;
-  //   });
-  // }
-  // ngAfterViewChecked(): void {
-  //   this.cd.detectChanges();
-  // }
-  // onCreate() {
-  //   if (this.userInsertReqDto.valid) {
-  //     const data = this.userInsertReqDto.getRawValue();
-  //     this.sending = true;
-  //     this.userService.insert(data).subscribe((res) => {
-  //       console.log('SUCCESSSSS');
-  //       this.router.navigateByUrl('/users');
-  //     });
-  //   } else {
-  //     console.log('ISI DULU');
-  //     this.sending = false;
-  //   }
-  // }
+  sending = false;
+
+  onCreate() {
+    if (this.createCandidateReq.valid) {
+      const data = this.createCandidateReq.getRawValue();
+      this.sending = true;
+      this.userService.create(data).subscribe({
+        next: (res) => {
+          console.log(res);
+          this.router.navigateByUrl('/login');
+          this.sending = false;
+          console.log('SUCCESSSSS');
+        },
+        error: () => {
+          this.sending = false;
+        },
+      });
+    } else {
+      console.log('ISI DULU');
+      this.sending = false;
+    }
+  }
 }

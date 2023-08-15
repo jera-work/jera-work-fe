@@ -11,4 +11,12 @@ export class AppliedJobListComponent implements OnInit {
   ngOnInit(): void {
     this.title.setTitle('Applied Jobs');
   }
+
+  getSeverity(status: string): string {
+    if (status === 'Application') {
+      return 'success';
+    } else {
+      return 'danger';
+    }
+  }
 }

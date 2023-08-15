@@ -31,8 +31,6 @@ function response<T>(message: MessageService, router: Router) {
       }
       if (err.status === 401 && err.error.message === 'Token Expired') {
         localStorage.clear();
-        console.log('test');
-
         router.navigateByUrl('/login');
       }
     },

@@ -1,12 +1,12 @@
 <pre>
-  <!-- {{ selectedCountries | json }} -->
+  {{ profile.value | json }}
 </pre>
 
 <div
   class="flex align-items-center justify-content-center flex-column container mt-4"
 >
   <h2>Update User</h2>
-  <form (ngSubmit)="onUpdate()" class="w-10">
+  <form [formGroup]="profile" (ngSubmit)="onUpdate()" class="w-10">
     <!-- email -->
 
     <h3>Profile</h3>
@@ -162,22 +162,70 @@
         ></p-dropdown>
       </div>
 
+      <!-- AUTO COMPLETE GA COMPLETE COMPLETE -->
+
+      <!-- formControlName="selectedSkill" -->
+      <!-- formControlName="selectedSkill" -->
       <!-- [suggestions]="filteredSkills" -->
-      <p-autoComplete
+      <!-- <p-autoComplete
         (completeMethod)="filterSkills($event)"
-        [(ngModel)]="selectedSkills"
-        [ngModelOptions]="{ standalone: true }"
         field="name"
         [multiple]="true"
       >
-      </p-autoComplete>
+      </p-autoComplete> -->
+
+      <!-- <p-autoComplete
+        [(ngModel)]="selectedCountries"
+        [ngModelOptions]="{ standalone: true }"
+        [suggestions]="filteredCountries"
+        (completeMethod)="filterCountry($event)"
+        field="name"
+        [multiple]="true"
+      >
+      </p-autoComplete> -->
+
+      <!-- Skills -->
+      <div class="col-12 col-md-3">
+        <label for="custom-skill" class="form-label"
+          >Skills <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-3">
+        <input
+          type="text"
+          pInputText
+          class="form-control col-12"
+          readonly
+          placeholder="Front End Developer"
+        />
+      </div>
+      <div class="col-3">
+        <app-button
+          icon="pi pi-times"
+          classBtn="p-button-danger p-button-outlined"
+          border=""
+        ></app-button>
+      </div>
+      <div class="col-12 col-md-9">
+        <app-button
+          btnType="button"
+          backgroundColor="var(--PRIMARY)"
+          label="Add"
+          (click)="showModal()"
+        ></app-button>
+      </div>
 
       <!-- Update button -->
       <div class="col-12">
-        <app-button type="submit" label="Update"></app-button>
+        <app-button
+          btnType="submit"
+          backgroundColor="var(--PRIMARY)"
+          label="Update"
+        ></app-button>
       </div>
       <div class="col-12">
         <app-button
+          btnType="button"
           routerLink="/dashboard"
           classBtn="p-button-secondary p-button-text"
           label="Cancel"
@@ -186,3 +234,49 @@
     </div>
   </form>
 </div>
+
+<p-dialog
+  header="Add Skills"
+  [(visible)]="visible"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <form [formGroup]="insertSkill">
+      <!-- Expected Salary -->
+      <div class="col-12 col-md-3">
+        <label for="new-salary" class="form-label"
+          >Input Skills <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-12 col-md-9">
+        <input
+          type="text"
+          formControlName="name"
+          pInputText
+          class="form-control col-12"
+          id="new-salary"
+        />
+      </div>
+    </form>
+    <div class="mt-4">
+      <app-button
+        type="button"
+        data-bs-dismiss="modal"
+        label="Submit"
+        (clickChange)="onChange()"
+      >
+      </app-button>
+      <app-button
+        type="button"
+        classBtn="p-button-secondary ml-4"
+        data-bs-dismiss="modal"
+        label="Cancel"
+        (clickChange)="onClose()"
+      >
+      </app-button>
+    </div>
+  </div>
+</p-dialog>

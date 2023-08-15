@@ -30,7 +30,6 @@ export class NavbarComponent implements OnInit {
       this.roleCode = profile?.roleCode;
       this.isLogin = true;
     } else {
-      console.log('test');
       this.isLogin = false;
     }
 
