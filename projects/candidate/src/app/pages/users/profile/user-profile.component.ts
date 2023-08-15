@@ -2,12 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { UsersService } from '@services/users.service';
 import { UsersResDto } from '@dto/user/users.res.dto';
 import { AuthService } from '@services/auth.service';
-import { NonNullableFormBuilder, Validators } from '@angular/forms';
+import { FormArray, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 interface AutoCompleteCompleteEvent {
   originalEvent: Event;
   query: string;
+}
+
+interface NewSkill {
+  name: string;
 }
 
 @Component({
@@ -28,7 +32,18 @@ export class UserProfileComponent implements OnInit {
   // autocomplete
   skills: any[] | undefined;
   selectedSkills: any[] | undefined;
-  filteredSkills: any[] | undefined;
+  filteredSkills?: any[] | undefined;
+
+  // custom skills
+  visible: boolean = false;
+
+  // formGroup = this.fb.group({
+  //   selectedSkill: this.fb.array([]),
+  // });
+
+  // get skill() {
+  //   return this.formGroup.get('selectedSkill') as FormArray;
+  // }
 
   constructor(
     private userService: UsersService,
@@ -36,6 +51,8 @@ export class UserProfileComponent implements OnInit {
     private fb: NonNullableFormBuilder,
     private router: Router
   ) {}
+
+  skillData: string[] = [];
 
   profile = this.fb.group({
     id: [0],
@@ -47,8 +64,20 @@ export class UserProfileComponent implements OnInit {
     fileName: [''],
     fileExtens: [''],
     isActive: [false],
-    selectedSkills: [],
+    skill: this.fb.array(this.skillData),
   });
+
+  insertSkill = this.fb.group({
+    name: '',
+  });
+
+  get skill() {
+    return this.profile.get('skill') as FormArray;
+  }
+
+  removeSkill(i: number) {
+    return this.skill.removeAt(i);
+  }
 
   ngOnInit(): void {
     const profile = this.authService.getProfile();
@@ -59,17 +88,17 @@ export class UserProfileComponent implements OnInit {
     }
     this.userId = profile?.id;
 
-    this.userService.getById(this.userId).subscribe((res) => {
-      console.log(res);
+    // this.userService.getById(this.userId).subscribe((res) => {
+    //   console.log(res);
 
-      this.profile.get('id')?.setValue(res.id);
-      this.profile.get('username')?.setValue(res.username);
-      this.profile.get('fullName')?.setValue(res.fullName);
-      this.profile.get('roleName')?.setValue(res.roleName);
-      this.profile.get('roleCode')?.setValue(res.roleCode);
-      this.profile.get('isActive')?.setValue(res.isActive);
-      this.profile.get('phoneNumb')?.setValue(res.phoneNumb);
-    });
+    //   this.profile.get('id')?.setValue(res.id);
+    //   this.profile.get('username')?.setValue(res.username);
+    //   this.profile.get('fullName')?.setValue(res.fullName);
+    //   this.profile.get('roleName')?.setValue(res.roleName);
+    //   this.profile.get('roleCode')?.setValue(res.roleCode);
+    //   this.profile.get('isActive')?.setValue(res.isActive);
+    //   this.profile.get('phoneNumb')?.setValue(res.phoneNumb);
+    // });
 
     this.genders = [
       {
@@ -149,23 +178,34 @@ export class UserProfileComponent implements OnInit {
         code: 'DS',
       },
     ];
+
+    this.countries = [
+      { name: 'afgan', code: 'aa' },
+      { name: 'afgon', code: 'ab' },
+      {
+        name: 'test',
+        code: 'tt',
+      },
+    ];
   }
 
   filterSkills(event: AutoCompleteCompleteEvent) {
     //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
-    let filtered: any[] = [];
+    let filtered!: any[];
     let query = event.query;
 
     for (let i = 0; i < (this.skills as any[]).length; i++) {
       let skill = (this.skills as any[])[i];
       if (skill.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        console.log(skill);
         filtered.push(skill);
+        // this.skill.push(skill);
       }
     }
 
-    this.filteredSkills = filtered;
+    this.filteredSkills?.push(filtered);
 
-    console.log(this.filteredSkills);
+    console.log(filtered);
   }
 
   fileUpload(event: any) {
@@ -207,5 +247,41 @@ export class UserProfileComponent implements OnInit {
         this.router.navigateByUrl('/dashboard');
       });
     }
+  }
+
+  countries: any[] | undefined;
+
+  selectedCountries: any[] | undefined;
+
+  filteredCountries: any[] = [];
+
+  filterCountry(event: AutoCompleteCompleteEvent) {
+    //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
+    let filtered: any[] = [];
+    let query = event.query;
+
+    for (let i = 0; i < (this.countries as any[]).length; i++) {
+      let country = (this.countries as any[])[i];
+      if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        filtered.push(country);
+      }
+    }
+    console.log(filtered);
+
+    this.filteredCountries = filtered;
+  }
+
+  showModal() {
+    this.visible = true;
+  }
+
+  onChange() {
+    const data = this.insertSkill.get('name');
+    this.skill.push(data);
+    this.visible = false;
+  }
+
+  onClose() {
+    this.visible = false;
   }
 }

@@ -16,6 +16,6 @@ export class LoginService {
   }
 
   loginCandidate(data: LoginReqDto): Observable<LoginResDto> {
-    return this.base.post(`${CANDIDATE_API}`, data, false);
+    return this.base.post(`${CANDIDATE_API}/login`, data, false);
   }
 }

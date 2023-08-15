@@ -34,8 +34,9 @@ export class UsersService {
     return this.base.post<UsersResDto>(`${CANDIDATE_API}/users`, data);
   }
 
+  // Create candidate account
   create(data: RegisterInsertReqDto): Observable<RegisterResDto> {
-    return this.base.post(`${CANDIDATE_API}`, data);
+    return this.base.post(`${CANDIDATE_API}/candidates/register`, data);
   }
 
   getAllCandidate(): Observable<UsersResDto[]> {
