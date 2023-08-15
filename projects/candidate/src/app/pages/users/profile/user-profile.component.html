@@ -1,13 +1,15 @@
 <pre>
-  {{ profile.value | json }}
+  <!-- {{ selectedCountries | json }} -->
 </pre>
 
 <div
   class="flex align-items-center justify-content-center flex-column container mt-4"
 >
-  <h3>Update User</h3>
-  <form [formGroup]="profile" (ngSubmit)="onUpdate()" class="w-10">
+  <h2>Update User</h2>
+  <form (ngSubmit)="onUpdate()" class="w-10">
     <!-- email -->
+
+    <h3>Profile</h3>
     <div class="my-3 grid align-items-center gy-md-4 container gy-3">
       <!-- Photo Profile -->
       <div class="col-12 col-md-3 align-items-start d-flex flex-column">
@@ -22,6 +24,7 @@
         ></p-fileUpload>
       </div>
 
+      <!-- Username -->
       <div class="col-12 col-md-3">
         <label for="email-address" class="form-label">Username</label>
       </div>
@@ -47,7 +50,6 @@
       <div class="col-12 col-md-9">
         <input
           type="text"
-          formControlName="fullName"
           class="form-control col-12"
           id="fullname"
           pInputText
@@ -55,9 +57,26 @@
         />
       </div>
 
+      <!-- Address -->
+      <div class="col-12 col-md-3">
+        <label for="address" class="form-label"
+          >Address <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-12 col-md-9">
+        <textarea
+          rows="5"
+          id="address"
+          cols="20"
+          pInputTextarea
+          class="form-control col-12"
+          placeholder="jl. xxx"
+        ></textarea>
+      </div>
+
       <!-- phoneNumb -->
       <div class="col-12 col-md-3">
-        <label for="fullname" class="form-label"
+        <label for="phoneNumb" class="form-label"
           >Phone Number <span class="text-red-600">*</span></label
         >
       </div>
@@ -65,18 +84,101 @@
         <input
           type="text"
           pInputText
-          formControlName="phoneNumb"
           class="form-control col-12"
           id="phoneNumb"
-          placeholder="phoneNumb"
+          placeholder="08xxxxx"
         />
       </div>
+
+      <!-- Expected Salary -->
+      <div class="col-12 col-md-3">
+        <label for="salary" class="form-label"
+          >Expected Salary <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-12 col-md-9">
+        <input
+          type="text"
+          pInputText
+          class="form-control col-12"
+          id="salary"
+          placeholder="Rp. 4.000.000"
+        />
+      </div>
+
+      <!-- Gender -->
+      <div class="col-12 col-md-3">
+        <label for="gender" class="form-label"
+          >Gender <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-12 col-md-9">
+        <p-dropdown
+          [options]="genders"
+          id="gender"
+          optionLabel="name"
+        ></p-dropdown>
+      </div>
+
+      <!-- Nationality -->
+      <div class="col-12 col-md-3">
+        <label for="nationality" class="form-label"
+          >Nationality <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-12 col-md-9">
+        <p-dropdown
+          [options]="nationalities"
+          id="nationality"
+          optionLabel="name"
+        ></p-dropdown>
+      </div>
+
+      <!-- Marital Status -->
+      <div class="col-12 col-md-3">
+        <label for="marital" class="form-label"
+          >Marital Status <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-12 col-md-9">
+        <p-dropdown
+          [options]="maritals"
+          id="martial"
+          optionLabel="name"
+        ></p-dropdown>
+      </div>
+
+      <!-- Religion -->
+      <div class="col-12 col-md-3">
+        <label for="religion" class="form-label"
+          >Religion <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-12 col-md-9">
+        <p-dropdown
+          [options]="religions"
+          id="religion"
+          optionLabel="name"
+        ></p-dropdown>
+      </div>
+
+      <!-- [suggestions]="filteredSkills" -->
+      <p-autoComplete
+        (completeMethod)="filterSkills($event)"
+        [(ngModel)]="selectedSkills"
+        [ngModelOptions]="{ standalone: true }"
+        field="name"
+        [multiple]="true"
+      >
+      </p-autoComplete>
+
+      <!-- Update button -->
       <div class="col-12">
         <app-button type="submit" label="Update"></app-button>
       </div>
       <div class="col-12">
         <app-button
-          routerLink="/users"
+          routerLink="/dashboard"
           classBtn="p-button-secondary p-button-text"
           label="Cancel"
         ></app-button>

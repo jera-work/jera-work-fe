@@ -5,6 +5,11 @@ import { AuthService } from '@services/auth.service';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+interface AutoCompleteCompleteEvent {
+  originalEvent: Event;
+  query: string;
+}
+
 @Component({
   selector: 'user-profile',
   templateUrl: './user-profile.component.html',
@@ -13,6 +18,17 @@ export class UserProfileComponent implements OnInit {
   userId!: any;
   imgUrl?: string;
   loading = false;
+
+  // Master Data
+  genders?: any[];
+  nationalities?: any[];
+  maritals?: any[];
+  religions?: any[];
+
+  // autocomplete
+  skills: any[] | undefined;
+  selectedSkills: any[] | undefined;
+  filteredSkills: any[] | undefined;
 
   constructor(
     private userService: UsersService,
@@ -31,6 +47,7 @@ export class UserProfileComponent implements OnInit {
     fileName: [''],
     fileExtens: [''],
     isActive: [false],
+    selectedSkills: [],
   });
 
   ngOnInit(): void {
@@ -53,6 +70,102 @@ export class UserProfileComponent implements OnInit {
       this.profile.get('isActive')?.setValue(res.isActive);
       this.profile.get('phoneNumb')?.setValue(res.phoneNumb);
     });
+
+    this.genders = [
+      {
+        id: 1,
+        name: 'Man',
+      },
+      {
+        id: 2,
+        name: 'Woman',
+      },
+    ];
+
+    this.nationalities = [
+      {
+        id: 1,
+        name: 'Indonesian',
+      },
+      {
+        id: 2,
+        name: 'Singapore',
+      },
+      {
+        id: 3,
+        name: 'Japan',
+      },
+      {
+        id: 4,
+        name: 'Australia',
+      },
+    ];
+
+    this.maritals = [
+      {
+        id: 1,
+        name: 'Single',
+      },
+      {
+        id: 2,
+        name: 'Married',
+      },
+      {
+        id: 3,
+        name: 'Divorced',
+      },
+    ];
+
+    this.religions = [
+      {
+        id: 1,
+        name: 'Moslem',
+      },
+      {
+        id: 2,
+        name: 'Christ',
+      },
+      {
+        id: 3,
+        name: 'Buddha',
+      },
+    ];
+
+    this.skills = [
+      {
+        name: 'Front End Dev',
+        code: 'FE',
+      },
+      {
+        name: 'Back End Dev',
+        code: 'BE',
+      },
+      {
+        name: 'General Affair',
+        code: 'GA',
+      },
+      {
+        name: 'Data Science',
+        code: 'DS',
+      },
+    ];
+  }
+
+  filterSkills(event: AutoCompleteCompleteEvent) {
+    //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
+    let filtered: any[] = [];
+    let query = event.query;
+
+    for (let i = 0; i < (this.skills as any[]).length; i++) {
+      let skill = (this.skills as any[])[i];
+      if (skill.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        filtered.push(skill);
+      }
+    }
+
+    this.filteredSkills = filtered;
+
+    console.log(this.filteredSkills);
   }
 
   fileUpload(event: any) {
