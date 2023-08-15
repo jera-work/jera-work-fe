@@ -7,16 +7,23 @@
       <img
         src="/assets/logo-light.svg"
         height="30"
-        class="mx-2 cursor-pointer"
+        class="mx-2 cursor-pointer logo"
         routerLink="/dashboard"
       />
     </ng-template>
     <ng-template pTemplate="end">
-      <p-overlayPanel #op>
-        <p-menu [model]="profile"> </p-menu>
-      </p-overlayPanel>
-      <!-- src="{{ imgUrl }}" -->
-      <p-image alt="Image" width="50" (click)="op.toggle($event)"> </p-image>
+      <div>
+        <p-overlayPanel #op>
+          <p-menu [model]="profile"> </p-menu>
+        </p-overlayPanel>
+        <p-image
+          alt="Image"
+          width="50"
+          (click)="op.toggle($event)"
+          src="{{ imgUrl }}"
+        >
+        </p-image>
+      </div>
       <span class="text-white">Log In</span>
     </ng-template>
   </p-menubar>

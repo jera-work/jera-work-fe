@@ -9,10 +9,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 // import { roleValidation } from './validation/role.validation';
 import { Roles } from './constant/role.constant';
-// import {
-//   authNonLoginValidation,
-//   authValidation,
-// } from './validation/auth.validation';
+import {
+  authNonLoginValidation,
+  authValidation,
+} from './validation/auth.validation';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonComponent } from '@components/button/button.component';
 import { SharedModule } from '@shared/shared.module';

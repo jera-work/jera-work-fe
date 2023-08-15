@@ -22,6 +22,7 @@ import { FormsModule } from '@angular/forms';
 import { CarouselModule } from 'primeng/carousel';
 import { EditorModule } from 'primeng/editor';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 @NgModule({
   imports: [
@@ -48,6 +49,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     CarouselModule,
     EditorModule,
     ReactiveFormsModule,
+    AutoCompleteModule,
   ],
   exports: [
     MenubarModule,
@@ -73,6 +75,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     CarouselModule,
     EditorModule,
     ReactiveFormsModule,
+    AutoCompleteModule,
   ],
 })
 export class SharedModule {}

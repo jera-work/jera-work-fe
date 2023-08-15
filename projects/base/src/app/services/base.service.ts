@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 
+// RESPONSE
 function response<T>(message: MessageService, router: Router) {
   return tap<T>({
     next: (data) => {
@@ -62,18 +63,21 @@ export class BaseService {
     };
   }
 
+  // POST API
   post<T>(url: string, body: any, withToken = true): Observable<T> {
     return this.http
       .post<T>(url, body, withToken ? this.headers : undefined)
       .pipe(response(this.message, this.router));
   }
 
+  // GET API
   get<T>(url: string, withToken = true): Observable<T> {
     return this.http
       .get<T>(url, withToken ? this.headers : undefined)
       .pipe(response(this.message, this.router));
   }
 
+  // PATCH API
   patch<T>(url: string, body: any, withToken = true): Observable<T> {
     return this.http
       .patch<T>(url, body, withToken ? this.headers : undefined)

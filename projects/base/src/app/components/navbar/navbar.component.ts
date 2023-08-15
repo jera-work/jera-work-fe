@@ -10,6 +10,7 @@ import { AuthService } from '@services/auth.service';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
+  isLogin = false;
   imgUrl = '';
   roleCode: string | undefined = '';
   navbar: MenuItem[] | undefined;
@@ -19,14 +20,28 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     const profile = this.authService.getProfile();
-    if (profile?.photoId) {
-      this.imgUrl = `http://localhost:8080/files/${profile.photoId}`;
+
+    if (profile) {
+      if (profile?.photoId) {
+        this.imgUrl = `http://localhost:8080/files/${profile.photoId}`;
+      } else {
+        this.imgUrl = '/assets/default.png';
+      }
+      this.roleCode = profile?.roleCode;
+      this.isLogin = true;
     } else {
-      this.imgUrl = 'http://localhost:8080/files/1';
+      console.log('test');
+      this.isLogin = false;
     }
-    this.roleCode = profile?.roleCode;
 
     this.navbar = [
+      {
+        label: 'JERA-WORK',
+        routerLink: '/dashboard',
+        id: 'dashboard',
+        styleClass: 'test',
+        icon: 'pi pi-fw pi-slack pi-spin text-white',
+      },
       {
         label: 'Applied Job',
         routerLink: '/applied-job',
@@ -60,11 +75,6 @@ export class NavbarComponent implements OnInit {
             visible: this.isReviewer,
           },
         ],
-      },
-      {
-        label: 'Assign Candidate',
-        routerLink: '/assign-candidate',
-        visible: this.isHr,
       },
     ];
 
