@@ -12,7 +12,7 @@
       />
     </ng-template>
     <ng-template pTemplate="end">
-      <div *ngIf="isLogin">
+      <div>
         <p-overlayPanel #op>
           <p-menu [model]="profile"> </p-menu>
         </p-overlayPanel>
@@ -25,7 +25,6 @@
         </p-image>
       </div>
       <app-button
-        *ngIf="!isLogin"
         label="Log In"
         backgroundColor="var(--PRIMARY)"
         routerLink="/login"

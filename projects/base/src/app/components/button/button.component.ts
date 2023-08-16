@@ -8,7 +8,7 @@ import { ButtonModule } from 'primeng/button';
     <p-button
       *ngIf="show"
       type="{{ btnType }}"
-      styleClass="{{ classBtn }}"
+      styleClass="{{ classBtn }} "
       (click)="clickBtn()"
       [loading]="loading"
       [label]="label"

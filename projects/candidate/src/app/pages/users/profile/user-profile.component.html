@@ -1,59 +1,349 @@
 <pre>
   {{ profile.value | json }}
 </pre>
+<pre>
+  {{ educationsReqDto.value | json }}
+</pre>
+
+<pre>
+  {{ experiencesReqDto.value | json }}
+</pre>
 
 <div
   class="flex align-items-center justify-content-center flex-column container mt-4"
 >
   <h2>Update User</h2>
-  <form [formGroup]="profile" (ngSubmit)="onUpdate()" class="w-10">
-    <!-- email -->
 
-    <h3>Profile</h3>
-    <div class="my-3 grid align-items-center gy-md-4 container gy-3">
-      <!-- Photo Profile -->
-      <div class="col-12 col-md-3 align-items-start d-flex flex-column">
-        <img [src]="imgUrl" alt="profile" class="w-1" />
-      </div>
-      <div class="col-12 col-md-9">
-        <p-fileUpload
-          mode="basic"
-          chooseLabel="Choose Photo"
-          #file
-          (onSelect)="fileUpload($event)"
-        ></p-fileUpload>
-      </div>
+  <p-tabMenu
+    [model]="menus"
+    [activeItem]="activeMenu"
+    (activeItemChange)="onActiveItemChange($event)"
+  ></p-tabMenu>
 
-      <!-- Username -->
+  <!-- Form for Update Profile -->
+  <ng-container *ngIf="activeMenu?.label === 'Profile'">
+    <form [formGroup]="profile" (ngSubmit)="onUpdate()" class="w-10">
+      <!-- email -->
+
+      <h3>Profile</h3>
+      <div class="my-3 grid align-items-center gy-md-4 container gy-3">
+        <!-- Photo Profile -->
+        <div class="col-12 col-md-3 align-items-start d-flex flex-column">
+          <img [src]="imgUrl" alt="profile" class="w-1" />
+        </div>
+        <div class="col-12 col-md-9">
+          <p-fileUpload
+            mode="basic"
+            chooseLabel="Choose Photo"
+            #file
+            (onSelect)="fileUpload($event)"
+          ></p-fileUpload>
+        </div>
+
+        <!-- Username -->
+        <div class="col-12 col-md-3">
+          <label for="email-address" class="form-label">Username</label>
+        </div>
+        <div class="col-12 col-md-9">
+          <!-- disabled -->
+          <input
+            type="email"
+            [value]="profile.get('username')?.value"
+            pInputText
+            class="form-control col-12"
+            id="email-address"
+            disabled
+          />
+          <!-- [value]="profile.username" -->
+        </div>
+
+        <!-- fullname -->
+        <div class="col-12 col-md-3">
+          <label for="fullname" class="form-label"
+            >User Fullname <span class="text-red-600">*</span></label
+          >
+        </div>
+        <div class="col-12 col-md-9">
+          <input
+            type="text"
+            class="form-control col-12"
+            id="fullname"
+            pInputText
+            placeholder="fullname"
+          />
+        </div>
+
+        <!-- Address -->
+        <div class="col-12 col-md-3">
+          <label for="address" class="form-label"
+            >Address <span class="text-red-600">*</span></label
+          >
+        </div>
+        <div class="col-12 col-md-9">
+          <textarea
+            rows="5"
+            id="address"
+            cols="20"
+            pInputTextarea
+            class="form-control col-12"
+            placeholder="jl. xxx"
+          ></textarea>
+        </div>
+
+        <!-- phoneNumb -->
+        <div class="col-12 col-md-3">
+          <label for="phoneNumb" class="form-label"
+            >Phone Number <span class="text-red-600">*</span></label
+          >
+        </div>
+        <div class="col-12 col-md-9">
+          <input
+            type="text"
+            pInputText
+            class="form-control col-12"
+            id="phoneNumb"
+            placeholder="08xxxxx"
+          />
+        </div>
+
+        <!-- Expected Salary -->
+        <div class="col-12 col-md-3">
+          <label for="salary" class="form-label"
+            >Expected Salary <span class="text-red-600">*</span></label
+          >
+        </div>
+        <div class="col-12 col-md-9">
+          <input
+            type="text"
+            pInputText
+            class="form-control col-12"
+            id="salary"
+            placeholder="Rp. 4.000.000"
+          />
+        </div>
+
+        <!-- Gender -->
+        <div class="col-12 col-md-3">
+          <label for="gender" class="form-label"
+            >Gender <span class="text-red-600">*</span></label
+          >
+        </div>
+        <div class="col-12 col-md-9">
+          <p-dropdown
+            [options]="genders"
+            id="gender"
+            optionLabel="name"
+          ></p-dropdown>
+        </div>
+
+        <!-- Nationality -->
+        <div class="col-12 col-md-3">
+          <label for="nationality" class="form-label"
+            >Nationality <span class="text-red-600">*</span></label
+          >
+        </div>
+        <div class="col-12 col-md-9">
+          <p-dropdown
+            [options]="nationalities"
+            id="nationality"
+            optionLabel="name"
+          ></p-dropdown>
+        </div>
+
+        <!-- Marital Status -->
+        <div class="col-12 col-md-3">
+          <label for="marital" class="form-label"
+            >Marital Status <span class="text-red-600">*</span></label
+          >
+        </div>
+        <div class="col-12 col-md-9">
+          <p-dropdown
+            [options]="maritals"
+            id="martial"
+            optionLabel="name"
+          ></p-dropdown>
+        </div>
+
+        <!-- Religion -->
+        <div class="col-12 col-md-3">
+          <label for="religion" class="form-label"
+            >Religion <span class="text-red-600">*</span></label
+          >
+        </div>
+        <div class="col-12 col-md-9">
+          <p-dropdown
+            [options]="religions"
+            id="religion"
+            optionLabel="name"
+          ></p-dropdown>
+        </div>
+
+        <!-- Skills -->
+        <div class="col-12 col-md-3">
+          <label for="custom-skill" class="form-label"
+            >Skills <span class="text-red-600">*</span></label
+          >
+        </div>
+        <div
+          class="col-12 grid"
+          *ngFor="let s of skill.controls; let i = index"
+          formArrayName="skill"
+        >
+          <div class="col-3">
+            <p-badge
+              [value]="s.value"
+              size="xlarge"
+              severity="success"
+            ></p-badge>
+          </div>
+          <div class="col-3">
+            <app-button
+              icon="pi pi-times"
+              classBtn="p-button-danger p-button-outlined"
+              border=""
+              (click)="removeSkill(i)"
+            ></app-button>
+          </div>
+        </div>
+        <div class="col-12 col-md-9">
+          <app-button
+            btnType="button"
+            classBtn="p-button-success"
+            label="Add"
+            (click)="showModalSkill()"
+          ></app-button>
+        </div>
+
+        <!-- Update button -->
+        <div class="col-12">
+          <app-button
+            btnType="submit"
+            backgroundColor="var(--PRIMARY)"
+            label="Update"
+          ></app-button>
+        </div>
+        <div class="col-12">
+          <app-button
+            btnType="button"
+            routerLink="/dashboard"
+            classBtn="p-button-secondary p-button-text"
+            label="Cancel"
+          ></app-button>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+
+  <!-- Form for Post / Update Education -->
+  <ng-container *ngIf="activeMenu?.label === 'Education'">
+    <h1>Education</h1>
+    
+
+
+
+
+    <div class="col-12">
+      <app-button
+        btnType="button"
+        label="Add Education"
+        (click)="showModalEducation()"
+        classBtn="p-button-success"
+      >
+      </app-button>
+    </div>
+
+    <div class="col-12">
+      <app-button
+        label="Update Education"
+        btnType="button"
+        backgroundColor="var(--PRIMARY)"
+      >
+      </app-button>
+    </div>
+  </ng-container>
+
+  <!-- Form for Post / Update Experience  -->
+  <ng-container *ngIf="activeMenu?.label === 'Experience'">
+    <h1>Experience</h1>
+  </ng-container>
+</div>
+
+<!-- Modal for Add Custom Skills -->
+<p-dialog
+  header="Add Skills"
+  [(visible)]="modalSkill"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <form [formGroup]="insertSkill">
+      <!-- Input New Skill -->
       <div class="col-12 col-md-3">
-        <label for="email-address" class="form-label">Username</label>
-      </div>
-      <div class="col-12 col-md-9">
-        <!-- disabled -->
-        <input
-          type="email"
-          [value]="profile.get('username')?.value"
-          pInputText
-          class="form-control col-12"
-          id="email-address"
-          disabled
-        />
-        <!-- [value]="profile.username" -->
-      </div>
-
-      <!-- fullname -->
-      <div class="col-12 col-md-3">
-        <label for="fullname" class="form-label"
-          >User Fullname <span class="text-red-600">*</span></label
+        <label for="new-skill" class="form-label"
+          >Input Skills <span class="text-red-600">*</span></label
         >
       </div>
       <div class="col-12 col-md-9">
         <input
           type="text"
-          class="form-control col-12"
-          id="fullname"
+          formControlName="name"
           pInputText
-          placeholder="fullname"
+          class="form-control col-12"
+          id="new-skill"
+        />
+      </div>
+    </form>
+    <div class="mt-4">
+      <app-button
+        type="submit"
+        data-bs-dismiss="modal"
+        label="Submit"
+        (click)="onCreateSkill()"
+      >
+      </app-button>
+      <app-button
+        type="button"
+        classBtn="p-button-secondary ml-4"
+        data-bs-dismiss="modal"
+        label="Cancel"
+        (click)="onCloseSkill()"
+      >
+      </app-button>
+    </div>
+  </div>
+</p-dialog>
+
+<!-- Modal for Add Education -->
+<p-dialog
+  header="Add Education"
+  [(visible)]="modalEducation"
+  [modal]="true"
+  [style]="{ width: '80vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <pre>
+      {{ education.value | json }}
+    </pre>
+    <form [formGroup]="education">
+      <!-- Input New Education -->
+
+      <!-- Institution Name -->
+      <div class="col-12 col-md-3">
+        <label for="institution-name" class="form-label"
+          >Institution Name <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-12 col-md-9">
+        <input
+          type="text"
+          formControlName="institutionName"
+          pInputText
+          class="form-control col-12"
+          id="institution-name"
         />
       </div>
 
@@ -65,208 +355,101 @@
       </div>
       <div class="col-12 col-md-9">
         <textarea
+          class="col-12"
           rows="5"
-          id="address"
-          cols="20"
+          cols="30"
           pInputTextarea
-          class="form-control col-12"
-          placeholder="jl. xxx"
+          formControlName="address"
         ></textarea>
       </div>
 
-      <!-- phoneNumb -->
+      <!-- Degree -->
       <div class="col-12 col-md-3">
-        <label for="phoneNumb" class="form-label"
-          >Phone Number <span class="text-red-600">*</span></label
-        >
-      </div>
-      <div class="col-12 col-md-9">
-        <input
-          type="text"
-          pInputText
-          class="form-control col-12"
-          id="phoneNumb"
-          placeholder="08xxxxx"
-        />
-      </div>
-
-      <!-- Expected Salary -->
-      <div class="col-12 col-md-3">
-        <label for="salary" class="form-label"
-          >Expected Salary <span class="text-red-600">*</span></label
-        >
-      </div>
-      <div class="col-12 col-md-9">
-        <input
-          type="text"
-          pInputText
-          class="form-control col-12"
-          id="salary"
-          placeholder="Rp. 4.000.000"
-        />
-      </div>
-
-      <!-- Gender -->
-      <div class="col-12 col-md-3">
-        <label for="gender" class="form-label"
-          >Gender <span class="text-red-600">*</span></label
+        <label for="degree" class="form-label"
+          >Degree <span class="text-red-600">*</span></label
         >
       </div>
       <div class="col-12 col-md-9">
         <p-dropdown
-          [options]="genders"
-          id="gender"
+          [options]="degree"
+          id="degree"
           optionLabel="name"
+          placeholder="Select Degree"
         ></p-dropdown>
       </div>
 
-      <!-- Nationality -->
+      <!-- Majors -->
       <div class="col-12 col-md-3">
-        <label for="nationality" class="form-label"
-          >Nationality <span class="text-red-600">*</span></label
+        <label for="majors" class="form-label"
+          >Majors <span class="text-red-600">*</span></label
         >
       </div>
       <div class="col-12 col-md-9">
         <p-dropdown
-          [options]="nationalities"
-          id="nationality"
+          [options]="majors"
+          id="degree"
           optionLabel="name"
+          placeholder="Select Major"
         ></p-dropdown>
       </div>
 
-      <!-- Marital Status -->
+      <!-- GPA -->
       <div class="col-12 col-md-3">
-        <label for="marital" class="form-label"
-          >Marital Status <span class="text-red-600">*</span></label
-        >
-      </div>
-      <div class="col-12 col-md-9">
-        <p-dropdown
-          [options]="maritals"
-          id="martial"
-          optionLabel="name"
-        ></p-dropdown>
-      </div>
-
-      <!-- Religion -->
-      <div class="col-12 col-md-3">
-        <label for="religion" class="form-label"
-          >Religion <span class="text-red-600">*</span></label
-        >
-      </div>
-      <div class="col-12 col-md-9">
-        <p-dropdown
-          [options]="religions"
-          id="religion"
-          optionLabel="name"
-        ></p-dropdown>
-      </div>
-
-      <!-- AUTO COMPLETE GA COMPLETE COMPLETE -->
-
-      <!-- formControlName="selectedSkill" -->
-      <!-- formControlName="selectedSkill" -->
-      <!-- [suggestions]="filteredSkills" -->
-      <!-- <p-autoComplete
-        (completeMethod)="filterSkills($event)"
-        field="name"
-        [multiple]="true"
-      >
-      </p-autoComplete> -->
-
-      <!-- <p-autoComplete
-        [(ngModel)]="selectedCountries"
-        [ngModelOptions]="{ standalone: true }"
-        [suggestions]="filteredCountries"
-        (completeMethod)="filterCountry($event)"
-        field="name"
-        [multiple]="true"
-      >
-      </p-autoComplete> -->
-
-      <!-- Skills -->
-      <div class="col-12 col-md-3">
-        <label for="custom-skill" class="form-label"
-          >Skills <span class="text-red-600">*</span></label
-        >
-      </div>
-      <div class="col-3">
-        <input
-          type="text"
-          pInputText
-          class="form-control col-12"
-          readonly
-          placeholder="Front End Developer"
-        />
-      </div>
-      <div class="col-3">
-        <app-button
-          icon="pi pi-times"
-          classBtn="p-button-danger p-button-outlined"
-          border=""
-        ></app-button>
-      </div>
-      <div class="col-12 col-md-9">
-        <app-button
-          btnType="button"
-          backgroundColor="var(--PRIMARY)"
-          label="Add"
-          (click)="showModal()"
-        ></app-button>
-      </div>
-
-      <!-- Update button -->
-      <div class="col-12">
-        <app-button
-          btnType="submit"
-          backgroundColor="var(--PRIMARY)"
-          label="Update"
-        ></app-button>
-      </div>
-      <div class="col-12">
-        <app-button
-          btnType="button"
-          routerLink="/dashboard"
-          classBtn="p-button-secondary p-button-text"
-          label="Cancel"
-        ></app-button>
-      </div>
-    </div>
-  </form>
-</div>
-
-<p-dialog
-  header="Add Skills"
-  [(visible)]="visible"
-  [modal]="true"
-  [style]="{ width: '50vw' }"
-  [draggable]="false"
-  [resizable]="false"
->
-  <div class="modal-dialog modal-dialog-centered">
-    <form [formGroup]="insertSkill">
-      <!-- Expected Salary -->
-      <div class="col-12 col-md-3">
-        <label for="new-salary" class="form-label"
-          >Input Skills <span class="text-red-600">*</span></label
+        <label for="gpa" class="form-label"
+          >GPA <span class="text-red-600">*</span></label
         >
       </div>
       <div class="col-12 col-md-9">
         <input
-          type="text"
-          formControlName="name"
+          type="number"
+          formControlName="GPA"
           pInputText
           class="form-control col-12"
-          id="new-salary"
+          id="gpa"
         />
+      </div>
+
+      <!-- Start Year -->
+      <div class="col-12 col-md-3">
+        <label for="startYear" class="form-label"
+          >Start Year <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-12 col-md-9">
+        <p-calendar
+          formControlName="startYearTemp"
+          id="startYear"
+          [showTime]="true"
+          styleClass="w-full"
+          [showSeconds]="true"
+          (onSelect)="convertStartYear($event)"
+        ></p-calendar>
+      </div>
+
+      <!-- End Year -->
+      <div class="col-12 col-md-3">
+        <label for="endYear" class="form-label"
+          >End Year <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-12 col-md-9">
+        <p-calendar
+          formControlName="endYearTemp"
+          id="endYear"
+          [showTime]="true"
+          styleClass="w-full"
+          [showSeconds]="true"
+          (onSelect)="convertEndYear($event)"
+        ></p-calendar>
       </div>
     </form>
+
     <div class="mt-4">
       <app-button
-        type="button"
+        type="submit"
         data-bs-dismiss="modal"
         label="Submit"
-        (clickChange)="onChange()"
+        (click)="onCreateEducation()"
       >
       </app-button>
       <app-button
@@ -274,7 +457,7 @@
         classBtn="p-button-secondary ml-4"
         data-bs-dismiss="modal"
         label="Cancel"
-        (clickChange)="onClose()"
+        (click)="onCloseEducation()"
       >
       </app-button>
     </div>
