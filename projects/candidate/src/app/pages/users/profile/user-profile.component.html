@@ -73,6 +73,8 @@
           />
         </div>
 
+        
+
         <!-- Address -->
         <div class="col-12 col-md-3">
           <label for="address" class="form-label"
@@ -237,11 +239,29 @@
   <!-- Form for Post / Update Education -->
   <ng-container *ngIf="activeMenu?.label === 'Education'">
     <h1>Education</h1>
-    
-
-
-
-
+    <div class="card">
+      <p-dataView #dv [value]="educations.controls">
+        <ng-template let-e pTemplate="listItem" let-i="index">
+          <div class="col-12">
+            <div class="mx-auto">
+              <h3>{{ e.value.institutionName }}</h3>
+              <h3>{{ e.value.address }}</h3>
+              <h3>{{ e.value.degreeId }}</h3>
+              <h3>{{ e.value.majorsId }}</h3>
+              <h3>{{ e.value.GPA }}</h3>
+              <h3>{{ e.value.startYearTemp }}</h3>
+              <h3>{{ e.value.endYearTemp }}</h3>
+              <app-button
+                icon="pi pi-times-circle"
+                classBtn="p-button-danger"
+                (click)="removeEducation(i)"
+              >
+              </app-button>
+            </div>
+          </div>
+        </ng-template>
+      </p-dataView>
+    </div>
     <div class="col-12">
       <app-button
         btnType="button"

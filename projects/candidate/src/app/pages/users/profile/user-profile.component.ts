@@ -20,21 +20,14 @@ const convertUTCToLocalDateTime = function (date: Date) {
   return newDate.toISOString();
 };
 
-interface AutoCompleteCompleteEvent {
-  originalEvent: Event;
-  query: string;
-}
-
-interface NewSkill {
-  name: string;
-}
-
 @Component({
   selector: 'user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css'],
 })
 export class UserProfileComponent implements OnInit {
+  layout: string = 'list';
+
   menus: MenuItem[] | undefined;
   activeMenu: MenuItem | undefined;
 
@@ -88,23 +81,27 @@ export class UserProfileComponent implements OnInit {
 
   // Education Form Group
   education = this.fb.group({
-    institutionName: 'test',
-    degreeId: 'Bachelors of Computer',
-    majorsId: 'Computer Science',
-    GPA: 123,
-    startYear: '2023-08-16T14:21:43.000Z',
-    endYear: '2023-08-17T14:21:44.000Z',
-    startYearTemp: '2023-08-16T07:21:43.000Z',
-    endYearTemp: '2023-08-17T07:21:44.000Z',
-    address: 'adqwdqwd',
+    institutionName: ['', Validators.required],
+    degreeId: ['', Validators.required],
+    majorsId: ['', Validators.required],
+    GPA: [0, Validators.required],
+    startYear: ['', Validators.required],
+    endYear: ['', Validators.required],
+    startYearTemp: ['', Validators.required],
+    endYearTemp: ['', Validators.required],
+    address: ['', Validators.required],
   });
 
   educationsReqDto = this.fb.group({
-    educations: this.fb.array([this.education]),
+    educations: this.fb.array([]),
   });
 
   get educations() {
     return this.educationsReqDto.get('educations') as FormArray;
+  }
+
+  removeEducation(i: number) {
+    this.educations.removeAt(i);
   }
 
   // Experience Form Group
@@ -262,6 +259,8 @@ export class UserProfileComponent implements OnInit {
     ];
 
     // Education Master Data
+
+    console.log(this.educations.controls);
   }
 
   onActiveItemChange(event: MenuItem) {
@@ -357,5 +356,10 @@ export class UserProfileComponent implements OnInit {
       endYear: convertUTCToLocalDateTime(e),
     });
   }
+
   // Convert Date
+
+  // For Education View
+
+  // For Education View
 }
