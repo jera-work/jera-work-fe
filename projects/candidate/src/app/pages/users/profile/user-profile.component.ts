@@ -4,6 +4,21 @@ import { UsersResDto } from '@dto/user/users.res.dto';
 import { AuthService } from '@services/auth.service';
 import { FormArray, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MenuItem } from 'primeng/api';
+
+const convertUTCToLocalDateTime = function (date: Date) {
+  const newDate = new Date(
+    Date.UTC(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      date.getHours(),
+      date.getMinutes(),
+      date.getSeconds()
+    )
+  );
+  return newDate.toISOString();
+};
 
 interface AutoCompleteCompleteEvent {
   originalEvent: Event;
@@ -17,33 +32,33 @@ interface NewSkill {
 @Component({
   selector: 'user-profile',
   templateUrl: './user-profile.component.html',
+  styleUrls: ['./user-profile.component.css'],
 })
 export class UserProfileComponent implements OnInit {
+  menus: MenuItem[] | undefined;
+  activeMenu: MenuItem | undefined;
+
   userId!: any;
   imgUrl?: string;
   loading = false;
 
   // Master Data
+
+  // Profile
   genders?: any[];
   nationalities?: any[];
   maritals?: any[];
   religions?: any[];
 
-  // autocomplete
-  skills: any[] | undefined;
-  selectedSkills: any[] | undefined;
-  filteredSkills?: any[] | undefined;
+  // Education
+  degree?: any[];
+  majors?: any[];
 
-  // custom skills
-  visible: boolean = false;
+  // Master Data
 
-  // formGroup = this.fb.group({
-  //   selectedSkill: this.fb.array([]),
-  // });
-
-  // get skill() {
-  //   return this.formGroup.get('selectedSkill') as FormArray;
-  // }
+  // modal boolean
+  modalSkill: boolean = false;
+  modalEducation: boolean = false;
 
   constructor(
     private userService: UsersService,
@@ -52,8 +67,13 @@ export class UserProfileComponent implements OnInit {
     private router: Router
   ) {}
 
-  skillData: string[] = [];
+  insertSkill = this.fb.group({
+    name: ['', Validators.required],
+  });
 
+  newSkill: string[] = [];
+
+  // Profile Form Group
   profile = this.fb.group({
     id: [0],
     username: ['', Validators.required],
@@ -64,22 +84,70 @@ export class UserProfileComponent implements OnInit {
     fileName: [''],
     fileExtens: [''],
     isActive: [false],
-    skill: this.fb.array(this.skillData),
   });
 
-  insertSkill = this.fb.group({
-    name: '',
+  // Education Form Group
+  education = this.fb.group({
+    institutionName: 'test',
+    degreeId: 'Bachelors of Computer',
+    majorsId: 'Computer Science',
+    GPA: 123,
+    startYear: '2023-08-16T14:21:43.000Z',
+    endYear: '2023-08-17T14:21:44.000Z',
+    startYearTemp: '2023-08-16T07:21:43.000Z',
+    endYearTemp: '2023-08-17T07:21:44.000Z',
+    address: 'adqwdqwd',
+  });
+
+  educationsReqDto = this.fb.group({
+    educations: this.fb.array([this.education]),
+  });
+
+  get educations() {
+    return this.educationsReqDto.get('educations') as FormArray;
+  }
+
+  // Experience Form Group
+  experience = this.fb.group({
+    position: ['', Validators.required],
+    institutionName: ['', Validators.required],
+    location: ['', Validators.required],
+    jobDesc: ['', Validators.required],
+    startDate: ['', Validators.required],
+    endDate: ['', Validators.required],
+    skill: this.fb.array([]),
   });
 
   get skill() {
-    return this.profile.get('skill') as FormArray;
+    return this.experience.get('skill') as FormArray;
   }
 
   removeSkill(i: number) {
     return this.skill.removeAt(i);
   }
 
+  experiencesReqDto = this.fb.group({
+    experiences: this.fb.array([this.experience]),
+  });
+
+  get experiences() {
+    return this.experiencesReqDto.get('experiences') as FormArray;
+  }
+
+  removeExperience(i: number) {
+    this.experiences.removeAt(i);
+  }
+
   ngOnInit(): void {
+    // menu
+    this.menus = [
+      { label: 'Profile', icon: 'pi pi-fw pi-user-edit' },
+      { label: 'Education', icon: 'pi pi-fw pi-book' },
+      { label: 'Experience', icon: 'pi pi-fw pi-briefcase' },
+    ];
+
+    this.activeMenu = this.menus[1];
+
     const profile = this.authService.getProfile();
     if (profile?.photoId) {
       this.imgUrl = `http://localhost:8080/files/${profile.photoId}`;
@@ -100,6 +168,7 @@ export class UserProfileComponent implements OnInit {
     //   this.profile.get('phoneNumb')?.setValue(res.phoneNumb);
     // });
 
+    // Profile Master Data
     this.genders = [
       {
         id: 1,
@@ -159,53 +228,44 @@ export class UserProfileComponent implements OnInit {
         name: 'Buddha',
       },
     ];
+    // Profile Master Data
 
-    this.skills = [
+    // Education Master Data
+    this.degree = [
       {
-        name: 'Front End Dev',
-        code: 'FE',
+        name: 'Bachelor of Computer Science',
       },
       {
-        name: 'Back End Dev',
-        code: 'BE',
+        name: 'Bachelor of Business Administration',
       },
       {
-        name: 'General Affair',
-        code: 'GA',
+        name: 'Bachelor of Accountancy',
       },
       {
-        name: 'Data Science',
-        code: 'DS',
+        name: 'Bachelor of Architecture',
+      },
+      {
+        name: 'Bachelor of Commerce',
       },
     ];
 
-    this.countries = [
-      { name: 'afgan', code: 'aa' },
-      { name: 'afgon', code: 'ab' },
+    this.majors = [
       {
-        name: 'test',
-        code: 'tt',
+        name: 'Agricultural Engineering',
+      },
+      {
+        name: 'Architectural Engineering',
+      },
+      {
+        name: 'Biochemical Engineering',
       },
     ];
+
+    // Education Master Data
   }
 
-  filterSkills(event: AutoCompleteCompleteEvent) {
-    //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
-    let filtered!: any[];
-    let query = event.query;
-
-    for (let i = 0; i < (this.skills as any[]).length; i++) {
-      let skill = (this.skills as any[])[i];
-      if (skill.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-        console.log(skill);
-        filtered.push(skill);
-        // this.skill.push(skill);
-      }
-    }
-
-    this.filteredSkills?.push(filtered);
-
-    console.log(filtered);
+  onActiveItemChange(event: MenuItem) {
+    this.activeMenu = event;
   }
 
   fileUpload(event: any) {
@@ -249,39 +309,53 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-  countries: any[] | undefined;
-
-  selectedCountries: any[] | undefined;
-
-  filteredCountries: any[] = [];
-
-  filterCountry(event: AutoCompleteCompleteEvent) {
-    //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
-    let filtered: any[] = [];
-    let query = event.query;
-
-    for (let i = 0; i < (this.countries as any[]).length; i++) {
-      let country = (this.countries as any[])[i];
-      if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-        filtered.push(country);
-      }
-    }
-    console.log(filtered);
-
-    this.filteredCountries = filtered;
+  // Modal for Custom Skills Form
+  showModalSkill() {
+    this.modalSkill = true;
   }
 
-  showModal() {
-    this.visible = true;
+  onCreateSkill() {
+    const data = this.insertSkill.get('name')?.getRawValue();
+    this.skill.push(this.fb.control(data));
+    this.insertSkill.reset();
+    this.modalSkill = false;
   }
 
-  onChange() {
-    const data = this.insertSkill.get('name');
-    this.skill.push(data);
-    this.visible = false;
+  onCloseSkill() {
+    this.modalSkill = false;
+  }
+  // Modal for Custom Skills Form
+
+  // Modal for Education Form
+
+  showModalEducation() {
+    this.modalEducation = true;
   }
 
-  onClose() {
-    this.visible = false;
+  onCreateEducation() {
+    const data = this.education.getRawValue();
+    this.educations.push(this.fb.group(data));
+    this.education.reset();
+    this.modalEducation = false;
   }
+
+  onCloseEducation() {
+    this.modalEducation = false;
+  }
+
+  // Modal for Education Form
+
+  // Convert Date
+  convertStartYear(e: any) {
+    this.education.patchValue({
+      startYear: convertUTCToLocalDateTime(e),
+    });
+  }
+
+  convertEndYear(e: any) {
+    this.education.patchValue({
+      endYear: convertUTCToLocalDateTime(e),
+    });
+  }
+  // Convert Date
 }

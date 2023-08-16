@@ -23,6 +23,10 @@ import { CarouselModule } from 'primeng/carousel';
 import { EditorModule } from 'primeng/editor';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { BadgeModule } from 'primeng/badge';
+import { ChipModule } from 'primeng/chip';
+import { TabMenuModule } from 'primeng/tabmenu';
+import { DataViewModule, DataViewLayoutOptions } from 'primeng/dataview';
 
 @NgModule({
   imports: [
@@ -50,6 +54,10 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     EditorModule,
     ReactiveFormsModule,
     AutoCompleteModule,
+    BadgeModule,
+    ChipModule,
+    TabMenuModule,
+    DataViewModule,
   ],
   exports: [
     MenubarModule,
@@ -76,6 +84,11 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     EditorModule,
     ReactiveFormsModule,
     AutoCompleteModule,
+    BadgeModule,
+    ChipModule,
+    TabMenuModule,
+    DataViewModule,
+    DataViewLayoutOptions,
   ],
 })
 export class SharedModule {}
