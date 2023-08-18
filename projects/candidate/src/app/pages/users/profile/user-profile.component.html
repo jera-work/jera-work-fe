@@ -15,6 +15,7 @@
   <h2>Update User</h2>
 
   <p-tabMenu
+    [scrollable]="true"
     [model]="menus"
     [activeItem]="activeMenu"
     (activeItemChange)="onActiveItemChange($event)"
@@ -54,7 +55,6 @@
             id="email-address"
             disabled
           />
-          <!-- [value]="profile.username" -->
         </div>
 
         <!-- fullname -->
@@ -72,8 +72,6 @@
             placeholder="fullname"
           />
         </div>
-
-        
 
         <!-- Address -->
         <div class="col-12 col-md-3">
@@ -124,60 +122,64 @@
           />
         </div>
 
-        <!-- Gender -->
-        <div class="col-12 col-md-3">
-          <label for="gender" class="form-label"
-            >Gender <span class="text-red-600">*</span></label
-          >
-        </div>
-        <div class="col-12 col-md-9">
-          <p-dropdown
-            [options]="genders"
-            id="gender"
-            optionLabel="name"
-          ></p-dropdown>
-        </div>
+        <div class="grid col-12">
+          <div class="grid col-6">
+            <!-- Gender -->
+            <div class="col-12 col-md-3">
+              <label for="gender" class="form-label"
+                >Gender <span class="text-red-600">*</span></label
+              >
+            </div>
+            <div class="col-12 col-md-9">
+              <p-dropdown
+                [options]="genders"
+                id="gender"
+                optionLabel="name"
+              ></p-dropdown>
+            </div>
 
-        <!-- Nationality -->
-        <div class="col-12 col-md-3">
-          <label for="nationality" class="form-label"
-            >Nationality <span class="text-red-600">*</span></label
-          >
-        </div>
-        <div class="col-12 col-md-9">
-          <p-dropdown
-            [options]="nationalities"
-            id="nationality"
-            optionLabel="name"
-          ></p-dropdown>
-        </div>
+            <!-- Nationality -->
+            <div class="col-12 col-md-3">
+              <label for="nationality" class="form-label"
+                >Nationality <span class="text-red-600">*</span></label
+              >
+            </div>
+            <div class="col-12 col-md-9">
+              <p-dropdown
+                [options]="nationalities"
+                id="nationality"
+                optionLabel="name"
+              ></p-dropdown>
+            </div>
+          </div>
 
-        <!-- Marital Status -->
-        <div class="col-12 col-md-3">
-          <label for="marital" class="form-label"
-            >Marital Status <span class="text-red-600">*</span></label
-          >
-        </div>
-        <div class="col-12 col-md-9">
-          <p-dropdown
-            [options]="maritals"
-            id="martial"
-            optionLabel="name"
-          ></p-dropdown>
-        </div>
+          <!-- Marital Status -->
+          <div class="col-12 col-md-3">
+            <label for="marital" class="form-label"
+              >Marital Status <span class="text-red-600">*</span></label
+            >
+          </div>
+          <div class="col-12 col-md-9">
+            <p-dropdown
+              [options]="maritals"
+              id="martial"
+              optionLabel="name"
+            ></p-dropdown>
+          </div>
 
-        <!-- Religion -->
-        <div class="col-12 col-md-3">
-          <label for="religion" class="form-label"
-            >Religion <span class="text-red-600">*</span></label
-          >
-        </div>
-        <div class="col-12 col-md-9">
-          <p-dropdown
-            [options]="religions"
-            id="religion"
-            optionLabel="name"
-          ></p-dropdown>
+          <!-- Religion -->
+          <div class="col-12 col-md-3">
+            <label for="religion" class="form-label"
+              >Religion <span class="text-red-600">*</span></label
+            >
+          </div>
+          <div class="col-12 col-md-9">
+            <p-dropdown
+              [options]="religions"
+              id="religion"
+              optionLabel="name"
+            ></p-dropdown>
+          </div>
         </div>
 
         <!-- Skills -->
@@ -239,28 +241,71 @@
   <!-- Form for Post / Update Education -->
   <ng-container *ngIf="activeMenu?.label === 'Education'">
     <h1>Education</h1>
-    <div class="card">
-      <p-dataView #dv [value]="educations.controls">
-        <ng-template let-e pTemplate="listItem" let-i="index">
-          <div class="col-12">
-            <div class="mx-auto">
-              <h3>{{ e.value.institutionName }}</h3>
-              <h3>{{ e.value.address }}</h3>
-              <h3>{{ e.value.degreeId }}</h3>
-              <h3>{{ e.value.majorsId }}</h3>
-              <h3>{{ e.value.GPA }}</h3>
-              <h3>{{ e.value.startYearTemp }}</h3>
-              <h3>{{ e.value.endYearTemp }}</h3>
-              <app-button
-                icon="pi pi-times-circle"
-                classBtn="p-button-danger"
-                (click)="removeEducation(i)"
-              >
-              </app-button>
-            </div>
+    <div class="relative" *ngIf="educations.controls.length">
+      <div class="flex flex-row-reverse mb-3">
+        <app-button
+          *ngIf="!isDeleteEducation"
+          icon="pi pi-trash"
+          label="Delete Education"
+          classBtn="p-button-outlined p-button-danger"
+          border=""
+          (clickChange)="showDeleteEducation()"
+        >
+        </app-button>
+
+        <app-button
+          *ngIf="isDeleteEducation"
+          icon="pi pi-chevron-left"
+          label="Cancel Delete"
+          classBtn="p-button-outlined p-button-secondary"
+          border=""
+          (clickChange)="hideDeleteEducation()"
+        >
+        </app-button>
+      </div>
+      <div *ngFor="let e of educations.controls">
+        <p-card
+          class="relative mb-2"
+          [header]="e.value.degreeId"
+          styleClass="shadow-2 hover:shadow-4"
+        >
+          <div>
+            <h3>
+              {{ e.value.majorsId }}
+            </h3>
           </div>
-        </ng-template>
-      </p-dataView>
+          <div>
+            <h4>
+              {{ e.value.institutionName }}
+            </h4>
+          </div>
+          <div>
+            <p class="w-5">
+              {{ e.value.address }}
+            </p>
+          </div>
+          <ng-template pTemplate="footer">
+            <p>{{ e.value.startYear }} - {{ e.value.endYear }}</p>
+          </ng-template>
+
+          <div class="absolute top-0 right-0 mr-2 mt-2">
+            <p>GPA: {{ e.value.GPA }}</p>
+          </div>
+
+          <div
+            class="absolute bottom-0 right-0 mr-2 mb-2"
+            *ngIf="isDeleteEducation"
+          >
+            <app-button
+              icon="pi pi-times"
+              classBtn="p-button-rounded p-button-danger p-button-outlined"
+              border=""
+              (clickChange)="showDeleteFuncEducation()"
+            >
+            </app-button>
+          </div>
+        </p-card>
+      </div>
     </div>
     <div class="col-12">
       <app-button
@@ -285,8 +330,419 @@
   <!-- Form for Post / Update Experience  -->
   <ng-container *ngIf="activeMenu?.label === 'Experience'">
     <h1>Experience</h1>
+    <div class="relative" *ngIf="experiences.controls.length">
+      <div class="flex flex-row-reverse mb-3">
+        <app-button
+          *ngIf="!isDeleteExperience"
+          icon="pi pi-trash"
+          label="Delete Experience"
+          classBtn="p-button-outlined p-button-danger"
+          border=""
+          (clickChange)="showDeleteExperience()"
+        >
+        </app-button>
+
+        <app-button
+          *ngIf="isDeleteExperience"
+          icon="pi pi-chevron-left"
+          label="Cancel Delete"
+          classBtn="p-button-outlined p-button-secondary"
+          border=""
+          (clickChange)="hideDeleteExperience()"
+        >
+        </app-button>
+      </div>
+      <div *ngFor="let e of experiences.controls">
+        <p-card
+          class="relative mb-2"
+          [header]="e.value.degreeId"
+          styleClass="shadow-2 hover:shadow-4"
+        >
+          <div>
+            <h3>
+              {{ e.value.majorsId }}
+            </h3>
+          </div>
+          <div>
+            <h4>
+              {{ e.value.institutionName }}
+            </h4>
+          </div>
+          <div>
+            <p class="w-5">
+              {{ e.value.address }}
+            </p>
+          </div>
+          <ng-template pTemplate="footer">
+            <p>{{ e.value.startYear }} - {{ e.value.endYear }}</p>
+          </ng-template>
+
+          <div class="absolute top-0 right-0 mr-2 mt-2">
+            <p>GPA: {{ e.value.GPA }}</p>
+          </div>
+
+          <div
+            class="absolute bottom-0 right-0 mr-2 mb-2"
+            *ngIf="isDeleteEducation"
+          >
+            <app-button
+              icon="pi pi-times"
+              classBtn="p-button-rounded p-button-danger p-button-outlined"
+              border=""
+              (clickChange)="showDeleteFuncEducation()"
+            >
+            </app-button>
+          </div>
+        </p-card>
+      </div>
+    </div>
+    <div class="col-12">
+      <app-button
+        btnType="button"
+        label="Add Experience"
+        (click)="showModalExperience()"
+        classBtn="p-button-success"
+      >
+      </app-button>
+    </div>
+
+    <div class="col-12">
+      <app-button
+        label="Update Experience"
+        btnType="button"
+        backgroundColor="var(--PRIMARY)"
+      >
+      </app-button>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="activeMenu?.label === 'Documents'">
+    <h1>Documents</h1>
   </ng-container>
 </div>
+
+<!-- Modal for Add Education -->
+<p-dialog
+  header="Add Education"
+  [(visible)]="modalEducation"
+  [modal]="true"
+  [style]="{ width: '80vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <!-- <pre>
+      {{ education.value | json }}
+    </pre> -->
+    <form [formGroup]="education">
+      <!-- Input New Education -->
+
+      <!-- Institution Name -->
+      <div class="col-12 col-md-3">
+        <label for="institution-name" class="form-label"
+          >Institution Name <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-12 col-md-9">
+        <input
+          type="text"
+          formControlName="institutionName"
+          pInputText
+          class="form-control col-12"
+          id="institution-name"
+        />
+      </div>
+
+      <div class="grid col-12">
+        <!-- Start Year -->
+        <div class="grid col-6">
+          <div class="col-12">
+            <label for="startYear" class="form-label"
+              >Start Year <span class="text-red-600">*</span></label
+            >
+          </div>
+          <div class="col-12">
+            <p-calendar
+              formControlName="startYearTemp"
+              id="startYear"
+              (onSelect)="convertStartYear($event)"
+            ></p-calendar>
+          </div>
+        </div>
+
+        <!-- End Year -->
+        <div class="grid col-6">
+          <div class="col-12">
+            <label for="endYear" class="form-label"
+              >End Year <span class="text-red-600">*</span></label
+            >
+          </div>
+          <div class="col-12">
+            <p-calendar
+              formControlName="endYearTemp"
+              id="endYear"
+              (onSelect)="convertEndYear($event)"
+            ></p-calendar>
+          </div>
+        </div>
+      </div>
+      <!-- Address -->
+      <div class="col-12 col-md-3">
+        <label for="address" class="form-label"
+          >Address <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-12 col-md-9">
+        <textarea
+          class="col-12"
+          rows="5"
+          cols="30"
+          pInputTextarea
+          formControlName="address"
+        ></textarea>
+      </div>
+
+      <!-- Degree -->
+      <div class="col-12 col-md-3">
+        <label for="degree" class="form-label"
+          >Degree <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-12 col-md-9">
+        <p-dropdown
+          [options]="degree"
+          id="degree"
+          optionLabel="name"
+          optionValue="name"
+          placeholder="Select Degree"
+          formControlName="degreeId"
+        ></p-dropdown>
+      </div>
+
+      <!-- Majors -->
+      <div class="col-12 col-md-3">
+        <label for="majors" class="form-label"
+          >Majors <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-12 col-md-9">
+        <p-dropdown
+          [options]="majors"
+          id="majors"
+          optionLabel="name"
+          optionValue="name"
+          placeholder="Select Major"
+          formControlName="majorsId"
+        ></p-dropdown>
+      </div>
+
+      <!-- GPA -->
+      <div class="col-12 col-md-3">
+        <label for="gpa" class="form-label"
+          >GPA <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-12 col-md-9">
+        <input
+          type="number"
+          formControlName="GPA"
+          pInputText
+          class="form-control col-12"
+          id="gpa"
+        />
+      </div>
+    </form>
+
+    <div class="mt-4">
+      <app-button
+        type="submit"
+        data-bs-dismiss="modal"
+        label="Submit"
+        classBtn="p-button-success"
+        (click)="onCreateEducation()"
+      >
+      </app-button>
+      <app-button
+        type="button"
+        classBtn="p-button-outlined p-button-secondary ml-4"
+        border=""
+        data-bs-dismiss="modal"
+        label="Cancel"
+        (click)="onCloseEducation()"
+      >
+      </app-button>
+    </div>
+  </div>
+</p-dialog>
+
+<!-- Modal for Add Experience -->
+<p-dialog
+  header="Add Experience"
+  [(visible)]="modalExperience"
+  [modal]="true"
+  [style]="{ width: '80vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <pre>
+      {{ experience.value | json }}
+    </pre>
+    <form [formGroup]="experience">
+      <!-- Input New Experience -->
+
+      <!-- Institution Name -->
+      <div class="col-12 col-md-3">
+        <label for="institution-name" class="form-label"
+          >Institution Name <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-12 col-md-9">
+        <input
+          type="text"
+          formControlName="institutionName"
+          pInputText
+          class="form-control col-12"
+          id="institution-name"
+        />
+      </div>
+
+      <!-- Position -->
+      <div class="col-12 col-md-3">
+        <label for="position" class="form-label"
+          >Position <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-12 col-md-9">
+        <input
+          type="text"
+          formControlName="position"
+          pInputText
+          class="form-control col-12"
+          id="position"
+        />
+      </div>
+
+      <!-- Dates -->
+      <div class="grid col-12">
+        <!-- Start Year -->
+        <div class="grid col-6">
+          <div class="col-12">
+            <label for="startDate" class="form-label"
+              >Start Date <span class="text-red-600">*</span></label
+            >
+          </div>
+          <div class="col-12">
+            <p-calendar
+              formControlName="startDateTemp"
+              id="startDate"
+              (onSelect)="convertStartDate($event)"
+            ></p-calendar>
+          </div>
+        </div>
+
+        <!-- End Year -->
+        <div class="grid col-6">
+          <div class="col-12">
+            <label for="endDate" class="form-label"
+              >End Date <span class="text-red-600">*</span></label
+            >
+          </div>
+          <div class="col-12">
+            <p-calendar
+              formControlName="endDateTemp"
+              id="endDate"
+              (onSelect)="convertEndDate($event)"
+            ></p-calendar>
+          </div>
+        </div>
+      </div>
+
+      <!-- Address -->
+      <div class="col-12 col-md-3">
+        <label for="address" class="form-label"
+          >Address <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-12 col-md-9">
+        <textarea
+          class="col-12"
+          rows="5"
+          cols="30"
+          pInputTextarea
+          formControlName="location"
+        ></textarea>
+      </div>
+
+      <div class="col-12">
+        <label for="jobdesc" class="form-label"
+          >Job Description <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-12">
+        <p-editor formControlName="jobDesc" [style]="{ height: '320px' }">
+          <ng-template pTemplate="header">
+            <span class="ql-formats">
+              <!-- Add font size dropdown -->
+              <select class="ql-size"></select>
+            </span>
+            <span class="ql-formats">
+              <button type="button" class="ql-bold" aria-label="Bold"></button>
+              <button
+                type="button"
+                class="ql-italic"
+                aria-label="Italic"
+              ></button>
+              <button
+                type="button"
+                class="ql-underline"
+                aria-label="Underline"
+              ></button>
+            </span>
+            <span class="ql-formats">
+              <span
+                class="ql-color ql-picker ql-color-picker"
+                aria-label="Bold"
+              >
+                <select class="ql-color"></select>
+              </span>
+              <span
+                class="ql-background ql-picker ql-color-picker"
+                aria-label="Bold"
+              >
+                <select class="ql-background"></select>
+              </span>
+            </span>
+            <span class="ql-formats">
+              <button class="ql-list" value="bullet" type="button"></button>
+            </span>
+          </ng-template>
+               </p-editor
+        >
+      </div>
+    </form>
+
+    <div class="mt-4">
+      <app-button
+        type="submit"
+        data-bs-dismiss="modal"
+        label="Add"
+        classBtn="p-button-success"
+        (click)="onCreateExperience()"
+      >
+      </app-button>
+      <app-button
+        type="button"
+        classBtn="p-button-outlined p-button-secondary ml-4"
+        border=""
+        data-bs-dismiss="modal"
+        label="Cancel"
+        (click)="onCloseExperience()"
+      >
+      </app-button>
+    </div>
+  </div>
+</p-dialog>
 
 <!-- Modal for Add Custom Skills -->
 <p-dialog
@@ -335,151 +791,29 @@
   </div>
 </p-dialog>
 
-<!-- Modal for Add Education -->
+<!-- Diupdate lagi kalo udah masuk ke db buat delete per education -->
 <p-dialog
-  header="Add Education"
-  [(visible)]="modalEducation"
+  header="Are you sure want to delete this Education?"
+  [(visible)]="modalDeleteEducation"
   [modal]="true"
-  [style]="{ width: '80vw' }"
+  [style]="{ width: '40vw' }"
   [draggable]="false"
   [resizable]="false"
 >
-  <div class="modal-dialog modal-dialog-centered">
-    <pre>
-      {{ education.value | json }}
-    </pre>
-    <form [formGroup]="education">
-      <!-- Input New Education -->
+  <ng-template pTemplate="footer">
+    <app-button
+      label="Yes"
+      classBtn="p-button-outlined p-button-danger"
+      border=""
+    >
+    </app-button>
 
-      <!-- Institution Name -->
-      <div class="col-12 col-md-3">
-        <label for="institution-name" class="form-label"
-          >Institution Name <span class="text-red-600">*</span></label
-        >
-      </div>
-      <div class="col-12 col-md-9">
-        <input
-          type="text"
-          formControlName="institutionName"
-          pInputText
-          class="form-control col-12"
-          id="institution-name"
-        />
-      </div>
-
-      <!-- Address -->
-      <div class="col-12 col-md-3">
-        <label for="address" class="form-label"
-          >Address <span class="text-red-600">*</span></label
-        >
-      </div>
-      <div class="col-12 col-md-9">
-        <textarea
-          class="col-12"
-          rows="5"
-          cols="30"
-          pInputTextarea
-          formControlName="address"
-        ></textarea>
-      </div>
-
-      <!-- Degree -->
-      <div class="col-12 col-md-3">
-        <label for="degree" class="form-label"
-          >Degree <span class="text-red-600">*</span></label
-        >
-      </div>
-      <div class="col-12 col-md-9">
-        <p-dropdown
-          [options]="degree"
-          id="degree"
-          optionLabel="name"
-          placeholder="Select Degree"
-        ></p-dropdown>
-      </div>
-
-      <!-- Majors -->
-      <div class="col-12 col-md-3">
-        <label for="majors" class="form-label"
-          >Majors <span class="text-red-600">*</span></label
-        >
-      </div>
-      <div class="col-12 col-md-9">
-        <p-dropdown
-          [options]="majors"
-          id="degree"
-          optionLabel="name"
-          placeholder="Select Major"
-        ></p-dropdown>
-      </div>
-
-      <!-- GPA -->
-      <div class="col-12 col-md-3">
-        <label for="gpa" class="form-label"
-          >GPA <span class="text-red-600">*</span></label
-        >
-      </div>
-      <div class="col-12 col-md-9">
-        <input
-          type="number"
-          formControlName="GPA"
-          pInputText
-          class="form-control col-12"
-          id="gpa"
-        />
-      </div>
-
-      <!-- Start Year -->
-      <div class="col-12 col-md-3">
-        <label for="startYear" class="form-label"
-          >Start Year <span class="text-red-600">*</span></label
-        >
-      </div>
-      <div class="col-12 col-md-9">
-        <p-calendar
-          formControlName="startYearTemp"
-          id="startYear"
-          [showTime]="true"
-          styleClass="w-full"
-          [showSeconds]="true"
-          (onSelect)="convertStartYear($event)"
-        ></p-calendar>
-      </div>
-
-      <!-- End Year -->
-      <div class="col-12 col-md-3">
-        <label for="endYear" class="form-label"
-          >End Year <span class="text-red-600">*</span></label
-        >
-      </div>
-      <div class="col-12 col-md-9">
-        <p-calendar
-          formControlName="endYearTemp"
-          id="endYear"
-          [showTime]="true"
-          styleClass="w-full"
-          [showSeconds]="true"
-          (onSelect)="convertEndYear($event)"
-        ></p-calendar>
-      </div>
-    </form>
-
-    <div class="mt-4">
-      <app-button
-        type="submit"
-        data-bs-dismiss="modal"
-        label="Submit"
-        (click)="onCreateEducation()"
-      >
-      </app-button>
-      <app-button
-        type="button"
-        classBtn="p-button-secondary ml-4"
-        data-bs-dismiss="modal"
-        label="Cancel"
-        (click)="onCloseEducation()"
-      >
-      </app-button>
-    </div>
-  </div>
+    <app-button
+      label="Cancel"
+      classBtn="p-button-outlined p-button-secondary"
+      (click)="modalDeleteEducation = false"
+      border=""
+    >
+    </app-button>
+  </ng-template>
 </p-dialog>
