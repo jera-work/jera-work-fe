@@ -1,59 +1,25 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { UsersResDto } from '../dto/user/users.res.dto';
-import { BaseService } from './base.service';
-import { CANDIDATE_API, ADMIN_API } from '../constant/api.constant';
-import { UserInsertReqDto } from '../dto/user/user-insert.req.dto';
-import { Roles } from '../constant/role.constant';
-import { UserNewPasswordInsertDto } from '../dto/user/user-new-password.insert.dto';
-import { UpdateResDto } from '../dto/UpdateResDto';
-import { UserUpdateReqDto } from '../dto/user/user-update.req.dto';
-import { UserUpdateProfileReqDto } from '../dto/user/user-update-profile.req.dto';
-import { RegisterInsertReqDto } from '@dto/register/register-insert.req.dto';
-import { RegisterResDto } from '@dto/register/register.res.dto';
+import { Injectable } from "@angular/core";
+import { BaseService } from "./base.service";
+import { UserInsertReqDto } from "@dto/user/user-insert.req.dto";
+import { Observable } from "rxjs";
+import { InsertResDto } from "@dto/InsertResDto";
+import { ADMIN_API } from "@constant/api.constant";
+import { UserResDto } from "@dto/user/user.res.dto";
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsersService {
-  constructor(private base: BaseService) {}
 
-  // getUser(): Observable<UsersResDto> {
-  //   return
-  // }
+  constructor(private base: BaseService) { }
 
-  getById(id: number): Observable<UsersResDto> {
-    return this.base.get(`${CANDIDATE_API}/users/detail?id=${id}`);
+  createUser(data: UserInsertReqDto): Observable<InsertResDto> {
+    return this.base.post<InsertResDto>(`${ADMIN_API}/users`, data, true)
   }
 
-  getAllUsers(): Observable<UsersResDto[]> {
-    return this.base.get<UsersResDto[]>(`${CANDIDATE_API}/users`);
+  getUsers(roleCode: string, companyCode: string): Observable<UserResDto[]> {
+    return this.base.get<UserResDto[]>(`${ADMIN_API}/users/?roleCode=${roleCode}&companyCode=${companyCode}`, true)
   }
 
-  insert(data: UserInsertReqDto): Observable<UsersResDto> {
-    return this.base.post<UsersResDto>(`${CANDIDATE_API}/users`, data);
-  }
-
-  // Create candidate account
-  create(data: RegisterInsertReqDto): Observable<RegisterResDto> {
-    return this.base.post(`${CANDIDATE_API}/candidates/register`, data);
-  }
-
-  getAllCandidate(): Observable<UsersResDto[]> {
-    return this.base.get(
-      `${CANDIDATE_API}/users/role/?code=${Roles.CANDIDATE}`
-    );
-  }
-
-  getAllReviewer(): Observable<UsersResDto[]> {
-    return this.base.get(`${CANDIDATE_API}/users/role/?code=${Roles.REVIEWER}`);
-  }
-
-  updatePassword(data: UserNewPasswordInsertDto): Observable<UpdateResDto> {
-    return this.base.patch(`${CANDIDATE_API}/users/new-password`, data);
-  }
-
-  updateProfile(data: UserUpdateProfileReqDto): Observable<UpdateResDto> {
-    return this.base.patch(`${CANDIDATE_API}/users/update-profile`, data);
-  }
 }

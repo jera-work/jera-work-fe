@@ -1,4 +1,4 @@
 export interface QuestionOptionInsertReqDto {
-  optionLabel: string;
-  optionCorrect: boolean;
+    optionLabel: string
+    isCorrect: boolean
 }
