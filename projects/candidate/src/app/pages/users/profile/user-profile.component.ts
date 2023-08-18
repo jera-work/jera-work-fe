@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '@services/users.service';
-import { UsersResDto } from '@dto/user/users.res.dto';
+// import { UsersResDto } from '@dto/user/users.res.dto';
 import { AuthService } from '@services/auth.service';
 import { FormArray, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -26,8 +26,6 @@ const convertUTCToLocalDateTime = function (date: Date) {
   styleUrls: ['./user-profile.component.css'],
 })
 export class UserProfileComponent implements OnInit {
-  layout: string = 'list';
-
   menus: MenuItem[] | undefined;
   activeMenu: MenuItem | undefined;
 
@@ -50,8 +48,7 @@ export class UserProfileComponent implements OnInit {
   // Master Data
 
   // modal boolean
-  modalSkill: boolean = false;
-  modalEducation: boolean = false;
+  modalSkill = false;
 
   constructor(
     private userService: UsersService,
@@ -79,12 +76,17 @@ export class UserProfileComponent implements OnInit {
     isActive: [false],
   });
 
-  // Education Form Group
+  // ======================= Education =======================
+  // Modal Needs
+  modalEducation = false;
+  isDeleteEducation = false;
+  modalDeleteEducation = false;
+
   education = this.fb.group({
     institutionName: ['', Validators.required],
     degreeId: ['', Validators.required],
     majorsId: ['', Validators.required],
-    GPA: [0, Validators.required],
+    GPA: [0, [Validators.required]],
     startYear: ['', Validators.required],
     endYear: ['', Validators.required],
     startYearTemp: ['', Validators.required],
@@ -103,8 +105,13 @@ export class UserProfileComponent implements OnInit {
   removeEducation(i: number) {
     this.educations.removeAt(i);
   }
+  // ======================= Education =======================
 
-  // Experience Form Group
+  // ======================= Experience =======================
+  modalExperience = false;
+  isDeleteExperience = false;
+  modalDeleteExperience = false;
+
   experience = this.fb.group({
     position: ['', Validators.required],
     institutionName: ['', Validators.required],
@@ -112,19 +119,13 @@ export class UserProfileComponent implements OnInit {
     jobDesc: ['', Validators.required],
     startDate: ['', Validators.required],
     endDate: ['', Validators.required],
+    startDateTemp: ['', Validators.required],
+    endDateTemp: ['', Validators.required],
     skill: this.fb.array([]),
   });
 
-  get skill() {
-    return this.experience.get('skill') as FormArray;
-  }
-
-  removeSkill(i: number) {
-    return this.skill.removeAt(i);
-  }
-
   experiencesReqDto = this.fb.group({
-    experiences: this.fb.array([this.experience]),
+    experiences: this.fb.array([]),
   });
 
   get experiences() {
@@ -135,37 +136,18 @@ export class UserProfileComponent implements OnInit {
     this.experiences.removeAt(i);
   }
 
-  ngOnInit(): void {
-    // menu
-    this.menus = [
-      { label: 'Profile', icon: 'pi pi-fw pi-user-edit' },
-      { label: 'Education', icon: 'pi pi-fw pi-book' },
-      { label: 'Experience', icon: 'pi pi-fw pi-briefcase' },
-    ];
+  get skill() {
+    return this.experience.get('skill') as FormArray;
+  }
 
-    this.activeMenu = this.menus[1];
+  removeSkill(i: number) {
+    return this.skill.removeAt(i);
+  }
 
-    const profile = this.authService.getProfile();
-    if (profile?.photoId) {
-      this.imgUrl = `http://localhost:8080/files/${profile.photoId}`;
-    } else {
-      this.imgUrl = '/assets/default.png';
-    }
-    this.userId = profile?.id;
+  // ======================= Experience =======================
 
-    // this.userService.getById(this.userId).subscribe((res) => {
-    //   console.log(res);
-
-    //   this.profile.get('id')?.setValue(res.id);
-    //   this.profile.get('username')?.setValue(res.username);
-    //   this.profile.get('fullName')?.setValue(res.fullName);
-    //   this.profile.get('roleName')?.setValue(res.roleName);
-    //   this.profile.get('roleCode')?.setValue(res.roleCode);
-    //   this.profile.get('isActive')?.setValue(res.isActive);
-    //   this.profile.get('phoneNumb')?.setValue(res.phoneNumb);
-    // });
-
-    // Profile Master Data
+  // ================ GET MASTER DATA FROM DATABASE ================
+  getMasterData() {
     this.genders = [
       {
         id: 1,
@@ -225,24 +207,22 @@ export class UserProfileComponent implements OnInit {
         name: 'Buddha',
       },
     ];
-    // Profile Master Data
 
-    // Education Master Data
     this.degree = [
       {
-        name: 'Bachelor of Computer Science',
+        name: 'Doctorate Degree',
       },
       {
-        name: 'Bachelor of Business Administration',
+        name: "Master's Degree",
       },
       {
-        name: 'Bachelor of Accountancy',
+        name: "Bachelor's Degree",
       },
       {
-        name: 'Bachelor of Architecture',
+        name: 'Senior High School',
       },
       {
-        name: 'Bachelor of Commerce',
+        name: 'Junior High School',
       },
     ];
 
@@ -257,15 +237,73 @@ export class UserProfileComponent implements OnInit {
         name: 'Biochemical Engineering',
       },
     ];
+  }
 
-    // Education Master Data
+  // ================ GET MASTER DATA FROM DATABASE ================
 
-    console.log(this.educations.controls);
+  ngOnInit(): void {
+    // menu
+    this.menus = [
+      { label: 'Profile', icon: 'pi pi-fw pi-user-edit' },
+      { label: 'Education', icon: 'pi pi-fw pi-book' },
+      { label: 'Experience', icon: 'pi pi-fw pi-briefcase' },
+      { label: 'Documents', icon: 'pi pi-fw pi-file' },
+    ];
+
+    this.activeMenu = this.menus[0];
+
+    const profile = this.authService.getProfile();
+    if (profile?.photoId) {
+      this.imgUrl = `http://localhost:8080/files/${profile.photoId}`;
+    } else {
+      this.imgUrl = '/assets/default.png';
+    }
+    this.userId = profile?.id;
+
+    // this.userService.getById(this.userId).subscribe((res) => {
+    //   console.log(res);
+
+    //   this.profile.get('id')?.setValue(res.id);
+    //   this.profile.get('username')?.setValue(res.username);
+    //   this.profile.get('fullName')?.setValue(res.fullName);
+    //   this.profile.get('roleName')?.setValue(res.roleName);
+    //   this.profile.get('roleCode')?.setValue(res.roleCode);
+    //   this.profile.get('isActive')?.setValue(res.isActive);
+    //   this.profile.get('phoneNumb')?.setValue(res.phoneNumb);
+    // });
+
+    this.getMasterData();
   }
 
   onActiveItemChange(event: MenuItem) {
     this.activeMenu = event;
   }
+
+  // =================== Convert Date ===================
+  convertStartYear(e: any) {
+    this.education.patchValue({
+      startYear: convertUTCToLocalDateTime(e),
+    });
+  }
+
+  convertEndYear(e: any) {
+    this.education.patchValue({
+      endYear: convertUTCToLocalDateTime(e),
+    });
+  }
+
+  convertStartDate(e: any) {
+    this.experience.patchValue({
+      startDate: convertUTCToLocalDateTime(e),
+    });
+  }
+
+  convertEndDate(e: any) {
+    this.experience.patchValue({
+      endDate: convertUTCToLocalDateTime(e),
+    });
+  }
+  // =================== Convert Date ===================
 
   fileUpload(event: any) {
     console.log(event);
@@ -308,25 +346,7 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-  // Modal for Custom Skills Form
-  showModalSkill() {
-    this.modalSkill = true;
-  }
-
-  onCreateSkill() {
-    const data = this.insertSkill.get('name')?.getRawValue();
-    this.skill.push(this.fb.control(data));
-    this.insertSkill.reset();
-    this.modalSkill = false;
-  }
-
-  onCloseSkill() {
-    this.modalSkill = false;
-  }
-  // Modal for Custom Skills Form
-
-  // Modal for Education Form
-
+  // =========================== Education ===========================
   showModalEducation() {
     this.modalEducation = true;
   }
@@ -342,24 +362,62 @@ export class UserProfileComponent implements OnInit {
     this.modalEducation = false;
   }
 
-  // Modal for Education Form
-
-  // Convert Date
-  convertStartYear(e: any) {
-    this.education.patchValue({
-      startYear: convertUTCToLocalDateTime(e),
-    });
+  // toggle delete education
+  showDeleteEducation() {
+    this.isDeleteEducation = true;
   }
 
-  convertEndYear(e: any) {
-    this.education.patchValue({
-      endYear: convertUTCToLocalDateTime(e),
-    });
+  hideDeleteEducation() {
+    this.isDeleteEducation = false;
   }
 
-  // Convert Date
+  showDeleteFuncEducation() {
+    this.modalDeleteEducation = true;
+  }
+  // =========================== Education ===========================
 
-  // For Education View
+  // =========================== Experience ===========================
+  showModalExperience() {
+    this.modalExperience = true;
+  }
 
-  // For Education View
+  onCreateExperience() {
+    const data = this.experience.getRawValue();
+    this.experiences.push(this.fb.group(data));
+    this.experiences.reset();
+    this.modalExperience = false;
+  }
+
+  onCloseExperience() {
+    this.modalExperience = false;
+  }
+
+  // toggle delete Experience
+  showDeleteExperience() {
+    this.isDeleteExperience = true;
+  }
+
+  hideDeleteExperience() {
+    this.isDeleteExperience = false;
+  }
+
+  showDeleteFuncExperience() {
+    this.modalDeleteExperience = true;
+  }
+
+  showModalSkill() {
+    this.modalSkill = true;
+  }
+
+  onCreateSkill() {
+    const data = this.insertSkill.get('name')?.getRawValue();
+    this.skill.push(this.fb.control(data));
+    this.insertSkill.reset();
+    this.modalSkill = false;
+  }
+
+  onCloseSkill() {
+    this.modalSkill = false;
+  }
+  // =========================== Experience ===========================
 }

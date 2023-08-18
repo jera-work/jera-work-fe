@@ -14,6 +14,7 @@ import { ButtonModule } from 'primeng/button';
       [label]="label"
       [style]="{ 'background-color': backgroundColor, border: border }"
       icon="{{ icon }}"
+      pRipple
     >
     </p-button>
   `,

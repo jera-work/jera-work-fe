@@ -27,6 +27,7 @@ import { BadgeModule } from 'primeng/badge';
 import { ChipModule } from 'primeng/chip';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { DataViewModule, DataViewLayoutOptions } from 'primeng/dataview';
+import { RippleModule } from 'primeng/ripple';
 
 @NgModule({
   imports: [
@@ -58,6 +59,7 @@ import { DataViewModule, DataViewLayoutOptions } from 'primeng/dataview';
     ChipModule,
     TabMenuModule,
     DataViewModule,
+    RippleModule,
   ],
   exports: [
     MenubarModule,
@@ -88,7 +90,7 @@ import { DataViewModule, DataViewLayoutOptions } from 'primeng/dataview';
     ChipModule,
     TabMenuModule,
     DataViewModule,
-    DataViewLayoutOptions,
+    RippleModule,
   ],
 })
 export class SharedModule {}

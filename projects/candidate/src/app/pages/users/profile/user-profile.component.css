@@ -12,3 +12,8 @@
   color: var(--PRIMARY);
   border-color: var(--PRIMARY);
 }
+
+::ng-deep .p-card .p-card-body {
+  min-width: 80vw;
+  margin-bottom: 2rem;
+}
