@@ -81,4 +81,11 @@ export class BaseService {
       .patch<T>(url, body, withToken ? this.headers : undefined)
       .pipe(response(this.message, this.router));
   }
+
+  // PUT API
+  put<T>(url: string, body: any, withToken: true): Observable<T> {
+    return this.http
+    .put<T>(url, body, withToken ? this.headers : undefined)
+    .pipe(response(this.message, this.router));
+  }
 }
