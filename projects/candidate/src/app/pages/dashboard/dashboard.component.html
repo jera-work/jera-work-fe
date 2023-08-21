@@ -3,7 +3,6 @@
 
   <!-- Filter Jobs -->
   <div class="flex justify-content-center align-items-center mb-4">
-    <p>belum responsif</p>
     <form class="shadow-2 hover:shadow-3 p-2 border-round-xl">
       <div class="flex sm:flex-row flex-column gap-4 mb-3">
         <input type="text" pInputText placeholder="Find your job type" />
@@ -13,75 +12,43 @@
       <div class="flex gap-3">
         <!-- Job Type -->
         <div class="flex align-items-center">
-          <p-radioButton
-            name="pizza"
-            value="Cheese"
-            [(ngModel)]="ingredient"
-            inputId="ingredient1"
-          ></p-radioButton>
+          <p-radioButton name="pizza" value="Cheese" [(ngModel)]="ingredient" inputId="ingredient1"></p-radioButton>
           <label for="ingredient1" class="ml-2">Full Time</label>
         </div>
 
         <div class="flex align-items-center">
-          <p-radioButton
-            name="pizza"
-            value="Mushroom"
-            [(ngModel)]="ingredient"
-            inputId="ingredient2"
-          ></p-radioButton>
+          <p-radioButton name="pizza" value="Mushroom" [(ngModel)]="ingredient" inputId="ingredient2"></p-radioButton>
           <label for="ingredient2" class="ml-2">Part Time</label>
         </div>
 
         <div class="flex align-items-center">
-          <p-radioButton
-            name="pizza"
-            value="Pepper"
-            [(ngModel)]="ingredient"
-            inputId="ingredient3"
-          ></p-radioButton>
+          <p-radioButton name="pizza" value="Pepper" [(ngModel)]="ingredient" inputId="ingredient3"></p-radioButton>
           <label for="ingredient3" class="ml-2">Internship</label>
         </div>
 
         <div>
-          <app-button
-            btnType="submit"
-            label="Find Jobs"
-            backgroundColor="var(--PRIMARY)"
-          ></app-button>
+          <app-button btnType="submit" label="Find Jobs" backgroundColor="var(--PRIMARY)"></app-button>
         </div>
       </div>
     </form>
   </div>
 
+  <h1>Latest Job</h1>
   <!-- Carousel Job List -->
   <div class="md:mx-8">
-    <p-carousel
-      [value]="jobs"
-      [numVisible]="4"
-      [numScroll]="4"
-      [circular]="true"
-      [responsiveOptions]="responsiveOptions"
-      autoPlayInterval="3000"
-    >
+    <p-carousel [value]="latestJobs" [numVisible]="4" [numScroll]="4" [circular]="true"
+      [responsiveOptions]="responsiveOptions" autoPlayInterval="3000">
       <ng-template let-job pTemplate="item" let-i="rowIndex">
-        <div
-          routerLink="/job/{{ job.id }}"
-          class="border-3 p-3 surface-border border-round m-2 flex flex-column gap-2 shadow-2 hover:shadow-5 cursor-pointer"
-        >
+        <div routerLink="/job/{{ job.id }}"
+          class="border-3 p-3 surface-border border-round m-2 flex flex-column gap-2 shadow-2 hover:shadow-5 cursor-pointer">
           <div class="mb-3">
             <div>
               <span class="font-bold text-xl">
-                {{ job.title }}
+                {{ job.vacancyTitle }}
               </span>
             </div>
             <div class="flex justify-content-center">
-              <img
-                src="https://primefaces.org/cdn/primeng/images/demo/product/{{
-                  job.image
-                }}"
-                [alt]="job.name"
-                class="md:w-full w-full sm:w-7"
-              />
+              <img src="{{ job.companyPhotoId | url }}" alt="companyLogo" class="md:w-full w-full sm:w-7" />
             </div>
           </div>
 
@@ -89,19 +56,18 @@
           <div class="border-bottom-1">
             <span>
               <i class="pi pi-building"> </i>
-              {{ job.company }}
+              {{ job.companyName }}
             </span>
           </div>
-
           <!-- Job Req -->
           <div class="border-bottom-1 flex justify-content-between">
             <span>
               <i class="pi pi-user"></i>
-              {{ job.degree }}
+              {{ job.degreeName }}
             </span>
             <span>
               <i class="pi pi-briefcase"></i>
-              {{ job.type }}
+              {{ job.jobTypeName }}
             </span>
           </div>
 
@@ -109,7 +75,7 @@
           <div>
             <span>
               <i class="pi pi-map-marker"></i>
-              {{ job.location }}
+              {{ job.cityName }}
             </span>
           </div>
         </div>
@@ -118,14 +84,13 @@
   </div>
 
   <h2>Job List</h2>
-  <!-- Job Vacancies -->
-  <div class="grid">
-    <!-- Job Vacancy Card -->
-    <div class="col-12 lg:col-6">
-      <job-card routerLink="/job/2"></job-card>
-    </div>
-    <div class="col-12 lg:col-6">
-      <job-card routerLink="/job/2"></job-card>
-    </div>
-  </div>
+  <p-dataView #dv [value]="allJobs" [first]="first" [rows]="rowCounts" [paginator]="true" 
+      [totalRecords]="length" (onPage)="onPageChange($event)" >
+    <ng-template let-job pTemplate="listItem" styleClass="grid">
+        <div class="col-12 lg:col-6 p-3">
+          <job-card routerLink="/job/{{ job.id }}" [company]="job.companyName" [companyImg]="job.companyPhotoId" 
+          [degree]="job.degreeName" [jobType]="job.jobTypeName" [location]="job.cityName" [title]="job.vacancyTitle"></job-card>
+        </div>
+    </ng-template>
+  </p-dataView>
 </div>
