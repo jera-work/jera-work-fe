@@ -26,16 +26,16 @@ export class UserChangePasswordComponent {
     if (this.userPasswordDto.valid) {
       this.loading = true;
       const data = this.userPasswordDto.getRawValue();
-      this.userService.updatePassword(data).subscribe({
-        next: (res) => {
-          this.loading = false;
-          localStorage.clear();
-          this.router.navigateByUrl('/login');
-        },
-        error: () => {
-          this.loading = false;
-        },
-      });
+      // this.userService.updatePassword(data).subscribe({
+      //   next: (res) => {
+      //     this.loading = false;
+      //     localStorage.clear();
+      //     this.router.navigateByUrl('/login');
+      //   },
+      //   error: () => {
+      //     this.loading = false;
+      //   },
+      // });
     } else {
       console.log('Invalid!');
     }

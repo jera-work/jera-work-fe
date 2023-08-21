@@ -339,10 +339,10 @@ export class UserProfileComponent implements OnInit {
     if (this.profile.valid) {
       this.loading = true;
       const data = this.profile.getRawValue();
-      this.userService.updateProfile(data).subscribe((res) => {
-        console.log(res);
-        this.router.navigateByUrl('/dashboard');
-      });
+      // this.userService.updateProfile(data).subscribe((res) => {
+      //   console.log(res);
+      //   this.router.navigateByUrl('/dashboard');
+      // });
     }
   }
 
