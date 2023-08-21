@@ -1,12 +1,12 @@
-export interface CandidateProfileUpdateReqDto {
+export interface ProfileResDto {
+  candidateEmail: string;
   profileAddress: string;
-  profileName: string;
   phoneNumber: string;
   expectedSalary: string;
-  photoContent: string;
-  photoExt: string;
   genderId: string;
   maritalId: string;
   nationalityId: string;
   religionId: string;
+  profileName: string;
+  photoId: string;
 }

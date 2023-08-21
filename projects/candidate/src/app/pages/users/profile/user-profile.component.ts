@@ -1,10 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewChecked,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { UsersService } from '@services/users.service';
 // import { UsersResDto } from '@dto/user/users.res.dto';
 import { AuthService } from '@services/auth.service';
 import { FormArray, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { GenderResDto } from '@dto/data-master/gender.res.dto';
+import { NationalityResDto } from '@dto/data-master/nationality.res.dto';
+import { MaritalStatusResDto } from '@dto/data-master/marital-status.res.dto';
+import { ReligionResDto } from '@dto/data-master/religion.res.dto';
+import { DegreeResDto } from '@dto/data-master/degree.res.dto';
+import { MajorsResDto } from '@dto/data-master/majors.res.dto';
+import { DocumentTypesResDto } from '@dto/data-master/document-types.res.dto';
+import { MasterDataService } from '@services/master-data.service';
+import { Subscription } from 'rxjs';
+import { ProfileService } from '@services/profile.service';
 
 const convertUTCToLocalDateTime = function (date: Date) {
   const newDate = new Date(
@@ -25,7 +41,9 @@ const convertUTCToLocalDateTime = function (date: Date) {
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css'],
 })
-export class UserProfileComponent implements OnInit {
+export class UserProfileComponent
+  implements OnInit, OnDestroy, AfterViewChecked
+{
   menus: MenuItem[] | undefined;
   activeMenu: MenuItem | undefined;
 
@@ -36,25 +54,40 @@ export class UserProfileComponent implements OnInit {
   // Master Data
 
   // Profile
-  genders?: any[];
-  nationalities?: any[];
-  maritals?: any[];
-  religions?: any[];
+  genders?: GenderResDto[];
+  nationalities?: NationalityResDto[];
+  maritals?: MaritalStatusResDto[];
+  religions?: ReligionResDto[];
 
   // Education
-  degree?: any[];
-  majors?: any[];
+  degree?: DegreeResDto[];
+  majors?: MajorsResDto[];
+
+  // Documents
+  documentTypes?: DocumentTypesResDto[];
 
   // Master Data
 
   // modal boolean
   modalSkill = false;
 
+  // Subscriptions
+  gendersSubscription?: Subscription;
+  nationalitiesSubscription?: Subscription;
+  maritalsSubscription?: Subscription;
+  religionsSubsription?: Subscription;
+  degreeSubscription?: Subscription;
+  majorsSubscription?: Subscription;
+  documentTypesSubscription?: Subscription;
+
   constructor(
     private userService: UsersService,
     private authService: AuthService,
     private fb: NonNullableFormBuilder,
-    private router: Router
+    private router: Router,
+    private master: MasterDataService,
+    private cd: ChangeDetectorRef,
+    private profileServ: ProfileService
   ) {}
 
   insertSkill = this.fb.group({
@@ -66,13 +99,17 @@ export class UserProfileComponent implements OnInit {
   // Profile Form Group
   profile = this.fb.group({
     id: [0],
-    username: ['', Validators.required],
-    fullName: ['', Validators.required],
-    phoneNumb: ['', Validators.required],
-    roleName: ['', Validators.required],
-    roleCode: ['', Validators.required],
-    fileName: [''],
-    fileExtens: [''],
+    candidateEmail: ['', Validators.required],
+    profileName: ['', Validators.required],
+    phoneNumber: ['', Validators.required],
+    profileAddress: ['', Validators.required],
+    genderId: ['', [Validators.required]],
+    nationalityId: ['', Validators.required],
+    maritalId: ['', Validators.required],
+    religionId: ['', Validators.required],
+    expectedSalary: ['', Validators.required],
+    photoContent: [''],
+    photoExt: [''],
     isActive: [false],
   });
 
@@ -86,12 +123,12 @@ export class UserProfileComponent implements OnInit {
     institutionName: ['', Validators.required],
     degreeId: ['', Validators.required],
     majorsId: ['', Validators.required],
-    GPA: [0, [Validators.required]],
+    gpa: [0, [Validators.required]],
     startYear: ['', Validators.required],
     endYear: ['', Validators.required],
     startYearTemp: ['', Validators.required],
     endYearTemp: ['', Validators.required],
-    address: ['', Validators.required],
+    institutionAddress: ['', Validators.required],
   });
 
   educationsReqDto = this.fb.group({
@@ -113,15 +150,14 @@ export class UserProfileComponent implements OnInit {
   modalDeleteExperience = false;
 
   experience = this.fb.group({
-    position: ['', Validators.required],
-    institutionName: ['', Validators.required],
-    location: ['', Validators.required],
-    jobDesc: ['', Validators.required],
+    formerPosition: ['', Validators.required],
+    formerInstitution: ['', Validators.required],
+    formerLocation: ['', Validators.required],
+    formerJobDesc: ['', Validators.required],
     startDate: ['', Validators.required],
     endDate: ['', Validators.required],
     startDateTemp: ['', Validators.required],
     endDateTemp: ['', Validators.required],
-    skill: this.fb.array([]),
   });
 
   experiencesReqDto = this.fb.group({
@@ -136,8 +172,12 @@ export class UserProfileComponent implements OnInit {
     this.experiences.removeAt(i);
   }
 
+  skills = this.fb.group({
+    skillArr: this.fb.array([]),
+  });
+
   get skill() {
-    return this.experience.get('skill') as FormArray;
+    return this.skills.get('skillArr') as FormArray;
   }
 
   removeSkill(i: number) {
@@ -146,119 +186,105 @@ export class UserProfileComponent implements OnInit {
 
   // ======================= Experience =======================
 
+  // ======================= Documents =======================
+  modalDocuments = false;
+  isDeleteDocuments = false;
+
+  documents = this.fb.group({
+    data: this.fb.array([]),
+  });
+
+  get documentsArr() {
+    return this.documents.get('data') as FormArray;
+  }
+
+  // ======================= Documents =======================
+
   // ================ GET MASTER DATA FROM DATABASE ================
   getMasterData() {
-    this.genders = [
-      {
-        id: 1,
-        name: 'Man',
-      },
-      {
-        id: 2,
-        name: 'Woman',
-      },
-    ];
+    this.gendersSubscription = this.master.getGenders().subscribe((res) => {
+      console.log(res);
+      this.genders = res;
+    });
 
-    this.nationalities = [
-      {
-        id: 1,
-        name: 'Indonesian',
-      },
-      {
-        id: 2,
-        name: 'Singapore',
-      },
-      {
-        id: 3,
-        name: 'Japan',
-      },
-      {
-        id: 4,
-        name: 'Australia',
-      },
-    ];
+    this.nationalitiesSubscription = this.master
+      .getNationalities()
+      .subscribe((res) => {
+        console.log(res);
 
-    this.maritals = [
-      {
-        id: 1,
-        name: 'Single',
-      },
-      {
-        id: 2,
-        name: 'Married',
-      },
-      {
-        id: 3,
-        name: 'Divorced',
-      },
-    ];
+        this.nationalities = res;
+      });
 
-    this.religions = [
-      {
-        id: 1,
-        name: 'Moslem',
-      },
-      {
-        id: 2,
-        name: 'Christ',
-      },
-      {
-        id: 3,
-        name: 'Buddha',
-      },
-    ];
+    this.maritalsSubscription = this.master
+      .getMaritalStatus()
+      .subscribe((res) => {
+        this.maritals = res;
+      });
 
-    this.degree = [
-      {
-        name: 'Doctorate Degree',
-      },
-      {
-        name: "Master's Degree",
-      },
-      {
-        name: "Bachelor's Degree",
-      },
-      {
-        name: 'Senior High School',
-      },
-      {
-        name: 'Junior High School',
-      },
-    ];
+    this.religionsSubsription = this.master
+      .getReligions()
+      .subscribe((res) => (this.religions = res));
 
-    this.majors = [
-      {
-        name: 'Agricultural Engineering',
-      },
-      {
-        name: 'Architectural Engineering',
-      },
-      {
-        name: 'Biochemical Engineering',
-      },
-    ];
+    this.degreeSubscription = this.master
+      .getDegree()
+      .subscribe((res) => (this.degree = res));
+
+    this.majorsSubscription = this.master
+      .getMajors()
+      .subscribe((res) => (this.majors = res));
+
+    this.documentTypesSubscription = this.master
+      .getDocumentTypes()
+      .subscribe((res) => {
+        console.log(res);
+        this.documentTypes = res;
+
+        for (let i = 0; i < res.length; i++) {
+          this.documentsArr.push(
+            this.fb.group({
+              documentTypeId: res[i].typeName,
+              fileContent: '',
+              fileExt: '',
+            })
+          );
+        }
+      });
   }
 
   // ================ GET MASTER DATA FROM DATABASE ================
 
   ngOnInit(): void {
-    // menu
-    this.menus = [
-      { label: 'Profile', icon: 'pi pi-fw pi-user-edit' },
-      { label: 'Education', icon: 'pi pi-fw pi-book' },
-      { label: 'Experience', icon: 'pi pi-fw pi-briefcase' },
-      { label: 'Documents', icon: 'pi pi-fw pi-file' },
-    ];
-
-    this.activeMenu = this.menus[0];
-
     const profile = this.authService.getProfile();
     if (profile?.photoId) {
-      this.imgUrl = `http://localhost:8080/files/${profile.photoId}`;
-    } else {
-      this.imgUrl = '/assets/default.png';
+      this.imgUrl = profile.photoId.toString();
     }
     this.userId = profile?.id;
+
+    this.profileServ.getProfile().subscribe((res) => {
+      console.log(res);
+      this.imgUrl = res.photoId;
+      this.profile.patchValue({
+        candidateEmail: res.candidateEmail,
+        profileName: res.profileName,
+        profileAddress: res.profileAddress,
+        phoneNumber: res.phoneNumber,
+        expectedSalary: res.expectedSalary,
+        genderId: res.genderId,
+        nationalityId: res.nationalityId,
+        maritalId: res.maritalId,
+        religionId: res.religionId,
+      });
+
+      // candidateEmail: ['', Validators.required],
+      // profileName: ['', Validators.required],
+      // phoneNumber: ['', Validators.required],
+      // profileAddress: ['', Validators.required],
+      // genderId: ['', [Validators.required]],
+      // nationalityId: ['', Validators.required],
+      // maritalId: ['', Validators.required],
+      // religionId: ['', Validators.required],
+      // expectedSalary: ['', Validators.required],
+    });
 
     // this.userService.getById(this.userId).subscribe((res) => {
     //   console.log(res);
@@ -306,8 +332,6 @@ export class UserProfileComponent implements OnInit {
   // =================== Convert Date ===================
 
   fileUpload(event: any) {
-    console.log(event);
-
     const toBase64 = (file: File) =>
       new Promise<string>((resolve, reject) => {
         const reader = new FileReader();
@@ -325,12 +349,12 @@ export class UserProfileComponent implements OnInit {
           result.length
         );
         const resultExtension = file.name.substring(
-          file.name.indexOf('.') + 1,
+          file.name.indexOf('.'),
           file.name.length
         );
 
-        this.profile.get('fileName')?.setValue(resultBase64);
-        this.profile.get('fileExtens')?.setValue(resultExtension);
+        this.profile.get('photoContent')?.setValue(resultBase64);
+        this.profile.get('photoExt')?.setValue(resultExtension);
       });
     }
   }
@@ -339,6 +363,11 @@ export class UserProfileComponent implements OnInit {
     if (this.profile.valid) {
       this.loading = true;
       const data = this.profile.getRawValue();
+      console.log(data);
+
+      this.profileServ.updateProfile(data).subscribe((res) => {
+        console.log(res);
+      });
       // this.userService.updateProfile(data).subscribe((res) => {
       //   console.log(res);
       //   this.router.navigateByUrl('/dashboard');
@@ -420,4 +449,59 @@ export class UserProfileComponent implements OnInit {
     this.modalSkill = false;
   }
   // =========================== Experience ===========================
+
+  // =========================== Documents ===========================
+  showModalDocuments() {
+    this.modalDocuments = true;
+  }
+
+  documentsUpload(event: any, id: string, index: number) {
+    const toBase64 = (file: File) =>
+      new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          if (typeof reader.result === 'string') resolve(reader.result);
+        };
+        reader.onerror = (error) => reject(error);
+      });
+
+    for (let file of event.files) {
+      toBase64(file).then((result) => {
+        const resultBase64 = result.substring(
+          result.indexOf(',') + 1,
+          result.length
+        );
+        const resultExtension = file.name.substring(
+          file.name.indexOf('.') + 1,
+          file.name.length
+        );
+
+        this.documentsArr.at(index).setValue({
+          documentTypeId: id,
+          fileExt: resultExtension,
+          fileContent: resultBase64,
+        });
+      });
+    }
+  }
+
+  onInsertDocuments() {}
+
+  // =========================== Documents ===========================
+
+  // CHANGE DETECTOR
+  ngAfterViewChecked(): void {
+    this.cd.detectChanges();
+  }
+
+  // DESTROY
+  ngOnDestroy(): void {
+    this.gendersSubscription?.unsubscribe();
+    this.nationalitiesSubscription?.unsubscribe();
+    this.maritalsSubscription?.unsubscribe();
+    this.religionsSubsription?.unsubscribe();
+    this.degreeSubscription?.unsubscribe();
+    this.majorsSubscription?.unsubscribe();
+  }
 }

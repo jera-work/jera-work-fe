@@ -19,7 +19,6 @@ function response<T>(message: MessageService, router: Router) {
       }
     },
     error: (err) => {
-      console.log(err.status);
       console.log(err.status === 401 && err.error.message === 'Token Expired');
 
       if (err instanceof HttpErrorResponse) {
@@ -83,9 +82,9 @@ export class BaseService {
   }
 
   // PUT API
-  put<T>(url: string, body: any, withToken: true): Observable<T> {
+  put<T>(url: string, body: any, withToken = true): Observable<T> {
     return this.http
-    .put<T>(url, body, withToken ? this.headers : undefined)
-    .pipe(response(this.message, this.router));
+      .put<T>(url, body, withToken ? this.headers : undefined)
+      .pipe(response(this.message, this.router));
   }
 }

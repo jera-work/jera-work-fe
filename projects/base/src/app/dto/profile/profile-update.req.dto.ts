@@ -1,6 +1,6 @@
-export interface CandidateProfileUpdateReqDto {
+export interface ProfileUpdateReqDto {
+  candidateEmail: string;
   profileAddress: string;
-  profileName: string;
   phoneNumber: string;
   expectedSalary: string;
   photoContent: string;
@@ -9,4 +9,5 @@ export interface CandidateProfileUpdateReqDto {
   maritalId: string;
   nationalityId: string;
   religionId: string;
+  profileName: string;
 }

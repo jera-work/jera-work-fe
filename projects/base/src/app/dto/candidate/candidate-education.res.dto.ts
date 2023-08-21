@@ -1,7 +1,8 @@
-export interface CandidateEducationInsertReqDto {
+export interface CandidateEducationResDto {
+  id: string;
   institutionName: string;
-  degreeId: string;
-  majorId: string;
+  degree: string;
+  major: string;
   institutionAddress: string;
   startYear: string;
   endYear: string;
