@@ -8,6 +8,11 @@ import {
 } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CompanyResDto } from '@dto/company/company.res.dto';
+import { RoleResDto } from '@dto/role/role.res.dto';
+import { CompanyService } from '@services/company.service';
+import { RoleService } from '@services/role.service';
+import { UsersService } from '@services/users.service';
 // import { RoleResDto } from '../../../dto/role/role.res.dto';
 // import { RoleService } from '../../../services/role.service';
 // import { UsersService } from '../../../services/users.service';
@@ -17,46 +22,52 @@ import { Router } from '@angular/router';
   templateUrl: './user-create.component.html',
 })
 export class UserCreateComponent implements OnInit, AfterViewChecked {
-  // userInsertReqDto = this.fb.group({
-  //   username: ['', Validators.required],
-  //   roleId: [0, Validators.required],
-  //   fullName: ['', Validators.required],
-  //   phoneNumb: ['', Validators.required],
-  // });
+  userInsertReqDto = this.fb.group({
+    userEmail: ['', Validators.required],
+    profileName: ['', Validators.required],
+    roleId: ['', Validators.required],
+    companyId: ['', Validators.required]
+  });
 
-  // sending = false;
+  sending = false;
 
-  // constructor(
-  //   private roleService: RoleService,
-  //   private fb: NonNullableFormBuilder,
-  //   private userService: UsersService,
-  //   private router: Router,
-  //   private cd: ChangeDetectorRef
-  // ) {}
+  roles! : RoleResDto[]
+  companies! : CompanyResDto[]
 
-  // roles: RoleResDto[] = [];
-
-  // selectedCity: RoleResDto | undefined;
+  constructor(
+    private roleService: RoleService,
+    private companyService : CompanyService,
+    private fb: NonNullableFormBuilder,
+    private userService: UsersService,
+    private router: Router,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
-    
+    this.roleService.getAllRole().subscribe(result => {
+      this.roles = result
+    })
+
+    this.companyService.getAllCompany().subscribe(result => {
+      this.companies = result
+    })
   }
 
   ngAfterViewChecked(): void {
     
   }
 
-  // onCreate() {
-  //   if (this.userInsertReqDto.valid) {
-  //     const data = this.userInsertReqDto.getRawValue();
-  //     this.sending = true;
-  //     this.userService.insert(data).subscribe((res) => {
-  //       console.log('SUCCESSSSS');
-  //       this.router.navigateByUrl('/users');
-  //     });
-  //   } else {
-  //     console.log('ISI DULU');
-  //     this.sending = false;
-  //   }
-  // }
+  onCreate() {
+    if (this.userInsertReqDto.valid) {
+      const data = this.userInsertReqDto.getRawValue();
+      this.sending = true;
+      this.userService.createUser(data).subscribe((res) => {
+        console.log('SUCCESSSSS');
+        this.router.navigateByUrl('/users');
+      });
+    } else {
+      console.log('ISI DULU');
+      this.sending = false;
+    }
+  }
 }
