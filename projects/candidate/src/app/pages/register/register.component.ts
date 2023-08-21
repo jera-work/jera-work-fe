@@ -9,7 +9,7 @@ import {
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { RoleResDto } from '@dto/role/role.res.dto';
+import { RoleResDto } from '@dto/data-master/role.res.dto';
 import { CandidateService } from '@services/candidate.service';
 import { RoleService } from '@services/role.service';
 import { UsersService } from '@services/users.service';

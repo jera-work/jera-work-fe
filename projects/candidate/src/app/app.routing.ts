@@ -27,7 +27,7 @@ const routes: Routes = [
     component: BaseComponent,
     loadChildren: () =>
       import('./pages/users/user.module').then((u) => u.UserModule),
-    // canMatch: [authNonLoginValidation],
+    canMatch: [authNonLoginValidation],
   },
   {
     path: 'job',
@@ -36,7 +36,7 @@ const routes: Routes = [
       import('./pages/job-details/job-details.module').then(
         (u) => u.JobDetailsModule
       ),
-    // canMatch: [authNonLoginValidation],
+    canMatch: [authNonLoginValidation],
   },
   {
     path: 'saved-job',
@@ -45,7 +45,7 @@ const routes: Routes = [
       import('./pages/saved-job/saved-job.module').then(
         (u) => u.SavedJobModule
       ),
-    // canMatch: [authNonLoginValidation],
+    canMatch: [authNonLoginValidation],
   },
   {
     path: 'applied-job',
@@ -54,18 +54,18 @@ const routes: Routes = [
       import('./pages/applied-job/applied-job.module').then(
         (u) => u.AppliedJobModule
       ),
-    // canMatch: [authNonLoginValidation],
+    canMatch: [authNonLoginValidation],
   },
 
   {
     path: 'login',
     component: LoginComponent,
-    // canMatch: [authValidation],
+    canMatch: [authValidation],
   },
   {
     path: 'register',
     component: RegisterComponent,
-    // canMatch: [authValidation],
+    canMatch: [authValidation],
   },
   {
     path: 'dashboard',
@@ -76,7 +76,7 @@ const routes: Routes = [
         component: DashboardComponent,
       },
     ],
-    // canMatch: [authNonLoginValidation],
+    canMatch: [authNonLoginValidation],
   },
   {
     path: '',

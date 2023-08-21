@@ -9,26 +9,23 @@
   {{ experiencesReqDto.value | json }}
 </pre>
 
+<pre>
+  {{ documentsArr.value | json }}
+</pre>
+
 <div
   class="flex align-items-center justify-content-center flex-column container mt-4"
 >
   <h2>Update Profile</h2>
 
-  <!-- <p-tabMenu
-    [scrollable]="true"
-    [model]="menus"
-    [activeItem]="activeMenu"
-    (activeItemChange)="onActiveItemChange($event)"
-  ></p-tabMenu> -->
-
   <!-- Form for Update Profile -->
-  <ng-container *ngIf="activeMenu?.label === 'Profile'">
+  <ng-container>
     <form [formGroup]="profile" (ngSubmit)="onUpdate()" class="w-10">
       <!-- email -->
       <div class="my-3 grid align-items-center gy-md-4 container gy-3">
         <!-- Photo Profile -->
         <div class="col-12 col-md-3 align-items-start d-flex flex-column">
-          <img [src]="imgUrl" alt="profile" class="w-1" />
+          <img [src]="imgUrl | urlCandidate" alt="profile" class="w-1" />
         </div>
         <div class="col-12 col-md-9">
           <p-fileUpload
@@ -47,7 +44,7 @@
           <!-- disabled -->
           <input
             type="email"
-            [value]="profile.get('username')?.value"
+            [value]="profile.get('candidateEmail')?.value"
             pInputText
             class="form-control col-12"
             id="email-address"
@@ -67,7 +64,7 @@
             class="form-control col-12"
             id="fullname"
             pInputText
-            placeholder="fullname"
+            formControlName="profileName"
           />
         </div>
 
@@ -84,7 +81,9 @@
             cols="20"
             pInputTextarea
             class="form-control col-12"
+            [value]="profile.get('profileAddress')?.value"
             placeholder="jl. xxx"
+            formControlName="profileAddress"
           ></textarea>
         </div>
 
@@ -98,9 +97,11 @@
           <input
             type="text"
             pInputText
+            [value]="profile.get('phoneNumber')?.value"
             class="form-control col-12"
             id="phoneNumb"
             placeholder="08xxxxx"
+            formControlName="phoneNumber"
           />
         </div>
 
@@ -114,6 +115,7 @@
           <input
             type="text"
             pInputText
+            formControlName="expectedSalary"
             class="form-control col-12"
             id="salary"
             placeholder="Rp. 4.000.000"
@@ -132,8 +134,10 @@
               <div class="col-12 col-md-9">
                 <p-dropdown
                   [options]="genders"
-                  id="gender"
-                  optionLabel="name"
+                  id="genderId"
+                  optionValue="genderId"
+                  optionLabel="genderName"
+                  formControlName="genderId"
                 ></p-dropdown>
               </div>
             </div>
@@ -148,8 +152,10 @@
               <div class="col-12 col-md-9">
                 <p-dropdown
                   [options]="nationalities"
-                  id="nationality"
-                  optionLabel="name"
+                  id="nationalityName"
+                  optionLabel="nationalityName"
+                  optionValue="id"
+                  formControlName="nationalityId"
                 ></p-dropdown>
               </div>
             </div>
@@ -166,8 +172,10 @@
               <div class="col-12 col-md-9">
                 <p-dropdown
                   [options]="maritals"
-                  id="martial"
-                  optionLabel="name"
+                  id="maritalName"
+                  optionValue="id"
+                  optionLabel="maritalName"
+                  formControlName="maritalId"
                 ></p-dropdown>
               </div>
             </div>
@@ -182,8 +190,10 @@
               <div class="col-12 col-md-9">
                 <p-dropdown
                   [options]="religions"
-                  id="religion"
-                  optionLabel="name"
+                  id="religionName"
+                  optionLabel="religionName"
+                  optionValue="id"
+                  formControlName="religionId"
                 ></p-dropdown>
               </div>
             </div>
@@ -219,6 +229,11 @@
           (click)="showModalEducation()"
         ></app-button>
       </div>
+
+      <div class="mt-3 h-4rem flex justify-content-center align-items-center">
+        <h3>No Education added yet</h3>
+      </div>
+
       <div class="mt-3" *ngIf="educations.controls.length">
         <div class="flex flex-row-reverse mb-3">
           <app-button
@@ -362,6 +377,10 @@
           </div>
         </p-card>
       </div>
+
+      <div class="mt-3 h-4rem flex justify-content-center align-items-center">
+        <h3>No Experience added yet</h3>
+      </div>
     </div>
 
     <!-- Skills -->
@@ -371,21 +390,12 @@
         <app-button
           label="Add"
           classBtn="p-button-success p-button-text"
-          (clickChange)="showModalExperience()"
+          (clickChange)="showModalSkill()"
         ></app-button>
       </div>
 
       <!-- Skills -->
-      <div class="col-12 col-md-3">
-        <label for="custom-skill" class="form-label"
-          >Skills <span class="text-red-600">*</span></label
-        >
-      </div>
-      <div
-        class="col-12 grid"
-        *ngFor="let s of skill.controls; let i = index"
-        formArrayName="skill"
-      >
+      <div class="col-12 grid" *ngFor="let s of skill.controls; let i = index">
         <div class="col-3">
           <p-badge [value]="s.value" size="xlarge" severity="success"></p-badge>
         </div>
@@ -398,13 +408,25 @@
           ></app-button>
         </div>
       </div>
-      <div class="col-12 col-md-9">
+
+      <div class="mt-3 h-4rem flex justify-content-center align-items-center">
+        <h3>No Skill added yet</h3>
+      </div>
+    </div>
+
+    <!-- Documents -->
+    <div class="w-10">
+      <div class="border border-bottom-2 flex justify-content-between">
+        <h2>Documents</h2>
         <app-button
-          btnType="button"
-          classBtn="p-button-success"
           label="Add"
-          (click)="showModalSkill()"
+          classBtn="p-button-success p-button-text"
+          (clickChange)="showModalDocuments()"
         ></app-button>
+      </div>
+
+      <div class="mt-3 h-4rem flex justify-content-center align-items-center">
+        <h3>No Documents added yet</h3>
       </div>
     </div>
   </ng-container>
@@ -420,9 +442,9 @@
   [resizable]="false"
 >
   <div class="modal-dialog modal-dialog-centered">
-    <!-- <pre>
+    <pre>
       {{ education.value | json }}
-    </pre> -->
+    </pre>
     <form [formGroup]="education">
       <!-- Input New Education -->
 
@@ -487,7 +509,7 @@
           rows="5"
           cols="30"
           pInputTextarea
-          formControlName="address"
+          formControlName="institutionAddress"
         ></textarea>
       </div>
 
@@ -534,7 +556,7 @@
       <div class="col-12 col-md-9">
         <input
           type="number"
-          formControlName="GPA"
+          formControlName="gpa"
           pInputText
           class="form-control col-12"
           id="gpa"
@@ -546,7 +568,7 @@
       <app-button
         type="submit"
         data-bs-dismiss="modal"
-        label="Submit"
+        label="Add"
         classBtn="p-button-success"
         (click)="onCreateEducation()"
       >
@@ -589,7 +611,7 @@
       <div class="col-12 col-md-9">
         <input
           type="text"
-          formControlName="institutionName"
+          formControlName="formerInstitution"
           pInputText
           class="form-control col-12"
           id="institution-name"
@@ -605,7 +627,7 @@
       <div class="col-12 col-md-9">
         <input
           type="text"
-          formControlName="position"
+          formControlName="formerPosition"
           pInputText
           class="form-control col-12"
           id="position"
@@ -659,7 +681,7 @@
           rows="5"
           cols="30"
           pInputTextarea
-          formControlName="location"
+          formControlName="formerLocation"
         ></textarea>
       </div>
 
@@ -669,7 +691,7 @@
         >
       </div>
       <div class="col-12">
-        <p-editor formControlName="jobDesc" [style]="{ height: '320px' }">
+        <p-editor formControlName="formerJobDesc" [style]="{ height: '320px' }">
           <ng-template pTemplate="header">
             <span class="ql-formats">
               <!-- Add font size dropdown -->
@@ -764,16 +786,79 @@
       <app-button
         type="submit"
         data-bs-dismiss="modal"
-        label="Submit"
+        label="Add"
+        classBtn="p-button-success"
         (click)="onCreateSkill()"
       >
       </app-button>
       <app-button
         type="button"
-        classBtn="p-button-secondary ml-4"
+        classBtn="p-button-outlined p-button-secondary ml-4"
+        border=""
         data-bs-dismiss="modal"
         label="Cancel"
         (click)="onCloseSkill()"
+      >
+      </app-button>
+    </div>
+  </div>
+</p-dialog>
+
+<!-- Modal for Add Documents -->
+<p-dialog
+  header="Add Documents"
+  [(visible)]="modalDocuments"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <pre>
+      {{ documents.value | json }}
+    </pre>
+    <form [formGroup]="documents">
+      <div
+        class="my-3 grid col-12 justify-content-center align-items-center md:gy-4 gy-3 container"
+      >
+        <div
+          *ngFor="let f of documentsArr.controls; let i = index"
+          formArrayName="data"
+          class="grid col-12"
+        >
+          <div class="col-12 md:col-6">
+            <label for="cv" class="form-label"
+              >Input {{ f.value.documentTypeId }}
+              <span class="text-red-600">*</span></label
+            >
+          </div>
+          <div class="col-12 md:col-6">
+            <p-fileUpload
+              mode="basic"
+              chooseLabel="Choose File"
+              #file
+              (onSelect)="documentsUpload($event, f.value.documentTypeId, i)"
+            ></p-fileUpload>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="mt-4">
+      <app-button
+        type="submit"
+        data-bs-dismiss="modal"
+        label="Add"
+        classBtn="p-button-success"
+        (click)="onInsertDocuments()"
+      >
+      </app-button>
+      <app-button
+        type="button"
+        classBtn="p-button-outlined p-button-secondary ml-4"
+        border=""
+        data-bs-dismiss="modal"
+        label="Cancel"
+        (click)="modalDocuments = false"
       >
       </app-button>
     </div>
