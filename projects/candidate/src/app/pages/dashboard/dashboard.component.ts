@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { JobSearchResDto } from '@dto/job-vacancy/job-search.res.dto';
+import { JobVacancyService } from '@services/job-vacancy.service';
 // import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -10,60 +12,53 @@ export class DashboardComponent {
   fullName: string = '';
 
   ingredient!: string;
+  latestJobs: JobSearchResDto[] = []
+  allJobs: JobSearchResDto[] = []
+  jobs: JobSearchResDto[] = []
 
-  constructor(private title: Title) {}
+  first: number = 0
+  rowCounts: number = 10
+  length?: number
+
+  constructor(private title: Title, private jobVacancyService: JobVacancyService) {}
 
   ngOnInit(): void {
     this.title.setTitle('Jera - Work');
+    this.getLatestJob()
+    this.getPagination()
+    this.getAll()
+  }
+  
+  getAll() {
+    this.jobVacancyService.getAllJobs().subscribe(result => {
+      this.jobs = result
+      this.length = result.length
+    })
+    
   }
 
-  jobs = [
-    {
-      id: 1,
-      title: 'Accounting Staff',
-      company: 'Bearology Cafe',
-      degree: 'S1',
-      type: 'Full Time',
-      image: 'bamboo-watch.jpg',
-      location: 'Jakarta Pusat',
-    },
-    {
-      id: 2,
-      title: 'Staff Admin',
-      company: 'Berkat Mandiri',
-      degree: 'S1',
-      type: 'Full Time',
-      image: 'bamboo-watch.jpg',
-      location: 'Jakarta Utara',
-    },
-    {
-      id: 3,
-      title: 'Barista',
-      company: 'Bearology Cafe',
-      degree: 'SMA/SMK',
-      type: 'Part Time',
-      image: 'bamboo-watch.jpg',
-      location: 'Jakarta Pusat',
-    },
-    {
-      id: 4,
-      title: 'Marketing',
-      company: 'PT. Naga Mulia',
-      degree: 'SMA/SMK',
-      type: 'Full Time',
-      image: 'bamboo-watch.jpg',
-      location: 'Jakarta Barat',
-    },
-    {
-      id: 5,
-      title: 'Host Live',
-      company: 'PT. Naga Mulia',
-      degree: 'SMA/SMK',
-      type: 'Full Time',
-      image: 'bamboo-watch.jpg',
-      location: 'Jakarta Barat',
-    },
-  ];
+  getPagination() {
+    this.jobVacancyService.getAllJobsWithPagination(this.first, this.rowCounts).subscribe(result => {
+      this.allJobs = result
+    })
+  }
+
+  getLatestJob() {
+    this.jobVacancyService.getLatestJob(0, this.rowCounts).subscribe(result => {
+      this.latestJobs = result
+    })
+  }
+
+  onPageChange(event: any){
+    let pageIndex = event.first/event.rows + 1
+    this.length = this.jobs.length
+    
+    event.first = this.rowCounts
+    event.rows += 10
+    this.jobVacancyService.getAllJobsWithPagination(event.first, event.rows).subscribe(result => {
+      this.allJobs = result
+    })
+  }
 
   responsiveOptions = [
     {

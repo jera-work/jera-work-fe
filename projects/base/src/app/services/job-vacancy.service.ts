@@ -25,5 +25,14 @@ export class JobVacancyService {
             &cityId=${cityId}
             &jobTypeId=${jobTypeId}`, true)
     }
-
+    
+    getAllJobs(): Observable<JobSearchResDto[]>{
+        return this.base.get<JobSearchResDto[]>(`${ADMIN_API}/jobs`)
+    }
+    getAllJobsWithPagination(startIndex: number, endIndex: number): Observable<JobSearchResDto[]>{
+        return this.base.get<JobSearchResDto[]>(`${ADMIN_API}/jobs/page/?startIndex=${startIndex}&endIndex=${endIndex}`)
+    }
+    getLatestJob(startIndex: number, endIndex: number): Observable<JobSearchResDto[]>{
+        return this.base.get<JobSearchResDto[]>(`${ADMIN_API}/jobs/latest/?startIndex=${startIndex}&endIndex=${endIndex}`)
+    }
 }

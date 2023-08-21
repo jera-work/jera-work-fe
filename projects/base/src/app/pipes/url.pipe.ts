@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { BASE_URL } from '../constant/api.constant';
+import { ADMIN_API } from '../constant/api.constant';
 
 @Pipe({
   name: 'url',
@@ -7,6 +7,6 @@ import { BASE_URL } from '../constant/api.constant';
 })
 export class UrlPipe implements PipeTransform {
   transform(value: any): string {
-    return `${BASE_URL}/files/${value}`;
+    return `${ADMIN_API}/files/${value}`;
   }
 }
