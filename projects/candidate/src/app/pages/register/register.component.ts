@@ -10,6 +10,7 @@ import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RoleResDto } from '@dto/role/role.res.dto';
+import { CandidateService } from '@services/candidate.service';
 import { RoleService } from '@services/role.service';
 import { UsersService } from '@services/users.service';
 
@@ -28,6 +29,7 @@ export class RegisterComponent implements OnInit {
     private fb: NonNullableFormBuilder,
     private title: Title,
     private userService: UsersService,
+    private candidateService: CandidateService,
     private router: Router
   ) {}
 
@@ -41,7 +43,7 @@ export class RegisterComponent implements OnInit {
     if (this.createCandidateReq.valid) {
       const data = this.createCandidateReq.getRawValue();
       this.sending = true;
-      this.userService.create(data).subscribe({
+      this.candidateService.register(data).subscribe({
         next: (res) => {
           console.log(res);
           this.router.navigateByUrl('/login');
