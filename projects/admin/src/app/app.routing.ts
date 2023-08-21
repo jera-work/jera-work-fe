@@ -28,6 +28,11 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
+    path: 'companies',
+    component: BaseComponent,
+    loadChildren: () => import('./pages/company/company.module').then((c) => c.CompanyModule)
+  },
+  {
     path: 'dashboard',
     component: BaseComponent,
     children: [

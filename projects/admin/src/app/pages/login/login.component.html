@@ -1,10 +1,13 @@
+<pre>
+  {{loginReqDto.value | json}}
+</pre>
 <div class="flex h-screen align-items-center justify-content-center flex-column container">
   <h2 style="letter-spacing: 3px">
     Welcome to <span class="PRIMARY_COLOR"> JERA-WORK </span>
   </h2>
   <div class="flex flex-column md:flex-row mx-5 justify-content-center align-items-center column-gap-8">
     <img src="/assets/login-img.svg" class="md:w-4 w-6" alt="img" />
-    <form>
+    <form [formGroup]="loginReqDto" (ngSubmit)="onLogin()">
       <!-- email -->
       <div class="my-3 grid align-items-center gy-md-2">
         <div class="col-10">
@@ -12,7 +15,7 @@
         </div>
         <div class="col-12">
           <input pInputText type="email" class="form-control col-12" id="email-address"
-            placeholder="name@example.com" />
+            placeholder="name@example.com" formControlName="userEmail"/>
         </div>
 
         <!-- password -->
@@ -20,7 +23,7 @@
           <label for="password" class="form-label PRIMARY_COLOR font-semibold">Password</label>
         </div>
         <div class="col-12">
-          <input pInputText type="password" class="form-control col-12" id="password" placeholder="password" />
+          <input pInputText type="password" class="form-control col-12" id="password" placeholder="password" formControlName="userPass"/>
         </div>
         <div class="col-12">
           <app-button type="submit" classBtn="PRIMARY_COLOR" label="Login" backgroundColor="var(--PRIMARY)">
