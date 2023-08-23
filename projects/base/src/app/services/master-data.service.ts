@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
 import { Observable } from 'rxjs';
 import { GenderResDto } from '@dto/data-master/gender.res.dto';
-import { ADMIN_API } from '@constant/api.constant';
+import { ADMIN_API, CANDIDATE_API } from '@constant/api.constant';
 import { NationalityResDto } from '@dto/data-master/nationality.res.dto';
 import { MaritalStatusResDto } from '@dto/data-master/marital-status.res.dto';
 import { BASE_URL } from 'projects/admin/src/app/constant/api.constant';
@@ -47,6 +47,6 @@ export class MasterDataService {
   }
 
   getSkills(): Observable<SkillResDto[]> {
-    return this.base.get(`${ADMIN_API}/skills`);
+    return this.base.get(`${ADMIN_API}/master-skills`);
   }
 }

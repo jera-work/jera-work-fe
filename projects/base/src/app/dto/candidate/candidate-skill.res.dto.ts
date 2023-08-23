@@ -1,4 +1,4 @@
 export interface CandidateSkillResDto {
-  id: string;
+  skillId: string;
   skillName: string;
 }

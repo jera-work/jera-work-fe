@@ -19,7 +19,7 @@ function response<T>(message: MessageService, router: Router) {
       }
     },
     error: (err) => {
-      console.log(err.status === 401 && err.error.message === 'Token Expired');
+      console.log(err.status === 401 && err.error.message === 'Token expired!');
 
       if (err instanceof HttpErrorResponse) {
         message.add({
@@ -28,7 +28,7 @@ function response<T>(message: MessageService, router: Router) {
           detail: err.error.message,
         });
       }
-      if (err.status === 401 && err.error.message === 'Token Expired') {
+      if (err.status === 401 && err.error.message === 'Token expired!') {
         localStorage.clear();
         router.navigateByUrl('/login');
       }
