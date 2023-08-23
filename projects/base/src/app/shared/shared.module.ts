@@ -30,6 +30,8 @@ import { DataViewModule, DataViewLayoutOptions } from 'primeng/dataview';
 import { RippleModule } from 'primeng/ripple';
 import { PaginatorModule } from 'primeng/paginator';
 import { DividerModule } from 'primeng/divider';
+import { AvatarModule } from 'primeng/avatar';
+import { AvatarGroupModule } from 'primeng/avatargroup';
 
 @NgModule({
   imports: [
@@ -63,7 +65,9 @@ import { DividerModule } from 'primeng/divider';
     DataViewModule,
     RippleModule,
     PaginatorModule,
-    DividerModule
+    DividerModule,
+    AvatarModule,
+    AvatarGroupModule,
   ],
   exports: [
     MenubarModule,
@@ -96,7 +100,9 @@ import { DividerModule } from 'primeng/divider';
     DataViewModule,
     RippleModule,
     PaginatorModule,
-    DividerModule
+    DividerModule,
+    AvatarModule,
+    AvatarGroupModule,
   ],
 })
 export class SharedModule {}

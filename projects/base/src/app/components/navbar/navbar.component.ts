@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { Roles } from '@constant/role.constant';
 import { AuthService } from '@services/auth.service';
+import { ADMIN_API, CANDIDATE_API } from '@constant/api.constant';
 
 @Component({
   selector: 'app-navbar',
@@ -22,12 +23,22 @@ export class NavbarComponent implements OnInit {
     const profile = this.authService.getProfile();
 
     if (profile) {
-      if (profile?.photoId) {
-        this.imgUrl = `http://localhost:8080/files/${profile.photoId}`;
+      if (profile.roleCode) {
+        if (profile?.photoId) {
+          this.imgUrl = `${ADMIN_API}/files/${profile.photoId}`;
+        } else {
+          this.imgUrl = '/assets/default.png';
+        }
+        this.roleCode = profile?.roleCode;
       } else {
-        this.imgUrl = '/assets/default.png';
+        console.log(profile);
+
+        if (profile?.photoId) {
+          this.imgUrl = `${CANDIDATE_API}/files/${profile.photoId}`;
+        } else {
+          this.imgUrl = '/assets/default.png';
+        }
       }
-      this.roleCode = profile?.roleCode;
       this.isLogin = true;
     } else {
       this.isLogin = false;

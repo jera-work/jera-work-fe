@@ -3,7 +3,7 @@ export interface CandidateExperienceResDto {
   formerPosition: string;
   formerInstitution: string;
   formerLocation: string;
-  formerJobdesk: string;
+  formerJobdesc: string;
   startDate: string;
   endDate: string;
 }
