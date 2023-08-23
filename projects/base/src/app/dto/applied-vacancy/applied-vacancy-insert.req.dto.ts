@@ -3,6 +3,4 @@ export interface AppliedVacancyInsertReqDto {
     candidateEmail: string
     jobVacancyId: string
     jobVacancyCode: string
-    appliedStatusId: string
-    appliedProgressId: string
 }

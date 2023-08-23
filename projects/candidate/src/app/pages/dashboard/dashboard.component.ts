@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { NonNullableFormBuilder } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { CityResDto } from '@dto/city/city.res.dto';
+import { DegreeResDto } from '@dto/data-master/degree.res.dto';
+import { JobTypeResDto } from '@dto/job-type/job-type.res.dto';
 import { JobSearchResDto } from '@dto/job-vacancy/job-search.res.dto';
 import { JobVacancyService } from '@services/job-vacancy.service';
+import { MasterDataService } from '@services/master-data.service';
 // import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -11,53 +17,86 @@ import { JobVacancyService } from '@services/job-vacancy.service';
 export class DashboardComponent {
   fullName: string = '';
 
-  ingredient!: string;
   latestJobs: JobSearchResDto[] = []
   allJobs: JobSearchResDto[] = []
   jobs: JobSearchResDto[] = []
+  jobTypes: JobTypeResDto[] = []
+  cities: CityResDto[] = []
+  degrees: DegreeResDto[] = []
 
   first: number = 0
   rowCounts: number = 10
-  length?: number
+  length!: number
 
-  constructor(private title: Title, private jobVacancyService: JobVacancyService) {}
+  constructor(private title: Title, 
+    private jobVacancyService: JobVacancyService,
+    private masterService: MasterDataService,
+    private router: Router,
+    private fb: NonNullableFormBuilder) {}
+
+  searchReq = this.fb.group({
+    vacancyTitle: '',
+    degreeId: '',
+    cityId: '',
+    jobTypeId: ''
+  })
 
   ngOnInit(): void {
     this.title.setTitle('Jera - Work');
     this.getLatestJob()
-    this.getPagination()
+    this.getPagination(this.first, this.rowCounts)
     this.getAll()
+    this.getMasterData()
   }
   
+  searchJobs() {
+    const data = this.searchReq.getRawValue()
+    this.jobVacancyService.searchCandidate(this.first, this.rowCounts, data.vacancyTitle, data.degreeId, data.cityId, data.jobTypeId).subscribe(result => {
+      this.allJobs = result
+      this.length = result.length
+    })
+  }
+
   getAll() {
-    this.jobVacancyService.getAllJobs().subscribe(result => {
+    this.jobVacancyService.getAllJobsCandidate().subscribe(result => {
       this.jobs = result
       this.length = result.length
     })
-    
   }
 
-  getPagination() {
-    this.jobVacancyService.getAllJobsWithPagination(this.first, this.rowCounts).subscribe(result => {
+  getPagination(startIndex: number, endIndex: number) {
+    this.jobVacancyService.getAllJobsWithPaginationCandidate(startIndex, endIndex).subscribe(result => {
       this.allJobs = result
+      this.length = this.jobs.length
     })
   }
 
   getLatestJob() {
-    this.jobVacancyService.getLatestJob(0, this.rowCounts).subscribe(result => {
+    this.jobVacancyService.getLatestJobCandidate(0, this.rowCounts).subscribe(result => {
       this.latestJobs = result
     })
   }
 
-  onPageChange(event: any){
-    let pageIndex = event.first/event.rows + 1
-    this.length = this.jobs.length
-    
-    event.first = this.rowCounts
-    event.rows += 10
-    this.jobVacancyService.getAllJobsWithPagination(event.first, event.rows).subscribe(result => {
-      this.allJobs = result
+  getMasterData() {
+    this.masterService.getJobTypes().subscribe(result => {
+      this.jobTypes = result
     })
+
+    this.masterService.getCities().subscribe(result => {
+      this.cities = result
+    })
+
+    this.masterService.getDegree().subscribe(result => {
+      this.degrees = result
+    })
+  }
+
+  onPageChange(event: any){
+    this.getPagination(event.first, event.first + event.rows)
+  }
+
+  toDetail(jobId: string) {
+    this.router.navigateByUrl(`/job/${jobId}`)
   }
 
   responsiveOptions = [

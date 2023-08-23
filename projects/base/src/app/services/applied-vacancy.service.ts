@@ -6,6 +6,7 @@ import { Injectable } from "@angular/core";
 import { ADMIN_API, CANDIDATE_API } from "@constant/api.constant";
 import { AppliedVacancyUpdateReqDto } from "@dto/applied-vacancy/applied-vacancy-update.req.dto";
 import { UpdateResDto } from "@dto/UpdateResDto";
+import { AppliedVacancyResDto } from "@dto/applied-vacancy/applied-vacancy.res.dto";
 
 @Injectable({
     providedIn: 'root'
@@ -22,4 +23,7 @@ export class AppliedVacancyService {
         return this.base.put<UpdateResDto>(`${ADMIN_API}/applied`, data, true)
     }
 
+    getAppliedVacancy(): Observable<AppliedVacancyResDto[]> {
+        return this.base.get<AppliedVacancyResDto[]>(`${CANDIDATE_API}/applied/my-applied`, true)
+    }
 }
