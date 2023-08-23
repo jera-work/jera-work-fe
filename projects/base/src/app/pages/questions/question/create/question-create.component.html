@@ -1,0 +1,188 @@
+<pre>
+  {{ questionInsertReqDto.value | json }}
+</pre>
+
+<div
+  class="d-flex justify-content-center align-items-center flex-column start mt-2 mb-4"
+>
+  <h3>Create Question</h3>
+  <app-button
+    (click)="onAddQuestion()"
+    label="Add Question"
+    classBtn="p-button-success"
+  ></app-button>
+  <form (ngSubmit)="onSubmit()" [formGroup]="questionInsertReqDto">
+    <div
+      *ngFor="let q of data.controls; let i = index"
+      formArrayName="data"
+      class="border border-3 flex justify-content-center align-items-center flex-column m-2 pb-4"
+    >
+      <div [formGroupName]="i" class="m-4">
+        <!-- Create Question -->
+        <div class="my-3 grid align-items-center md:gy-4 gy-3 container">
+          <!-- Question Packet -->
+          <div class="col-12 md:col-3">
+            <label for="packet" class="form-label"
+              >Select Question Packet <span class="text-danger">*</span></label
+            >
+          </div>
+          <div class="col-12 md:col-9">
+            <p-dropdown
+              styleClass="w-full"
+              [options]="questionsPacket"
+              optionLabel="packetName"
+              optionValue="id"
+              placeholder="Select Question Packet"
+              formControlName="packetId"
+            >
+            </p-dropdown>
+          </div>
+
+          <!-- Question Type -->
+          <div class="col-12 md:col-3">
+            <label for="type" class="form-label"
+              >Select Question Type <span class="text-danger">*</span></label
+            >
+          </div>
+          <div class="col-12 md:col-9">
+            <p-dropdown
+              [options]="questionsType"
+              optionLabel="typeQuestionName"
+              styleClass="w-full"
+              optionValue="id"
+              placeholder="Select Question Type"
+              formControlName="typeId"
+            >
+            </p-dropdown>
+          </div>
+
+          <!-- Question Topic -->
+          <div class="col-12 md:col-3">
+            <label for="topic" class="form-label"
+              >Select Question Topic <span class="text-danger">*</span></label
+            >
+          </div>
+          <div class="col-12 md:col-9">
+            <p-dropdown
+              [options]="questionsTopic"
+              optionLabel="topicName"
+              styleClass="w-full"
+              optionValue="id"
+              placeholder="Select Question Topic"
+              formControlName="topicId"
+            >
+            </p-dropdown>
+          </div>
+
+          <div class="col-12 md:col-3">
+            <label for="question" class="form-label"
+              >Create Question Name <span class="text-danger">*</span></label
+            >
+          </div>
+          <div class="col-12 md:col-9">
+            <input
+              type="text"
+              styleClass="w-full"
+              pInputText
+              class="form-control col-12"
+              id="question"
+              placeholder="Question Name"
+              formControlName="question"
+            />
+          </div>
+
+          <div class="col-12 md:col-3">
+            <label for="questionCode" class="form-label"
+              >Create Question Code <span class="text-danger">*</span></label
+            >
+          </div>
+          <div class="col-12 md:col-9">
+            <input
+              type="text"
+              styleClass="w-full"
+              pInputText
+              class="form-control col-12"
+              id="questionCode"
+              placeholder="Question Code"
+              formControlName="questionCode"
+            />
+          </div>
+
+          <div class="col-6 md:col-3">
+            <label for="option" class="form-label">Options</label>
+          </div>
+          <div class="col-6 md:col-9">
+            <app-button
+              classBtn="p-button-success"
+              (click)="onAddOption(i)"
+              label="Add Option"
+            >
+            </app-button>
+          </div>
+
+          <div
+            *ngFor="let op of questionOption(i).controls; let j = index"
+            formArrayName="questionOption"
+            class="col-12"
+          >
+            <div [formGroupName]="j" class="col-12">
+              <div class="col-12 md:col-4 md:offset-3">
+                <input
+                  type="text"
+                  styleClass="w-full"
+                  pInputText
+                  class="form-control col-12"
+                  id="option"
+                  placeholder="Option Name"
+                  formControlName="optionLabel"
+                />
+              </div>
+
+              <div class="md:col-3 col-6">
+                <p-dropdown
+                  [options]="questionOptionValue"
+                  optionLabel="value"
+                  styleClass="w-full"
+                  optionValue="id"
+                  placeholder="Select Option Value"
+                  formControlName="optionCorrect"
+                >
+                </p-dropdown>
+
+                <!-- questionOptionValue -->
+              </div>
+              <div class="md:col-2 col-4">
+                <app-button
+                  classBtn="p-button-danger"
+                  (click)="onRemoveOption(i, j)"
+                  label="Delete Option"
+                >
+                </app-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <app-button
+        classBtn="p-button-danger"
+        label="Delete Question"
+        (click)="onRemoveQuestion(i)"
+      >
+      </app-button>
+    </div>
+    <div class="col-12">
+      <app-button
+        type="submit"
+        class="btn btn-primary"
+        label="Submit"
+      ></app-button>
+    </div>
+    <div class="col-12">
+      <app-button
+        routerLink="/questions"
+        classBtn="p-button-secondary p-button-text"
+        label="Back"
+      ></app-button>
+    </div>
+  </form>
+</div>

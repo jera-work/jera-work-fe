@@ -16,10 +16,7 @@ export class UsersService {
     return this.base.post<InsertResDto>(`${ADMIN_API}/users`, data, true);
   }
 
-  getUsers(roleCode: string, companyCode: string): Observable<UserResDto[]> {
-    return this.base.get<UserResDto[]>(
-      `${ADMIN_API}/users/?roleCode=${roleCode}&companyCode=${companyCode}`,
-      true
-    );
+  getUsers(roleCode: string): Observable<UserResDto[]> {
+    return this.base.get<UserResDto[]>(`${ADMIN_API}/users/?roleCode=${roleCode}`, true);
   }
 }

@@ -1,0 +1,99 @@
+<pre>
+  {{ statusReq.value | json }}
+</pre>
+
+<div class="mt-5">
+  <div class="card flex align-items-center justify-content-center">
+    <div class="w-11">
+      <p-table
+        [value]="users"
+        [tableStyle]="{ 'min-width': 'w-7' }"
+        styleClass="p-datatable-gridlines"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Username</th>
+            <th>FullName</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Options</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user>
+          <tr>
+            <td>{{ user.username }}</td>
+            <td>{{ user.fullName }}</td>
+            <td>{{ user.roleName }}</td>
+            <td>
+              <p-tag
+                [value]="user.isActive"
+                [severity]="getSeverity(user.isActive)"
+              ></p-tag>
+            </td>
+            <td>
+              <!-- (click)="showDialog()" -->
+              <p-button
+                (click)="showDialog(user.id)"
+                icon="pi pi-external-link"
+                label="Show"
+              ></p-button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+  <div class="card flex mt-5 ml-4">
+    <p-button label="Create User" routerLink="/users/create"></p-button>
+  </div>
+</div>
+
+<p-dialog
+  header="Update Status User"
+  [(visible)]="visible"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <form [formGroup]="statusReq">
+      <div class="flex flex-wrap gap-3">
+        <div class="flex align-items-center">
+          <p-radioButton
+            value="true"
+            inputId="ingredient1"
+            formControlName="isActive"
+          ></p-radioButton>
+          <label for="ingredient1" class="ml-2">True</label>
+        </div>
+
+        <div class="flex align-items-center">
+          <p-radioButton
+            value="false"
+            inputId="ingredient4"
+            formControlName="isActive"
+          ></p-radioButton>
+          <label for="ingredient4" class="ml-2">False</label>
+        </div>
+      </div>
+    </form>
+    <div class="mt-4">
+      <app-button
+        type="button"
+        data-bs-dismiss="modal"
+        label="Submit"
+        (clickChange)="onChange()"
+      >
+      </app-button>
+      <app-button
+        type="button"
+        classBtn="p-button-secondary ml-4"
+        data-bs-dismiss="modal"
+        label="Cancel"
+        (clickChange)="onClose()"
+      >
+      </app-button>
+    </div>
+  </div>
+</p-dialog>

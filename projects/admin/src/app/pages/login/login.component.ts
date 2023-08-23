@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { Router } from '@angular/router';
 import { LoginService } from '@services/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   constructor(
     private title: Title,
     private loginService: LoginService,
@@ -21,8 +21,8 @@ export class LoginComponent {
   }
 
   loginReqDto = this.fb.group({
-    userEmail: ['', Validators.required],
-    userPass: ['', Validators.required],
+    userEmail: ['', [Validators.required]],
+    userPass: ['', [Validators.required]],
   });
 
   loading = false;

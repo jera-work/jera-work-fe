@@ -7,7 +7,6 @@ export interface JobVacancyInsertReqDto {
 	endDate: string
 	expLevelId: string
 	availableStatusId: string
-	companyId: string
 	degreeId: string
 	genderId: string
 	ageVacancyId: string
