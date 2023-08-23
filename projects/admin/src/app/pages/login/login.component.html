@@ -1,7 +1,9 @@
 <pre>
-  {{loginReqDto.value | json}}
+  {{ loginReqDto.value | json }}
 </pre>
-<div class="flex h-screen align-items-center justify-content-center flex-column container">
+<div
+  class="flex h-screen align-items-center justify-content-center flex-column container"
+>
   <h2 style="letter-spacing: 3px">
     Welcome to <span class="PRIMARY_COLOR"> JERA-WORK </span>
   </h2>
@@ -30,7 +32,6 @@
             formControlName="userEmail"
             placeholder="name@example.com"
           />
-
         </div>
 
         <!-- password -->
@@ -40,7 +41,6 @@
           >
         </div>
         <div class="col-12">
-          
           <input
             pInputText
             type="password"
@@ -49,9 +49,6 @@
             formControlName="userPass"
             placeholder="password"
           />
-
-          <input pInputText type="password" formControlName="userPass" class="form-control col-12" id="password" placeholder="password" />
-
         </div>
         <div class="col-12">
           <app-button

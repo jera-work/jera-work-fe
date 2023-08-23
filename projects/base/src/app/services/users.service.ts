@@ -23,7 +23,7 @@ export class UsersService {
     return this.base.get<UserResDto[]>(
       `${ADMIN_API}/users/?roleCode=${roleCode}&companyCode=${companyCode}`
     );
-
+  }
 
   getUsers(): Observable<UserResDto[]> {
     return this.base.get(`${ADMIN_API}/users/all`);
