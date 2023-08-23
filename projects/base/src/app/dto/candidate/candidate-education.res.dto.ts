@@ -1,8 +1,8 @@
 export interface CandidateEducationResDto {
   id: string;
   institutionName: string;
-  degree: string;
-  major: string;
+  degreeId: string;
+  majorId: string;
   institutionAddress: string;
   startYear: string;
   endYear: string;

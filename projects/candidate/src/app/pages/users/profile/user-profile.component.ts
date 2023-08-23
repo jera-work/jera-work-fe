@@ -21,6 +21,11 @@ import { DocumentTypesResDto } from '@dto/data-master/document-types.res.dto';
 import { MasterDataService } from '@services/master-data.service';
 import { Subscription } from 'rxjs';
 import { ProfileService } from '@services/profile.service';
+import { SkillResDto } from '@dto/data-master/skill.res.dto';
+import { CandidateEducationResDto } from '@dto/candidate/candidate-education.res.dto';
+import { CandidateExperienceResDto } from '@dto/candidate/candidate-experience.res.dto';
+import { CandidateSkillResDto } from '@dto/candidate/candidate-skill.res.dto';
+import { CandidateDocumentResDto } from '@dto/candidate/candidate-document.res.dto';
 
 const convertUTCToLocalDateTime = function (date: Date) {
   const newDate = new Date(
@@ -51,6 +56,12 @@ export class UserProfileComponent
   imgUrl?: string;
   loading = false;
 
+  // Profile Data
+  educationsData?: CandidateEducationResDto[];
+  experiencesData?: CandidateExperienceResDto[];
+  skillsData?: CandidateSkillResDto[];
+  documentsData?: CandidateDocumentResDto[];
+
   // Master Data
 
   // Profile
@@ -63,6 +74,9 @@ export class UserProfileComponent
   degree?: DegreeResDto[];
   majors?: MajorsResDto[];
 
+  // Skills
+  skills?: SkillResDto[];
+
   // Documents
   documentTypes?: DocumentTypesResDto[];
 
@@ -72,13 +86,23 @@ export class UserProfileComponent
   modalSkill = false;
 
   // Subscriptions
+  profileSubscription?: Subscription;
   gendersSubscription?: Subscription;
   nationalitiesSubscription?: Subscription;
   maritalsSubscription?: Subscription;
   religionsSubsription?: Subscription;
   degreeSubscription?: Subscription;
   majorsSubscription?: Subscription;
+  skillsSubscription?: Subscription;
   documentTypesSubscription?: Subscription;
+  insertExperienceSubscription?: Subscription;
+  insertEducationSubscription?: Subscription;
+  insertSkillSubscription?: Subscription;
+  insertDocumentsSubscription?: Subscription;
+  getEducationsSubscription?: Subscription;
+  getExperiencesSubscription?: Subscription;
+  getSkillsSubscription?: Subscription;
+  getDocumentsSubscription?: Subscription;
 
   constructor(
     private userService: UsersService,
@@ -101,13 +125,13 @@ export class UserProfileComponent
     id: [0],
     candidateEmail: ['', Validators.required],
     profileName: ['', Validators.required],
-    phoneNumber: ['', Validators.required],
-    profileAddress: ['', Validators.required],
-    genderId: ['', [Validators.required]],
-    nationalityId: ['', Validators.required],
-    maritalId: ['', Validators.required],
-    religionId: ['', Validators.required],
-    expectedSalary: ['', Validators.required],
+    phoneNumber: [''],
+    profileAddress: [''],
+    genderId: [''],
+    nationalityId: [''],
+    maritalId: [''],
+    religionId: [''],
+    expectedSalary: [''],
     photoContent: [''],
     photoExt: [''],
     isActive: [false],
@@ -122,13 +146,13 @@ export class UserProfileComponent
   education = this.fb.group({
     institutionName: ['', Validators.required],
     degreeId: ['', Validators.required],
-    majorsId: ['', Validators.required],
+    majorId: ['', Validators.required],
     gpa: [0, [Validators.required]],
     startYear: ['', Validators.required],
     endYear: ['', Validators.required],
+    institutionAddress: ['', Validators.required],
     startYearTemp: ['', Validators.required],
     endYearTemp: ['', Validators.required],
-    institutionAddress: ['', Validators.required],
   });
 
   educationsReqDto = this.fb.group({
@@ -142,6 +166,7 @@ export class UserProfileComponent
   removeEducation(i: number) {
     this.educations.removeAt(i);
   }
+
   // ======================= Education =======================
 
   // ======================= Experience =======================
@@ -153,7 +178,7 @@ export class UserProfileComponent
     formerPosition: ['', Validators.required],
     formerInstitution: ['', Validators.required],
     formerLocation: ['', Validators.required],
-    formerJobDesc: ['', Validators.required],
+    formerJobdesc: ['', Validators.required],
     startDate: ['', Validators.required],
     endDate: ['', Validators.required],
     startDateTemp: ['', Validators.required],
@@ -172,17 +197,9 @@ export class UserProfileComponent
     this.experiences.removeAt(i);
   }
 
-  skills = this.fb.group({
-    skillArr: this.fb.array([]),
+  skillsReqDto = this.fb.group({
+    skillId: ['', Validators.required],
   });
-
-  get skill() {
-    return this.skills.get('skillArr') as FormArray;
-  }
-
-  removeSkill(i: number) {
-    return this.skill.removeAt(i);
-  }
 
   // ======================= Experience =======================
 
@@ -201,17 +218,36 @@ export class UserProfileComponent
   // ======================= Documents =======================
 
   // ================ GET MASTER DATA FROM DATABASE ================
-  getMasterData() {
+  getData() {
+    this.profileSubscription = this.profileServ
+      .getProfile()
+      .subscribe((res) => {
+        console.log(res);
+        if (res.photoId) {
+          this.imgUrl = res.photoId;
+        } else {
+          this.imgUrl = undefined;
+        }
+        this.profile.patchValue({
+          candidateEmail: res.candidateEmail,
+          profileName: res.profileName,
+          profileAddress: res.profileAddress,
+          phoneNumber: res.phoneNumber,
+          expectedSalary: res.expectedSalary,
+          genderId: res.genderId,
+          nationalityId: res.nationalityId,
+          maritalId: res.maritalId,
+          religionId: res.religionId,
+        });
+      });
+
     this.gendersSubscription = this.master.getGenders().subscribe((res) => {
-      console.log(res);
       this.genders = res;
     });
 
     this.nationalitiesSubscription = this.master
       .getNationalities()
       .subscribe((res) => {
-        console.log(res);
-
         this.nationalities = res;
       });
 
@@ -233,72 +269,55 @@ export class UserProfileComponent
       .getMajors()
       .subscribe((res) => (this.majors = res));
 
+    this.skillsSubscription = this.master.getSkills().subscribe((res) => {
+      this.skills = res;
+    });
+
     this.documentTypesSubscription = this.master
       .getDocumentTypes()
       .subscribe((res) => {
-        console.log(res);
         this.documentTypes = res;
 
         for (let i = 0; i < res.length; i++) {
           this.documentsArr.push(
             this.fb.group({
-              documentTypeId: res[i].typeName,
+              name: res[i].typeName,
+              documentTypeId: res[i].id,
               fileContent: '',
               fileExt: '',
             })
           );
         }
       });
+
+    this.getEducationsSubscription = this.profileServ
+      .getEducations()
+      .subscribe((res) => {
+        this.educationsData = res;
+      });
+
+    this.getExperiencesSubscription = this.profileServ
+      .getExperiences()
+      .subscribe((res) => {
+        this.experiencesData = res;
+      });
+
+    this.getSkillsSubscription = this.profileServ
+      .getSkills()
+      .subscribe((res) => {
+        console.log(res);
+        this.skillsData = res;
+      });
+
+    this.getDocumentsSubscription = this.profileServ
+      .getDocuments()
+      .subscribe((res) => (this.documentsData = res));
   }
 
   // ================ GET MASTER DATA FROM DATABASE ================
 
   ngOnInit(): void {
-    const profile = this.authService.getProfile();
-    if (profile?.photoId) {
-      this.imgUrl = profile.photoId.toString();
-    }
-    this.userId = profile?.id;
-
-    this.profileServ.getProfile().subscribe((res) => {
-      console.log(res);
-      this.imgUrl = res.photoId;
-      this.profile.patchValue({
-        candidateEmail: res.candidateEmail,
-        profileName: res.profileName,
-        profileAddress: res.profileAddress,
-        phoneNumber: res.phoneNumber,
-        expectedSalary: res.expectedSalary,
-        genderId: res.genderId,
-        nationalityId: res.nationalityId,
-        maritalId: res.maritalId,
-        religionId: res.religionId,
-      });
-
-      // candidateEmail: ['', Validators.required],
-      // profileName: ['', Validators.required],
-      // phoneNumber: ['', Validators.required],
-      // profileAddress: ['', Validators.required],
-      // genderId: ['', [Validators.required]],
-      // nationalityId: ['', Validators.required],
-      // maritalId: ['', Validators.required],
-      // religionId: ['', Validators.required],
-      // expectedSalary: ['', Validators.required],
-    });
-
-    // this.userService.getById(this.userId).subscribe((res) => {
-    //   console.log(res);
-
-    //   this.profile.get('id')?.setValue(res.id);
-    //   this.profile.get('username')?.setValue(res.username);
-    //   this.profile.get('fullName')?.setValue(res.fullName);
-    //   this.profile.get('roleName')?.setValue(res.roleName);
-    //   this.profile.get('roleCode')?.setValue(res.roleCode);
-    //   this.profile.get('isActive')?.setValue(res.isActive);
-    //   this.profile.get('phoneNumb')?.setValue(res.phoneNumb);
-    // });
-
-    this.getMasterData();
+    this.getData();
   }
 
   onActiveItemChange(event: MenuItem) {
@@ -363,15 +382,13 @@ export class UserProfileComponent
     if (this.profile.valid) {
       this.loading = true;
       const data = this.profile.getRawValue();
-      console.log(data);
-
-      this.profileServ.updateProfile(data).subscribe((res) => {
-        console.log(res);
-      });
-      // this.userService.updateProfile(data).subscribe((res) => {
-      //   console.log(res);
-      //   this.router.navigateByUrl('/dashboard');
-      // });
+      // console.log(data);
+      this.profileSubscription = this.profileServ
+        .updateProfile(data)
+        .subscribe((res) => {
+          console.log(res);
+          this.router.navigateByUrl('/dashboard');
+        });
     }
   }
 
@@ -381,10 +398,22 @@ export class UserProfileComponent
   }
 
   onCreateEducation() {
-    const data = this.education.getRawValue();
-    this.educations.push(this.fb.group(data));
-    this.education.reset();
-    this.modalEducation = false;
+    if (this.education.valid) {
+      const data = this.education.getRawValue();
+
+      this.insertEducationSubscription = this.profileServ
+        .insertEducations([data])
+        .subscribe((res) => {
+          this.getEducationsSubscription = this.profileServ
+            .getEducations()
+            .subscribe((res) => (this.educationsData = res));
+        });
+      this.educations.reset();
+      this.education.reset();
+      this.modalEducation = false;
+    } else {
+      console.log('Please input data!');
+    }
   }
 
   onCloseEducation() {
@@ -411,10 +440,22 @@ export class UserProfileComponent
   }
 
   onCreateExperience() {
-    const data = this.experience.getRawValue();
-    this.experiences.push(this.fb.group(data));
-    this.experiences.reset();
-    this.modalExperience = false;
+    if (this.experience.valid) {
+      const data = this.experience.getRawValue();
+      this.experiences.push(this.fb.group(data));
+      this.insertExperienceSubscription = this.profileServ
+        .insertExperiences([data])
+        .subscribe((res) => {
+          this.getExperiencesSubscription = this.profileServ
+            .getExperiences()
+            .subscribe((res) => (this.experiencesData = res));
+        });
+
+      this.experience.reset();
+      this.modalExperience = false;
+    } else {
+      console.log('Please input data!');
+    }
   }
 
   onCloseExperience() {
@@ -439,10 +480,22 @@ export class UserProfileComponent
   }
 
   onCreateSkill() {
-    const data = this.insertSkill.get('name')?.getRawValue();
-    this.skill.push(this.fb.control(data));
-    this.insertSkill.reset();
-    this.modalSkill = false;
+    if (this.skillsReqDto.valid) {
+      const data = this.skillsReqDto.getRawValue();
+      console.log(data);
+      this.insertSkillSubscription = this.profileServ
+        .insertSkills([data])
+        .subscribe((res) => {
+          console.log(res);
+          this.getSkillsSubscription = this.profileServ
+            .getSkills()
+            .subscribe((res) => (this.skillsData = res));
+        });
+      this.skillsReqDto.reset();
+      this.modalSkill = false;
+    } else {
+      console.log('Please input value!');
+    }
   }
 
   onCloseSkill() {
@@ -455,7 +508,7 @@ export class UserProfileComponent
     this.modalDocuments = true;
   }
 
-  documentsUpload(event: any, id: string, index: number) {
+  documentsUpload(event: any, index: number) {
     const toBase64 = (file: File) =>
       new Promise<string>((resolve, reject) => {
         const reader = new FileReader();
@@ -473,12 +526,11 @@ export class UserProfileComponent
           result.length
         );
         const resultExtension = file.name.substring(
-          file.name.indexOf('.') + 1,
+          file.name.indexOf('.'),
           file.name.length
         );
 
-        this.documentsArr.at(index).setValue({
-          documentTypeId: id,
+        this.documentsArr.at(index).patchValue({
           fileExt: resultExtension,
           fileContent: resultBase64,
         });
@@ -486,7 +538,19 @@ export class UserProfileComponent
     }
   }
 
-  onInsertDocuments() {}
+  onInsertDocuments() {
+    const data = this.documentsArr.getRawValue();
+    this.insertDocumentsSubscription = this.profileServ
+      .insertDocuments(data)
+      .subscribe((res) => {
+        console.log(res);
+        this.getDocumentsSubscription = this.profileServ
+          .getDocuments()
+          .subscribe((res) => (this.documentsData = res));
+      });
+    this.documentsArr.reset();
+    this.modalDocuments = false;
+  }
 
   // =========================== Documents ===========================
 
@@ -497,11 +561,20 @@ export class UserProfileComponent
 
   // DESTROY
   ngOnDestroy(): void {
+    this.profileSubscription?.unsubscribe();
     this.gendersSubscription?.unsubscribe();
     this.nationalitiesSubscription?.unsubscribe();
     this.maritalsSubscription?.unsubscribe();
     this.religionsSubsription?.unsubscribe();
     this.degreeSubscription?.unsubscribe();
     this.majorsSubscription?.unsubscribe();
+    this.skillsSubscription?.unsubscribe();
+    this.insertEducationSubscription?.unsubscribe();
+    this.insertExperienceSubscription?.unsubscribe();
+    this.insertSkillSubscription?.unsubscribe();
+    this.insertDocumentsSubscription?.unsubscribe();
+    this.getEducationsSubscription?.unsubscribe();
+    this.getExperiencesSubscription?.unsubscribe();
+    this.getSkillsSubscription?.unsubscribe();
   }
 }

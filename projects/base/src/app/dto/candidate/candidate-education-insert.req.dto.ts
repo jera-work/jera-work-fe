@@ -2,8 +2,8 @@ export interface CandidateEducationInsertReqDto {
   institutionName: string;
   degreeId: string;
   majorId: string;
-  institutionAddress: string;
+  gpa: number;
   startYear: string;
   endYear: string;
-  gpa: number;
+  institutionAddress: string;
 }
