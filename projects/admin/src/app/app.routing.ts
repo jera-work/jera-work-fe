@@ -15,6 +15,10 @@ import { BaseComponent } from '@components/base/base.component';
 import { NotFoundComponent } from '@components/not-found/not-found.component';
 import { BaseModule } from '@components/base/base.module';
 import { SharedModule } from '@shared/shared.module';
+import {
+  authNonLoginValidation,
+  authValidation,
+} from './validation/auth.validation';
 
 const routes: Routes = [
   {
@@ -22,10 +26,28 @@ const routes: Routes = [
     component: BaseComponent,
     loadChildren: () =>
       import('./pages/users/user.module').then((u) => u.UserModule),
+    canMatch: [authNonLoginValidation],
+  },
+  {
+    path: 'companies',
+    component: BaseComponent,
+    loadChildren: () =>
+      import('./pages/company/company.module').then((u) => u.CompanyModule),
+    canMatch: [authNonLoginValidation],
+  },
+  {
+    path: 'job-vacancies',
+    component: BaseComponent,
+    loadChildren: () =>
+      import('./pages/job-vacancy/job-vacancy.module').then(
+        (u) => u.JobVacancyModule
+      ),
+    canMatch: [authNonLoginValidation],
   },
   {
     path: 'login',
     component: LoginComponent,
+    canMatch: [authValidation],
   },
   {
     path: 'dashboard',
@@ -36,7 +58,9 @@ const routes: Routes = [
         component: DashboardComponent,
       },
     ],
+    canMatch: [authNonLoginValidation],
   },
+
   {
     path: '',
     redirectTo: 'login',

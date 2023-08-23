@@ -14,6 +14,7 @@ import { ButtonModule } from 'primeng/button';
       [label]="label"
       [style]="{ 'background-color': backgroundColor, border: border }"
       icon="{{ icon }}"
+      [disabled]="isDisabled"
       pRipple
     >
     </p-button>
@@ -30,6 +31,7 @@ export class ButtonComponent {
   @Input() backgroundColor = '';
   @Input() icon = '';
   @Input() border = 'none';
+  @Input() isDisabled = false;
 
   @Output() clickChange = new EventEmitter<void>();
 

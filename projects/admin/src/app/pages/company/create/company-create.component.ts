@@ -1,47 +1,80 @@
-import { Component } from "@angular/core";
-import { NonNullableFormBuilder, Validators } from "@angular/forms";
+import { Component, OnInit } from '@angular/core';
+import { NonNullableFormBuilder, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { CompanyService } from '@services/company.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
-    selector: 'company-create',
-    templateUrl: './company-create.component.html',
-  })
-export class CompanyCreateComponent{
-
-  constructor(private fb: NonNullableFormBuilder){}
+  selector: 'company-create',
+  templateUrl: './company-create.component.html',
+  styleUrls: ['company-create.styles.css'],
+})
+export class CompanyCreateComponent implements OnInit {
+  constructor(
+    private fb: NonNullableFormBuilder,
+    private title: Title,
+    private router: Router,
+    private companyService: CompanyService
+  ) {}
 
   companyInsertReqDto = this.fb.group({
-    companyCode : ['', Validators.required],
-    companyName : ['', Validators.required],
-    fileContent : ['', Validators.required],
-    fileExt : ['', Validators.required],
-    address : ['', Validators.required],
-    description :  ['', Validators.required],
-    phoneNumber : ['', Validators.required]
-  })
+    companyCode: ['', Validators.required],
+    companyName: ['', Validators.required],
+    fileContent: ['', Validators.required],
+    fileExt: ['', Validators.required],
+    address: ['', Validators.required],
+    description: ['', Validators.required],
+    phoneNumber: ['', Validators.required],
+  });
+
+  ngOnInit(): void {
+    this.title.setTitle('Create Company');
+  }
 
   fileUpload(event: any) {
-    const toBase64 = (file: File) => new Promise<string>((resolve, reject) => {
+    const toBase64 = (file: File) =>
+      new Promise<string>((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
-            if (typeof reader.result === "string") resolve(reader.result)
+          if (typeof reader.result === 'string') resolve(reader.result);
         };
-        reader.onerror = error => reject(error);
-    });
-    
+        reader.onerror = (error) => reject(error);
+      });
+
     for (let file of event.files) {
-        toBase64(file).then(result => {
-          const resultBase64 = result.substring(result.indexOf(",") + 1, result.length)
-          const resultExtension = file.name.substring(file.name.indexOf(".") + 1, file.name.length)
-            this.companyInsertReqDto.patchValue({
-                fileExt: resultExtension,
-                fileContent: resultBase64
-            })
-        })
+      toBase64(file).then((result) => {
+        const resultBase64 = result.substring(
+          result.indexOf(',') + 1,
+          result.length
+        );
+        const resultExtension = file.name.substring(
+          file.name.indexOf('.'),
+          file.name.length
+        );
+        this.companyInsertReqDto.patchValue({
+          fileExt: resultExtension,
+          fileContent: resultBase64,
+        });
+      });
     }
   }
 
-  submit(){
-    
+  onSubmit() {
+    if (this.companyInsertReqDto.valid) {
+      const data = this.companyInsertReqDto.getRawValue();
+
+      firstValueFrom(this.companyService.insertCompany(data))
+        .then((res) => {
+          console.log(res);
+          this.router.navigateByUrl('/companies');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      console.log('Please input value!');
+    }
   }
 }

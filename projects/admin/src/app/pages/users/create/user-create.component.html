@@ -65,47 +65,87 @@
 </p-card> -->
 
 <pre>{{ userInsertReqDto.value | json }}</pre>
-<p-card styleClass="mt-5 mx-7">
-  <div class="flex flex-column justify-content-center pl-2 pr-2">
-      <p class="text-5xl">Create New User</p>
-      <form [formGroup]="userInsertReqDto">
-        <div class="grid">
-          <div class="md:col-12 col-12">
-            <label for="email">Email <span class="text-red-700">*</span></label>
-          </div>
-          <div class="md:col-12 col-12">
-            <input type="email" pInputText id="email" placeholder="email@email.com" class="w-full"
-              required formControlName="userEmail">
-          </div>
-  
-          <div class="md:col-12 col-12">
-            <label for="name" class="form-label">Name <span class="text-red-700">*</span></label>
-          </div>
-          <div class="md:col-12 col-12">
-            <input type="text" pInputText id="name" class="w-full" required formControlName="profileName">
-          </div>
-  
-          <div class="md:col-12 col-12">
-            <label for="company" class="form-label">Company <span class="text-red-700">*</span></label>
-          </div>
-          <div class="md:col-12 col-12">
-            <p-dropdown [options]="companies" optionLabel="companyName" placeholder="Select company..."
-              optionValue="id" styleClass="w-full" formControlName="companyId"></p-dropdown>
-          </div>
-  
-          <div class="md:col-12 col-12">
-            <label for="role" class="form-label">Role <span class="text-red-700">*</span></label>
-          </div>
-          <div class="md:col-12 col-12">
-            <p-dropdown [options]="roles" optionLabel="roleName" placeholder="Select role..."
-              optionValue="id" styleClass="w-full" formControlName="roleId"></p-dropdown>
-          </div>
-  
-        </div>
-        <div class="mt-2">
-          <app-button label="SUBMIT" btnType="Submit"></app-button>
-          <button pButton pRipple routerLink="/users" class="p-button-secondary ml-2">BACK</button>
-        </div>
-      </form>
+
+<div class="flex justify-content-center align-items-center flex-column">
+  <p class="text-5xl">Create New User</p>
+  <form [formGroup]="userInsertReqDto" (ngSubmit)="onCreate()" class="w-10">
+    <div class="grid">
+      <div class="col-12">
+        <label for="email">Email <span class="text-red-700">*</span></label>
+      </div>
+      <div class="col-12">
+        <input
+          type="email"
+          pInputText
+          id="email"
+          placeholder="email@email.com"
+          class="w-full"
+          required
+          formControlName="userEmail"
+        />
+      </div>
+
+      <div class="col-12">
+        <label for="name" class="form-label"
+          >Name <span class="text-red-700">*</span></label
+        >
+      </div>
+      <div class="col-12">
+        <input
+          type="text"
+          pInputText
+          id="name"
+          class="w-full"
+          required
+          formControlName="profileName"
+        />
+      </div>
+
+      <div class="col-12">
+        <label for="company" class="form-label"
+          >Company <span class="text-red-700">*</span></label
+        >
+      </div>
+      <div class="col-12">
+        <p-dropdown
+          [options]="companies"
+          optionLabel="companyName"
+          placeholder="Select company..."
+          optionValue="id"
+          styleClass="w-full"
+          formControlName="companyId"
+        ></p-dropdown>
+      </div>
+
+      <div class="col-12">
+        <label for="role" class="form-label"
+          >Role <span class="text-red-700">*</span></label
+        >
+      </div>
+      <div class="col-12">
+        <p-dropdown
+          [options]="roles"
+          optionLabel="roleName"
+          placeholder="Select role..."
+          optionValue="id"
+          styleClass="w-full"
+          formControlName="roleId"
+        ></p-dropdown>
+      </div>
     </div>
-  </p-card>
+    <div class="mt-2">
+      <app-button
+        [loading]="loading"
+        label="Create"
+        backgroundColor="var(--PRIMARY)"
+        btnType="Submit"
+      ></app-button>
+      <app-button
+        label="Back"
+        routerLink="/users"
+        class="p-button-outlined p-button-secondary ml-3"
+      >
+      </app-button>
+    </div>
+  </form>
+</div>

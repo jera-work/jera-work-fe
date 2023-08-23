@@ -20,10 +20,14 @@ export class UserListComponent implements OnInit {
     // this.usersService.getAllUsers().subscribe((res) => {
     //   this.users = res;
     // });
+
+    this.usersService.getUsers().subscribe((res) => {
+      this.users = res;
+      console.log(res);
+    });
   }
 
-  clear(table : Table){
-    table.clear()
+  clear(table: Table) {
+    table.clear();
   }
-
 }
