@@ -20,4 +20,8 @@ export class CompanyService {
     getAllCompany() : Observable<CompanyResDto[]>{
         return this.base.get<CompanyResDto[]>(`${ADMIN_API}/companies`)
     }
+
+    insertCompany(data: CompanyInsertReqDto): Observable<InsertResDto>{
+        return this.base.post<InsertResDto>(`${ADMIN_API}/companies`, data ,true)
+    }
 }

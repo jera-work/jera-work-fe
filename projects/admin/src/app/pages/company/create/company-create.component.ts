@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { NonNullableFormBuilder, Validators } from "@angular/forms";
+import { CompanyService } from "@services/company.service";
 
 @Component({
     selector: 'company-create',
@@ -7,7 +8,9 @@ import { NonNullableFormBuilder, Validators } from "@angular/forms";
   })
 export class CompanyCreateComponent{
 
-  constructor(private fb: NonNullableFormBuilder){}
+  constructor(private fb: NonNullableFormBuilder,
+    private companyService: CompanyService){
+  }
 
   companyInsertReqDto = this.fb.group({
     companyCode : ['', Validators.required],
@@ -42,6 +45,9 @@ export class CompanyCreateComponent{
   }
 
   submit(){
-    
+    this.companyService.insertCompany(this.companyInsertReqDto.getRawValue()).subscribe((res) => {
+      console.log(res.id)
+      console.log(res.message)
+    })
   }
 }

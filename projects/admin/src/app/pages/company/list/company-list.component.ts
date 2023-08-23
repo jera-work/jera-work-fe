@@ -11,6 +11,7 @@ export class CompanyListComponent implements OnInit{
   loading = true
 
   companies : CompanyResDto[] = []
+  
   ngOnInit(): void {
     this.loading = false
   }

@@ -2,7 +2,7 @@
 <p-card styleClass="mt-5 mx-7">
     <div class="flex flex-column justify-content-center pl-2 pr-2">
       <p class="text-5xl">Create New Company</p>
-      <form [formGroup]="companyInsertReqDto">
+      <form [formGroup]="companyInsertReqDto" (ngSubmit)="submit()">
         <div class="grid">
             <div class="md:col-12 col-12">
                 <label for="company-code">Company Code <span class="text-red-700">*</span></label>
