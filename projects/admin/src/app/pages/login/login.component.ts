@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { LoginService } from '@services/login.service';
+import { firstValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-login',
@@ -24,6 +26,13 @@ export class LoginComponent implements OnInit {
     userEmail: ['', [Validators.required]],
     userPass: ['', [Validators.required]],
   });
+
+  // Constructor
+  constructor(
+    private fb: NonNullableFormBuilder,
+    private loginService: LoginService,
+    private router: Router
+  ) {}
 
   loading = false;
 
@@ -47,5 +56,5 @@ export class LoginComponent implements OnInit {
       this.loading = false;
     }
   }
-
+  
 }

@@ -1,3 +1,4 @@
+
 export interface JobVacancyResDto {
 	vacancyId: string
 	vacancyCode: string
@@ -20,3 +21,4 @@ export interface JobVacancyResDto {
 	address: string
 	description: string
 }
+

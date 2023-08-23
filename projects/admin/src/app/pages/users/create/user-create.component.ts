@@ -13,6 +13,7 @@ import { RoleResDto } from '@dto/data-master/role.res.dto';
 import { CompanyService } from '@services/company.service';
 import { RoleService } from '@services/role.service';
 import { UsersService } from '@services/users.service';
+import { firstValueFrom } from 'rxjs';
 // import { RoleResDto } from '../../../dto/role/role.res.dto';
 // import { RoleService } from '../../../services/role.service';
 // import { UsersService } from '../../../services/users.service';
@@ -29,7 +30,7 @@ export class UserCreateComponent implements OnInit, AfterViewChecked {
     companyId: ['', Validators.required],
   });
 
-  sending = false;
+  loading = false;
 
   roles!: RoleResDto[];
   companies!: CompanyResDto[];
@@ -43,14 +44,18 @@ export class UserCreateComponent implements OnInit, AfterViewChecked {
     private cd: ChangeDetectorRef
   ) {}
 
-  ngOnInit(): void {
-    this.roleService.getAllRole().subscribe((result) => {
-      this.roles = result;
-    });
+  getData() {
+    firstValueFrom(this.roleService.getAllRole())
+      .then((res) => (this.roles = res))
+      .catch((err) => console.log(err));
 
-    this.companyService.getAllCompany().subscribe((result) => {
-      this.companies = result;
-    });
+    firstValueFrom(this.companyService.getAllCompany())
+      .then((res) => (this.companies = res))
+      .catch((err) => console.log(err));
+  }
+
+  ngOnInit(): void {
+    this.getData();
   }
 
   ngAfterViewChecked(): void {}
@@ -58,14 +63,20 @@ export class UserCreateComponent implements OnInit, AfterViewChecked {
   onCreate() {
     if (this.userInsertReqDto.valid) {
       const data = this.userInsertReqDto.getRawValue();
-      this.sending = true;
-      this.userService.createUser(data).subscribe((res) => {
-        console.log('SUCCESSSSS');
-        this.router.navigateByUrl('/users');
-      });
+      this.loading = true;
+      firstValueFrom(this.userService.createUser(data))
+        .then((res) => {
+          console.log(res);
+          this.router.navigateByUrl('/users');
+          this.loading = false;
+        })
+        .catch((err) => {
+          console.log(err);
+          this.loading = false;
+        });
     } else {
       console.log('ISI DULU');
-      this.sending = false;
+      this.loading = false;
     }
   }
 }

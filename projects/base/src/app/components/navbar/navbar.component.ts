@@ -14,6 +14,7 @@ export class NavbarComponent implements OnInit {
   isLogin = false;
   imgUrl = '';
   roleCode: string | undefined = '';
+  isAdminApp = false;
   navbar: MenuItem[] | undefined;
   profile: MenuItem[] | undefined;
 
@@ -30,15 +31,16 @@ export class NavbarComponent implements OnInit {
           this.imgUrl = '/assets/default.png';
         }
         this.roleCode = profile?.roleCode;
+        this.isAdminApp = true;
       } else {
-        console.log(profile);
-
+        this.isAdminApp = false;
         if (profile?.photoId) {
           this.imgUrl = `${CANDIDATE_API}/files/${profile.photoId}`;
         } else {
           this.imgUrl = '/assets/default.png';
         }
       }
+
       this.isLogin = true;
     } else {
       this.isLogin = false;
@@ -55,36 +57,29 @@ export class NavbarComponent implements OnInit {
       {
         label: 'Applied Job',
         routerLink: '/applied-job',
+        visible: !this.isAdminApp,
       },
       {
         label: 'Saved Job',
         routerLink: '/saved-job',
+        visible: !this.isAdminApp,
       },
       {
-        label: 'Master Data',
-        visible: this.isAdmin || this.isHr || this.isReviewer,
-        items: [
-          {
-            label: 'User',
-            routerLink: '/users',
-            visible: this.isAdmin || this.isHr,
-          },
-          {
-            label: 'Question',
-            routerLink: '/questions',
-            visible: this.isReviewer,
-          },
-          {
-            label: 'Question Packet',
-            routerLink: '/questions/packet',
-            visible: this.isHr,
-          },
-          {
-            label: 'Question Topic',
-            routerLink: '/questions/topic',
-            visible: this.isReviewer,
-          },
-        ],
+        label: 'Users',
+        routerLink: '/users',
+        visible: this.isAdminApp && (this.isAdmin || this.isSuperAdmin),
+      },
+
+      {
+        label: 'Companies',
+        routerLink: '/companies',
+        visible: this.isAdminApp && this.isSuperAdmin,
+      },
+
+      {
+        label: 'Job Vacancies',
+        routerLink: '/job-vacancies',
+        visible: this.isAdminApp && (this.isAdmin || this.isHr || this.isUser),
       },
     ];
 
@@ -113,11 +108,15 @@ export class NavbarComponent implements OnInit {
     return Roles.HR === this.roleCode;
   }
 
-  get isReviewer() {
-    return Roles.REVIEWER === this.roleCode;
+  get isUser() {
+    return Roles.USER === this.roleCode;
   }
 
   get isAdmin() {
+    return Roles.ADMIN === this.roleCode;
+  }
+
+  get isSuperAdmin() {
     return Roles.SUPER_ADMIN === this.roleCode;
   }
 

@@ -21,7 +21,7 @@ const routes: Routes = [
     component: UserCreateComponent,
   },
   {
-    path: 'profile/:id',
+    path: 'profile',
     component: UserProfileComponent,
   },
   {
@@ -43,7 +43,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     SharedModule,
     FormsModule,
-    ButtonComponent
+    ButtonComponent,
   ],
   exports: [RouterModule],
 })

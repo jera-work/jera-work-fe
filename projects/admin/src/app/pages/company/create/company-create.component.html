@@ -1,3 +1,4 @@
+
 <pre>{{companyInsertReqDto.value | json}}</pre>
 <p-card styleClass="mt-5 mx-7">
     <div class="flex flex-column justify-content-center pl-2 pr-2">
@@ -35,26 +36,218 @@
                 required formControlName="address"></textarea>
             </div>
 
-            <div class="md:col-12 col-12">
-                <label for="description" class="form-label">Description <span class="text-red-700">*</span></label>
-            </div>
-            <div class="md:col-12 col-12">
-                <textarea id="description" rows="3" pInputTextarea class="w-full"
-                required formControlName="description"></textarea>
-            </div>
-  
-            <div class="md:col-12 col-12">
-                <label for="company-picture" class="form-label">Profile Picture</label>
-            </div>
-            <div class="md:col-12 col-12">
-                <p-fileUpload #file mode="basic" chooseLabel="Upload" accept="image/*" (onSelect)="fileUpload($event)"></p-fileUpload>
-            </div>
-        </div>
-        <div class="mt-2">
-          <!-- <app-button label="SUBMIT" btnType="Submit"></app-button> -->
-          <button pButton pRipple type="submit" (click)="submit()" >SUBMIT</button>
-          <button pButton pRipple routerLink="/companies" class="p-button-secondary ml-2">BACK</button>
-        </div>
-      </form>
+
+<div class="flex flex-column justify-content-center align-items-center">
+  <p class="text-5xl px-5 pt-5">Create Company</p>
+  <form [formGroup]="companyInsertReqDto" (ngSubmit)="onSubmit()" class="w-10">
+    <div class="grid">
+      <div class="md:col-12 col-12">
+        <label for="company-picture" class="form-label">Profile Picture</label>
+      </div>
+      <div class="md:col-12 col-12">
+        <p-fileUpload
+          #file
+          mode="basic"
+          chooseLabel="Upload"
+          accept="image/*"
+          (onSelect)="fileUpload($event)"
+        ></p-fileUpload>
+      </div>
+
+      <div class="md:col-12 col-12">
+        <label for="company-name"
+          >Company Name <span class="text-red-700">*</span></label
+        >
+      </div>
+      <div class="md:col-12 col-12">
+        <input
+          type="text"
+          pInputText
+          id="company-name"
+          class="w-full mb-2"
+          required
+          formControlName="companyName"
+        />
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            companyInsertReqDto.get('companyName')!.invalid &&
+            companyInsertReqDto.get('companyName')!.value &&
+            (companyInsertReqDto.get('companyName')!.dirty ||
+              companyInsertReqDto.get('companyName')!.touched)
+          "
+          >Input exceeds characters</span
+        >
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            companyInsertReqDto.get('companyName')!.invalid &&
+            !companyInsertReqDto.get('companyName')!.value &&
+            (companyInsertReqDto.get('companyName')!.dirty ||
+              companyInsertReqDto.get('companyName')!.touched)
+          "
+          >Input can't be empty</span
+        >
+      </div>
+
+      <div class="md:col-12 col-12">
+        <label for="company-code"
+          >Company Code <span class="text-red-700">*</span></label
+        >
+      </div>
+      <div class="md:col-12 col-12">
+        <input
+          type="text"
+          pInputText
+          id="company-code"
+          class="w-full mb-2"
+          required
+          formControlName="companyCode"
+        />
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            companyInsertReqDto.get('companyCode')!.invalid &&
+            companyInsertReqDto.get('companyCode')!.value &&
+            (companyInsertReqDto.get('companyCode')!.dirty ||
+              companyInsertReqDto.get('companyCode')!.touched)
+          "
+          >Input exceeds characters</span
+        >
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            companyInsertReqDto.get('companyCode')!.invalid &&
+            !companyInsertReqDto.get('companyCode')!.value &&
+            (companyInsertReqDto.get('companyCode')!.dirty ||
+              companyInsertReqDto.get('companyCode')!.touched)
+          "
+          >Input can't be empty</span
+        >
+      </div>
+
+      <div class="md:col-12 col-12">
+        <label for="phone" class="form-label"
+          >Phone <span class="text-red-700">*</span></label
+        >
+      </div>
+      <div class="md:col-12 col-12">
+        <input
+          type="text"
+          pInputText
+          id="phone"
+          class="w-full mb-2"
+          required
+          formControlName="phoneNumber"
+        />
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            companyInsertReqDto.get('phoneNumber')!.invalid &&
+            companyInsertReqDto.get('phoneNumber')!.value &&
+            (companyInsertReqDto.get('phoneNumber')!.dirty ||
+              companyInsertReqDto.get('phoneNumber')!.touched)
+          "
+          >Input exceeds characters</span
+        >
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            companyInsertReqDto.get('phoneNumber')!.invalid &&
+            !companyInsertReqDto.get('phoneNumber')!.value &&
+            (companyInsertReqDto.get('phoneNumber')!.dirty ||
+              companyInsertReqDto.get('phoneNumber')!.touched)
+          "
+          >Input can't be empty</span
+        >
+      </div>
+
+      <div class="md:col-12 col-12">
+        <label for="address" class="form-label"
+          >Address <span class="text-red-700">*</span></label
+        >
+      </div>
+      <div class="md:col-12 col-12">
+        <textarea
+          id="address"
+          rows="3"
+          pInputTextarea
+          class="w-full mb-2"
+          required
+          formControlName="address"
+        ></textarea>
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            companyInsertReqDto.get('address')!.invalid &&
+            companyInsertReqDto.get('address')!.value &&
+            (companyInsertReqDto.get('address')!.dirty ||
+              companyInsertReqDto.get('address')!.touched)
+          "
+          >Input exceeds characters</span
+        >
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            companyInsertReqDto.get('address')!.invalid &&
+            !companyInsertReqDto.get('address')!.value &&
+            (companyInsertReqDto.get('address')!.dirty ||
+              companyInsertReqDto.get('address')!.touched)
+          "
+          >Input can't be empty</span
+        >
+      </div>
+
+      <div class="md:col-12 col-12">
+        <label for="description" class="form-label"
+          >Description <span class="text-red-700">*</span></label
+        >
+      </div>
+      <div class="md:col-12 col-12">
+        <textarea
+          id="description"
+          rows="3"
+          pInputTextarea
+          class="w-full mb-2"
+          required
+          formControlName="description"
+        ></textarea>
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            companyInsertReqDto.get('description')!.invalid &&
+            companyInsertReqDto.get('description')!.value &&
+            (companyInsertReqDto.get('description')!.dirty ||
+              companyInsertReqDto.get('description')!.touched)
+          "
+          >Input exceeds characters</span
+        >
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            companyInsertReqDto.get('description')!.invalid &&
+            !companyInsertReqDto.get('description')!.value &&
+            (companyInsertReqDto.get('description')!.dirty ||
+              companyInsertReqDto.get('description')!.touched)
+          "
+          >Input can't be empty</span
+        >
+      </div>
     </div>
-  </p-card>
+    <div class="mt-2">
+      <app-button
+        type="submit"
+        label="Create"
+        backgroundColor="var(--PRIMARY)"
+        [isDisabled]="companyInsertReqDto.invalid"
+      >
+      </app-button>
+      <app-button
+        label="Back"
+        routerLink="/companies"
+        classBtn="p-button-outlined p-button-secondary ml-4"
+      >
+      </app-button>
+    </div>
+  </form>
+</div>
