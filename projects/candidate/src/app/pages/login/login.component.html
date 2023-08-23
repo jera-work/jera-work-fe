@@ -1,6 +1,6 @@
-<pre>
+<!-- <pre>
   {{ loginReqDto.value | json }}
-</pre>
+</pre> -->
 
 <div
   class="flex h-screen align-items-center justify-content-center flex-column container"
@@ -30,6 +30,7 @@
             id="email-address"
             placeholder="name@example.com"
             formControlName="userEmail"
+            required
           />
         </div>
 
@@ -45,6 +46,7 @@
             type="password"
             class="form-control col-12"
             id="password"
+            required
             placeholder="password"
             formControlName="userPass"
           />

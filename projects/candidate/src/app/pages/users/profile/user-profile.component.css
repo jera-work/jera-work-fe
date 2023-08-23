@@ -17,3 +17,9 @@
   min-width: 80vw;
   margin-bottom: 2rem;
 }
+
+::ng-deep .DELETE {
+  position: absolute;
+  top: -1.4rem;
+  right: -1.4rem;
+}

@@ -3,6 +3,7 @@ import { JobDetailsComponent } from './job-details.component';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
 import { ButtonComponent } from '@components/button/button.component';
+import { UrlPipeAdmin } from '@pipes/url.pipe';
 
 const routes: Routes = [
   {
@@ -12,8 +13,15 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [JobDetailsComponent],
-  imports: [RouterModule.forChild(routes), SharedModule, ButtonComponent],
-  exports: [RouterModule],
+  declarations: [
+    JobDetailsComponent
+  ], imports: [
+    RouterModule.forChild(routes), 
+    SharedModule, 
+    ButtonComponent,
+    UrlPipeAdmin
+  ], exports: [
+    RouterModule
+  ],
 })
 export class JobDetailsRouting {}

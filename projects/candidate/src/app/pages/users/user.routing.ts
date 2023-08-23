@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 
 import { SharedModule } from '@shared/shared.module';
 import { ButtonComponent } from '@components/button/button.component';
+import { UrlPipeAdmin, UrlPipeCandidate } from '@pipes/url.pipe';
 
 const routes: Routes = [
   {
@@ -29,6 +30,8 @@ const routes: Routes = [
     SharedModule,
     FormsModule,
     ButtonComponent,
+    UrlPipeCandidate,
+    UrlPipeAdmin
   ],
   exports: [RouterModule],
 })

@@ -12,7 +12,7 @@
       />
     </ng-template>
     <ng-template pTemplate="end">
-      <div>
+      <div *ngIf="profile">
         <p-overlayPanel #op>
           <p-menu [model]="profile"> </p-menu>
         </p-overlayPanel>
@@ -21,6 +21,7 @@
           width="50"
           (click)="op.toggle($event)"
           [src]="imgUrl"
+          class="cursor-pointer border-circle"
         >
         </p-image>
       </div>
@@ -28,6 +29,7 @@
         label="Log In"
         backgroundColor="var(--PRIMARY)"
         routerLink="/login"
+        *ngIf="!profile"
       ></app-button>
     </ng-template>
   </p-menubar>

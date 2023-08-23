@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
 import { Observable } from 'rxjs';
-import { RoleResDto } from '../dto/role/role.res.dto';
+import { RoleResDto } from '../dto/data-master/role.res.dto';
 import { CANDIDATE_API } from '../constant/api.constant';
 
 @Injectable({

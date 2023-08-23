@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { NonNullableFormBuilder, Validators } from '@angular/forms';
-// import { AuthService } from '../../services/auth.service';
-// import { LoginService } from '../../services/login.service';
 import { Router } from '@angular/router';
-import { Title } from '@angular/platform-browser';
 import { LoginService } from '@services/login.service';
+import { NonNullableFormBuilder, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-login',

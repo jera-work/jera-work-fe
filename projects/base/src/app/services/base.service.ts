@@ -19,8 +19,7 @@ function response<T>(message: MessageService, router: Router) {
       }
     },
     error: (err) => {
-      console.log(err.status);
-      console.log(err.status === 401 && err.error.message === 'Token Expired');
+      console.log(err.status === 401 && err.error.message === 'Token expired!');
 
       if (err instanceof HttpErrorResponse) {
         message.add({
@@ -29,7 +28,7 @@ function response<T>(message: MessageService, router: Router) {
           detail: err.error.message,
         });
       }
-      if (err.status === 401 && err.error.message === 'Token Expired') {
+      if (err.status === 401 && err.error.message === 'Token expired!') {
         localStorage.clear();
         router.navigateByUrl('/login');
       }
@@ -83,9 +82,9 @@ export class BaseService {
   }
 
   // PUT API
-  put<T>(url: string, body: any, withToken: true): Observable<T> {
+  put<T>(url: string, body: any, withToken = true): Observable<T> {
     return this.http
-    .put<T>(url, body, withToken ? this.headers : undefined)
-    .pipe(response(this.message, this.router));
+      .put<T>(url, body, withToken ? this.headers : undefined)
+      .pipe(response(this.message, this.router));
   }
 }

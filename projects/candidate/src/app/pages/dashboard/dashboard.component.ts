@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { NonNullableFormBuilder } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { CityResDto } from '@dto/city/city.res.dto';
+import { DegreeResDto } from '@dto/data-master/degree.res.dto';
+import { JobTypeResDto } from '@dto/job-type/job-type.res.dto';
+import { JobSearchResDto } from '@dto/job-vacancy/job-search.res.dto';
+import { JobVacancyService } from '@services/job-vacancy.service';
+import { MasterDataService } from '@services/master-data.service';
 // import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -9,61 +17,87 @@ import { Title } from '@angular/platform-browser';
 export class DashboardComponent {
   fullName: string = '';
 
-  ingredient!: string;
+  latestJobs: JobSearchResDto[] = []
+  allJobs: JobSearchResDto[] = []
+  jobs: JobSearchResDto[] = []
+  jobTypes: JobTypeResDto[] = []
+  cities: CityResDto[] = []
+  degrees: DegreeResDto[] = []
 
-  constructor(private title: Title) {}
+  first: number = 0
+  rowCounts: number = 10
+  length!: number
+
+  constructor(private title: Title, 
+    private jobVacancyService: JobVacancyService,
+    private masterService: MasterDataService,
+    private router: Router,
+    private fb: NonNullableFormBuilder) {}
+
+  searchReq = this.fb.group({
+    vacancyTitle: '',
+    degreeId: '',
+    cityId: '',
+    jobTypeId: ''
+  })
 
   ngOnInit(): void {
     this.title.setTitle('Jera - Work');
+    this.getLatestJob()
+    this.getPagination(this.first, this.rowCounts)
+    this.getAll()
+    this.getMasterData()
+  }
+  
+  searchJobs() {
+    const data = this.searchReq.getRawValue()
+    this.jobVacancyService.searchCandidate(this.first, this.rowCounts, data.vacancyTitle, data.degreeId, data.cityId, data.jobTypeId).subscribe(result => {
+      this.allJobs = result
+      this.length = result.length
+    })
   }
 
-  jobs = [
-    {
-      id: 1,
-      title: 'Accounting Staff',
-      company: 'Bearology Cafe',
-      degree: 'S1',
-      type: 'Full Time',
-      image: 'bamboo-watch.jpg',
-      location: 'Jakarta Pusat',
-    },
-    {
-      id: 2,
-      title: 'Staff Admin',
-      company: 'Berkat Mandiri',
-      degree: 'S1',
-      type: 'Full Time',
-      image: 'bamboo-watch.jpg',
-      location: 'Jakarta Utara',
-    },
-    {
-      id: 3,
-      title: 'Barista',
-      company: 'Bearology Cafe',
-      degree: 'SMA/SMK',
-      type: 'Part Time',
-      image: 'bamboo-watch.jpg',
-      location: 'Jakarta Pusat',
-    },
-    {
-      id: 4,
-      title: 'Marketing',
-      company: 'PT. Naga Mulia',
-      degree: 'SMA/SMK',
-      type: 'Full Time',
-      image: 'bamboo-watch.jpg',
-      location: 'Jakarta Barat',
-    },
-    {
-      id: 5,
-      title: 'Host Live',
-      company: 'PT. Naga Mulia',
-      degree: 'SMA/SMK',
-      type: 'Full Time',
-      image: 'bamboo-watch.jpg',
-      location: 'Jakarta Barat',
-    },
-  ];
+  getAll() {
+    this.jobVacancyService.getAllJobsCandidate().subscribe(result => {
+      this.jobs = result
+      this.length = result.length
+    })
+  }
+
+  getPagination(startIndex: number, endIndex: number) {
+    this.jobVacancyService.getAllJobsWithPaginationCandidate(startIndex, endIndex).subscribe(result => {
+      this.allJobs = result
+      this.length = this.jobs.length
+    })
+  }
+
+  getLatestJob() {
+    this.jobVacancyService.getLatestJobCandidate(0, this.rowCounts).subscribe(result => {
+      this.latestJobs = result
+    })
+  }
+
+  getMasterData() {
+    this.masterService.getJobTypes().subscribe(result => {
+      this.jobTypes = result
+    })
+
+    this.masterService.getCities().subscribe(result => {
+      this.cities = result
+    })
+
+    this.masterService.getDegree().subscribe(result => {
+      this.degrees = result
+    })
+  }
+
+  onPageChange(event: any){
+    this.getPagination(event.first, event.first + event.rows)
+  }
+
+  toDetail(jobId: string) {
+    this.router.navigateByUrl(`/job/${jobId}`)
+  }
 
   responsiveOptions = [
     {
