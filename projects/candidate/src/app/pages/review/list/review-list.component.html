@@ -1,0 +1,47 @@
+<h3 class="m-4">Review Candidate List</h3>
+<div class="table-responsive container mt-4">
+  <p-table
+    [value]="reviewList"
+    [tableStyle]="{ 'min-width': 'w-7' }"
+    styleClass="p-datatable-gridlines"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>No</th>
+        <th>Candidate</th>
+        <th>Progress</th>
+        <th>Status</th>
+        <th>Review</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-review let-i="rowIndex">
+      <tr>
+        <td>{{ i + 1 }}</td>
+        <td>{{ review.candidate }}</td>
+        <td>
+          <p-tag
+            [value]="
+              review.status ? review.status : 'Candidate Not finished yet'
+            "
+            [severity]="getSeverityStatus(review.status)"
+          ></p-tag>
+        </td>
+        <td>
+          <p-tag
+            [value]="
+              review.result ? review.result : 'Candidate Not finished yet'
+            "
+            [severity]="getSeverity(review.result)"
+          ></p-tag>
+        </td>
+        <td>
+          <p-button
+            (click)="goDetails(review.candidateId)"
+            icon="pi pi-external-link"
+            label="Details"
+          ></p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

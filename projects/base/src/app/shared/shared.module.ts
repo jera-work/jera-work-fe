@@ -28,6 +28,8 @@ import { ChipModule } from 'primeng/chip';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { DataViewModule, DataViewLayoutOptions } from 'primeng/dataview';
 import { RippleModule } from 'primeng/ripple';
+import { PaginatorModule } from 'primeng/paginator';
+import { DividerModule } from 'primeng/divider';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 
@@ -62,6 +64,8 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
     TabMenuModule,
     DataViewModule,
     RippleModule,
+    PaginatorModule,
+    DividerModule,
     AvatarModule,
     AvatarGroupModule,
   ],
@@ -95,6 +99,8 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
     TabMenuModule,
     DataViewModule,
     RippleModule,
+    PaginatorModule,
+    DividerModule,
     AvatarModule,
     AvatarGroupModule,
   ],

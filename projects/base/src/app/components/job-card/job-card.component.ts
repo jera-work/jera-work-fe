@@ -1,9 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { UrlPipeAdmin } from '@pipes/url.pipe';
 import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'job-card',
   template: `
+    <div (click)="clickBtn()">
     <p-card class="w-full relative cursor-pointer" styleClass="hover:shadow-4">
       <span class="absolute top-0 right-0 mr-3 mt-3">
         <i class="pi pi-clock"></i>
@@ -12,7 +14,7 @@ import { CardModule } from 'primeng/card';
       <div class="flex flex-row">
         <div class="mr-4">
           <img
-            src="/assets/company.svg"
+            src="{{ companyImg | urlAdmin }}"
             class="w-10rem sm:w-13rem"
             alt="company"
           />
@@ -23,17 +25,17 @@ import { CardModule } from 'primeng/card';
             style="border-bottom: 1px solid black"
             class="flex flex-column row-gap-2 mb-1"
           >
-            <span class="text-3xl font-bold">Live Host</span>
+            <span class="text-3xl font-bold">{{ title }}</span>
             <div>
               <span class="font-semibold">
                 <i class="pi pi-building"> </i>
-                LiLaine Official
+                {{ company }}
               </span>
             </div>
             <div>
               <span class="font-medium">
                 <i class="pi pi-money-bill"></i>
-                4-6 Juta / bulan
+                {{ salary }}
               </span>
             </div>
           </div>
@@ -42,22 +44,23 @@ import { CardModule } from 'primeng/card';
           <div class="flex column-gap-2 md:column-gap-5 flex-wrap">
             <span>
               <i class="pi pi-user"></i>
-              SMA/SMK
+              {{ degree }}
             </span>
             <span>
               <i class="pi pi-briefcase"></i>
-              Full Time
+              {{ jobType }}
             </span>
             <span>
               <i class="pi pi-map-marker"></i>
-              Jakarta Pusat
+              {{ location }}
             </span>
           </div>
         </div>
       </div>
     </p-card>
+  </div>
   `,
-  imports: [CardModule],
+  imports: [CardModule, UrlPipeAdmin],
   standalone: true,
 })
 export class JobCardComponent {
@@ -69,4 +72,10 @@ export class JobCardComponent {
   @Input() degree = '';
   @Input() jobType = '';
   @Input() location = '';
+
+  @Output() clickChange = new EventEmitter<void>();
+
+  clickBtn() {
+    this.clickChange.emit();
+  }
 }

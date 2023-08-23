@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
@@ -60,7 +61,6 @@ export class CompanyCreateComponent implements OnInit {
       });
     }
   }
-
   onSubmit() {
     if (this.companyInsertReqDto.valid) {
       const data = this.companyInsertReqDto.getRawValue();
@@ -76,5 +76,6 @@ export class CompanyCreateComponent implements OnInit {
     } else {
       console.log('Please input value!');
     }
+
   }
 }

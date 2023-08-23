@@ -1,0 +1,182 @@
+<pre>{{ jobVacancyInsertReqDto.value | json }}</pre>
+<p-card styleClass="mt-5 mx-7">
+    <ng-template pTemplate="header">
+      <p class="text-5xl px-5 pt-5">Create Job</p>
+    </ng-template>
+    <div class="flex flex-column justify-content-center pl-2 pr-2">
+      <form [formGroup]="jobVacancyInsertReqDto" (ngSubmit)="submit()">
+        <div class="grid">
+            <div class="md:col-12 col-12">
+                <label for="vacancy-title">Vacancy Title <span class="text-red-700">*</span></label>
+            </div>
+            <div class="md:col-12 col-12">
+                <input type="text" pInputText id="vacancy-title" class="w-full"
+                  required formControlName="vacancyTitle">
+                  <span class="text-red-500 ml-2" *ngIf="jobVacancyInsertReqDto.get('vacancyTitle')!.invalid && jobVacancyInsertReqDto.get('vacancyTitle')!.value && (jobVacancyInsertReqDto.get('vacancyTitle')!.dirty || jobVacancyInsertReqDto.get('vacancyTitle')!.touched)">Input exceeds characters</span>
+                  <span class="text-red-500 ml-2" *ngIf="jobVacancyInsertReqDto.get('vacancyTitle')!.invalid && !jobVacancyInsertReqDto.get('vacancyTitle')!.value && (jobVacancyInsertReqDto.get('vacancyTitle')!.dirty || jobVacancyInsertReqDto.get('vacancyTitle')!.touched)">Input can't be empty</span>
+            </div>
+
+            <div class="md:col-12 col-12">
+                <label for="vacancy-code">Vacancy Code <span class="text-red-700">*</span></label>
+            </div>
+            <div class="md:col-12 col-12">
+                <input type="text" pInputText id="vacancy-code" class="w-full"
+                  required formControlName="vacancyCode">
+                  <span class="text-red-500 ml-2" *ngIf="jobVacancyInsertReqDto.get('vacancyCode')!.invalid && jobVacancyInsertReqDto.get('vacancyCode')!.value && (jobVacancyInsertReqDto.get('vacancyCode')!.dirty || jobVacancyInsertReqDto.get('vacancyCode')!.touched)">Input exceeds characters</span>
+                  <span class="text-red-500 ml-2" *ngIf="jobVacancyInsertReqDto.get('vacancyCode')!.invalid && !jobVacancyInsertReqDto.get('vacancyCode')!.value && (jobVacancyInsertReqDto.get('vacancyCode')!.dirty || jobVacancyInsertReqDto.get('vacancyCode')!.touched)">Input can't be empty</span>
+            </div>
+
+            <div class="md:col-12 col-12">
+                <label for="pic-hr">Pic HR <span class="text-red-700">*</span></label>
+            </div>
+            <div class="md:col-12 col-12">
+                <p-dropdown [options]="picHr" optionLabel="profileName" placeholder="Select Pic" optionValue="id" styleClass="w-full" formControlName="picHrId"></p-dropdown>
+            </div>
+
+            <div class="md:col-12 col-12">
+                <label for="pic-user">Pic User <span class="text-red-700">*</span></label>
+            </div>
+            <div class="md:col-12 col-12">
+                <p-dropdown [options]="picUser" optionLabel="profileName" placeholder="Select Pic" optionValue="id" styleClass="w-full" formControlName="picUserId"></p-dropdown>
+            </div>
+            
+            <div class="md:col-12 col-12 p-0">
+                <div class="grid">
+                    <div class="md:col-6 col-12">
+                            <div class="md:col-12 col-12">
+                                <label for="start-date">Start Date <span class="text-red-700">*</span></label>
+                            </div>
+                            <div class="md:col-12 col-12">
+                                <p-calendar formControlName="startDateTemp" (onSelect)="convertStartDate($event)" styleClass="md:col-5 col-12 m-0 p-0"></p-calendar>
+                            </div>
+                    </div>
+                    <div class="md:col-6 col-12 ">
+                            <div class="md:col-12 col-12">
+                                <label for="end-date">End Date <span class="text-red-700">*</span></label>
+                            </div>
+                            <div class="md:col-12 col-12">
+                                <p-calendar formControlName="endDateTemp" (onSelect)="convertEndDate($event)" styleClass="md:col-5 col-12 m-0 p-0"></p-calendar>
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:col-12 col-12 p-0">
+                <div class="grid">
+                    <div class="lg:col-4 md:col-6 col-12">
+                        <div class="md:col-12 col-12">
+                            <label for="gender">Gender <span class="text-red-700">*</span></label>
+                        </div>
+                        <div class="md:col-12 col-12">
+                            <p-dropdown [options]="gender" optionLabel="genderName" placeholder="Select Gender" optionValue="id" styleClass="w-full" formControlName="genderId"></p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-4 md:col-6 col-12">
+                        <div class="md:col-12 col-12">
+                            <label for="ageVacancy">Age <span class="text-red-700">*</span></label>
+                        </div>
+                        <div class="md:col-12 col-12">
+                            <p-dropdown [options]="ageVacancy" optionLabel="ageName" placeholder="Select Age Vacancy" optionValue="id" styleClass="w-full" formControlName="ageVacancyId"></p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-4 md:col-6 col-12">
+                        <div class="md:col-12 col-12">
+                            <label for="degree">Degree <span class="text-red-700">*</span></label>
+                        </div>
+                        <div class="md:col-12 col-12">
+                            <p-dropdown [options]="degree" optionLabel="degreeName" placeholder="Select Degree" optionValue="id" styleClass="w-full" formControlName="degreeId"></p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-4 md:col-6 col-12">
+                        <div class="md:col-12 col-12">
+                            <label for="city">City <span class="text-red-700">*</span></label>
+                        </div>
+                        <div class="md:col-12 col-12">
+                            <p-dropdown [options]="city" optionLabel="cityName" placeholder="Select City" optionValue="id" styleClass="w-full" formControlName="cityId"></p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-4 md:col-6 col-12">
+                        <div class="md:col-12 col-12">
+                            <label for="jobType">Job Type <span class="text-red-700">*</span></label>
+                        </div>
+                        <div class="md:col-12 col-12">
+                            <p-dropdown [options]="jobType" optionLabel="typeName" placeholder="Select Job Type" optionValue="id" styleClass="w-full" formControlName="jobTypeId"></p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-4 md:col-6 col-12">
+                        <div class="md:col-12 col-12">
+                            <label for="exp-level">Experience Level <span class="text-red-700">*</span></label>
+                        </div>
+                        <div class="md:col-12 col-12">
+                            <p-dropdown [options]="expLevel" optionLabel="levelName" placeholder="Select Experience Level" optionValue="id" styleClass="w-full" formControlName="expLevelId"></p-dropdown>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:col-12 col-12">
+                <label for="salary">Salary <span class="text-red-700">*</span></label>
+            </div>
+            <div class="md:col-12 col-12">
+                <input type="text" pInputText id="salary" class="w-full"
+                  required formControlName="salary">
+                  <span class="text-red-500 ml-2" *ngIf="jobVacancyInsertReqDto.get('salary')!.invalid && jobVacancyInsertReqDto.get('salary')!.value && (jobVacancyInsertReqDto.get('salary')!.dirty || jobVacancyInsertReqDto.get('salary')!.touched)">Input exceeds characters</span>
+                  <span class="text-red-500 ml-2" *ngIf="jobVacancyInsertReqDto.get('salary')!.invalid && !jobVacancyInsertReqDto.get('salary')!.value && (jobVacancyInsertReqDto.get('salary')!.dirty || jobVacancyInsertReqDto.get('salary')!.touched)">Input can't be empty</span>
+  
+            </div>
+
+            <div class="md:col-12 col-12">
+                <label for="address">Address <span class="text-red-700">*</span></label>
+            </div>
+            <div class="md:col-12 col-12">
+                <textarea id="address" rows="3" pInputTextarea class="w-full" required formControlName="address"></textarea>
+                <span class="text-red-500 ml-2" *ngIf="jobVacancyInsertReqDto.get('address')!.invalid && jobVacancyInsertReqDto.get('address')!.value && (jobVacancyInsertReqDto.get('address')!.dirty || jobVacancyInsertReqDto.get('address')!.touched)">Input exceeds characters</span>
+                <span class="text-red-500 ml-2" *ngIf="jobVacancyInsertReqDto.get('address')!.invalid && !jobVacancyInsertReqDto.get('address')!.value && (jobVacancyInsertReqDto.get('address')!.dirty || jobVacancyInsertReqDto.get('address')!.touched)">Input can't be empty</span>
+            </div>
+
+            <div class="md:col-12 col-12">
+                <label for="description">Description <span class="text-red-700">*</span></label>
+            </div>
+            <div class="md:col-12 col-12">
+                <p-editor formControlName="description" [style]="{ height: '320px' }">
+                    <ng-template pTemplate="header">
+                        <span class="ql-formats">
+                            <select class="ql-size"></select>
+                        </span>
+                        <span class="ql-formats">
+                            <button type="button" class="ql-bold" aria-label="Bold"></button>
+                            <button type="button" class="ql-italic" aria-label="Italic"></button>
+                            <button type="button" class="ql-underline" aria-label="Underline"></button>
+                        </span>
+                        <span class="ql-formats">
+                            <span class="ql-color ql-picker ql-color-picker" aria-label="Bold">
+                                <select class="ql-color"></select>
+                            </span>
+                            <span class="ql-background ql-picker ql-color-picker" aria-label="Bold">
+                                <select class="ql-background"></select>
+                            </span>
+                        </span>
+                        <span class="ql-formats">
+                            <button class="ql-list" value="bullet" type="button"></button>
+                        </span>
+                    </ng-template>
+                </p-editor>                
+                <span class="text-red-500 ml-2" *ngIf="jobVacancyInsertReqDto.get('description')!.invalid && jobVacancyInsertReqDto.get('description')!.value && (jobVacancyInsertReqDto.get('description')!.dirty || jobVacancyInsertReqDto.get('description')!.touched)">Input exceeds characters</span>
+                <span class="text-red-500 ml-2" *ngIf="jobVacancyInsertReqDto.get('description')!.invalid && !jobVacancyInsertReqDto.get('description')!.value && (jobVacancyInsertReqDto.get('description')!.dirty || jobVacancyInsertReqDto.get('description')!.touched)">Input can't be empty</span>
+
+            </div>
+            
+        <div class="md:col-12 col-12 mt-2">
+            <!-- <app-button label="SUBMIT" btnType="Submit"></app-button> -->
+            <button pButton pRipple type="submit" (click)="submit()" [disabled]="jobVacancyInsertReqDto.invalid">Create</button>
+            <button pButton pRipple routerLink="/job-vacancies" class="p-button-secondary ml-2">Back</button>
+        </div>
+        </div>
+      </form>
+    </div>
+  </p-card>

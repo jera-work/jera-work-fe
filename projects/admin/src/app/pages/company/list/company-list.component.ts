@@ -14,6 +14,8 @@ export class CompanyListComponent implements OnInit {
   companies: CompanyResDto[] = [];
 
   constructor(private companyService: CompanyService) {}
+  companies : CompanyResDto[] = []
+  
 
   ngOnInit(): void {
     this.loading = false;

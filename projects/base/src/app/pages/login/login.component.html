@@ -1,0 +1,47 @@
+<div
+  class="flex h-screen align-items-center justify-content-center flex-column container"
+>
+  <h3>Login Bootcamp Test</h3>
+  <form [formGroup]="loginReqDto" (ngSubmit)="onLogin()">
+    <!-- email -->
+    <div class="my-3 grid align-items-center gy-md-2">
+      <div class="col-12">
+        <label for="email-address" class="form-label">Email address</label>
+      </div>
+      <div class="col-12">
+        <input
+          pInputText
+          type="email"
+          class="form-control col-12"
+          id="email-address"
+          placeholder="name@example.com"
+          formControlName="username"
+        />
+      </div>
+
+      <!-- password -->
+      <div class="col-12">
+        <label for="password" class="form-label">Password</label>
+      </div>
+      <div class="col-12">
+        <input
+          pInputText
+          type="password"
+          class="form-control col-12"
+          id="password"
+          placeholder="password"
+          formControlName="password"
+        />
+      </div>
+      <div class="col-12">
+        <app-button
+          type="submit"
+          class="btn btn-primary"
+          label="Login"
+          [loading]="loading"
+        >
+        </app-button>
+      </div>
+    </div>
+  </form>
+</div>

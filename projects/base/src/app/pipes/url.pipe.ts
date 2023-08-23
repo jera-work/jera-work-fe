@@ -1,5 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
+
 import { ADMIN_API, CANDIDATE_API } from '../constant/api.constant';
+
 
 @Pipe({
   name: 'urlCandidate',
@@ -7,6 +9,7 @@ import { ADMIN_API, CANDIDATE_API } from '../constant/api.constant';
 })
 export class UrlPipeCandidate implements PipeTransform {
   transform(value: any): string {
+
     if (value !== undefined) {
       return `${CANDIDATE_API}/files/${value}`;
     } else {
@@ -16,7 +19,7 @@ export class UrlPipeCandidate implements PipeTransform {
 }
 
 @Pipe({
-  name: 'url-admin',
+  name: 'urlAdmin',
   standalone: true,
 })
 export class UrlPipeAdmin implements PipeTransform {
