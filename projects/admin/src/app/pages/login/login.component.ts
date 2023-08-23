@@ -5,7 +5,6 @@ import { LoginService } from '@services/login.service';
 import { firstValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -27,34 +26,24 @@ export class LoginComponent implements OnInit {
     userPass: ['', [Validators.required]],
   });
 
-  // Constructor
-  constructor(
-    private fb: NonNullableFormBuilder,
-    private loginService: LoginService,
-    private router: Router
-  ) {}
-
   loading = false;
 
   onLogin() {
     if (this.loginReqDto.valid) {
       this.loading = true;
-      this.loginService
-        .loginAdmin(this.loginReqDto.getRawValue())
-        .subscribe({
-          next: (result) => {
-            this.loading = false;
-            localStorage.setItem('data', JSON.stringify(result));
-            this.router.navigateByUrl('/dashboard');
-          },
-          error: () => {
-            this.loading = false;
-          },
-        });
+      this.loginService.loginAdmin(this.loginReqDto.getRawValue()).subscribe({
+        next: (result) => {
+          this.loading = false;
+          localStorage.setItem('data', JSON.stringify(result));
+          this.router.navigateByUrl('/dashboard');
+        },
+        error: () => {
+          this.loading = false;
+        },
+      });
     } else {
       console.log('Invalid!');
       this.loading = false;
     }
   }
-  
 }

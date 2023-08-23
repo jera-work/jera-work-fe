@@ -39,7 +39,7 @@ const routes: Routes = [
     path: 'job-vacancies',
     component: BaseComponent,
     loadChildren: () =>
-      import('./pages/job-vacancy/job-vacancy.module').then(
+      import('./pages/job-vacancies/job-vacancy.module').then(
         (u) => u.JobVacancyModule
       ),
     canMatch: [authNonLoginValidation],
@@ -49,16 +49,7 @@ const routes: Routes = [
     component: LoginComponent,
     canMatch: [authValidation],
   },
-  {
-    path: 'job-vacancies',
-    component: BaseComponent,
-    loadChildren: () => import('./pages/job-vacancies/job-vacancy.module').then((j) => j.JobVacancyModule)
-  },
-  {
-    path: 'companies',
-    component: BaseComponent,
-    loadChildren: () => import('./pages/company/company.module').then((c) => c.CompanyModule)
-  },
+
   {
     path: 'dashboard',
     component: BaseComponent,

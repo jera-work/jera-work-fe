@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewChecked,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { NonNullableFormBuilder } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -14,89 +19,105 @@ import { MasterDataService } from '@services/master-data.service';
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
 })
-export class DashboardComponent {
+export class DashboardComponent implements AfterViewChecked {
   fullName: string = '';
 
-  latestJobs: JobSearchResDto[] = []
-  allJobs: JobSearchResDto[] = []
-  jobs: JobSearchResDto[] = []
-  jobTypes: JobTypeResDto[] = []
-  cities: CityResDto[] = []
-  degrees: DegreeResDto[] = []
+  latestJobs: JobSearchResDto[] = [];
+  allJobs: JobSearchResDto[] = [];
+  jobs: JobSearchResDto[] = [];
+  jobTypes: JobTypeResDto[] = [];
+  cities: CityResDto[] = [];
+  degrees: DegreeResDto[] = [];
 
-  first: number = 0
-  rowCounts: number = 10
-  length!: number
+  first: number = 0;
+  rowCounts: number = 10;
+  length!: number;
 
-  constructor(private title: Title, 
+  constructor(
+    private title: Title,
     private jobVacancyService: JobVacancyService,
     private masterService: MasterDataService,
     private router: Router,
-    private fb: NonNullableFormBuilder) {}
+    private fb: NonNullableFormBuilder,
+    private cd: ChangeDetectorRef
+  ) {}
 
   searchReq = this.fb.group({
     vacancyTitle: '',
     degreeId: '',
     cityId: '',
-    jobTypeId: ''
-  })
+    jobTypeId: '',
+  });
 
   ngOnInit(): void {
     this.title.setTitle('Jera - Work');
-    this.getLatestJob()
-    this.getPagination(this.first, this.rowCounts)
-    this.getAll()
-    this.getMasterData()
+    this.getLatestJob();
+    this.getPagination(this.first, this.rowCounts);
+    this.getAll();
+    this.getMasterData();
   }
-  
+
   searchJobs() {
-    const data = this.searchReq.getRawValue()
-    this.jobVacancyService.searchCandidate(this.first, this.rowCounts, data.vacancyTitle, data.degreeId, data.cityId, data.jobTypeId).subscribe(result => {
-      this.allJobs = result
-      this.length = result.length
-    })
+    const data = this.searchReq.getRawValue();
+    this.jobVacancyService
+      .searchCandidate(
+        this.first,
+        this.rowCounts,
+        data.vacancyTitle,
+        data.degreeId,
+        data.cityId,
+        data.jobTypeId
+      )
+      .subscribe((result) => {
+        this.allJobs = result;
+        this.length = result.length;
+      });
   }
 
   getAll() {
-    this.jobVacancyService.getAllJobsCandidate().subscribe(result => {
-      this.jobs = result
-      this.length = result.length
-    })
+    this.jobVacancyService.getAllJobsCandidate().subscribe((result) => {
+      this.jobs = result;
+      this.length = result.length;
+    });
   }
 
   getPagination(startIndex: number, endIndex: number) {
-    this.jobVacancyService.getAllJobsWithPaginationCandidate(startIndex, endIndex).subscribe(result => {
-      this.allJobs = result
-      this.length = this.jobs.length
-    })
+    this.jobVacancyService
+      .getAllJobsWithPaginationCandidate(startIndex, endIndex)
+      .subscribe((result) => {
+        this.allJobs = result;
+        this.length = this.jobs.length;
+      });
   }
 
   getLatestJob() {
-    this.jobVacancyService.getLatestJobCandidate(0, this.rowCounts).subscribe(result => {
-      this.latestJobs = result
-    })
+    this.jobVacancyService
+      .getLatestJobCandidate(0, this.rowCounts)
+      .subscribe((result) => {
+        this.latestJobs = result;
+      });
   }
 
   getMasterData() {
-    this.masterService.getJobTypes().subscribe(result => {
-      this.jobTypes = result
-    })
+    this.masterService.getJobTypes().subscribe((result) => {
+      this.jobTypes = result;
+    });
 
-    this.masterService.getCities().subscribe(result => {
-      this.cities = result
-    })
+    this.masterService.getCities().subscribe((result) => {
+      this.cities = result;
+    });
 
-    this.masterService.getDegree().subscribe(result => {
-      this.degrees = result
-    })
+    this.masterService.getDegree().subscribe((result) => {
+      this.degrees = result;
+    });
   }
 
-  onPageChange(event: any){
-    this.getPagination(event.first, event.first + event.rows)
+  onPageChange(event: any) {
+    this.getPagination(event.first, event.first + event.rows);
   }
 
   toDetail(jobId: string) {
-    this.router.navigateByUrl(`/job/${jobId}`)
+    this.router.navigateByUrl(`/job/${jobId}`);
   }
 
   responsiveOptions = [
@@ -127,5 +148,9 @@ export class DashboardComponent {
         return 'danger';
     }
     return '';
+  }
+
+  ngAfterViewChecked(): void {
+    this.cd.detectChanges();
   }
 }
