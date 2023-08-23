@@ -28,6 +28,11 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
+    path: 'job-vacancies',
+    component: BaseComponent,
+    loadChildren: () => import('./pages/job-vacancies/job-vacancy.module').then((j) => j.JobVacancyModule)
+  },
+  {
     path: 'dashboard',
     component: BaseComponent,
     children: [
