@@ -1,0 +1,201 @@
+<pre>
+  {{ assignsCandidate.value | json }}
+</pre>
+
+<div
+  class="flex align-items-center justify-content-center flex-column container"
+>
+  <h3>Assign Candidate</h3>
+  <form [formGroup]="assignsCandidate" (ngSubmit)="onSubmit()" class="w-10">
+    <!-- Assign Candidate -->
+    <div class="my-3 grid align-items-center md:gy-4 gy-3 container">
+      <div class="col-12 md:col-3">
+        <label for="candidate" class="form-label"
+          >Select Candidate <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-12 md:col-9">
+        <p-dropdown
+          [options]="candidates"
+          styleClass="w-full"
+          optionLabel="fullName"
+          optionValue="id"
+          formControlName="candidateId"
+          placeholder="Select Candidate"
+        >
+        </p-dropdown>
+      </div>
+
+      <div class="col-12 md:col-3">
+        <label for="reviewer" class="form-label"
+          >Select Reviewer <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-12 md:col-9">
+        <p-dropdown
+          styleClass="w-full"
+          [options]="reviewers"
+          optionLabel="fullName"
+          optionValue="id"
+          formControlName="reviewerId"
+          placeholder="Select Reviewer"
+        >
+        </p-dropdown>
+      </div>
+
+      <div class="col-12 md:col-3">
+        <label for="packet" class="form-label"
+          >Select Question Packet <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-12 md:col-9">
+        <p-dropdown
+          [options]="questionPacket"
+          styleClass="w-full"
+          optionLabel="packetName"
+          optionValue="id"
+          placeholder="Select Packet"
+        >
+        </p-dropdown>
+      </div>
+
+      <!-- Question Type -->
+      <div class="col-12 md:col-3">
+        <label for="type" class="form-label"
+          >Select Question Type <span class="text-red-600">*</span></label
+        >
+      </div>
+
+      <div class="col-12 md:col-9 flex">
+        <div *ngFor="let t of questionType" class="mr-4">
+          <p-checkbox
+            styleClass="w-full mr-2"
+            name="{{ t.typeQuestionName }}"
+            value="{{ t.id }}"
+            inputId="{{ t.id }}"
+            (onChange)="addAssignList($event, t.id)"
+          ></p-checkbox>
+          <label for="{{ t.id }}">{{ t.typeQuestionName }}</label>
+        </div>
+      </div>
+      <!-- Question Type -->
+
+      <!-- set date time -->
+      <div
+        class="my-3 col-12 flex-row align-items-center md:gy-4 gy-3 container border pb-2 border-2"
+        *ngFor="let d of candidateAssignList.controls; let i = index"
+        formArrayName="candidateAssignList"
+      >
+        <div [formGroupName]="i">
+          <div class="col-12">
+            <h4>{{ typeName }}</h4>
+          </div>
+          <div class="col-12 md:col-3">
+            <label for="start-time" class="form-label"
+              >Input Start Time <span class="text-red-600">*</span></label
+            >
+          </div>
+          <div class="col-12 md:col-9">
+            <p-calendar
+              formControlName="startDateTemp"
+              [showTime]="true"
+              [touchUI]="true"
+              styleClass="w-full"
+              [showSeconds]="true"
+              (onSelect)="convertStartDate($event, i)"
+            ></p-calendar>
+          </div>
+
+          <div class="col-12 md:col-3">
+            <label for="end-time" class="form-label"
+              >Input End Time <span class="text-red-600">*</span></label
+            >
+          </div>
+          <div class="col-12 md:col-9">
+            <p-calendar
+              formControlName="endDateTemp"
+              [showTime]="true"
+              styleClass="w-full"
+              [touchUI]="true"
+              [showSeconds]="true"
+              (onSelect)="convertEndDate($event, i)"
+            ></p-calendar>
+          </div>
+        </div>
+      </div>
+      <!-- set date time -->
+
+      <!-- Question Topic -->
+      <div class="col-12 md:col-3">
+        <label for="topic" class="form-label"
+          >Select Question Topic <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-12 md:col-9">
+        <p-dropdown
+          [options]="questionTopic"
+          styleClass="w-full"
+          optionLabel="topicName"
+          optionValue="id"
+          placeholder="Select Topic"
+        >
+        </p-dropdown>
+      </div>
+      <!-- Question Topic -->
+
+      <!-- Questions -->
+      <div class="col-9 md:col-3">
+        <label for="question" class="form-label"
+          >Question <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-3 md:col-9">
+        <app-button
+          btnType="button"
+          class="btn btn-primary"
+          id="questionadd"
+          label="Add"
+          (click)="addQuestion()"
+        >
+        </app-button>
+      </div>
+
+      <div
+        *ngFor="let qid of questionId.controls; let i = index"
+        formArrayName="questionId"
+        class="w-full"
+      >
+        <div class="col-12 md:col-6 md:col-offset-3">
+          <p-dropdown
+            [options]="questionList"
+            optionLabel="question"
+            optionValue="id"
+            styleClass="w-full"
+            placeholder="Select Question"
+            [formControlName]="i"
+          >
+          </p-dropdown>
+        </div>
+        <div class="col-12 md:col-3">
+          <app-button
+            classBtn="p-button-danger"
+            label="Delete"
+            (click)="removeQuestion(i)"
+          >
+          </app-button>
+        </div>
+      </div>
+      <div class="col-12">
+        <app-button type="submit" label="Submit"></app-button>
+      </div>
+      <div class="col-12">
+        <app-button
+          btnType="button"
+          label="Back"
+          routerLink="/dashboard"
+          classBtn="p-button-secondary p-button-text"
+        ></app-button>
+      </div>
+    </div>
+  </form>
+</div>

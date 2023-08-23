@@ -1,0 +1,93 @@
+<pre>
+  {{ userInsertReqDto.value | json }}
+</pre>
+
+<div
+  class="flex align-items-center justify-content-center flex-column container"
+>
+  <h3>Create New User</h3>
+  <form [formGroup]="userInsertReqDto" (ngSubmit)="onCreate()" class="w-10">
+    <!-- email -->
+    <div class="my-3 grid align-items-center">
+      <div class="col-12 md:col-3">
+        <label for="email-address" class="form-label"
+          >Username <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-12 md:col-9">
+        <input
+          type="email"
+          class="form-control col-12"
+          id="email-address"
+          placeholder="name@example.com"
+          formControlName="username"
+          pInputText
+        />
+      </div>
+
+      <div class="col-12 md:col-3">
+        <label for="phone" class="form-label"
+          >Phone Number <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-12 md:col-9">
+        <input
+          type="number"
+          class="form-control col-12"
+          id="phone"
+          placeholder="08xxxx"
+          formControlName="phoneNumb"
+          pInputText
+        />
+      </div>
+
+      <!-- fullName -->
+      <div class="col-12 md:col-3">
+        <label for="fullname" class="form-label"
+          >User Fullname <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-12 md:col-9">
+        <input
+          type="text"
+          class="form-control col-12"
+          id="fullname"
+          placeholder="fullname"
+          formControlName="fullName"
+          pInputText
+        />
+      </div>
+
+      <!-- Select Role -->
+      <div class="col-12 md:col-3">
+        <label for="role" class="form-label"
+          >Role <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-12 md:col-9">
+        <div class="card">
+          <p-dropdown
+            [options]="roles"
+            optionLabel="roleName"
+            optionValue="id"
+            formControlName="roleId"
+            placeholder="Select Role"
+          ></p-dropdown>
+        </div>
+      </div>
+      <div class="col-12">
+        <app-button type="submit" [loading]="sending" label="Create">
+        </app-button>
+      </div>
+
+      <div class="col-12">
+        <app-button
+          routerLink="/users"
+          classBtn="p-button-secondary p-button-text"
+          label="Back"
+        >
+        </app-button>
+      </div>
+    </div>
+  </form>
+</div>
