@@ -28,6 +28,8 @@ import { ChipModule } from 'primeng/chip';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { DataViewModule, DataViewLayoutOptions } from 'primeng/dataview';
 import { RippleModule } from 'primeng/ripple';
+import { PaginatorModule } from 'primeng/paginator';
+import { DividerModule } from 'primeng/divider';
 
 @NgModule({
   imports: [
@@ -60,6 +62,8 @@ import { RippleModule } from 'primeng/ripple';
     TabMenuModule,
     DataViewModule,
     RippleModule,
+    PaginatorModule,
+    DividerModule
   ],
   exports: [
     MenubarModule,
@@ -91,6 +95,8 @@ import { RippleModule } from 'primeng/ripple';
     TabMenuModule,
     DataViewModule,
     RippleModule,
+    PaginatorModule,
+    DividerModule
   ],
 })
 export class SharedModule {}

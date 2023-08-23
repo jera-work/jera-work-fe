@@ -18,8 +18,7 @@ import { ButtonComponent } from '@components/button/button.component';
 import { SharedModule } from '@shared/shared.module';
 import { JobCardComponent } from '@components/job-card/job-card.component';
 import { RegisterComponent } from './pages/register/register.component';
-import { UrlPipe } from '@pipes/url.pipe';
-import { DataViewModule, DataViewLayoutOptions } from 'primeng/dataview';
+import { UrlPipeAdmin, UrlPipeCandidate } from '@pipes/url.pipe';
 
 const routes: Routes = [
   {
@@ -100,7 +99,8 @@ const routes: Routes = [
     ButtonComponent,
     SharedModule,
     JobCardComponent,
-    UrlPipe, DataViewModule
+    UrlPipeCandidate,
+    UrlPipeAdmin
   ],
   exports: [RouterModule],
 })

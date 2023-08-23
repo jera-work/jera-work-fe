@@ -1,106 +1,120 @@
 <div class="min-h-screen md:mx-8 sm:mx-6 mx-2">
-  <app-button
-    label="Back"
-    icon="pi pi-arrow-left"
-    classBtn="p-button-secondary p-button-outlined my-4"
-    border=""
-    routerLink="/dashboard"
-  ></app-button>
+  <app-button label="Back" icon="pi pi-arrow-left" classBtn="p-button-secondary p-button-outlined my-4" border=""
+    routerLink="/dashboard"></app-button>
   <div class="px-6 shadow-3 py-2 relative">
-    <!-- company img -->
-    <div class="flex justify-content-center align-items-center">
-      <img src="/assets/company.svg" alt="company" />
-    </div>
-    <!-- company name -->
-    <h2>LiLaine Official</h2>
-    <!-- company desc -->
-    <p>
-      PT. Conviction Group adalah perusahaan baru didaerah Jabodetabek.
-      Sebelumnya perusahaan kita sudah berjalan di kota Medan, Pekanbaru dan
-      Batam. Perusahaan kita bergerak dalam bidang Event organizer dan
-      menempatkan team kita di beberapa SPBU milik Pertamina di indonesia.
-    </p>
+    <div class="flex flex-column">
 
-    <!-- job title -->
-    <p>Open for you:</p>
-    <h2>Live Host</h2>
-    <!-- buttons -->
-    <div>
-      <app-button label="Apply" backgroundColor="var(--PRIMARY)"> </app-button>
-    </div>
-
-    <div>
-      <h4>Details:</h4>
-      <div class="flex flex-column gap-2">
-        <!-- Degree -->
-        <div class="flex">
-          <span class="w-10rem">
-            <i class="pi pi-user"></i>
-            Degree
-          </span>
-          <span>: SMA / SMK</span>
-        </div>
-
-        <!-- Gender -->
-        <div class="flex">
-          <span class="w-10rem">
-            <i class="pi pi-question"></i>
-            Gender
-          </span>
-          <span>: Pria / Wanita</span>
-        </div>
-
-        <!-- Ages -->
-        <div class="flex">
-          <span class="w-10rem">
-            <i class="pi pi-id-card"></i>
-            Ages
-          </span>
-          <span>: 18-28 tahun</span>
-        </div>
-
-        <!-- Job Type -->
-        <div class="flex">
-          <span class="w-10rem">
-            <i class="pi pi-briefcase"></i>
-            Job Type
-          </span>
-          <span>: Full Time</span>
-        </div>
-
-        <!-- Payload -->
-        <div class="flex">
-          <span class="w-10rem">
-            <i class="pi pi-money-bill"></i>
-            Payload
-          </span>
-          <span>: 3 - 4 Juta</span>
-        </div>
-
-        <!-- Map -->
-        <div class="flex">
-          <span class="w-10rem">
-            <i class="pi pi-map-marker"></i>
-            Location
-          </span>
-          <span>
-            : Jakarta Pusat, Jakarta Barat, Jakarta Timur, Jakarta Selatan,
-            Jakarta Utara, Bogor, Tangerang, Bekasi, Depok
-          </span>
+      <!-- company img -->
+      <div class="flex gap-2 justify-content-end my-3">
+        <i class="pi pi-bookmark text-2xl"></i>
+        <i class="pi pi-bookmark-fill text-2xl"></i>
+        <i class="pi pi-share-alt text-2xl"></i>
+      </div>
+      <div class="flex gap-3 mb-2 flex-column md:flex-row">
+        <img src="{{ jobDetail?.companyPhotoId | urlAdmin}}" alt="company" class="w-15rem h-10rem " style="object-fit:cover"/>
+        <div class="flex flex-column w-full">
+          <!-- company name -->
+          <h1>{{ jobDetail?.companyName }}</h1>
+          <!-- company desc -->
+    
+          <h3>Company Description</h3>
+          <p>
+            {{ jobDetail?.companyDesc }}
+          </p>
+    
         </div>
       </div>
-    </div>
+      <p-divider></p-divider>
+      <!-- job title -->
+      <p>Open for you:</p>
+      <h2>{{ jobDetail?.vacancyTitle }}</h2>
 
-    <!-- job desc -->
-    <div>
-      <h4>Description</h4>
-    </div>
+      <div>
+        <h4>Details:</h4>
+        <div class="flex flex-column gap-2">
+          <!-- Degree -->
+          <div class="flex">
+            <span class="w-10rem">
+              <i class="pi pi-user"></i>
+              Degree
+            </span>
+            <span>: {{ jobDetail?.degreeName }}</span>
+          </div>
 
-    <!-- save and share -->
-    <div class="absolute top-0 right-0 mr-4 mt-4 flex gap-3">
-      <i class="pi pi-bookmark text-2xl"></i>
-      <i class="pi pi-bookmark-fill text-2xl"></i>
-      <i class="pi pi-share-alt text-2xl"></i>
+          <!-- Gender -->
+          <div class="flex">
+            <span class="w-10rem">
+              <i class="pi pi-question"></i>
+              Gender
+            </span>
+            <span>: {{ jobDetail?.genderName }}</span>
+          </div>
+
+          <!-- Ages -->
+          <div class="flex">
+            <span class="w-10rem">
+              <i class="pi pi-id-card"></i>
+              Ages
+            </span>
+            <span>: {{ jobDetail?.ageVacancyName }}</span>
+          </div>
+
+          <!-- Job Type -->
+          <div class="flex">
+            <span class="w-10rem">
+              <i class="pi pi-briefcase"></i>
+              Job Type
+            </span>
+            <span>: {{ jobDetail?.jobTypeName }}</span>
+          </div>
+
+          <!-- Payload -->
+          <div class="flex">
+            <span class="w-10rem">
+              <i class="pi pi-money-bill"></i>
+              Payload
+            </span>
+            <span>: {{ jobDetail?.salary }}</span>
+          </div>
+
+          <!-- Map -->
+          <div class="flex">
+            <span class="w-10rem">
+              <i class="pi pi-map-marker"></i>
+              Location
+            </span>
+            <span>
+              : {{ jobDetail?.cityName }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <p-divider></p-divider>
+      <!-- job desc -->
+      <div>
+        <h4>Description</h4>
+        <span>{{ jobDetail?.description }}</span>
+      </div>
+      
+      <p-divider></p-divider>
+      <!-- buttons -->
+      <div>
+        <p-button label="Apply" backgroundColor="var(--PRIMARY)" (onClick)="showApplyModal()"></p-button>
+      </div>
     </div>
   </div>
 </div>
+
+  <p-dialog header="Header" [(visible)]="applyJobModalVisibility" styleClass="w-27rem">
+      <ng-template pTemplate="header">
+          <span class="text-xl font-bold">Apply job</span>
+      </ng-template>
+          <span class="text-center">Apply for this job?</span>
+          <p-divider></p-divider>
+          <div class="flex gap-1 justify-content-end">
+            <app-button type="button" (click)="applyJobModalVisibility = false" classBtn="p-button-danger"
+                label="Cancel"></app-button>
+            <app-button btnType="submit" label="Apply" (clickChange)="applyJob()"></app-button>
+          </div>
+  </p-dialog>

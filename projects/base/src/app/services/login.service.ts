@@ -12,7 +12,7 @@ export class LoginService {
   constructor(private base: BaseService) {}
 
   loginAdmin(data: LoginReqDto): Observable<LoginResDto> {
-    return this.base.post<LoginResDto>(`${ADMIN_API}`, data, false);
+    return this.base.post<LoginResDto>(`${ADMIN_API}/login`, data, false);
   }
 
   loginCandidate(data: LoginReqDto): Observable<LoginResDto> {

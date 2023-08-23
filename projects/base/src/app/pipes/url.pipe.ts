@@ -19,7 +19,7 @@ export class UrlPipeCandidate implements PipeTransform {
 }
 
 @Pipe({
-  name: 'url-admin',
+  name: 'urlAdmin',
   standalone: true,
 })
 export class UrlPipeAdmin implements PipeTransform {
