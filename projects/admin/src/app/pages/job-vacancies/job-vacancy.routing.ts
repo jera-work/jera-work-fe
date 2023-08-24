@@ -18,6 +18,7 @@ import { AppliedCandidateComponent } from './applied-candidate/applied-candidate
 import { ImageModule } from 'primeng/image';
 import { SharedModule } from '@shared/shared.module';
 import { ButtonComponent } from '@components/button/button.component';
+import { TimeAgoPipe } from '@pipes/timeago.pipe';
 
 const routes: Routes = [
   {
@@ -45,7 +46,12 @@ const routes: Routes = [
     JobVacancyDetailComponent,
     AppliedCandidateComponent,
   ],
-  imports: [RouterModule.forChild(routes), SharedModule, ButtonComponent],
+  imports: [
+    RouterModule.forChild(routes),
+    SharedModule,
+    ButtonComponent,
+    TimeAgoPipe,
+  ],
   exports: [RouterModule],
 })
 export class JobVacancyRouting {}

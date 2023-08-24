@@ -7,7 +7,6 @@ import {
 import { JobVacancyResDto } from '@dto/job-vacancy/job-vacancy.res.dto';
 import { AppliedVacancyService } from '@services/applied-vacancy.service';
 import { JobVacancyService } from '@services/job-vacancy.service';
-import { Table } from 'primeng/table';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
@@ -46,42 +45,23 @@ export class JobVacancyDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.getData();
+  }
 
-    // this.activatedRoute.params.subscribe(result => {
-    //     console.log(result['id'])
-    // })
-    // this.jobVacancy = {
-    //     id : 'ac0bb0c8-cb58-4399-b155-436a837d7859',
-    //     vacancyCode : 'VA001',
-    //     vacancyTitle : 'Fullstack Developer',
-    //     picHrName : 'Rendy',
-    //     picUserName : 'Riandy',
-    //     startDate : '2021-01-07',
-    //     endDate : '2021-01-07',
-    //     expLevelName : 'Junior',
-    //     availableStatusName : 'Open',
-    //     companyName : 'Adidas',
-    //     degreeName : 'S1 - Bachelor',
-    //     genderName : 'Male',
-    //     ageVacancyName : 'Below 20',
-    //     jobTypeName : 'Fulltime',
-    //     salary : 'Rp.4.000.000',
-    //     cityName : 'Jakarta',
-    //     address : 'Jalan Casablanca Raya, Kav. 88 12870 Jakarta Selatan Daerah Khusus Ibukota Jakarta',
-    //     description : 'Adidas adalah perusahaan yang bergerak di bidang alat olahraga'
-    // }
-    // this.appliedVacancies.push({
-    //     candidateName : "Rendy Prima",
-    //     candidateEmail : "rdarma2000@gmail.com",
-    //     progressName : "Application",
-    //     statusName : "Open"
-    // })
+  getProgressSeverity(status: string) {
+    switch (status) {
+      case 'Active':
+        return 'success';
+      case 'Close':
+        return 'danger';
+      default:
+        return 'danger';
+    }
   }
 
   getStatusSeverity(status: string) {
     switch (status) {
-      case 'Active':
-        return 'success';
+      case 'Application':
+        return 'warning';
       case 'Close':
         return 'danger';
       default:
