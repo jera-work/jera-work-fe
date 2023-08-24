@@ -13,6 +13,8 @@ import { DocumentTypesResDto } from '@dto/data-master/document-types.res.dto';
 import { SkillResDto } from '@dto/data-master/skill.res.dto';
 import { JobTypeResDto } from '@dto/job-type/job-type.res.dto';
 import { CityResDto } from '@dto/city/city.res.dto';
+import { ExperienceLevelResDto } from '@dto/data-master/experience-level.res.dto';
+import { AgeVacancyResDto } from '@dto/data-master/age-vacancy.res.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -62,5 +64,13 @@ export class MasterDataService {
 
   getDegrees(): Observable<DegreeResDto[]> {
     return this.base.get(`${ADMIN_API}/degrees`);
+  }
+
+  getExperiencesLevel(): Observable<ExperienceLevelResDto[]> {
+    return this.base.get(`${ADMIN_API}/experience-levels`);
+  }
+
+  getAgeVacancies(): Observable<AgeVacancyResDto[]> {
+    return this.base.get(`${ADMIN_API}/age-vacancies`);
   }
 }

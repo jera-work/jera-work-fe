@@ -1,5 +1,7 @@
-export interface UserResDto {
-  id: string;
+export interface ProfileAdminResDto {
+  userId: string;
+  photoId: string;
+  userEmail: string;
   profileName: string;
   phoneNumber: string;
   profileAddress: string;

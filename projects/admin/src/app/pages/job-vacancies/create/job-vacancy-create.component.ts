@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Roles } from '@constant/role.constant';
-import { AgeVacancyResDto } from '@dto/age-vacancy/age-vacancy.res.dto';
-import { AvailableStatusResDto } from '@dto/available-status/available-status.res.dto';
 import { CityResDto } from '@dto/city/city.res.dto';
 import { CompanyResDto } from '@dto/company/company.res.dto';
+import { AgeVacancyResDto } from '@dto/data-master/age-vacancy.res.dto';
 import { DegreeResDto } from '@dto/data-master/degree.res.dto';
+import { ExperienceLevelResDto } from '@dto/data-master/experience-level.res.dto';
 import { GenderResDto } from '@dto/data-master/gender.res.dto';
-import { ExperienceLevelResDto } from '@dto/experience-level/experience-level.res.dto';
 import { JobTypeResDto } from '@dto/job-type/job-type.res.dto';
 import { UserResDto } from '@dto/user/user.res.dto';
 import { JobVacancyService } from '@services/job-vacancy.service';
+import { MasterDataService } from '@services/master-data.service';
 import { UsersService } from '@services/users.service';
 import { firstValueFrom } from 'rxjs';
 
@@ -36,18 +37,19 @@ export class JobVacancyCreateComponent implements OnInit {
   picUser: UserResDto[] = [];
   picHr: UserResDto[] = [];
   expLevel: ExperienceLevelResDto[] = [];
-  availableStatus: AvailableStatusResDto[] = [];
   companies: CompanyResDto[] = [];
-  degree: DegreeResDto[] = [];
-  gender: GenderResDto[] = [];
+  degrees: DegreeResDto[] = [];
+  genders: GenderResDto[] = [];
   ageVacancy: AgeVacancyResDto[] = [];
   jobType: JobTypeResDto[] = [];
-  city: CityResDto[] = [];
+  cities: CityResDto[] = [];
 
   constructor(
     private fb: NonNullableFormBuilder,
     private jobService: JobVacancyService,
-    private userService: UsersService
+    private userService: UsersService,
+    private masterDataService: MasterDataService,
+    private router: Router
   ) {}
 
   jobVacancyInsertReqDto = this.fb.group({
@@ -60,8 +62,6 @@ export class JobVacancyCreateComponent implements OnInit {
     endDate: ['', Validators.required],
     endDateTemp: [],
     expLevelId: ['', Validators.required],
-    availableStatusId: ['', Validators.required],
-
     degreeId: ['', Validators.required],
     genderId: ['', Validators.required],
     ageVacancyId: ['', Validators.required],
@@ -72,13 +72,44 @@ export class JobVacancyCreateComponent implements OnInit {
     description: ['', Validators.required],
   });
 
+  getData() {
+    firstValueFrom(this.userService.getUsersByRole(Roles.HR)).then((res) => {
+      this.picHr = res;
+    });
+
+    firstValueFrom(this.userService.getUsersByRole(Roles.USER)).then((res) => {
+      this.picUser = res;
+    });
+
+    firstValueFrom(this.masterDataService.getGenders()).then((res) => {
+      this.genders = res;
+    });
+
+    firstValueFrom(this.masterDataService.getDegree()).then(
+      (res) => (this.degrees = res)
+    );
+
+    firstValueFrom(this.masterDataService.getCities()).then((res) => {
+      this.cities = res;
+    });
+
+    firstValueFrom(this.masterDataService.getJobTypes()).then((res) => {
+      this.jobType = res;
+    });
+
+    firstValueFrom(this.masterDataService.getExperiencesLevel()).then((res) => {
+      console.log(res);
+      this.expLevel = res;
+    });
+
+    firstValueFrom(this.masterDataService.getAgeVacancies()).then((res) => {
+      console.log(res);
+      this.ageVacancy = res;
+    });
+  }
+
   ngOnInit(): void {
-    // firstValueFrom(this.userService.getUsers('ADM'))
-    // .then((res) => {
-    //     this.picHr = res
-    //     this.picUser = res
-    //     console.log(res)
-    // })
+    this.getData();
   }
 
   convertStartDate(event: any) {
@@ -95,16 +126,20 @@ export class JobVacancyCreateComponent implements OnInit {
     });
   }
 
-  submit() {
-    firstValueFrom(
-      this.jobService.insertJob(this.jobVacancyInsertReqDto.getRawValue())
-    )
-      .then((res) => {
-        console.log(res.id);
-        console.log(res.message);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  onSubmit() {
+    if (this.jobVacancyInsertReqDto.valid) {
+      firstValueFrom(
+        this.jobService.insertJob(this.jobVacancyInsertReqDto.getRawValue())
+      )
+        .then((res) => {
+          console.log(res);
+          this.router.navigateByUrl('/job-vacancies');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      console.log('Please input value!');
+    }
   }
 }

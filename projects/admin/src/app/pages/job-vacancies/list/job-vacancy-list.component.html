@@ -1,7 +1,12 @@
-<!-- buat hr -->
-<div class="mx-7 mt-5">
-  <p-button routerLink="/job-vacancies/create" icon="pi pi-plus" label="Add Job Vacancy"></p-button>
-  <p-table 
+<div class="min-h-screen">
+  <div class="mx-7 mt-5">
+    <app-button
+      routerLink="/job-vacancies/create"
+      icon="pi pi-plus"
+      label="Add Job"
+      backgroundColor="var(--PRIMARY)"
+    ></app-button>
+    <p-table
       #dt1
       [value]="jobVacancies"
       dataKey="id"
@@ -9,111 +14,167 @@
       [showCurrentPageReport]="true"
       [rowsPerPageOptions]="[10, 25, 50]"
       [paginator]="true"
-      [loading]="loading"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-      [globalFilterFields]="['vacancyCode', 'vacancyTitle', 'picUserName', 'picHrName', 'startDate', 'endDate', 'expLevelName', 'availableStatusName', 'companyName']"
-      selectionMode="single" 
-      [tableStyle]="{ 'min-width': '50rem' }" 
+      [globalFilterFields]="[
+        'vacancyCode',
+        'vacancyTitle',
+        'picUserName',
+        'picHrName',
+        'startDate',
+        'endDate',
+        'expLevelName',
+        'availableStatusName',
+        'companyName'
+      ]"
+      selectionMode="single"
+      [tableStyle]="{ 'min-width': '50rem' }"
       styleClass="p-datatable-gridlines p-datatable-striped mt-2"
-  >
+    >
       <ng-template pTemplate="caption">
-        <div class="flex flex-column md:flex-row lg:flex-row md:align-items-center">
-            <h2>Job Vacancy List</h2>
-            <div class="m-0 md:ml-auto flex flex-column">
-              <div class="p-input-icon-left mt-2">
-                  <i class="pi pi-search"></i>
-                  <input class="w-full" pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')" placeholder="Search"/>
-                </div>
+        <div
+          class="flex flex-column md:flex-row lg:flex-row md:align-items-center"
+        >
+          <h2>Job Vacancy List</h2>
+          <div class="m-0 md:ml-auto flex flex-column">
+            <div class="p-input-icon-left mt-2">
+              <i class="pi pi-search"></i>
+              <input
+                class="w-full"
+                pInputText
+                type="text"
+                (input)="
+                  dt1.filterGlobal($any($event.target).value, 'contains')
+                "
+                placeholder="Search"
+              />
             </div>
+          </div>
         </div>
       </ng-template>
-    
+
       <ng-template pTemplate="header">
-            <tr>
-                <th scope="col" class="md:col-1">No.</th>
-                <th scope="col" class="md:col-1">
-                  <div class="flex align-items-center">
-                      Code
-                      <p-columnFilter type="text" field="vacancyCode" display="menu"></p-columnFilter>
-                  </div>
-                </th>
-                <th scope="col" class="md:col-1">
-                  <div class="flex align-items-center">
-                      Title
-                      <p-columnFilter type="text" field="vacancyTitle" display="menu"></p-columnFilter>
-                  </div>
-                </th>
-                <th scope="col" class="md:col-2">
-                  <div class="flex align-items-center">
-                      PIC HR
-                      <p-columnFilter type="text" field="picHrName" display="menu"></p-columnFilter>
-                  </div>
-                </th>
-                <th scope="col" class="md:col-2">
-                  <div class="flex align-items-center">
-                      PIC User
-                      <p-columnFilter type="text" field="picUserName" display="menu"></p-columnFilter>
-                  </div>
-                </th>
-                <th scope="col" class="md:col-2">
-                  <div class="flex align-items-center">
-                      End Date
-                      <p-columnFilter type="text" field="startDate" display="menu"></p-columnFilter>
-                  </div>
-                </th>
-                <th scope="col" class="md:col-2">
-                  <div class="flex align-items-center">
-                      End Date
-                      <p-columnFilter type="text" field="endDate" display="menu"></p-columnFilter>
-                  </div>
-                </th>
-                <th scope="col" class="md:col-2">
-                  <div class="flex align-items-center">
-                      Exp Level
-                      <p-columnFilter type="text" field="expLevelName" display="menu"></p-columnFilter>
-                  </div>
-                </th>
-                <th scope="col" class="md:col-1">
-                  <div class="flex align-items-center">
-                      Available Status
-                      <p-columnFilter type="text" field="availableStatusName" display="menu"></p-columnFilter>
-                  </div>
-                </th>
-                <th scope="col" class="md:col-1">
-                  <div class="flex align-items-center">
-                      Company Name
-                      <p-columnFilter type="text" field="companyName" display="menu"></p-columnFilter>
-                  </div>
-                </th>
-            </tr>
+        <tr>
+          <th scope="col" class="md:col-1">No.</th>
+          <th scope="col" class="md:col-1">
+            <div class="flex align-items-center">
+              Title
+              <p-columnFilter
+                type="text"
+                field="vacancyTitle"
+                display="menu"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <th scope="col" class="md:col-2">
+            <div class="flex align-items-center">
+              PIC HR
+              <p-columnFilter
+                type="text"
+                field="picHrName"
+                display="menu"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <th scope="col" class="md:col-2">
+            <div class="flex align-items-center">
+              PIC User
+              <p-columnFilter
+                type="text"
+                field="picUserName"
+                display="menu"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <th scope="col" class="md:col-2">
+            <div class="flex align-items-center">
+              End Date
+              <p-columnFilter
+                type="text"
+                field="startDate"
+                display="menu"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <th scope="col" class="md:col-2">
+            <div class="flex align-items-center">
+              End Date
+              <p-columnFilter
+                type="text"
+                field="endDate"
+                display="menu"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <th scope="col" class="md:col-2">
+            <div class="flex align-items-center">
+              Exp Level
+              <p-columnFilter
+                type="text"
+                field="expLevelName"
+                display="menu"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <th scope="col" class="md:col-1">
+            <div class="flex align-items-center">
+              Available Status
+              <p-columnFilter
+                type="text"
+                field="availableStatusName"
+                display="menu"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <th scope="col" class="md:col-1">
+            <div class="flex align-items-center">
+              Company Name
+              <p-columnFilter
+                type="text"
+                field="companyName"
+                display="menu"
+              ></p-columnFilter>
+            </div>
+          </th>
+        </tr>
       </ng-template>
       <ng-template pTemplate="body" let-jobVacancy let-i="rowIndex">
-          <tr routerLink="{{i+1}}" style="cursor: pointer;">
-              <td>{{i+1}}</td>
-              <td>{{jobVacancy.vacancyCode}}</td>
-              <td>{{jobVacancy.vacancyTitle}}</td>
-              <td>{{jobVacancy.picHrName}}</td>
-              <td>{{jobVacancy.picUserName}}</td>
-              <td>{{jobVacancy.startDate}}</td>
-              <td>{{jobVacancy.endDate}}</td>
-              <td>{{jobVacancy.expLevelName}}</td>
-              <td>
-                <p-tag [value]="jobVacancy.availableStatusName" [severity]="getStatusSeverity(jobVacancy.availableStatusName)"></p-tag>
-              </td>
-              <td>{{jobVacancy.companyName}}</td>
-          </tr>
+        <tr routerLink="{{ jobVacancy.vacancyId }}" style="cursor: pointer">
+          <td>{{ i + 1 }}</td>
+          <td>{{ jobVacancy.vacancyTitle }}</td>
+          <td>{{ jobVacancy.hrName }}</td>
+          <td>{{ jobVacancy.userName }}</td>
+          <td>{{ jobVacancy.startDate }}</td>
+          <td>{{ jobVacancy.endDate }}</td>
+          <td>{{ jobVacancy.levelName }}</td>
+          <td>
+            <p-tag
+              [value]="jobVacancy.statusName"
+              [severity]="getStatusSeverity(jobVacancy.statusName)"
+            ></p-tag>
+          </td>
+          <td>{{ jobVacancy.companyName }}</td>
+        </tr>
       </ng-template>
-      <ng-template pTemplate="summary">
-        <div class="flex align-items-center justify-content-between">
-          <div class="flex align-items-center gap-2" style="cursor: pointer;" (click)="prevPage()">
-            <i class="pi pi-arrow-left"></i>
-            <span>Previous</span>
-          </div>
-          <div class="flex align-items-center gap-2" style="cursor: pointer;" (click)="nextPage()">
-            <span>Next</span>
-            <i class="pi pi-arrow-right"></i>
-          </div>
+      <!-- <ng-template pTemplate="summary">
+      <div class="flex align-items-center justify-content-between">
+        <div
+          class="flex align-items-center gap-2"
+          style="cursor: pointer"
+          (click)="prevPage()"
+        >
+          <i class="pi pi-arrow-left"></i>
+          <span>Previous</span>
         </div>
-      </ng-template>
-  </p-table>
+        <div
+          class="flex align-items-center gap-2"
+          style="cursor: pointer"
+          (click)="nextPage()"
+        >
+          <span>Next</span>
+          <i class="pi pi-arrow-right"></i>
+        </div>
+      </div>
+    </ng-template> -->
+    </p-table>
+  </div>
 </div>
