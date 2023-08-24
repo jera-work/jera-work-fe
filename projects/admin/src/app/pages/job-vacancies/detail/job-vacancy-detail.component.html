@@ -1,9 +1,10 @@
 <!-- buat hr -->
-<div class="min-h-screen">
+<div class="min-h-screen w-10 m-auto">
   <app-button
     label="Back"
     routerLink="/job-vacancies"
     icon="pi pi-angle-left"
+    border=""
     classBtn="p-button-outlined p-button-secondary"
   >
   </app-button>
@@ -20,7 +21,6 @@
     [showCurrentPageReport]="true"
     [rowsPerPageOptions]="[10, 25, 50]"
     [paginator]="true"
-    [loading]="loading"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     [globalFilterFields]="[
       'candidateName',
@@ -29,8 +29,7 @@
       'progressName'
     ]"
     selectionMode="single"
-    [tableStyle]="{ 'min-width': '50rem' }"
-    styleClass="p-datatable-gridlines p-datatable-striped mx-7 mt-5"
+    styleClass="p-datatable-gridlines p-datatable-striped "
   >
     <ng-template pTemplate="caption">
       <div class="flex flex-column md:flex-row md:align-items-center">
@@ -63,7 +62,7 @@
         </th>
         <th scope="col" class="md:col-4">
           <div class="flex align-items-center">
-            Candidate Email
+            Date
             <p-columnFilter
               type="text"
               field="candidateEmail"
@@ -96,7 +95,7 @@
     <ng-template pTemplate="body" let-appliedVacancy let-i="rowIndex">
       <tr routerLink="applied/{{ i + 1 }}" style="cursor: pointer">
         <td>{{ i + 1 }}</td>
-        <td>{{ appliedVacancy.candidateName }}</td>
+        <td>{{ appliedVacancy.profileName }}</td>
         <td>{{ appliedVacancy.candidateEmail }}</td>
         <td>
           <p-tag
@@ -105,7 +104,10 @@
           ></p-tag>
         </td>
         <td>
-          {{ appliedVacancy.progressName }}
+          <p-tag
+            [value]="appliedVacancy.progressName"
+            [severity]="getStatusSeverity(appliedVacancy.progressName)"
+          ></p-tag>
         </td>
       </tr>
     </ng-template>

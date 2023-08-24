@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AppliedVacancyResDto } from '@dto/applied-vacancy/applied-vacancy.res.dto';
+import {
+  AppliedVacancyAdminResDto,
+  AppliedVacancyResDto,
+} from '@dto/applied-vacancy/applied-vacancy.res.dto';
 import { JobVacancyResDto } from '@dto/job-vacancy/job-vacancy.res.dto';
+import { AppliedVacancyService } from '@services/applied-vacancy.service';
 import { JobVacancyService } from '@services/job-vacancy.service';
 import { Table } from 'primeng/table';
 import { firstValueFrom } from 'rxjs';
@@ -9,26 +13,39 @@ import { firstValueFrom } from 'rxjs';
 @Component({
   selector: 'detail',
   templateUrl: './job-vacancy-detail.component.html',
+  styleUrls: ['./job-vacancy-detail.component.css'],
 })
 export class JobVacancyDetailComponent implements OnInit {
   jobVacancy!: JobVacancyResDto;
   loading = false;
-  appliedVacancies: AppliedVacancyResDto[] = [];
+  appliedVacancies: AppliedVacancyAdminResDto[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private jobVacancyService: JobVacancyService
+    private jobVacancyService: JobVacancyService,
+    private appliedVacancyService: AppliedVacancyService
   ) {}
 
-  ngOnInit(): void {
+  getData() {
     firstValueFrom(this.activatedRoute.paramMap).then((res) => {
       const id = res.get('id');
       if (id) {
-        firstValueFrom(this.jobVacancyService.getJobDetails(id)).then((res) =>
-          console.log(res)
-        );
+        firstValueFrom(this.jobVacancyService.getJobDetails(id)).then((res) => {
+          this.jobVacancy = res;
+          console.log(res);
+        });
+
+        firstValueFrom(
+          this.appliedVacancyService.getAppliedCandidatesByJobId(id)
+        ).then((res) => {
+          this.appliedVacancies = res;
+        });
       }
     });
+  }
+
+  ngOnInit(): void {
+    this.getData();
 
     // this.activatedRoute.params.subscribe(result => {
     //     console.log(result['id'])
@@ -61,13 +78,9 @@ export class JobVacancyDetailComponent implements OnInit {
     // })
   }
 
-  clear(table: Table) {
-    table.clear();
-  }
-
   getStatusSeverity(status: string) {
     switch (status) {
-      case 'Open':
+      case 'Active':
         return 'success';
       case 'Close':
         return 'danger';
