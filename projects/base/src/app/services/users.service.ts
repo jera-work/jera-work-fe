@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
 import { UserInsertReqDto } from '@dto/user/user-insert.req.dto';
 import { Observable } from 'rxjs';
-import { InsertResDto } from '@dto/InsertResDto';
+import { InsertResDto } from '@dto/insert.res.dto';
 import { ADMIN_API } from '@constant/api.constant';
 import { UserResDto } from '@dto/user/user.res.dto';
 

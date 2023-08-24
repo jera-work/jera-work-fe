@@ -7,8 +7,9 @@
 
   <div class="grid">
     <!-- Job Vacancy Card -->
-    <div class="col-12">
-      <job-card routerLink="/saved-job/2"></job-card>
+    <div class="col-12" *ngFor="let sv of savedVacancies">
+      <job-card (clickChange)="toDetail(sv.vacancyId)" [company]="sv.companyName" [companyImg]="sv.companyPhotoId" [degree]="sv.degreeName"
+        [jobType]="sv.jobTypeName" [location]="sv.cityName" [title]="sv.vacancyTitle" [salary]="sv.salary" ></job-card>
     </div>
   </div>
 </div>

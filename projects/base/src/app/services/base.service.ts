@@ -87,4 +87,10 @@ export class BaseService {
       .put<T>(url, body, withToken ? this.headers : undefined)
       .pipe(response(this.message, this.router));
   }
+
+  delete<T>(url: string, withToken = true): Observable<T> {
+    return this.http
+      .delete<T>(url, withToken ? this.headers : undefined)
+      .pipe(response(this.message, this.router));
+  }
 }

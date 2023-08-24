@@ -6,7 +6,7 @@ import { ADMIN_API, CANDIDATE_API } from '@constant/api.constant';
 import { ProfileUpdateReqDto } from '@dto/profile/profile-update.req.dto';
 import { UpdateResDto } from '@dto/UpdateResDto';
 import { CandidateEducationInsertReqDto } from '@dto/candidate/candidate-education-insert.req.dto';
-import { InsertResDto } from '@dto/InsertResDto';
+import { InsertResDto } from '@dto/insert.res.dto';
 import { CandidateExperienceReqDto } from '@dto/candidate/candidate-experience-insert.req.dto';
 import { CandidateDocumentInsertReqDto } from '@dto/candidate/candidate-document-insert.req.dto';
 import { CandidateEducationResDto } from '@dto/candidate/candidate-education.res.dto';
