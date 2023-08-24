@@ -3,7 +3,10 @@ import { BaseService } from './base.service';
 import { Observable } from 'rxjs';
 import { ProfileResDto } from '@dto/profile/profile.res.dto';
 import { ADMIN_API, CANDIDATE_API } from '@constant/api.constant';
-import { ProfileUpdateReqDto } from '@dto/profile/profile-update.req.dto';
+import {
+  ProfileUpdateAdminReqDto,
+  ProfileUpdateCandidateReqDto,
+} from '@dto/profile/profile-update.req.dto';
 import { UpdateResDto } from '@dto/UpdateResDto';
 import { CandidateEducationInsertReqDto } from '@dto/candidate/candidate-education-insert.req.dto';
 import { InsertResDto } from '@dto/InsertResDto';
@@ -14,6 +17,8 @@ import { CandidateExperienceResDto } from '@dto/candidate/candidate-experience.r
 import { CandidateSkillResDto } from '@dto/candidate/candidate-skill.res.dto';
 import { CandidateSkillInsertReqDto } from '@dto/candidate/candidate-skill-insert.req.dto';
 import { CandidateDocumentResDto } from '@dto/candidate/candidate-document.res.dto';
+import { ProfileAdminResDto } from '@dto/profile/profile-admin.res.dto';
+import { CandidateProfileUpdateReqDto } from '@dto/candidate/candidate-profile-update.req.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -25,8 +30,16 @@ export class ProfileService {
     return this.base.get(`${CANDIDATE_API}/candidates`);
   }
 
-  updateProfile(data: ProfileUpdateReqDto): Observable<UpdateResDto> {
+  getProfileAdmin(): Observable<ProfileAdminResDto> {
+    return this.base.get(`${ADMIN_API}/users/profile`);
+  }
+
+  updateProfile(data: ProfileUpdateCandidateReqDto): Observable<UpdateResDto> {
     return this.base.put(`${CANDIDATE_API}/candidates/profile`, data);
+  }
+
+  updateProfileAdmin(data: ProfileUpdateAdminReqDto): Observable<UpdateResDto> {
+    return this.base.patch(`${ADMIN_API}/users/profile`, data);
   }
 
   // ================= INSERT DATA =================

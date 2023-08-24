@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { InsertResDto } from '@dto/InsertResDto';
 import { ADMIN_API } from '@constant/api.constant';
 import { UserResDto } from '@dto/user/user.res.dto';
+import { ChangePasswordReqDto } from '@dto/user/user-change-password.req.dto';
+import { UpdateResDto } from '@dto/UpdateResDto';
 
 @Injectable({
   providedIn: 'root',
@@ -16,16 +18,17 @@ export class UsersService {
     return this.base.post<InsertResDto>(`${ADMIN_API}/users`, data);
   }
 
-  getUsersByRole(
-    roleCode: string,
-    companyCode: string
-  ): Observable<UserResDto[]> {
+  getUsersByRole(roleCode: string): Observable<UserResDto[]> {
     return this.base.get<UserResDto[]>(
-      `${ADMIN_API}/users/?roleCode=${roleCode}&companyCode=${companyCode}`
+      `${ADMIN_API}/users/?roleCode=${roleCode}`
     );
   }
 
   getUsers(): Observable<UserResDto[]> {
     return this.base.get(`${ADMIN_API}/users/all`);
+  }
+
+  changePassword(data: ChangePasswordReqDto): Observable<UpdateResDto> {
+    return this.base.patch(`${ADMIN_API}/users/change-password`, data);
   }
 }

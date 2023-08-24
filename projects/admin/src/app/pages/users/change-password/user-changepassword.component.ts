@@ -1,4 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { NonNullableFormBuilder, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { UsersService } from '@services/users.service';
+import { firstValueFrom } from 'rxjs';
 // import { NonNullableFormBuilder, Validators } from '@angular/forms';
 // import { Router } from '@angular/router';
 // import { UsersService } from '../../../services/users.service';
@@ -7,37 +12,45 @@ import { Component } from '@angular/core';
   selector: 'user-change-password',
   templateUrl: './user-changepassword.component.html',
 })
-export class UserChangePasswordComponent {
-  // loading = false;
+export class UserChangePasswordComponent implements OnInit {
+  loading = false;
 
-  // userPasswordDto = this.fb.group({
-  //   oldPassword: ['', Validators.required],
-  //   newPassword: ['', Validators.required],
-  //   confirmNewPassword: ['', Validators.required],
-  // });
+  userPasswordDto = this.fb.group({
+    oldPassword: ['', Validators.required],
+    newPassword: ['', Validators.required],
+    confirmNewPassword: ['', Validators.required],
+  });
 
-  // constructor(
-  //   private userService: UsersService,
-  //   private fb: NonNullableFormBuilder,
-  //   private router: Router
-  // ) {}
+  constructor(
+    private userService: UsersService,
+    private fb: NonNullableFormBuilder,
+    private router: Router,
+    private title: Title
+  ) {}
 
-  // onSubmit() {
-  //   if (this.userPasswordDto.valid) {
-  //     this.loading = true;
-  //     const data = this.userPasswordDto.getRawValue();
-  //     this.userService.updatePassword(data).subscribe({
-  //       next: (res) => {
-  //         this.loading = false;
-  //         localStorage.clear();
-  //         this.router.navigateByUrl('/login');
-  //       },
-  //       error: () => {
-  //         this.loading = false;
-  //       },
-  //     });
-  //   } else {
-  //     console.log('Invalid!');
-  //   }
-  // }
+  ngOnInit(): void {
+    this.title.setTitle('Change Password');
+  }
+
+  onSubmit() {
+    if (this.userPasswordDto.valid) {
+      this.loading = true;
+
+      const data = this.userPasswordDto.getRawValue();
+
+      firstValueFrom(this.userService.changePassword(data))
+        .then((res) => {
+          console.log(res);
+          this.loading = false;
+          localStorage.clear();
+          this.router.navigateByUrl('/login');
+        })
+        .catch((err) => {
+          this.loading = false;
+          console.log(err);
+        });
+    } else {
+      console.log('Please input value!');
+    }
+  }
 }
