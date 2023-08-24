@@ -1,3 +1,4 @@
+
 import { Observable } from 'rxjs';
 import { BaseService } from './base.service';
 import { InsertResDto } from '@dto/InsertResDto';
@@ -10,6 +11,7 @@ import {
   AppliedVacancyAdminResDto,
   AppliedVacancyResDto,
 } from '@dto/applied-vacancy/applied-vacancy.res.dto';
+
 
 @Injectable({
   providedIn: 'root',

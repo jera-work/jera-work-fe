@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
 import { UserInsertReqDto } from '@dto/user/user-insert.req.dto';
 import { Observable } from 'rxjs';
-import { InsertResDto } from '@dto/InsertResDto';
+import { InsertResDto } from '@dto/insert.res.dto';
 import { ADMIN_API } from '@constant/api.constant';
 import { UserResDto } from '@dto/user/user.res.dto';
 import { ChangePasswordReqDto } from '@dto/user/user-change-password.req.dto';
-import { UpdateResDto } from '@dto/UpdateResDto';
+import { UpdateResDto } from '@dto/update.res.dto';
 
 @Injectable({
   providedIn: 'root',

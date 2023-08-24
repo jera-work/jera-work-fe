@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { TimeAgoPipe } from '@pipes/timeago.pipe';
 import { UrlPipeAdmin } from '@pipes/url.pipe';
 import { CardModule } from 'primeng/card';
 
@@ -9,7 +10,7 @@ import { CardModule } from 'primeng/card';
     <p-card class="w-full relative cursor-pointer" styleClass="hover:shadow-4">
       <span class="absolute top-0 right-0 mr-3 mt-3">
         <i class="pi pi-clock"></i>
-        Today
+        {{ time | timeAgo }}
       </span>
       <div class="flex flex-row">
         <div class="mr-4">
@@ -60,7 +61,7 @@ import { CardModule } from 'primeng/card';
     </p-card>
   </div>
   `,
-  imports: [CardModule, UrlPipeAdmin],
+  imports: [CardModule, UrlPipeAdmin, TimeAgoPipe],
   standalone: true,
 })
 export class JobCardComponent {
