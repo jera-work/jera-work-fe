@@ -3,7 +3,7 @@ import { BaseService } from './base.service';
 import { Observable } from 'rxjs';
 import { CompanyResDto } from '@dto/company/company.res.dto';
 import { ADMIN_API } from '@constant/api.constant';
-import { InsertResDto } from '@dto/InsertResDto';
+import { InsertResDto } from '@dto/insert.res.dto';
 import { CompanyInsertReqDto } from '@dto/company/company-insert.req.dto';
 
 @Injectable({

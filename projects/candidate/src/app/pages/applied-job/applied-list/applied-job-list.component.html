@@ -9,7 +9,7 @@
     <!-- Job Vacancy Card -->
     <div class="col-12" *ngFor="let av of appliedVacancy">
       <p-card
-        routerLink="/applied-job/2"
+        (click)="toDetail(av.id)"
         class="w-full relative cursor-pointer"
         styleClass="hover:shadow-5 shadow-4"
       >
@@ -28,7 +28,7 @@
         <div class="flex flex-row">
           <div class="mr-4">
             <img
-              src="/assets/company.svg"
+              src="{{ av.companyPhotoId | urlAdmin }}"
               class="w-10rem sm:w-13rem"
               alt="company"
             />

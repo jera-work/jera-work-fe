@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { AppliedVacancyResDto } from '@dto/applied-vacancy/applied-vacancy.res.dto';
 import { JobSearchResDto } from '@dto/job-vacancy/job-search.res.dto';
 import { JobVacancyResDto } from '@dto/job-vacancy/job-vacancy.res.dto';
@@ -15,7 +16,8 @@ export class AppliedJobListComponent implements OnInit {
   appliedVacancy: AppliedVacancyResDto[] = []
 
   constructor(private title: Title,
-    private appliedVacancyService: AppliedVacancyService) {}
+    private appliedVacancyService: AppliedVacancyService,
+    private router: Router) {}
 
   ngOnInit(): void {
     this.title.setTitle('Applied Jobs');
@@ -26,6 +28,10 @@ export class AppliedJobListComponent implements OnInit {
     this.appliedVacancyService.getAppliedVacancy().subscribe(result => {
       this.appliedVacancy = result
     })
+  }
+
+  toDetail(appliedId: string){
+    this.router.navigateByUrl(`/applied-job/${appliedId}`)
   }
 
   getSeverity(status: string): string {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
 import { JobVacancyInsertReqDto } from '@dto/job-vacancy/job-vacancy-insert.req.dto';
 import { Observable } from 'rxjs';
-import { InsertResDto } from '@dto/InsertResDto';
+import { InsertResDto } from '@dto/insert.res.dto';
 import { ADMIN_API, CANDIDATE_API } from '@constant/api.constant';
 import { JobSearchResDto } from '@dto/job-vacancy/job-search.res.dto';
 import { JobVacancyResDto } from '@dto/job-vacancy/job-vacancy.res.dto';

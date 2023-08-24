@@ -2,9 +2,8 @@
   #dt1
   [value]="users"
   dataKey="id"
-  [rows]="5"
+  [rows]="10"
   [showCurrentPageReport]="true"
-  [rowsPerPageOptions]="[10, 25, 50]"
   [paginator]="true"
   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
   [globalFilterFields]="[
@@ -19,9 +18,9 @@
   styleClass="p-datatable-gridlines p-datatable-striped mx-7 mt-5"
 >
   <ng-template pTemplate="caption">
-    <div class="flex flex-column md:flex-row md:align-items-center">
+    <div class="flex flex-column md:flex-row md:align-items-center gap-2">
       <span>User List</span>
-      <div class="p-input-icon-left m-0 md:ml-auto flex mt-3 md:mt-0">
+      <div class="p-input-icon-left m-0 md:ml-auto flex mt-3 md:mt-0 gap-2">
         <i class="pi pi-search"></i>
         <input
           class="w-full"

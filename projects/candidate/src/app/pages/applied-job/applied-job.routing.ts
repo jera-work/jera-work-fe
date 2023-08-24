@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
 import { ButtonComponent } from '@components/button/button.component';
 import { JobCardComponent } from '@components/job-card/job-card.component';
+import { UrlPipeAdmin } from '@pipes/url.pipe';
 
 const routes: Routes = [
   {
@@ -24,6 +25,7 @@ const routes: Routes = [
     SharedModule,
     ButtonComponent,
     JobCardComponent,
+    UrlPipeAdmin
   ],
   exports: [RouterModule],
 })
