@@ -1,34 +1,42 @@
-import { Component, OnInit } from "@angular/core";
-import { JobVacancyResDto } from "@dto/job-vacancy/job-vacancy.res.dto";
-import { JobVacancyService } from "@services/job-vacancy.service";
-import { Table } from "primeng/table";
+import { Component, OnInit } from '@angular/core';
+import { JobVacancyResDto } from '@dto/job-vacancy/job-vacancy.res.dto';
+import { JobVacancyService } from '@services/job-vacancy.service';
+import { Table } from 'primeng/table';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
-    selector : 'job-vacancy-list',
-    templateUrl : './job-vacancy-list.component.html'
+  selector: 'job-vacancy-list',
+  templateUrl: './job-vacancy-list.component.html',
 })
-export class JobVacancyListComponent implements OnInit{
+export class JobVacancyListComponent implements OnInit {
+  visible = false;
 
-    visible = false
+  loading: boolean = true;
 
-    jobVacancies : JobVacancyResDto[] = []
-    jobVacancy? : JobVacancyResDto
+  activityValues: number[] = [0, 100];
 
-    constructor(private jobVacancyService: JobVacancyService) {} 
+  jobVacancies: JobVacancyResDto[] = [];
+  jobVacancy?: JobVacancyResDto;
 
-    ngOnInit(): void {
-    //     this.loading = false;
+  ngOnInit(): void {
+    firstValueFrom(this.jobVacancyService.getAllJobsByCompany(0, 10)).then(
+      (res) => {
+        console.log(res);
+        this.jobVacancies = res;
+      }
+    );
+  }
+
+  constructor(private jobVacancyService: JobVacancyService) {}
+
+  getStatusSeverity(status: string) {
+    switch (status) {
+      case 'Open':
+        return 'success';
+      case 'Close':
+        return 'danger';
+      default:
+        return 'danger';
     }
-
-    getStatusSeverity(status: string) {
-        switch (status) {
-            case 'Open':
-                return 'success';
-            case 'Close':
-                return 'danger';
-            default: 
-                return 'danger'
-        }
-    }
-
+  }
 }

@@ -105,8 +105,6 @@ export class UserProfileComponent
   getDocumentsSubscription?: Subscription;
 
   constructor(
-    private userService: UsersService,
-    private authService: AuthService,
     private fb: NonNullableFormBuilder,
     private router: Router,
     private master: MasterDataService,

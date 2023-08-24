@@ -5,7 +5,7 @@ import { AppliedVacancyInsertReqDto } from "@dto/applied-vacancy/applied-vacancy
 import { Injectable } from "@angular/core";
 import { ADMIN_API, CANDIDATE_API } from "@constant/api.constant";
 import { AppliedVacancyUpdateReqDto } from "@dto/applied-vacancy/applied-vacancy-update.req.dto";
-import { UpdateResDto } from "@dto/UpdateResDto";
+import { UpdateResDto } from "@dto/update.res.dto";
 import { AppliedVacancyResDto } from "@dto/applied-vacancy/applied-vacancy.res.dto";
 
 @Injectable({

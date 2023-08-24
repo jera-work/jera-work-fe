@@ -1,4 +1,4 @@
-export interface ProfileUpdateReqDto {
+export interface ProfileUpdateCandidateReqDto {
   candidateEmail: string;
   profileAddress: string;
   phoneNumber: string;
@@ -10,4 +10,13 @@ export interface ProfileUpdateReqDto {
   nationalityId: string;
   religionId: string;
   profileName: string;
+}
+
+export interface ProfileUpdateAdminReqDto {
+  userEmail: string;
+  profileName: string;
+  phoneNumber: string;
+  profileAddress: string;
+  fileExt: string;
+  fileContent: string;
 }

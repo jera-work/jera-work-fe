@@ -1,3 +1,0 @@
-interface ErrorResDto {
-  message: string;
-}

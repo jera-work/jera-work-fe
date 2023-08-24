@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { InsertResDto } from '@dto/insert.res.dto';
 import { CANDIDATE_API } from '@constant/api.constant';
 import { CandidateProfileUpdateReqDto } from '@dto/candidate/candidate-profile-update.req.dto';
-import { UpdateResDto } from '@dto/UpdateResDto';
+import { UpdateResDto } from '@dto/update.res.dto';
 import { CandidateDocumentInsertReqDto } from '@dto/candidate/candidate-document-insert.req.dto';
 import { CandidateEducationInsertReqDto } from '@dto/candidate/candidate-education-insert.req.dto';
 import { CandidateExperienceReqDto } from '@dto/candidate/candidate-experience-insert.req.dto';
