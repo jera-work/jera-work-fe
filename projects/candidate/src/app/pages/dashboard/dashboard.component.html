@@ -78,7 +78,7 @@
       <div class="col-12 lg:col-6 p-3" *ngFor="let job of allJobs">
         <job-card (clickChange)="toDetail(job.id)" [company]="job.companyName" [companyImg]="job.companyPhotoId"
           [degree]="job.degreeName" [jobType]="job.jobTypeName" [location]="job.cityName"
-          [title]="job.vacancyTitle" [salary]="job.salary"></job-card>
+          [title]="job.vacancyTitle" [salary]="job.salary" [time]="job.createdAt"></job-card>
       </div>
     </div>
     <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rowCounts"
