@@ -1,6 +1,7 @@
 <div class="min-h-screen">
   <div class="mx-7 mt-5">
     <app-button
+      *ngIf="isAdmin"
       routerLink="/job-vacancies/create"
       icon="pi pi-plus"
       label="Add Job"
@@ -27,7 +28,6 @@
         'companyName'
       ]"
       selectionMode="single"
-      [tableStyle]="{ 'min-width': '50rem' }"
       styleClass="p-datatable-gridlines p-datatable-striped mt-2"
     >
       <ng-template pTemplate="caption">

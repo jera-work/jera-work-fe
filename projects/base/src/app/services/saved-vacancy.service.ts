@@ -18,8 +18,12 @@ export class SavedVacancyService {
         return this.base.post<InsertResDto>(`${CANDIDATE_API}/save-jobs`, data);
     }
 
-    getMySavedJobs(startIndex: number, endIndex: number): Observable<SavedJobResDto[]> {
-        return this.base.get(`${CANDIDATE_API}/save-jobs/my-saved/?startIndex=${startIndex}&endIndex=${endIndex}`, true)
+    getMySavedJobWithLimit(startIndex: number, endIndex: number): Observable<SavedJobResDto[]> {
+        return this.base.get(`${CANDIDATE_API}/save-jobs/my-saved/page/?startIndex=${startIndex}&endIndex=${endIndex}`, true)
+    }
+
+    getMySavedJobs(): Observable<SavedJobResDto[]> {
+        return this.base.get(`${CANDIDATE_API}/save-jobs/my-saved`, true)
     }
 
     getByJobAndCandidate(jobId: string): Observable<SavedJobResDto>{

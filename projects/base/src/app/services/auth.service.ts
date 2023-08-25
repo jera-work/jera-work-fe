@@ -5,9 +5,8 @@ import { LoginResDto } from '../dto/login/login.res.dto';
   providedIn: 'root',
 })
 export class AuthService {
-  getProfile(): LoginResDto | null {
+  getProfile(): LoginResDto | any {
     const data = localStorage.getItem('data');
-
     if (data) {
       return JSON.parse(data);
     }

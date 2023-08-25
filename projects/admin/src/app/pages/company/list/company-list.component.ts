@@ -7,6 +7,7 @@ import { firstValueFrom } from 'rxjs';
 @Component({
   selector: 'company-list',
   templateUrl: './company-list.component.html',
+  styleUrls: ['./company-list.component.css'],
 })
 export class CompanyListComponent implements OnInit {
   loading = true;

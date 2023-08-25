@@ -1,15 +1,24 @@
 <div class="min-h-screen md:mx-8 sm:mx-6 mx-2">
-  <div class="flex justify-content-center align-items-center flex-column">
-    <img src="/assets/saved-job.svg" alt="saved" />
-    <h2>Saved Jobs</h2>
-  </div>
-  <!-- Job Vacancies -->
-
-  <div class="grid">
-    <!-- Job Vacancy Card -->
-    <div class="col-12" *ngFor="let sv of savedVacancies">
-      <job-card (clickChange)="toDetail(sv.vacancyId)" [company]="sv.companyName" [companyImg]="sv.companyPhotoId" [degree]="sv.degreeName"
-        [jobType]="sv.jobTypeName" [location]="sv.cityName" [title]="sv.vacancyTitle" [salary]="sv.salary" ></job-card>
+  <div class="flex flex-column md:flex-row gap-5 md:justify-content-between">
+    <div class="flex justify-content-center align-items-center flex-column">
+      <img src="/assets/saved-job.svg" alt="saved" />
     </div>
+    <div class="flex flex-column">
+      <h2 class="my-2 text-center">Saved Jobs</h2>
+      <!-- Job Vacancies -->
+      <div class="grid">
+        <!-- Job Vacancy Card -->
+        <div class="col-12" *ngFor="let sv of savedVacanciesWithLimit">
+          <job-card (clickChange)="toDetail(sv.vacancyId)" [company]="sv.companyName" [companyImg]="sv.companyPhotoId" [degree]="sv.degreeName"
+            [jobType]="sv.jobTypeName" [location]="sv.cityName" [title]="sv.vacancyTitle" [salary]="sv.salary" [time]="sv.createdAt" ></job-card>
+        </div>
+      </div>
+      <p-paginator
+          (onPageChange)="onPageChange($event)"
+          [first]="first"
+          [rows]="rowCounts"
+          [totalRecords]="length"
+        ></p-paginator>
+      </div>
   </div>
 </div>

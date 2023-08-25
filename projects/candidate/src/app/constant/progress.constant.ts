@@ -1,4 +1,8 @@
 export enum ProgressStatus {
-  ON_PROGRESS = 1,
-  SUBMITTED = 2,
+  APP = "APP",
+  ASS = "ASS",
+  INT = "INT",
+  MCU = "MCU",
+  OFL = "OFL",
+  HIR = "HIR"
 }
