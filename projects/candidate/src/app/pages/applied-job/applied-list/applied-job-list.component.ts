@@ -6,6 +6,7 @@ import { JobSearchResDto } from '@dto/job-vacancy/job-search.res.dto';
 import { JobVacancyResDto } from '@dto/job-vacancy/job-vacancy.res.dto';
 import { AppliedVacancyService } from '@services/applied-vacancy.service';
 import { JobVacancyService } from '@services/job-vacancy.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'applied-job-list',
@@ -14,6 +15,10 @@ import { JobVacancyService } from '@services/job-vacancy.service';
 export class AppliedJobListComponent implements OnInit {
 
   appliedVacancy: AppliedVacancyResDto[] = []
+  appliedVacancyWithLimit: AppliedVacancyResDto[] = []
+  first: number = 0;
+  rowCounts: number = 3;
+  length!: number;
 
   constructor(private title: Title,
     private appliedVacancyService: AppliedVacancyService,
@@ -22,12 +27,23 @@ export class AppliedJobListComponent implements OnInit {
   ngOnInit(): void {
     this.title.setTitle('Applied Jobs');
     this.getMyApplied()
+    this.getMyAppliedWithLimit(this.first, this.rowCounts)
   }
 
   getMyApplied() {
     this.appliedVacancyService.getAppliedVacancy().subscribe(result => {
       this.appliedVacancy = result
+      this.length = result.length
     })
+  }
+
+  getMyAppliedWithLimit(startIndex: number, endIndex: number) {
+    firstValueFrom(this.appliedVacancyService.getAppliedVacancyWithLimit(startIndex,endIndex)).then(result => {
+      this.appliedVacancyWithLimit = result
+    })
+  }
+  onPageChange(event: any) {
+    this.getMyAppliedWithLimit(event.first, event.first + event.rows);
   }
 
   toDetail(appliedId: string){
