@@ -1,3 +1,4 @@
+<pre>{{ searchReq.value | json}}</pre>
 <div class="min-h-screen md:mx-8 sm:mx-6 mx-2">
 
   <!-- Filter Jobs -->
@@ -10,9 +11,9 @@
       </div>
       <div class="flex gap-3">
         <!-- Job Type -->
-        <div class="flex align-items-center field-checkbox" *ngFor="let jobType of jobTypes">
-          <p-radioButton [inputId]="jobType.id" [value]="jobType"></p-radioButton>
-          <label [for]="jobType.id" class="ml-2">{{ jobType.typeName }}</label>
+        <div class="flex align-items-center field-checkbox" *ngFor="let jt of jobTypes">
+          <p-radioButton  formControlName="jobTypeId" [inputId]="jt.typeName" [value]="jt.id"></p-radioButton>
+          <label [for]="jt.typeName" class="ml-2">{{ jt.typeName }}</label>
         </div>
 
         <div>
