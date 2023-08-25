@@ -10,6 +10,7 @@ import {
   AppliedVacancyAdminResDto,
   AppliedVacancyResDto,
 } from '@dto/applied-vacancy/applied-vacancy.res.dto';
+import { AppliedVacancyCandidateDetailsResDto } from '@dto/applied-vacancy/applied-vacancy-candidate-details.res.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -42,5 +43,11 @@ export class AppliedVacancyService {
     id: string
   ): Observable<AppliedVacancyAdminResDto[]> {
     return this.base.get(`${ADMIN_API}/applied/job?jobId=${id}`);
+  }
+
+  getAppliedCandidateDetails(
+    id: string
+  ): Observable<AppliedVacancyCandidateDetailsResDto> {
+    return this.base.get(`${ADMIN_API}/applied?appliedId=${id}`);
   }
 }

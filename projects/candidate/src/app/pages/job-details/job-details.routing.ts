@@ -13,15 +13,13 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    JobDetailsComponent
-  ], imports: [
-    RouterModule.forChild(routes), 
-    SharedModule, 
+  declarations: [JobDetailsComponent],
+  imports: [
+    RouterModule.forChild(routes),
+    SharedModule,
     ButtonComponent,
-    UrlPipeAdmin
-  ], exports: [
-    RouterModule
+    UrlPipeAdmin,
   ],
+  exports: [RouterModule],
 })
 export class JobDetailsRouting {}
