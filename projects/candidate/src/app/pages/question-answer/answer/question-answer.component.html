@@ -1,0 +1,38 @@
+<pre>{{ questionAnswerInsertReqDto.value | json }}</pre>
+<section>
+    <form class="m-5" [formGroup]="questionAnswerInsertReqDto" (ngSubmit)="submit()">
+        <p-card styleClass="shadow-4 mb-2 p-0" *ngFor="let q of questions; let i = index" formArrayName="answerReq">
+            <div [formGroupName]="i">
+                <div>
+                    <div class="md:col-12 mb-1">
+                        {{ i+1 }}.
+                        {{ q.questionBody }}
+                    </div>
+                    <div class="md:col-12 flex flex-wrap">
+                        <div *ngFor="let o of q.options" class="ml-3 mt-4">
+                            <p-radioButton (onClick)="patchOption($event, i)" inputId="{{o.optionId}}"
+                                [value]="o.optionId" [label]="o.optionLabel"
+                                formControlName="questionOptionIdTemp{{i}}"></p-radioButton>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </p-card>
+        <div class="col-md-5 gy-4">
+            <p-button (onClick)="showDialog()" label="Submit"
+                [disabled]="questionAnswerInsertReqDto.invalid"></p-button>
+            <p-dialog header="Konfirmasi" [(visible)]="visible" [breakpoints]="{ '960px': '75vw' }"
+                [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+                <p>
+                    Anda yakin ingin mengirim jawaban sekarang?
+                </p>
+                <ng-template pTemplate="footer">
+                    <p-button (click)="submit()" label="Ya" styleClass="p-button-text"></p-button>
+                    <p-button (click)="showDialog()" label="Tidak"
+                        styleClass="p-button-text text-color-secondary"></p-button>
+                </ng-template>
+            </p-dialog>
+        </div>
+    </form>
+</section>

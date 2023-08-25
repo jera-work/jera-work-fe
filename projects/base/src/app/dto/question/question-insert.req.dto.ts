@@ -1,8 +1,10 @@
-import { QuestionOptionInsertReqDto } from "./question-option-insert.req.dto"
+import { QuestionInsertQuestionReqDto } from "./question-insert-question.req.dto";
+
+// export interface QuestionInsertReqDto {
+//     questionsReq : QuestionInsertQuestionReqDto[]
+// }
 
 export interface QuestionInsertReqDto {
-    jobVacancyId: string
-	questionCode: string
-	questionBody: string
-    options: QuestionOptionInsertReqDto[]
+    questionsReq : QuestionInsertQuestionReqDto[]
 }
+

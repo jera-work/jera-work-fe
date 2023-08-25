@@ -4,6 +4,7 @@ import { QuestionAnswerInsertReqDto } from "@dto/question-answer/question-answer
 import { Observable } from "rxjs";
 import { InsertResDto } from "@dto/insert.res.dto";
 import { ADMIN_API, CANDIDATE_API } from "@constant/api.constant";
+import { QuestionAnswerInsertAnswerReqDto } from "@dto/question-answer/question-answer-insert-answer.req.dto";
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +12,7 @@ import { ADMIN_API, CANDIDATE_API } from "@constant/api.constant";
 export class QuestionAnswerService {
     constructor(private base: BaseService) { }
 
-    insertAnswer(data: QuestionAnswerInsertReqDto[]): Observable<InsertResDto> {
+    insertAnswer(data: QuestionAnswerInsertAnswerReqDto[]): Observable<InsertResDto> {
         return this.base.post<InsertResDto>(`${CANDIDATE_API}/answers`, data, true)
     }
     

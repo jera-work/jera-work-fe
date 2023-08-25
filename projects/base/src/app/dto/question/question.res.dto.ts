@@ -1,8 +1,8 @@
-import { QuestionOptionResDto } from './question-option.res.dto';
+import { QuestionOptionResDto } from "../question-option/question-option.res.dto"
 
 export interface QuestionResDto {
-  id: number;
-  question: string;
-  questionCode: string;
-  questionOption: QuestionOptionResDto[];
+	id : string
+	questionCode : string
+	questionBody : string
+	options : QuestionOptionResDto[]	
 }
