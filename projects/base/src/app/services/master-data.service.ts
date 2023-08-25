@@ -16,6 +16,7 @@ import { CityResDto } from '@dto/city/city.res.dto';
 import { ExperienceLevelResDto } from '@dto/data-master/experience-level.res.dto';
 import { AgeVacancyResDto } from '@dto/data-master/age-vacancy.res.dto';
 import { AppliedProgressResDto } from '@dto/data-master/applied-progress.res.dto';
+import { ProgressStatusResDto } from '@dto/data-master/progress-status.res.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -75,7 +76,7 @@ export class MasterDataService {
     return this.base.get(`${ADMIN_API}/age-vacancies`);
   }
 
-  getAppliedProgress(): Observable<AppliedProgressResDto[]> {
-    return this.base.get<AppliedProgressResDto[]>(`${ADMIN_API}/applied-progress`)
-}
+  getProgressStatus(): Observable<ProgressStatusResDto[]> {
+    return this.base.get(`${ADMIN_API}/applied-progress`);
+  }
 }

@@ -16,6 +16,7 @@ import { firstValueFrom } from 'rxjs';
 })
 export class JobVacancyDetailComponent implements OnInit {
   jobVacancy!: JobVacancyResDto;
+  jobVacancyId?: string;
   loading = false;
   appliedVacancies: AppliedVacancyAdminResDto[] = [];
 
@@ -29,15 +30,24 @@ export class JobVacancyDetailComponent implements OnInit {
     firstValueFrom(this.activatedRoute.paramMap).then((res) => {
       const id = res.get('id');
       if (id) {
-        firstValueFrom(this.jobVacancyService.getJobDetails(id)).then((res) => {
+        this.jobVacancyId = id;
+      }
+
+      if (this.jobVacancyId) {
+        firstValueFrom(
+          this.jobVacancyService.getJobDetails(this.jobVacancyId)
+        ).then((res) => {
           this.jobVacancy = res;
           console.log(res);
         });
 
         firstValueFrom(
-          this.appliedVacancyService.getAppliedCandidatesByJobId(id)
+          this.appliedVacancyService.getAppliedCandidatesByJobId(
+            this.jobVacancyId
+          )
         ).then((res) => {
           this.appliedVacancies = res;
+          console.log(this.appliedVacancies);
         });
       }
     });

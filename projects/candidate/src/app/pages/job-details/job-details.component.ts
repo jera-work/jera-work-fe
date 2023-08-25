@@ -16,90 +16,98 @@ import { VacancyDescriptionService } from '@services/vacancy-description.service
   templateUrl: './job-details.component.html',
 })
 export class JobDetailsComponent implements OnInit {
+  jobDetail?: JobVacancyResDto;
+  jobDesc?: VacancyDescriptionResDto;
+  companyPhotoId?: string;
+  jobId!: string;
+  savedJobId?: string;
+  isSaved?: boolean;
+  applyJobModalVisibility = false;
 
-  jobDetail?: JobVacancyResDto
-  jobDesc?: VacancyDescriptionResDto
-  jobId!: string
-  savedJobId?: string
-  isSaved?: boolean
-  applyJobModalVisibility = false
-
-  constructor(private fb: NonNullableFormBuilder, 
+  constructor(
+    private fb: NonNullableFormBuilder,
     private title: Title,
     private jobVacancyService: JobVacancyService,
     private savedVacancyService: SavedVacancyService,
     private appliedVacancyService: AppliedVacancyService,
-    private activatedRoute: ActivatedRoute) {}
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.title.setTitle('Job Title');
-    this.getDetail()
-    this.getByJobAndCandidate()
+    this.getDetail();
+    this.getByJobAndCandidate();
   }
 
   AppliedVacancyInsertReqDto = this.fb.group({
     jobVacancyId: '',
     candidateEmail: '',
     jobVacancyCode: '',
-    candidateId: ''
-  })
+    candidateId: '',
+  });
 
   InsertSavedJobReqDto = this.fb.group({
-    jobVacancyId: ''
-  })
+    jobVacancyId: '',
+  });
 
-  getDetail(){
-    this.activatedRoute.params.subscribe(params => {
-      this.jobId = params['id']
-      this.jobVacancyService.detailCandidate(params['id']).subscribe(result => {
-        this.jobDetail = result
-      })
-    })
+  getDetail() {
+    this.activatedRoute.params.subscribe((params) => {
+      this.jobId = params['id'];
+
+      this.jobVacancyService
+        .detailCandidate(params['id'])
+        .subscribe((result) => {
+          this.companyPhotoId = result.companyPhotoId;
+          this.jobDetail = result;
+        });
+    });
   }
 
   showApplyModal() {
-    this.applyJobModalVisibility = true
+    this.applyJobModalVisibility = true;
   }
 
   applyJob() {
-    const data = this.AppliedVacancyInsertReqDto.getRawValue()
-    data.jobVacancyId = this.jobId
-    this.appliedVacancyService.insertApplied(data).subscribe(result=> {
-
-    })
+    const data = this.AppliedVacancyInsertReqDto.getRawValue();
+    data.jobVacancyId = this.jobId;
+    this.appliedVacancyService.insertApplied(data).subscribe((result) => {});
   }
 
-  getByJobAndCandidate(){
-    this.savedVacancyService.getByJobAndCandidate(this.jobId).subscribe(result=> {
-      if(result != null){
-        this.savedJobId = result.id
-        this.isSaved = true
-      } else {
-        this.isSaved = false
-      }
-    })
+  getByJobAndCandidate() {
+    this.savedVacancyService
+      .getByJobAndCandidate(this.jobId)
+      .subscribe((result) => {
+        if (result != null) {
+          this.savedJobId = result.id;
+          this.isSaved = true;
+        } else {
+          this.isSaved = false;
+        }
+      });
   }
 
-  saveJob(){
-    const data = this.InsertSavedJobReqDto.getRawValue()
-    data.jobVacancyId = this.jobId
-    this.savedVacancyService.insertSavedJob(data).subscribe(result => {
-      this.savedJobId = result.id
-      this.isSaved = true
-    })
+  saveJob() {
+    const data = this.InsertSavedJobReqDto.getRawValue();
+    data.jobVacancyId = this.jobId;
+    this.savedVacancyService.insertSavedJob(data).subscribe((result) => {
+      this.savedJobId = result.id;
+      this.isSaved = true;
+    });
   }
 
-  deleteSaved(){
-    this.savedVacancyService.deleteSavedJobs(this.savedJobId!).subscribe(result => {
-      this.isSaved = false
-    })
+  deleteSaved() {
+    this.savedVacancyService
+      .deleteSavedJobs(this.savedJobId!)
+      .subscribe((result) => {
+        this.isSaved = false;
+      });
   }
 
-  changeSavedStatus(){
+  changeSavedStatus() {
     if (!this.isSaved) {
-      this.saveJob()
+      this.saveJob();
     } else {
-      this.deleteSaved()
+      this.deleteSaved();
     }
   }
 
