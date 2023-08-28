@@ -1,16 +1,120 @@
 <!-- buat hr -->
-<div class="min-h-screen w-10 m-auto">
+<div class="min-h-screen w-10 m-auto mt-5">
   <app-button
     label="Back"
     routerLink="/job-vacancies"
     icon="pi pi-angle-left"
     border=""
-    classBtn="p-button-outlined p-button-secondary"
+    classBtn="p-button-outlined p-button-secondary mb-3"
   >
   </app-button>
 
-  <div class="justify-content-center">
-    <h1>Isi data job detail</h1>
+  <div *ngIf="jobVacancy">
+    <!-- <h1>{{ jobVacancy.vacancyTitle }}</h1> -->
+    <div class="grid">
+      <div class="grid col-6">
+        <div class="col-4">
+          <p>Job Title:</p>
+        </div>
+        <div class="col-8">
+          <p>
+            {{ jobVacancy.vacancyTitle }}
+          </p>
+        </div>
+      </div>
+      <div class="grid col-6">
+        <div class="col-4">
+          <p>Degree:</p>
+        </div>
+        <div class="col-8">
+          <p>{{ jobVacancy.degreeName }}</p>
+        </div>
+      </div>
+      <div class="grid col-6">
+        <div class="col-4">
+          <p>Job Type:</p>
+        </div>
+        <div class="col-8">
+          <p>{{ jobVacancy.jobTypeName }}</p>
+        </div>
+      </div>
+      <div class="grid col-6">
+        <div class="col-4">
+          <p>Job Level:</p>
+        </div>
+        <div class="col-8">
+          <p>{{ jobVacancy.levelName }}</p>
+        </div>
+      </div>
+      <div class="grid col-6">
+        <div class="col-4">
+          <p>City:</p>
+        </div>
+        <div class="col-8">
+          <p>{{ jobVacancy.cityName }}</p>
+        </div>
+      </div>
+      <div class="grid col-6">
+        <div class="col-4">
+          <p>Salary:</p>
+        </div>
+        <div class="col-8">
+          <p>Rp. {{ jobVacancy.salary }}</p>
+        </div>
+      </div>
+      <div class="grid col-6">
+        <div class="col-4">
+          <p>Start Date:</p>
+        </div>
+        <div class="col-8">
+          <p>{{ jobVacancy.startDate }}</p>
+        </div>
+      </div>
+      <div class="grid col-6">
+        <div class="col-4">
+          <p>End Date:</p>
+        </div>
+        <div class="col-8">
+          <p>{{ jobVacancy.endDate }}</p>
+        </div>
+      </div>
+      <div class="grid col-6">
+        <div class="col-4">
+          <p>Gender:</p>
+        </div>
+        <div class="col-8">
+          <p>{{ jobVacancy.genderName }}</p>
+        </div>
+      </div>
+      <div class="grid col-6">
+        <div class="col-4">
+          <p>Status:</p>
+        </div>
+        <div class="col-8">
+          <p>{{ jobVacancy.statusName }}</p>
+        </div>
+      </div>
+      <div class="grid col-6">
+        <div class="col-4">
+          <p>PIC HR:</p>
+        </div>
+        <div class="col-8">
+          <p>{{ jobVacancy.hrName }}</p>
+        </div>
+      </div>
+      <div class="grid col-6">
+        <div class="col-4">
+          <p>PIC User:</p>
+        </div>
+        <div class="col-8">
+          <p>{{ jobVacancy.userName }}</p>
+        </div>
+      </div>
+      <div class="col-2">Description</div>
+      <div class="col-10">
+        <div [innerHTML]="jobVacancy.description"></div>
+      </div>
+    </div>
   </div>
 
   <p-table
@@ -92,7 +196,7 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-appliedVacancy let-i="rowIndex">
-      <tr routerLink="applied/{{ i + 1 }}" style="cursor: pointer">
+      <tr routerLink="applied/{{ appliedVacancy.id }}" style="cursor: pointer">
         <td>{{ i + 1 }}</td>
         <td>{{ appliedVacancy.profileName }}</td>
         <td>{{ appliedVacancy.createdAt | timeAgo }}</td>

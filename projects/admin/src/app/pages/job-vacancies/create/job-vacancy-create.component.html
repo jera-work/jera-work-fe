@@ -260,12 +260,24 @@
       <div class="md:col-12 col-12">
         <input
           type="text"
+          mode="currency"
+          inputId="currency-germany"
+          currency="EUR"
+          locale="de-DE"
           pInputText
           id="salary"
           class="w-full"
           required
           formControlName="salary"
         />
+        <!-- <p-inputNumber
+          formControlName="salary"
+          mode="currency"
+          inputId="currency-indonesian"
+          currency="IDR"
+          locale="id-ID"
+        >
+        </p-inputNumber> -->
         <span
           class="text-red-500 ml-2"
           *ngIf="

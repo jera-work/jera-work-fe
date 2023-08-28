@@ -19,6 +19,7 @@ import { ImageModule } from 'primeng/image';
 import { SharedModule } from '@shared/shared.module';
 import { ButtonComponent } from '@components/button/button.component';
 import { TimeAgoPipe } from '@pipes/timeago.pipe';
+import { UrlPipeAdmin } from '@pipes/url.pipe';
 
 const routes: Routes = [
   {
@@ -51,6 +52,7 @@ const routes: Routes = [
     SharedModule,
     ButtonComponent,
     TimeAgoPipe,
+    UrlPipeAdmin,
   ],
   exports: [RouterModule],
 })

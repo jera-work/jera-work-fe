@@ -1,26 +1,128 @@
-<div class="mx-7 p-3">
-    <h1>
-        Applied : Accounting
-    </h1>
-    <div class="grid">
-        <div class="md:col-3">
-            <p-image src="https://primefaces.org/cdn/primeng/images/galleria/galleria1.jpg" alt="Image" width="250"></p-image>
+<div class="min-h-screen w-10 m-auto mt-5">
+  <app-button
+    label="Back"
+    routerLink="/job-vacancies/{{ jobVacancyId }}"
+    icon="pi pi-angle-left"
+    border=""
+    classBtn="p-button-outlined p-button-secondary my-4"
+  >
+  </app-button>
+
+  <p-card>
+    <p-steps
+      [model]="progressStatus"
+      [readonly]="true"
+      [activeIndex]="activeIndex"
+      styleClass="mb-4"
+    ></p-steps>
+
+    <ng-container *ngIf="appliedVacancyCandidateDetails">
+      <div>
+        <p class="text-2xl">
+          Applied: {{ appliedVacancyCandidateDetails.jobTitle }}
+        </p>
+      </div>
+
+      <div class="mt-4 grid">
+        <div
+          class="flex justify-content-center align-items-center flex-column gap-3 col-3"
+        >
+          <img
+            [src]="appliedVacancyCandidateDetails.photoId | urlAdmin"
+            alt="profilePhoto"
+            class="w-10rem"
+          />
+          <p>{{ appliedVacancyCandidateDetails.candidateName }}</p>
         </div>
-        <div class="md:col-9">
-            <div class="grid align-items-center mx-2 my-0">
-                <div class="md:col-2">Name</div>
-                <div class="md:col-4"><input pInputText readonly value="Rendy" class="w-10"></div>
-                <div class="md:col-2">Email</div>
-                <div class="md:col-4"><input pInputText readonly value="rdarma2000@gmail.com" class="w-10"></div>
-                <div class="md:col-2">Phone Number</div>
-                <div class="md:col-4"><input pInputText readonly value="08999999999" class="w-10"></div>  
-                <div class="md:col-2">Gender</div>
-                <div class="md:col-4"><input pInputText readonly value="Male" class="w-10"></div>  
-                <div class="md:col-2">Nationality</div>
-                <div class="md:col-4"><input pInputText readonly value="Indonesia" class="w-10"></div>  
-                <div class="md:col-2">Religion</div>
-                <div class="md:col-4"><input pInputText readonly value="Islam" class="w-10"></div> 
+        <div class="col-9 grid">
+          <!-- Phone Number -->
+          <div class="col-6 grid">
+            <div class="col-12">
+              <span>Phone Number</span>
             </div>
+            <div class="col-12">
+              <input
+                pInputText
+                type="text"
+                [value]="appliedVacancyCandidateDetails.phoneNumber"
+              />
+            </div>
+          </div>
+
+          <!-- Expected Salary -->
+          <div class="col-6 grid">
+            <div class="col-12">
+              <span>Expected Salary</span>
+            </div>
+            <div class="col-12">
+              <input
+                pInputText
+                type="text"
+                value="Rp. {{ appliedVacancyCandidateDetails.expectedSalary }}"
+              />
+            </div>
+          </div>
+
+          <!-- Nationality -->
+          <div class="col-6 grid">
+            <div class="col-12">
+              <span>Nationality</span>
+            </div>
+            <div class="col-12">
+              <input
+                pInputText
+                type="text"
+                [value]="appliedVacancyCandidateDetails.nationalityName"
+              />
+            </div>
+          </div>
+
+          <!-- Gender -->
+          <div class="col-6 grid">
+            <div class="col-12">
+              <span>Gender</span>
+            </div>
+            <div class="col-12">
+              <input
+                pInputText
+                type="text"
+                value="{{ appliedVacancyCandidateDetails.genderName }}"
+              />
+            </div>
+          </div>
+
+          <!-- Marital -->
+          <div class="col-6 grid">
+            <div class="col-12">
+              <span>Marital</span>
+            </div>
+            <div class="col-12">
+              <input
+                pInputText
+                type="text"
+                [value]="appliedVacancyCandidateDetails.maritalName"
+              />
+            </div>
+          </div>
+
+          <!-- Religion -->
+          <div class="col-6 grid">
+            <div class="col-12">
+              <span>Religion</span>
+            </div>
+            <div class="col-12">
+              <input
+                pInputText
+                type="text"
+                value="{{ appliedVacancyCandidateDetails.religionName }}"
+              />
+            </div>
+          </div>
+
+          <!-- Address -->
+          <div class="col-12 grid"></div>
         </div>
-    </div>
+      </div>
+    </ng-container>
+  </p-card>
 </div>
