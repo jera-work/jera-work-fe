@@ -55,7 +55,7 @@ export class QuestionCreateComponent implements OnInit, AfterViewChecked {
     addQuestion() {
         // JOB VACANCY ID DIAMBIL DARI ROUTERLINK
         this.questionsReq.push(this.fb.group({
-            jobVacancyId : [''],
+            jobVacancyId : ['ef1f048e-f3eb-4899-94e2-356fe70e548f'],
             questionCode : ['', Validators.required],
             questionBody : ['', Validators.required],
             options : this.fb.array(this.questionOptionInsertReqDto)
@@ -85,7 +85,7 @@ export class QuestionCreateComponent implements OnInit, AfterViewChecked {
             this.loading = true
             this.questionService.insertQuestion(this.questionInsertReqDto.get('questionsReq')?.getRawValue()).subscribe(result => {
                 this.loading = false
-                // this.router.navigateByUrl('/questions')
+                this.router.navigateByUrl('/questions')
             })
         }
     }

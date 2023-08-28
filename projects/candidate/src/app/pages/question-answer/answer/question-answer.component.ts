@@ -76,7 +76,7 @@ export class QuestionAnswerComponent implements OnInit{
         this.loading = true
         this.questionAnswerService.insertAnswer(this.questionAnswerInsertReqDto.get('answerReq')?.getRawValue()).subscribe(result => {
             localStorage.clear()
-            this.router.navigateByUrl('/login')
+            // this.router.navigateByUrl('/login')
         })
     }
 }

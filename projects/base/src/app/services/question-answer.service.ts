@@ -13,7 +13,7 @@ export class QuestionAnswerService {
     constructor(private base: BaseService) { }
 
     insertAnswer(data: QuestionAnswerInsertAnswerReqDto[]): Observable<InsertResDto> {
-        return this.base.post<InsertResDto>(`${CANDIDATE_API}/answers`, data, true)
+        return this.base.post<InsertResDto>(`${ADMIN_API}/answers`, data, true)
     }
     
 }

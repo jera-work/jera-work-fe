@@ -27,3 +27,15 @@ export const authNonLoginValidation = (
   }
   return true;
 };
+
+export const testValidation = (route: Route, segments: UrlSegment[]) => {
+  const auth = inject(AuthService);
+  const router = inject(Router);
+  const profile = auth.getProfile();
+
+  if (profile) {
+    router.navigateByUrl('/dashboard');
+  }
+
+  return true;
+};
