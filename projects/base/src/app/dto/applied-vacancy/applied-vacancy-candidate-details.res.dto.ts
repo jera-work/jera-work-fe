@@ -6,6 +6,7 @@ import { CandidateSkillResDto } from '@dto/candidate/candidate-skill.res.dto';
 export interface AppliedVacancyCandidateDetailsResDto {
   id: string;
   candidateName: string;
+  candidateId: string;
   profileAddress: string;
   phoneNumber: string;
   expectedSalary: string;
@@ -16,6 +17,7 @@ export interface AppliedVacancyCandidateDetailsResDto {
   photoId: string;
   appliedStatus: string;
   appliedProgress: string;
+  appliedProgressCode: string;
   picHrId: string;
   picHrName: string;
   picUserId: string;

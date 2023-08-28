@@ -1,0 +1,4 @@
+::ng-deep .p-steps .p-steps-item.p-highlight .p-steps-number {
+  background-color: #89d4f4;
+  color: white;
+}
