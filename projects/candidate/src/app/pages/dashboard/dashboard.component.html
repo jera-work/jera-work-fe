@@ -1,6 +1,7 @@
+<pre>{{ searchReq.value | json}}</pre>
 <div class="min-h-screen md:mx-8 sm:mx-6 mx-2">
   <!-- Filter Jobs -->
-  <!-- <div class="flex justify-content-center align-items-center my-4">
+  <div class="flex justify-content-center align-items-center my-4">
     <form
       class="shadow-2 hover:shadow-3 p-2 border-round-xl"
       [formGroup]="searchReq"
@@ -29,15 +30,10 @@
         ></p-dropdown>
       </div>
       <div class="flex gap-3">
-        <div
-          class="flex align-items-center field-checkbox"
-          *ngFor="let jobType of jobTypes"
-        >
-          <p-radioButton
-            [inputId]="jobType.id"
-            [value]="jobType"
-          ></p-radioButton>
-          <label [for]="jobType.id" class="ml-2">{{ jobType.typeName }}</label>
+        <!-- Job Type -->
+        <div class="flex align-items-center field-checkbox" *ngFor="let jt of jobTypes">
+          <p-radioButton  formControlName="jobTypeId" [inputId]="jt.typeName" [value]="jt.id"></p-radioButton>
+          <label [for]="jt.typeName" class="ml-2">{{ jt.typeName }}</label>
         </div>
 
         <div>
@@ -49,7 +45,7 @@
         </div>
       </div>
     </form>
-  </div> -->
+  </div>
 
   <h1 class="text-center my-2">Latest Job</h1>
   <!-- Carousel Job List -->

@@ -11,9 +11,11 @@ import { firstValueFrom } from 'rxjs';
 })
 export class SavedJobListComponent implements OnInit {
 
+  savedVacanciesWithLimit: SavedJobResDto[] = []
   savedVacancies: SavedJobResDto[] = []
   first: number = 0;
-  rowCounts: number = 10;
+  rowCounts: number = 3;
+  length!: number;
 
   constructor(private title: Title,
     private router: Router,
@@ -22,19 +24,35 @@ export class SavedJobListComponent implements OnInit {
   ngOnInit(): void {
     this.title.setTitle('Saved Jobs');
     this.getSavedVacancies()
+    this.getSavedVacanciesWithLimit(this.first, this.rowCounts)
   }
 
   toDetail(jobId: string) {
     this.router.navigateByUrl(`/job/${jobId}`);
   }
 
-  getSavedVacancies(){
-    firstValueFrom(this.savedVacancyService.getMySavedJobs(this.first, this.rowCounts))
+  getSavedVacanciesWithLimit(startIndex: number, endIndex: number){
+    firstValueFrom(this.savedVacancyService.getMySavedJobWithLimit(startIndex, endIndex))
       .then(res => {
-        this.savedVacancies = res
+        this.savedVacanciesWithLimit = res
       })
       .catch((err) => {
         console.log(err)
       })
+  }
+
+  getSavedVacancies(){
+    firstValueFrom(this.savedVacancyService.getMySavedJobs())
+      .then(res => {
+        this.savedVacancies = res
+        this.length = res.length
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  onPageChange(event: any) {
+    this.getSavedVacanciesWithLimit(event.first, event.first + event.rows);
   }
 }

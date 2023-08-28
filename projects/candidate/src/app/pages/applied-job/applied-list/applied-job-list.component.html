@@ -1,77 +1,71 @@
 <div class="min-h-screen md:mx-8 sm:mx-6 mx-2">
-  <div class="flex justify-content-center align-items-center flex-column">
-    <img src="/assets/applied-job.svg" alt="saved" />
-    <h2>Applied Jobs</h2>
-  </div>
-  <!-- Job Vacancies -->
+  <div class="flex flex-column md:flex-row md:justify-content-between">
+    <div class="flex justify-content-center align-items-center flex-column">
+      <img src="/assets/applied-job.svg" alt="saved" />
+    </div>
+    <div class="flex flex-column">
+      <!-- Job Vacancies -->
+      <h2 class="my-2 text-center">Applied Jobs</h2>
+      <div class="grid">
+        <!-- Job Vacancy Card -->
+        <div class="col-12" *ngFor="let av of appliedVacancyWithLimit">
+          <p-card (click)="toDetail(av.id)" class="w-full relative cursor-pointer" styleClass="hover:shadow-5 shadow-4">
+            <span class="absolute top-0 right-0 mr-3 mt-3">
+              <i class="pi pi-clock"></i>
+              {{ av.createdAt | timeAgo }}
+            </span>
+            <span class="absolute top-0 mt-2 font-bold">Progress:
 
-  <div class="grid">
-    <!-- Job Vacancy Card -->
-    <div class="col-12" *ngFor="let av of appliedVacancy">
-      <p-card
-        (click)="toDetail(av.id)"
-        class="w-full relative cursor-pointer"
-        styleClass="hover:shadow-5 shadow-4"
-      >
-        <span class="absolute top-0 right-0 mr-3 mt-3">
-          <i class="pi pi-clock"></i>
-          {{ av.createdAt | timeAgo }}
-        </span>
-        <span class="absolute top-0 mt-2 font-bold"
-          >Progress:
-
-          <p-tag
-            value="{{ av.appliedProgressName }}"
-            [severity]="getSeverity('Application')"
-          ></p-tag>
-        </span>
-        <div class="flex flex-row">
-          <div class="mr-4">
-            <img
-              src="{{ av.companyPhotoId | urlAdmin }}"
-              class="w-10rem sm:w-13rem"
-              alt="company"
-            />
-          </div>
-          <div class="flex flex-column w-6 flex-1">
-            <!-- Job Vacancy Title -->
-            <div
-              style="border-bottom: 1px solid black"
-              class="flex flex-column row-gap-2 mb-1"
-            >
-              <span class="text-3xl font-bold">{{ av.vacancyTitle }}</span>
-              <div>
-                <span class="font-semibold">
-                  <i class="pi pi-building"> </i>
-                  {{ av.companyName }}
-                </span>
+              <p-tag value="{{ av.appliedProgressName }}" [severity]="getSeverity('Application')"></p-tag>
+            </span>
+            <div class="flex flex-row">
+              <div class="mr-4">
+                <img src="{{ av.companyPhotoId | urlAdmin }}" class="w-10rem sm:w-13rem" alt="company" />
               </div>
-              <div>
-                <span class="font-medium">
-                  <i class="pi pi-money-bill"></i>
-                  {{ av.salary }}
-                </span>
+              <div class="flex flex-column w-6 flex-1">
+                <!-- Job Vacancy Title -->
+                <div style="border-bottom: 1px solid black" class="flex flex-column row-gap-2 mb-1">
+                  <span class="text-3xl font-bold">{{ av.vacancyTitle }}</span>
+                  <div>
+                    <span class="font-semibold">
+                      <i class="pi pi-building"> </i>
+                      {{ av.companyName }}
+                    </span>
+                  </div>
+                  <div>
+                    <span class="font-medium">
+                      <i class="pi pi-money-bill"></i>
+                      {{ av.salary }}
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Job Vacancy Detail -->
+                <div class="flex column-gap-2 md:column-gap-5 flex-wrap">
+                  <span>
+                    <i class="pi pi-user"></i>
+                    {{ av.degreeName }}
+                  </span>
+                  <span>
+                    <i class="pi pi-briefcase"></i>
+                    {{ av.jobTypeName }}
+                  </span>
+                  <span>
+                    <i class="pi pi-map-marker"></i>
+                    {{ av.cityName }}
+                  </span>
+                </div>
               </div>
             </div>
-
-            <!-- Job Vacancy Detail -->
-            <div class="flex column-gap-2 md:column-gap-5 flex-wrap">
-              <span>
-                <i class="pi pi-user"></i>
-                {{ av.degreeName }}
-              </span>
-              <span>
-                <i class="pi pi-briefcase"></i>
-                {{ av.jobTypeName }}
-              </span>
-              <span>
-                <i class="pi pi-map-marker"></i>
-                {{ av.cityName }}
-              </span>
-            </div>
-          </div>
+          </p-card>
         </div>
-      </p-card>
+      </div>
+      <p-paginator
+      (onPageChange)="onPageChange($event)"
+      [first]="first!"
+      [rows]="rowCounts!"
+      [totalRecords]="length"
+    ></p-paginator>
     </div>
   </div>
 </div>

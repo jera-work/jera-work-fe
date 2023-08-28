@@ -28,6 +28,7 @@ export class DashboardComponent implements AfterViewChecked {
   jobTypes: JobTypeResDto[] = [];
   cities: CityResDto[] = [];
   degrees: DegreeResDto[] = [];
+  jobType?: string
 
   first: number = 0;
   rowCounts: number = 10;

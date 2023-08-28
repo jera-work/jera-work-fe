@@ -10,6 +10,7 @@
     <div class="flex flex-column">
       <!-- company img -->
       <div class="flex gap-2 justify-content-end my-3">
+        <i (click)="changeSavedStatus()" [ngClass]="isSaved ? 'pi text-2xl pi-bookmark-fill' : 'pi text-2xl pi-bookmark'" style="cursor: pointer"></i>
         <i
           (click)="changeSavedStatus()"
           [ngClass]="

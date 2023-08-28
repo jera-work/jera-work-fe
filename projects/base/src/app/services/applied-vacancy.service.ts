@@ -10,6 +10,8 @@ import {
   AppliedVacancyAdminResDto,
   AppliedVacancyResDto,
 } from '@dto/applied-vacancy/applied-vacancy.res.dto';
+import { AppliedProgressResDto } from '@dto/data-master/applied-progress.res.dto';
+import { AppliedVacancyProgressResDto } from '@dto/applied-vacancy/applied-vacancy-progress.res.dto';
 import { AppliedVacancyCandidateDetailsResDto } from '@dto/applied-vacancy/applied-vacancy-candidate-details.res.dto';
 
 @Injectable({
@@ -32,12 +34,27 @@ export class AppliedVacancyService {
     return this.base.put<UpdateResDto>(`${ADMIN_API}/applied`, data, true);
   }
 
+  getAppliedVacancyWithLimit(startIndex: number, endIndex: number): Observable<AppliedVacancyResDto[]> {
+    return this.base.get<AppliedVacancyResDto[]>(
+      `${CANDIDATE_API}/applied/my-applied/page/?startIndex=${startIndex}&endIndex=${endIndex}`,
+      true
+    );
+  }
+
   getAppliedVacancy(): Observable<AppliedVacancyResDto[]> {
     return this.base.get<AppliedVacancyResDto[]>(
       `${CANDIDATE_API}/applied/my-applied`,
       true
     );
   }
+
+  getProgress(appliedId: string): Observable<AppliedVacancyProgressResDto> {
+    return this.base.get<AppliedVacancyProgressResDto>(
+      `${CANDIDATE_API}/applied/my-applied/code/?appliedId=${appliedId}`,
+      true
+    );
+  }
+
 
   getAppliedCandidatesByJobId(
     id: string
