@@ -39,20 +39,24 @@ export class QuestionAnswerComponent implements OnInit{
     }
 
     ngOnInit(): void {
-        firstValueFrom(this.questionService.getQuestions("ef1f048e-f3eb-4899-94e2-356fe70e548f")).then((res) => {
-            this.questions = res
-            
-            for(let i = 0; i < this.questions.length; i++){
-                this.questionAnswerReq.push(this.fb.group({
-                    appliedVacancyId : [''],
-                    questionId : [this.questions.at(i)?.id],
-                    [`questionOptionId${i}`] : [''],
-                    [`questionOptionIdTemp${i}`] : ['']                
-            }))
-            }
-            console.log(res);
-        })
-
+        if(localStorage.getItem('data')){
+            firstValueFrom(this.questionService.getQuestions("ba7c9532-a579-42bd-b2b1-d66c101213aa")).then((res) => {
+                this.questions = res
+                
+                for(let i = 0; i < this.questions.length; i++){
+                    this.questionAnswerReq.push(this.fb.group({
+                        jobVacancyId: ['ba7c9532-a579-42bd-b2b1-d66c101213aa'],
+                        assesmentVacancyId: ['ce8aae45-7cdf-40e2-b811-3789662d41e2'],
+                        questionId : [this.questions.at(i)?.id],
+                        questionOptionId : [''],
+                        [`questionOptionIdTemp${i}`] : ['']                
+                }))
+                }
+                console.log(res);
+            })
+        } else {
+            this.router.navigateByUrl('/questions-answer/login')
+        }
     }
 
     get questionAnswerReq() {
@@ -62,7 +66,7 @@ export class QuestionAnswerComponent implements OnInit{
     
     patchOption(event : any, i : number){
         this.questionAnswerReq.at(i).patchValue({
-            [`questionOptionId${i}`] : event.value
+            questionOptionId : event.value
         })
     }
 

@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core"
-import { Routes , RouterModule} from "@angular/router"
+import { Routes, RouterModule } from "@angular/router"
 import { QuestionAnswerComponent } from "./answer/question-answer.component"
 import { CommonModule } from "@angular/common"
 import { ReactiveFormsModule } from "@angular/forms"
@@ -10,19 +10,27 @@ import { InputTextareaModule } from "primeng/inputtextarea"
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { DialogModule } from "primeng/dialog"
 import { SharedModule } from "@shared/shared.module"
+import { LoginQuestionAnswerComponent } from "./login-for-question-answer/login-answer.component"
+import { ButtonComponent } from "@components/button/button.component"
 
 const routes: Routes = [
     {
-        path : '',
-        component : QuestionAnswerComponent
+        path: '',
+        component: QuestionAnswerComponent
+
+    },
+    {
+        path: "login",
+        component: LoginQuestionAnswerComponent
     }
 ]
 
 @NgModule({
-    declarations : [
-        QuestionAnswerComponent
+    declarations: [
+        QuestionAnswerComponent,
+        LoginQuestionAnswerComponent
     ],
-    imports : [
+    imports: [
         RouterModule.forChild(routes),
         CommonModule,
         ReactiveFormsModule,
@@ -32,13 +40,15 @@ const routes: Routes = [
         RadioButtonModule,
         CardModule,
         DialogModule,
-        SharedModule
+        SharedModule,
+        ButtonComponent
     ],
-    exports : [
+    exports: [
         RouterModule,
-        QuestionAnswerComponent
+        QuestionAnswerComponent,
+        LoginQuestionAnswerComponent
     ]
 })
-export class QuestionAnswerRouting{
+export class QuestionAnswerRouting {
 
 }

@@ -55,7 +55,7 @@ export class QuestionCreateComponent implements OnInit, AfterViewChecked {
     addQuestion() {
         // JOB VACANCY ID DIAMBIL DARI ROUTERLINK
         this.questionsReq.push(this.fb.group({
-            jobVacancyId : ['ef1f048e-f3eb-4899-94e2-356fe70e548f'],
+            jobVacancyId : ['ba7c9532-a579-42bd-b2b1-d66c101213aa'],
             questionCode : ['', Validators.required],
             questionBody : ['', Validators.required],
             options : this.fb.array(this.questionOptionInsertReqDto)

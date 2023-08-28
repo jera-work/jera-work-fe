@@ -38,7 +38,7 @@ export class AppliedJobDetailsComponent implements OnInit {
   }
 
   getAppliedProgress() {
-    firstValueFrom(this.masterDataService.getAppliedProgress()).then(result => {
+    firstValueFrom(this.masterDataService.getProgressStatus()).then(result => {
       for (let r of result) {
         const menuItem: MenuItem = {
           label: r.progressName
