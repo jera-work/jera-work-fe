@@ -47,7 +47,6 @@ export class JobVacancyDetailComponent implements OnInit {
           )
         ).then((res) => {
           this.appliedVacancies = res;
-          console.log(this.appliedVacancies);
         });
       }
     });

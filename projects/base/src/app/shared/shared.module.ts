@@ -32,8 +32,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { DividerModule } from 'primeng/divider';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
-
-
+import { ColorPickerModule } from 'primeng/colorpicker';
 
 @NgModule({
   imports: [
@@ -70,6 +69,7 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
     DividerModule,
     AvatarModule,
     AvatarGroupModule,
+    ColorPickerModule
   ],
   exports: [
     MenubarModule,
@@ -105,6 +105,7 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
     DividerModule,
     AvatarModule,
     AvatarGroupModule,
+    ColorPickerModule
   ],
 })
 export class SharedModule {}
