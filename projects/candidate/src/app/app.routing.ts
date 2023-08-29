@@ -55,7 +55,13 @@ const routes: Routes = [
       ),
     canMatch: [authNonLoginValidation],
   },
-
+  {
+    path: 'questions-answer',
+    loadChildren: () =>
+    import('./pages/question-answer/question-answer.module').then(
+      (q) => q.QuestionAnswerModule
+    ),
+  },
   {
     path: 'login',
     component: LoginComponent,
