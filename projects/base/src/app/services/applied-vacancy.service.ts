@@ -34,7 +34,10 @@ export class AppliedVacancyService {
     return this.base.put<UpdateResDto>(`${ADMIN_API}/applied`, data, true);
   }
 
-  getAppliedVacancyWithLimit(startIndex: number, endIndex: number): Observable<AppliedVacancyResDto[]> {
+  getAppliedVacancyWithLimit(
+    startIndex: number,
+    endIndex: number
+  ): Observable<AppliedVacancyResDto[]> {
     return this.base.get<AppliedVacancyResDto[]>(
       `${CANDIDATE_API}/applied/my-applied/page/?startIndex=${startIndex}&endIndex=${endIndex}`,
       true
@@ -54,7 +57,6 @@ export class AppliedVacancyService {
       true
     );
   }
-
 
   getAppliedCandidatesByJobId(
     id: string

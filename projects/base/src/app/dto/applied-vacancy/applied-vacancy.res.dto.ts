@@ -21,6 +21,8 @@ export interface AppliedVacancyAdminResDto {
   id: string;
   profileName: string;
   statusName: string;
+  statusCode: string;
   progressName: string;
+  progressCode: string;
   createdAt: string;
 }

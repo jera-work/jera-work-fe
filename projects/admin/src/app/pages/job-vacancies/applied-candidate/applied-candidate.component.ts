@@ -15,6 +15,11 @@ import { MenuItem } from 'primeng/api';
 import { firstValueFrom } from 'rxjs';
 import { ProgressStatus } from '@constant/progress.constant';
 import { ColorPickerChangeEvent } from 'primeng/colorpicker';
+import { AssessmentVacancyResDto } from '@dto/progress-job-vacancy/assessment-vacancy.res.dto';
+import { InterviewVacancyResDto } from '@dto/progress-job-vacancy/interview-vacancy.res.dto';
+import { McuVacancyResDto } from '@dto/progress-job-vacancy/mcu-vacancy.res.dto';
+import { OfferingResDto } from '@dto/progress-job-vacancy/offering.res.dto';
+import { HiringVacancyResDto } from '@dto/progress-job-vacancy/hiring-vacancy.res.dto';
 
 const convertUTCToLocalDateTime = function (date: Date) {
   const newDate = new Date(
@@ -46,9 +51,21 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
   mcuModal = false;
   offeringModal = false;
   hiredModal = false;
+  updateModalAssessment = false;
+  updateModalInterview = false;
 
   progressStatusRes: ProgressStatusResDto[] = [];
   appliedVacancyCandidateDetails?: AppliedVacancyCandidateDetailsResDto;
+
+  toggleUpdateAssessment = false;
+  toggleUpdateInterview = false;
+
+  // progress data res
+  assessmentVacancyResDto?: AssessmentVacancyResDto;
+  interviewVacancyResDto?: InterviewVacancyResDto;
+  mcuVacancyResDto?: McuVacancyResDto;
+  offeringResDto?: OfferingResDto;
+  hiringResDto?: HiringVacancyResDto;
 
   activeIndex: number = 0;
 
@@ -63,11 +80,44 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
 
   ngOnInit(): void {
     this.getData();
-    // this.activeIndex = this.currentProgressStatus;
+    this.getProgressStatusData();
   }
 
   ngAfterViewChecked(): void {
     this.cd.detectChanges();
+  }
+
+  getLatestProgressStatus() {
+    firstValueFrom(this.activatedRoute.paramMap).then((res) => {
+      const appliedId = res.get('appliedId');
+      const jobVacancyIdParam = res.get('id');
+      if (appliedId && jobVacancyIdParam) {
+        firstValueFrom(
+          this.appliedVacancyService.getAppliedCandidateDetails(appliedId)
+        ).then((res) => {
+          this.appliedVacancyCandidateDetails = res;
+          console.log(this.appliedVacancyCandidateDetails);
+          if (res.appliedProgressCode === ProgressStatus.APPLICATION) {
+            this.activeIndex = 0;
+          } else if (res.appliedProgressCode === ProgressStatus.ASSESSMENT) {
+            this.activeIndex = 1;
+          } else if (
+            res.appliedProgressCode === ProgressStatus.INTERVIEW_USER
+          ) {
+            this.activeIndex = 2;
+          } else if (res.appliedProgressCode === ProgressStatus.MCU) {
+            this.activeIndex = 3;
+          } else if (
+            res.appliedProgressCode === ProgressStatus.OFFERING_LETTER
+          ) {
+            this.activeIndex = 4;
+          } else if (res.appliedProgressCode === ProgressStatus.HIRED) {
+            this.activeIndex = 5;
+          }
+        });
+        this.jobVacancyId = jobVacancyIdParam;
+      }
+    });
   }
 
   getData() {
@@ -105,7 +155,6 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
     firstValueFrom(this.masterDataService.getProgressStatus()).then((res) => {
       this.progressStatus = [];
       this.progressStatusRes = res;
-      console.log(res);
 
       for (let progress of res) {
         const menuItem: MenuItem = {
@@ -114,6 +163,58 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
         this.progressStatus.push(menuItem);
         this.progressStatusDropdown.push({
           name: progress.progressName,
+        });
+      }
+    });
+  }
+
+  getProgressStatusData() {
+    firstValueFrom(this.activatedRoute.paramMap).then((res) => {
+      const appliedId = res.get('appliedId');
+      if (appliedId) {
+        // get assessment data
+        firstValueFrom(
+          this.progressAppliedJobVacancyService.getAssessment(appliedId)
+        ).then((res) => {
+          this.updateNotesAssessmentReqDto.patchValue({
+            notes: res.notes,
+          });
+          this.assessmentVacancyResDto = res;
+        });
+
+        // get interview user data
+        firstValueFrom(
+          this.progressAppliedJobVacancyService.getInterviewUser(appliedId)
+        ).then((res) => {
+          this.updateNotesInterviewReqDto.patchValue({
+            notes: res.notes,
+          });
+          this.interviewVacancyResDto = res;
+        });
+
+        // get mcu data
+        firstValueFrom(
+          this.progressAppliedJobVacancyService.getMcu(appliedId)
+        ).then((res) => {
+          this.mcuVacancyResDto = res;
+        });
+
+        // get offering data
+        firstValueFrom(
+          this.progressAppliedJobVacancyService.getOffering(appliedId)
+        ).then((res) => {
+          this.offeringResDto = res;
+        });
+
+        // get hired
+        firstValueFrom(
+          this.appliedVacancyService.getAppliedCandidateDetails(appliedId)
+        ).then((res) => {
+          firstValueFrom(
+            this.progressAppliedJobVacancyService.getHired(res.candidateId)
+          ).then((res) => {
+            this.hiringResDto = res;
+          });
         });
       }
     });
@@ -173,6 +274,16 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
 
   hiringVacancyInsertReqDto = this.fb.group({
     candidateId: ['', [Validators.required]],
+  });
+
+  updateNotesAssessmentReqDto = this.fb.group({
+    progressId: ['', [Validators.required]],
+    notes: ['', [Validators.required]],
+  });
+
+  updateNotesInterviewReqDto = this.fb.group({
+    progressId: ['', [Validators.required]],
+    notes: ['', [Validators.required]],
   });
 
   onCompanyColorChange(event: ColorPickerChangeEvent) {
@@ -344,6 +455,52 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
     }
   }
 
+  showDialogUpdateAssessment(progressId: string) {
+    this.updateModalAssessment = true;
+    this.updateNotesAssessmentReqDto.patchValue({
+      progressId,
+    });
+  }
+
+  updateNotesAssessment() {
+    if (this.updateNotesAssessmentReqDto.valid) {
+      const data = this.updateNotesAssessmentReqDto.getRawValue();
+      firstValueFrom(
+        this.progressAppliedJobVacancyService.updateNotesAssessment(data)
+      ).then((res) => {
+        console.log(res);
+        this.getProgressStatusData();
+        this.updateNotesAssessmentReqDto.reset();
+        this.updateModalAssessment = false;
+      });
+    } else {
+      console.log('please input value');
+    }
+  }
+
+  showDialogUpdateInterview(progressId: string) {
+    this.updateModalInterview = true;
+    this.updateNotesInterviewReqDto.patchValue({
+      progressId,
+    });
+  }
+
+  updateNotesInterview() {
+    if (this.updateNotesInterviewReqDto.valid) {
+      const data = this.updateNotesInterviewReqDto.getRawValue();
+      firstValueFrom(
+        this.progressAppliedJobVacancyService.updateNotesInterviewUser(data)
+      ).then((res) => {
+        console.log(res);
+        this.getProgressStatusData();
+        this.updateNotesInterviewReqDto.reset();
+        this.updateModalInterview = false;
+      });
+    } else {
+      console.log('Please input');
+    }
+  }
+
   submit(event: any) {
     const { name } = event;
     if (name === this.progressStatusDropdown[0].name) {
@@ -369,14 +526,15 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
           )
         ).then((res) => {
           console.log(res);
-          this.getData();
         });
         firstValueFrom(
           this.progressAppliedJobVacancyService.updateAppliedVacancyDetailStatus(
             updateStatus
           )
-        ).then((res) => console.log(res));
-        this.getData();
+        ).then((res) => {
+          this.getLatestProgressStatus();
+          console.log(res);
+        });
         this.assessmentModal = false;
       }
     }
@@ -402,9 +560,13 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
           this.progressAppliedJobVacancyService.updateAppliedVacancyDetailStatus(
             updateStatus
           )
-        ).then((res) => console.log(res));
+        ).then((res) => {
+          this.getLatestProgressStatus();
+          console.log(res);
+        });
         this.interviewModal = false;
-        this.getData();
+      } else {
+        console.log('error tetot');
       }
     }
 
@@ -428,9 +590,9 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
           )
         ).then((res) => {
           console.log(res);
+          this.getLatestProgressStatus();
         });
         this.mcuModal = false;
-        this.getData();
       } else {
         console.log('please input');
       }
@@ -449,7 +611,6 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
             insertProgressData
           )
         ).then((res) => {
-          this.getData();
           console.log(res);
         });
 
@@ -458,10 +619,9 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
             updateStatus
           )
         ).then((res) => {
-          this.getData();
+          this.getLatestProgressStatus();
           // console.log(res);
         });
-        this.getData();
         this.offeringModal = false;
       } else {
         console.log('please input');
@@ -480,7 +640,7 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
         firstValueFrom(
           this.progressAppliedJobVacancyService.insertHiring(insertProgressData)
         ).then((res) => {
-          this.getData();
+          this.getLatestProgressStatus();
           console.log(res);
         });
 
@@ -489,11 +649,9 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
             updateStatus
           )
         ).then((res) => {
-          this.getData();
+          this.getLatestProgressStatus();
           console.log(res);
         });
-
-        // this.getData();
         this.hiredModal = false;
       }
       console.log('Hired');

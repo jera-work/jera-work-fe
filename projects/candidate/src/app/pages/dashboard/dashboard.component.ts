@@ -7,9 +7,9 @@ import {
 import { NonNullableFormBuilder } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { CityResDto } from '@dto/city/city.res.dto';
+import { CityResDto } from '@dto/data-master/city.res.dto';
 import { DegreeResDto } from '@dto/data-master/degree.res.dto';
-import { JobTypeResDto } from '@dto/job-type/job-type.res.dto';
+import { JobTypeResDto } from '@dto/data-master/job-type.res.dto';
 import { JobSearchResDto } from '@dto/job-vacancy/job-search.res.dto';
 import { JobVacancyService } from '@services/job-vacancy.service';
 import { MasterDataService } from '@services/master-data.service';
@@ -28,7 +28,7 @@ export class DashboardComponent implements AfterViewChecked {
   jobTypes: JobTypeResDto[] = [];
   cities: CityResDto[] = [];
   degrees: DegreeResDto[] = [];
-  jobType?: string
+  jobType?: string;
 
   first: number = 0;
   rowCounts: number = 10;

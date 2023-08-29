@@ -4,7 +4,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Roles } from './constant/role.constant';
+import { Roles } from '@constant/role.constant';
 // import {
 //   authNonLoginValidation,
 //   authValidation,
@@ -48,9 +48,7 @@ const routes: Routes = [
     path: 'questions',
     component: BaseComponent,
     loadChildren: () =>
-    import('./pages/questions/question.module').then(
-      (q) => q.QuestionModule
-    )
+      import('./pages/questions/question.module').then((q) => q.QuestionModule),
   },
   {
     path: 'login',

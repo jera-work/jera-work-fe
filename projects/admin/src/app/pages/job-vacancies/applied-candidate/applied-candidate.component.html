@@ -153,6 +153,202 @@
           </div>
         </div>
       </div>
+
+      <p-tabView styleClass="tabview-custom">
+        <p-tabPanel>
+          <ng-template pTemplate="header">
+            <i class="pi pi-briefcase"></i>
+            <span class="ml-2">Applied Data</span>
+          </ng-template>
+
+          <!-- Assessment -->
+          <div class="mt-4" *ngIf="assessmentVacancyResDto">
+            <h4>Assessment</h4>
+            <p-divider></p-divider>
+
+            <form [formGroup]="updateNotesAssessmentReqDto">
+              <div class="grid">
+                <div class="col-12 flex column-gap-3">
+                  <p>Notes</p>
+                  <span *ngIf="!toggleUpdateAssessment">
+                    <i
+                      class="pi pi-pencil cursor-pointer"
+                      (click)="toggleUpdateAssessment = true"
+                    ></i>
+                  </span>
+                  <span *ngIf="toggleUpdateAssessment">
+                    <i
+                      class="pi pi-times cursor-pointer"
+                      (click)="toggleUpdateAssessment = false"
+                    ></i>
+                  </span>
+                </div>
+                <div class="col-12">
+                  <textarea
+                    rows="5"
+                    cols="50"
+                    pInputTextarea
+                    [readOnly]="!toggleUpdateAssessment"
+                    formControlName="notes"
+                  ></textarea>
+                </div>
+                <div *ngIf="toggleUpdateAssessment" class="col-12">
+                  <app-button
+                    btnType="button"
+                    label="Update Notes"
+                    backgroundColor="var(--PRIMARY)"
+                    (click)="
+                      showDialogUpdateAssessment(
+                        assessmentVacancyResDto.assessmentId
+                      )
+                    "
+                  >
+                  </app-button>
+                </div>
+              </div>
+            </form>
+            <p-dialog
+              header="Update Notes"
+              [(visible)]="updateModalAssessment"
+              [modal]="true"
+              [draggable]="false"
+              [resizable]="false"
+            >
+              <pre>
+              {{ updateNotesAssessmentReqDto.value | json }}
+            </pre
+              >
+              <h5>Are you sure want to update?</h5>
+              <ng-template pTemplate="footer">
+                <app-button
+                  label="Confirm"
+                  (click)="updateNotesAssessment()"
+                  backgroundColor="var(--PRIMARY)"
+                >
+                </app-button>
+                <app-button
+                  label="Cancel"
+                  classBtn="p-button-outlined p-button-secondary ml-3"
+                  border=""
+                  (click)="updateModalAssessment = false"
+                >
+                </app-button>
+              </ng-template>
+            </p-dialog>
+          </div>
+
+          <!-- Interview User -->
+          <div *ngIf="interviewVacancyResDto">
+            <h4>Interview User</h4>
+            <p-divider></p-divider>
+
+            <form [formGroup]="updateNotesInterviewReqDto">
+              <div class="grid">
+                <div class="col-12 flex column-gap-3">
+                  <p>Notes</p>
+                  <span *ngIf="!toggleUpdateInterview">
+                    <i
+                      class="pi pi-pencil cursor-pointer"
+                      (click)="toggleUpdateInterview = true"
+                    ></i>
+                  </span>
+                  <span *ngIf="toggleUpdateInterview">
+                    <i
+                      class="pi pi-times cursor-pointer"
+                      (click)="toggleUpdateInterview = false"
+                    ></i>
+                  </span>
+                </div>
+                <div class="col-12">
+                  <textarea
+                    rows="5"
+                    cols="50"
+                    [readOnly]="!toggleUpdateInterview"
+                    pInputTextarea
+                    formControlName="notes"
+                  ></textarea>
+                </div>
+                <div class="col-12" *ngIf="toggleUpdateInterview">
+                  <app-button
+                    btnType="button"
+                    label="Update Notes"
+                    backgroundColor="var(--PRIMARY)"
+                    (click)="
+                      showDialogUpdateInterview(
+                        interviewVacancyResDto.interviewId
+                      )
+                    "
+                  >
+                  </app-button>
+                </div>
+              </div>
+            </form>
+
+            <!-- Confirm Modal -->
+            <p-dialog
+              header="Update Notes"
+              [(visible)]="updateModalInterview"
+              [modal]="true"
+              [draggable]="false"
+              [resizable]="false"
+            >
+              <pre>
+              {{ updateNotesInterviewReqDto.value | json }}
+            </pre
+              >
+              <h5>Are you sure want to update this notes?</h5>
+              <ng-template pTemplate="footer">
+                <app-button
+                  label="Confirm"
+                  (click)="updateNotesInterview()"
+                  backgroundColor="var(--PRIMARY)"
+                >
+                </app-button>
+                <app-button
+                  label="Cancel"
+                  classBtn="p-button-outlined p-button-secondary ml-3"
+                  border=""
+                  (click)="updateModalInterview = false"
+                >
+                </app-button>
+              </ng-template>
+            </p-dialog>
+          </div>
+
+          <!-- MCU -->
+          <div *ngIf="mcuVacancyResDto">
+            <h4>Medical Check Up</h4>
+            <p-divider></p-divider>
+          </div>
+
+          <!-- Offering -->
+          <div *ngIf="offeringResDto">
+            <h4>Offering</h4>
+            <p-divider></p-divider>
+          </div>
+
+          <!-- Hired -->
+          <div *ngIf="hiringResDto">
+            <h4>Hiring</h4>
+            <p-divider></p-divider>
+          </div>
+        </p-tabPanel>
+        <p-tabPanel header="Header II">
+          <ng-template pTemplate="header">
+            <i class="pi pi-user"></i>
+            <span class="ml-2">Candidate</span>
+          </ng-template>
+          <p>
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+            accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
+            quae ab illo inventore veritatis et quasi architecto beatae vitae
+            dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
+            aspernatur aut odit aut fugit, sed quia consequuntur magni dolores
+            eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci
+            velit, sed quia non numquam eius modi.
+          </p>
+        </p-tabPanel>
+      </p-tabView>
     </ng-container>
   </p-card>
 </div>
@@ -163,12 +359,12 @@
     header="Move To Assessment"
     [(visible)]="assessmentModal"
     [modal]="true"
-    [style]="{ width: '90vw' }"
+    [style]="{ width: '90vw', height: '90vh' }"
     [draggable]="false"
     [resizable]="false"
   >
-    <pre>{{ assessmentVacancyInsertReqDto.value | json }}</pre>
-    <pre>{{ appliedVacancyUpdateProgressReqDto.value | json }}</pre>
+    <!-- <pre>{{ assessmentVacancyInsertReqDto.value | json }}</pre>
+    <pre>{{ appliedVacancyUpdateProgressReqDto.value | json }}</pre> -->
     <form
       [formGroup]="assessmentVacancyInsertReqDto"
       (ngSubmit)="submit(selectedProgress)"
@@ -199,25 +395,17 @@
               </div>
             </div>
           </div>
-          <div class="col-12">With Question</div>
+          <!-- <div class="col-12">With Question</div>
           <div class="col-12 flex">
-            <!-- <div *ngFor="let isQuestion of isQuestions" class="mr-4 mb-2">
+            <div *ngFor="let isQuestion of isQuestions" class="mr-4 mb-2">
               <p-radioButton
                 [inputId]="isQuestion.label"
                 [value]="isQuestion.value"
                 [label]="isQuestion.label"
                 formControlName="isQuestion"
               ></p-radioButton>
-            </div> -->
-          </div>
-          <div class="col-12">Note</div>
-          <div class="col-12">
-            <textarea
-              pInputTextarea
-              class="w-full"
-              formControlName="notes"
-            ></textarea>
-          </div>
+            </div>
+          </div> -->
           <div class="col-12">Location</div>
           <div class="col-12">
             <textarea
@@ -285,14 +473,6 @@
                 ></p-calendar>
               </div>
             </div>
-          </div>
-          <div class="col-12">Note</div>
-          <div class="col-12">
-            <textarea
-              pInputTextarea
-              class="w-full"
-              formControlName="notes"
-            ></textarea>
           </div>
           <div class="col-12">Location</div>
           <div class="col-12">
@@ -391,7 +571,7 @@
     [draggable]="false"
     [resizable]="false"
   >
-    <pre>{{ offeringInsertReqDto.value | json }}</pre>
+    <!-- <pre>{{ offeringInsertReqDto.value | json }}</pre> -->
     <form
       [formGroup]="offeringInsertReqDto"
       (ngSubmit)="submit(selectedProgress)"
