@@ -33,6 +33,7 @@ import { DividerModule } from 'primeng/divider';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { ColorPickerModule } from 'primeng/colorpicker';
+import { TabViewModule } from 'primeng/tabview';
 
 @NgModule({
   imports: [
@@ -69,7 +70,8 @@ import { ColorPickerModule } from 'primeng/colorpicker';
     DividerModule,
     AvatarModule,
     AvatarGroupModule,
-    ColorPickerModule
+    ColorPickerModule,
+    TabViewModule,
   ],
   exports: [
     MenubarModule,
@@ -105,7 +107,8 @@ import { ColorPickerModule } from 'primeng/colorpicker';
     DividerModule,
     AvatarModule,
     AvatarGroupModule,
-    ColorPickerModule
+    ColorPickerModule,
+    TabViewModule,
   ],
 })
 export class SharedModule {}
