@@ -60,7 +60,7 @@ export class JobDetailsComponent implements OnInit {
   getDetail() {
     this.activatedRoute.params.subscribe((params) => {
       this.jobId = params['id'];
-
+      
       this.jobVacancyService
         .detailCandidate(params['id'])
         .subscribe((result) => {

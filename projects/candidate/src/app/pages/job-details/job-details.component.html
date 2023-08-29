@@ -1,26 +1,34 @@
 <div class="min-h-screen md:mx-8 sm:mx-6 mx-2">
-  <app-button label="Back" icon="pi pi-arrow-left" classBtn="p-button-secondary p-button-outlined my-4" border=""
-    routerLink="/dashboard"></app-button>
+  <app-button
+    label="Back"
+    icon="pi pi-arrow-left"
+    classBtn="p-button-secondary p-button-outlined my-4"
+    border=""
+    routerLink="/dashboard"
+  ></app-button>
   <div class="px-6 shadow-3 py-2 relative">
     <div class="flex flex-column">
-
       <!-- company img -->
       <div class="flex gap-2 justify-content-end my-3">
         <i (click)="changeSavedStatus()" [ngClass]="isSaved ? 'pi text-2xl pi-bookmark-fill' : 'pi text-2xl pi-bookmark'" style="cursor: pointer" *ngIf="isLogin"></i>
         <i class="pi pi-share-alt text-2xl"></i>
       </div>
       <div class="flex gap-3 mb-2 flex-column md:flex-row">
-        <img src="{{ jobDetail?.companyPhotoId | urlAdmin}}" alt="company" class="w-15rem h-10rem " style="object-fit:cover"/>
+        <img
+          src="{{ companyPhotoId | urlAdmin }}"
+          alt="company"
+          class="w-15rem h-10rem"
+          style="object-fit: cover"
+        />
         <div class="flex flex-column w-full">
           <!-- company name -->
           <h1>{{ jobDetail?.companyName }}</h1>
           <!-- company desc -->
-    
+
           <h3>Company Description</h3>
           <p>
             {{ jobDetail?.companyDesc }}
           </p>
-    
         </div>
       </div>
       <p-divider></p-divider>
@@ -82,9 +90,7 @@
               <i class="pi pi-map-marker"></i>
               Location
             </span>
-            <span>
-              : {{ jobDetail?.cityName }}
-            </span>
+            <span> : {{ jobDetail?.cityName }} </span>
           </div>
         </div>
       </div>
@@ -95,11 +101,15 @@
         <h4>Description</h4>
         <div [innerHTML]="jobDetail?.description"></div>
       </div>
-      
+
       <p-divider></p-divider>
       <!-- buttons -->
       <div>
-        <p-button label="Apply" backgroundColor="var(--PRIMARY)" (onClick)="showApplyModal()"></p-button>
+        <p-button
+          label="Apply"
+          backgroundColor="var(--PRIMARY)"
+          (onClick)="showApplyModal()"
+        ></p-button>
       </div>
     </div>
   </div>

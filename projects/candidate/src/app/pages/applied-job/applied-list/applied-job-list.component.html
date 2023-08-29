@@ -9,22 +9,41 @@
       <div class="grid">
         <!-- Job Vacancy Card -->
         <div class="col-12" *ngFor="let av of appliedVacancyWithLimit">
-          <p-card (click)="toDetail(av.id)" class="w-full relative cursor-pointer" styleClass="hover:shadow-5 shadow-4">
+          <p-card
+            (click)="toDetail(av.id)"
+            class="w-full relative cursor-pointer"
+            styleClass="hover:shadow-5 shadow-4"
+          >
             <span class="absolute top-0 right-0 mr-3 mt-3">
               <i class="pi pi-clock"></i>
               {{ av.createdAt | timeAgo }}
             </span>
             <span class="absolute top-0 mt-2 font-bold flex gap-1">
-              <p-tag value="{{ av.appliedStatusName }}" [style]="{ 'background': getStatusColor(av.appliedStatusCode) }"></p-tag>
-              <p-tag value="{{ av.appliedProgressName }}" [style]="{ 'background': getProgressColor(av.appliedProgressCode) }"></p-tag>
+              <p-tag
+                value="{{ av.appliedStatusName }}"
+                [style]="{ background: getStatusColor(av.appliedStatusCode) }"
+              ></p-tag>
+              <p-tag
+                value="{{ av.appliedProgressName }}"
+                [style]="{
+                  background: getProgressColor(av.appliedProgressCode)
+                }"
+              ></p-tag>
             </span>
             <div class="flex flex-row">
               <div class="mr-4">
-                <img src="{{ av.companyPhotoId | urlAdmin }}" class="w-10rem sm:w-13rem" alt="company" />
+                <img
+                  src="{{ av.companyPhotoId | urlAdmin }}"
+                  class="w-10rem sm:w-13rem"
+                  alt="company"
+                />
               </div>
               <div class="flex flex-column w-6 flex-1">
                 <!-- Job Vacancy Title -->
-                <div style="border-bottom: 1px solid black" class="flex flex-column row-gap-2 mb-1">
+                <div
+                  style="border-bottom: 1px solid black"
+                  class="flex flex-column row-gap-2 mb-1"
+                >
                   <span class="text-3xl font-bold">{{ av.vacancyTitle }}</span>
                   <div>
                     <span class="font-semibold">
@@ -61,11 +80,11 @@
         </div>
       </div>
       <p-paginator
-      (onPageChange)="onPageChange($event)"
-      [first]="first!"
-      [rows]="rowCounts!"
-      [totalRecords]="length"
-    ></p-paginator>
+        (onPageChange)="onPageChange($event)"
+        [first]="first!"
+        [rows]="rowCounts!"
+        [totalRecords]="length"
+      ></p-paginator>
     </div>
   </div>
 </div>

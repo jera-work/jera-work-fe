@@ -33,7 +33,7 @@ import { DividerModule } from 'primeng/divider';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { ColorPickerModule } from 'primeng/colorpicker';
-import { ImageCropperModule } from 'ngx-image-cropper';
+import { TabViewModule } from 'primeng/tabview';
 
 @NgModule({
   imports: [
@@ -71,7 +71,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     AvatarModule,
     AvatarGroupModule,
     ColorPickerModule,
-    ImageCropperModule
+    TabViewModule,
   ],
   exports: [
     MenubarModule,
@@ -108,7 +108,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     AvatarModule,
     AvatarGroupModule,
     ColorPickerModule,
-    ImageCropperModule
+    TabViewModule,
   ],
 })
 export class SharedModule {}

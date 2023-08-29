@@ -8,7 +8,7 @@ import { NotFoundComponent } from '@components/not-found/not-found.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 // import { roleValidation } from './validation/role.validation';
-import { Roles } from './constant/role.constant';
+import { Roles } from '@constant/role.constant';
 import {
   authNonLoginValidation,
   authValidation,
@@ -57,9 +57,9 @@ const routes: Routes = [
   {
     path: 'questions-answer',
     loadChildren: () =>
-    import('./pages/question-answer/question-answer.module').then(
-      (q) => q.QuestionAnswerModule
-    ),
+      import('./pages/question-answer/question-answer.module').then(
+        (q) => q.QuestionAnswerModule
+      ),
   },
   {
     path: 'login',
@@ -104,7 +104,7 @@ const routes: Routes = [
     SharedModule,
     JobCardComponent,
     UrlPipeCandidate,
-    UrlPipeAdmin
+    UrlPipeAdmin,
   ],
   exports: [RouterModule],
 })
