@@ -1,4 +1,8 @@
 export enum ProgressStatus {
-  ON_PROGRESS = 1,
-  SUBMITTED = 2,
+  APPLICATION = 'APP',
+  ASSESSMENT = 'ASS',
+  INTERVIEW_USER = 'INT',
+  MCU = 'MCU',
+  OFFERING_LETTER = 'OFL',
+  HIRED = 'HIR',
 }
