@@ -99,11 +99,6 @@
           <p>
             Please check your email for interview with user and more details!
           </p>
-          <p-fileUpload
-            mode="basic"
-            chooseLabel="Choose File"
-            #file
-          ></p-fileUpload>
           <!-- (onSelect)="fileUpload($event, f.id, i)" -->
         </div>
       </div>
@@ -153,23 +148,20 @@
       </div>
     </div>
 
+    <p-divider></p-divider>
     <!-- company img -->
     <div>
-      <img src="/assets/company.svg" alt="company" class="w-2" />
+      <img src="{{ jobVacancy!.companyPhotoId | urlAdmin}}" alt="company" class="w-15rem h-10rem " style="object-fit:cover"/>
     </div>
     <!-- company name -->
-    <h2>LiLaine Official</h2>
+    <h2>{{ jobVacancy!.companyName }}</h2>
     <!-- company desc -->
-    <p>
-      PT. Conviction Group adalah perusahaan baru didaerah Jabodetabek.
-      Sebelumnya perusahaan kita sudah berjalan di kota Medan, Pekanbaru dan
-      Batam. Perusahaan kita bergerak dalam bidang Event organizer dan
-      menempatkan team kita di beberapa SPBU milik Pertamina di indonesia.
+    <p>{{ jobVacancy!.companyDesc }}
     </p>
 
     <!-- job title -->
     <p>Open for you:</p>
-    <h2>Live Host</h2>
+    <h2>{{ jobVacancy!.vacancyTitle }}</h2>
 
     <div>
       <h4>Details:</h4>
@@ -180,7 +172,7 @@
             <i class="pi pi-user"></i>
             Degree
           </span>
-          <span>: SMA / SMK</span>
+          <span>: {{ jobVacancy!.degreeName }}</span>
         </div>
 
         <!-- Gender -->
@@ -189,7 +181,7 @@
             <i class="pi pi-question"></i>
             Gender
           </span>
-          <span>: Pria / Wanita</span>
+          <span>: {{ jobVacancy!.genderName }}</span>
         </div>
 
         <!-- Ages -->
@@ -198,7 +190,7 @@
             <i class="pi pi-id-card"></i>
             Ages
           </span>
-          <span>: 18-28 tahun</span>
+          <span>: {{ jobVacancy!.ageVacancyName }}</span>
         </div>
 
         <!-- Job Type -->
@@ -207,7 +199,7 @@
             <i class="pi pi-briefcase"></i>
             Job Type
           </span>
-          <span>: Full Time</span>
+          <span>: {{ jobVacancy!.jobTypeName }}</span>
         </div>
 
         <!-- Payload -->
@@ -216,7 +208,7 @@
             <i class="pi pi-money-bill"></i>
             Payload
           </span>
-          <span>: 3 - 4 Juta</span>
+          <span>: {{ jobVacancy!.salary }}</span>
         </div>
 
         <!-- Map -->
@@ -226,13 +218,7 @@
             Location
           </span>
           <span class="text-justify">
-            : Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati
-            amet praesentium pariatur assumenda deserunt voluptatem non
-            similique iusto autem. Hic, voluptatum odit. Eaque, cumque
-            dignissimos? Illum officiis animi modi vel. Ipsa facilis obcaecati
-            dicta nulla excepturi, aperiam animi saepe voluptatum, sunt
-            voluptatem vel, iste earum asperiores non eius velit.
-            Necessitatibus.
+            : {{ jobVacancy!.cityName }}
           </span>
         </div>
       </div>
@@ -241,6 +227,7 @@
     <!-- job desc -->
     <div>
       <h4>Description</h4>
+      <div [innerHTML]="jobVacancy?.description"></div>
     </div>
   </div>
 </div>

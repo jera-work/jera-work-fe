@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TimeAgoPipe } from '@pipes/timeago.pipe';
 import { UrlPipeAdmin } from '@pipes/url.pipe';
+import { SharedModule } from '@shared/shared.module';
 import { CardModule } from 'primeng/card';
 
 @Component({
@@ -12,18 +13,17 @@ import { CardModule } from 'primeng/card';
         <i class="pi pi-clock"></i>
         {{ time | timeAgo }}
       </span>
-      <div class="flex flex-row">
-        <div class="mr-4">
+      <div class="flex flex-row ">
+        <div class="align-content-center mr-4">
           <img
             src="{{ companyImg | urlAdmin }}"
-            class="w-10rem sm:w-13rem"
+            class="w-10rem sm:w-13rem "
             alt="company"
           />
         </div>
         <div class="flex flex-column w-6 flex-1">
           <!-- Job Vacancy Title -->
           <div
-            style="border-bottom: 1px solid black"
             class="flex flex-column row-gap-2 mb-1"
           >
             <span class="text-3xl font-bold">{{ title }}</span>
@@ -40,6 +40,7 @@ import { CardModule } from 'primeng/card';
               </span>
             </div>
           </div>
+          <p-divider [style]="{ 'color': 'black' }"></p-divider>
 
           <!-- Job Vacancy Detail -->
           <div class="flex column-gap-2 md:column-gap-5 flex-wrap">
@@ -61,7 +62,7 @@ import { CardModule } from 'primeng/card';
     </p-card>
   </div>
   `,
-  imports: [CardModule, UrlPipeAdmin, TimeAgoPipe],
+  imports: [CardModule, UrlPipeAdmin, TimeAgoPipe, SharedModule],
   standalone: true,
 })
 export class JobCardComponent {

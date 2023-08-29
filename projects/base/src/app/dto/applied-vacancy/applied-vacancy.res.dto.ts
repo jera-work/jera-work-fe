@@ -2,7 +2,9 @@ export interface AppliedVacancyResDto {
   id: string;
   jobVacancyId: string;
   jobVacancyCode: string;
+  appliedStatusCode: string;
   appliedStatusName: string;
+  appliedProgressCode: string;
   appliedProgressName: string;
   vacancyTitle: string;
   vacancyCode: string;

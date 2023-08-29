@@ -49,19 +49,19 @@
 
   <h1 class="text-center my-2">Latest Job</h1>
   <!-- Carousel Job List -->
-  <div class="md:mx-8">
+  <div class="md:mx-2">
     <p-carousel
       [value]="latestJobs"
       [numVisible]="4"
       [numScroll]="4"
       [circular]="true"
       [responsiveOptions]="responsiveOptions"
-      autoPlayInterval="3000"
+      [autoplayInterval]="3000"
     >
       <ng-template let-job pTemplate="item" let-i="rowIndex">
         <div
           routerLink="/job/{{ job.id }}"
-          class="border-3 p-3 surface-border border-round m-2 flex flex-column gap-2 shadow-2 hover:shadow-5 cursor-pointer"
+          class="border-3 p-4 surface-border border-round m-2 flex flex-column shadow-2 hover:shadow-5 cursor-pointer w-auto h-18rem"
         >
           <div class="mb-3">
             <div>
@@ -77,29 +77,30 @@
               />
             </div>
           </div>
-
-          <!-- Company Name -->
-          <div class="border-bottom-1">
-            <span>
-              <i class="pi pi-building"> </i>
-              {{ job.companyName }}
-            </span>
-          </div>
+          
+            <!-- Company Name -->
+            <div>
+              <span class="white-space-nowrap">
+                <i class="pi pi-building"> </i>
+                {{ job.companyName }}
+              </span>
+            </div>
+          <p-divider></p-divider>
           <!-- Job Req -->
-          <div class="border-bottom-1 flex justify-content-between">
-            <span>
+          <div class="flex justify-content-between gap-2">
+            <span class="white-space-nowrap">
               <i class="pi pi-user"></i>
               {{ job.degreeName }}
             </span>
-            <span>
+            <span class="white-space-nowrap">
               <i class="pi pi-briefcase"></i>
               {{ job.jobTypeName }}
             </span>
           </div>
-
+          <p-divider></p-divider>
           <!-- Location -->
           <div>
-            <span>
+            <span class="white-space-nowrap">
               <i class="pi pi-map-marker"></i>
               {{ job.cityName }}
             </span>

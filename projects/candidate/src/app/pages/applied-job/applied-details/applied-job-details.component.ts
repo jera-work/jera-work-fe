@@ -7,8 +7,9 @@ import { AppliedVacancyService } from '@services/applied-vacancy.service';
 import { MasterDataService } from '@services/master-data.service';
 import { MenuItem } from 'primeng/api';
 import { firstValueFrom } from 'rxjs';
-import { ProgressStatus } from '../../../constant/progress.constant';
+import { ProgressCode } from '../../../constant/progress.constant';
 import { JobVacancyService } from '@services/job-vacancy.service';
+import { JobVacancyResDto } from '@dto/job-vacancy/job-vacancy.res.dto';
 
 @Component({
   selector: 'applied-job-details',
@@ -18,6 +19,7 @@ import { JobVacancyService } from '@services/job-vacancy.service';
 export class AppliedJobDetailsComponent implements OnInit {
   jobStatus: MenuItem[] = [];
   progress?: AppliedVacancyProgressResDto;
+  jobVacancy?: JobVacancyResDto;
 
   activeIndex: number = 0;
   appliedId?: string;
@@ -25,6 +27,7 @@ export class AppliedJobDetailsComponent implements OnInit {
   constructor(private title: Title,
     private masterDataService: MasterDataService,
     private appliedVacancyService: AppliedVacancyService,
+    private jobVacancyService: JobVacancyService,
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -38,7 +41,7 @@ export class AppliedJobDetailsComponent implements OnInit {
   }
 
   getAppliedProgress() {
-    firstValueFrom(this.masterDataService.getAppliedProgress()).then(result => {
+    firstValueFrom(this.masterDataService.getProgressStatus()).then(result => {
       for (let r of result) {
         const menuItem: MenuItem = {
           label: r.progressName
@@ -53,20 +56,24 @@ export class AppliedJobDetailsComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.appliedId = params['id']
       firstValueFrom(this.appliedVacancyService.getProgress(this.appliedId!)).then(result => {
-        if (result.progressCode === ProgressStatus.APP) {
+        if (result.progressCode === ProgressCode.APP) {
           this.activeIndex = 0
-        } else if (result.progressCode === ProgressStatus.ASS) {
+        } else if (result.progressCode === ProgressCode.ASS) {
           this.activeIndex = 1
-        } else if (result.progressCode === ProgressStatus.HIR) {
+        } else if (result.progressCode === ProgressCode.INT) {
           this.activeIndex = 2
-        } else if (result.progressCode === ProgressStatus.INT) {
+        } else if (result.progressCode === ProgressCode.MCU) {
           this.activeIndex = 3
-        } else if (result.progressCode === ProgressStatus.MCU) {
+        } else if (result.progressCode === ProgressCode.OFL) {
           this.activeIndex = 4
-        } else if (result.progressCode === ProgressStatus.OFL) {
+        }else if (result.progressCode === ProgressCode.HIR) {
           this.activeIndex = 5
-        }
+        } 
+        firstValueFrom(this.jobVacancyService.detailCandidate(result.jobVacancyId)).then(result => {
+          this.jobVacancy = result
+        })
       })
     })
   }
+
 }
