@@ -114,7 +114,11 @@ export class DashboardComponent implements AfterViewChecked {
   }
 
   onPageChange(event: any) {
-    this.getPagination(event.first, event.first + event.rows);
+    console.log(event.first);
+    console.log(event.rows);
+    console.log(event.first + event.rows);
+    
+    this.getPagination(event.first, this.rowCounts);
   }
 
   toDetail(jobId: string) {

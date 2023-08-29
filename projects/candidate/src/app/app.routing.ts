@@ -34,8 +34,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/job-details/job-details.module').then(
         (u) => u.JobDetailsModule
-      ),
-    canMatch: [authNonLoginValidation],
+      )
   },
   {
     path: 'saved-job',
@@ -80,12 +79,11 @@ const routes: Routes = [
         path: '',
         component: DashboardComponent,
       },
-    ],
-    canMatch: [authNonLoginValidation],
+    ]
   },
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'dashboard',
     pathMatch: 'full',
   },
   {
