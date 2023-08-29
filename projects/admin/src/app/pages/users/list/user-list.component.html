@@ -1,11 +1,5 @@
 
 <div>
-  <app-button
-    routerLink="/users/create"
-    icon="pi pi-plus"
-    label="Add User"
-    backgroundColor="var(--PRIMARY)"
-  ></app-button>
 
   <p-table
     #dt1
@@ -39,6 +33,12 @@
             (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
             placeholder="Global Search"
           />
+          <app-button
+            routerLink="/users/create"
+            icon="pi pi-plus"
+            label="Add User"
+            backgroundColor="var(--PRIMARY)"
+          ></app-button>
         </div>
       </div>
     </ng-template>

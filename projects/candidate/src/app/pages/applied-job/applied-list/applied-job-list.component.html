@@ -14,9 +14,9 @@
               <i class="pi pi-clock"></i>
               {{ av.createdAt | timeAgo }}
             </span>
-            <span class="absolute top-0 mt-2 font-bold">Progress:
-
-              <p-tag value="{{ av.appliedProgressName }}" [severity]="getSeverity('Application')"></p-tag>
+            <span class="absolute top-0 mt-2 font-bold flex gap-1">
+              <p-tag value="{{ av.appliedStatusName }}" [style]="{ 'background': getStatusColor(av.appliedStatusCode) }"></p-tag>
+              <p-tag value="{{ av.appliedProgressName }}" [style]="{ 'background': getProgressColor(av.appliedProgressCode) }"></p-tag>
             </span>
             <div class="flex flex-row">
               <div class="mr-4">
