@@ -22,6 +22,7 @@ export class JobDetailsComponent implements OnInit {
   jobId!: string;
   savedJobId?: string;
   isSaved?: boolean;
+  isLogin?: boolean;
   applyJobModalVisibility = false;
 
   constructor(
@@ -30,13 +31,19 @@ export class JobDetailsComponent implements OnInit {
     private jobVacancyService: JobVacancyService,
     private savedVacancyService: SavedVacancyService,
     private appliedVacancyService: AppliedVacancyService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.title.setTitle('Job Title');
     this.getDetail();
-    this.getByJobAndCandidate();
+
+    const auth = this.authService.getProfile()
+    if(auth) {
+      this.getByJobAndCandidate();
+      this.isLogin = true
+    }
   }
 
   AppliedVacancyInsertReqDto = this.fb.group({

@@ -45,58 +45,61 @@ export class NavbarComponent implements OnInit {
     } else {
       this.isLogin = false;
     }
+    
+    if(this.isLogin){
 
-    this.navbar = [
-      {
-        label: 'JERA-WORK',
-        routerLink: '/dashboard',
-        id: 'dashboard',
-        styleClass: 'test',
-        icon: 'pi pi-fw pi-slack pi-spin text-white',
-      },
-      {
-        label: 'Applied Job',
-        routerLink: '/applied-job',
-        visible: !this.isAdminApp,
-      },
-      {
-        label: 'Saved Job',
-        routerLink: '/saved-job',
-        visible: !this.isAdminApp,
-      },
-      {
-        label: 'Users',
-        routerLink: '/users',
-        visible: this.isAdminApp && (this.isAdmin || this.isSuperAdmin),
-      },
-
-      {
-        label: 'Companies',
-        routerLink: '/companies',
-        visible: this.isAdminApp && this.isSuperAdmin,
-      },
-
-      {
-        label: 'Job Vacancies',
-        routerLink: '/job-vacancies',
-        visible: this.isAdminApp && (this.isAdmin || this.isHr || this.isUser),
-      },
-    ];
-
-    this.profile = [
-      {
-        label: 'Profile',
-        routerLink: '/users/profile',
-      },
-      {
-        label: 'Change Password',
-        routerLink: '/users/changepassword',
-      },
-      {
-        label: 'Logout',
-        command: () => this.onLogout(),
-      },
-    ];
+      this.navbar = [
+        {
+          label: 'JERA-WORK',
+          routerLink: '/dashboard',
+          id: 'dashboard',
+          styleClass: 'test',
+          icon: 'pi pi-fw pi-slack pi-spin text-white',
+        },
+        {
+          label: 'Applied Job',
+          routerLink: '/applied-job',
+          visible: !this.isAdminApp,
+        },
+        {
+          label: 'Saved Job',
+          routerLink: '/saved-job',
+          visible: !this.isAdminApp,
+        },
+        {
+          label: 'Users',
+          routerLink: '/users',
+          visible: this.isAdminApp && (this.isAdmin || this.isSuperAdmin),
+        },
+  
+        {
+          label: 'Companies',
+          routerLink: '/companies',
+          visible: this.isAdminApp && this.isSuperAdmin,
+        },
+  
+        {
+          label: 'Job Vacancies',
+          routerLink: '/job-vacancies',
+          visible: this.isAdminApp && (this.isAdmin || this.isHr || this.isUser),
+        },
+      ];
+  
+      this.profile = [
+        {
+          label: 'Profile',
+          routerLink: '/users/profile',
+        },
+        {
+          label: 'Change Password',
+          routerLink: '/users/changepassword',
+        },
+        {
+          label: 'Logout',
+          command: () => this.onLogout(),
+        },
+      ];
+    }
   }
 
   onLogout(): void {
