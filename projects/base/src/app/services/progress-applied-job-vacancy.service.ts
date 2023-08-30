@@ -53,6 +53,13 @@ export class ProgressAppliedJobVacancyService {
     return this.base.patch(`${ADMIN_API}/interviews`, data);
   }
 
+  updateOfferingFromCandidate(offeringId: string): Observable<UpdateResDto> {
+    return this.base.patch(
+      `${ADMIN_API}/offerings?offeringId=${offeringId}`,
+      null
+    );
+  }
+
   insertMcu(data: McuVacancyInsertReqDto): Observable<InsertResDto> {
     return this.base.post<InsertResDto>(`${ADMIN_API}/mcus`, data, true);
   }

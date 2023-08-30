@@ -1,4 +1,4 @@
-<pre>
+<!-- <pre>
   {{ profile.value | json }}
 </pre>
 <pre>
@@ -11,7 +11,7 @@
 
 <pre>
   {{ documentsArr.value | json }}
-</pre>
+</pre> -->
 
 <div
   class="flex align-items-center justify-content-center flex-column container mt-4"
@@ -200,6 +200,7 @@
             btnType="button"
             routerLink="/dashboard"
             classBtn="p-button-secondary p-button-text"
+            border=""
             label="Cancel"
           ></app-button>
         </div>
@@ -408,6 +409,7 @@
                     icon="pi pi-times"
                     classBtn="p-button-rounded p-button-danger p-button-text p-button-sm"
                     border=""
+                    (click)="showDeleteModalSkill(s.skillId)"
                   ></app-button>
                 </div>
               </div>
@@ -441,7 +443,10 @@
         </div>
       </div>
 
-      <div class="mt-3 h-4rem flex justify-content-center align-items-center">
+      <div
+        *ngIf="documentsData?.length == 0"
+        class="mt-3 h-4rem flex justify-content-center align-items-center"
+      >
         <h3>No Documents added yet</h3>
       </div>
     </div>
@@ -457,10 +462,6 @@
   [draggable]="false"
   [resizable]="false"
 >
-  <pre>
-    {{ educations.value | json }}
-    {{ education.value | json }}
-  </pre>
   <div class="modal-dialog modal-dialog-centered">
     <form [formGroup]="education">
       <!-- Input New Education -->
@@ -807,7 +808,6 @@
   [resizable]="false"
 >
   <div class="modal-dialog modal-dialog-centered h-25rem">
-    {{ skillsReqDto.value | json }}
     <form [formGroup]="skillsReqDto">
       <!-- Input New Skill -->
       <div class="col-12 col-md-3">
@@ -859,9 +859,6 @@
   [resizable]="false"
 >
   <div class="modal-dialog modal-dialog-centered">
-    <pre>
-      {{ documents.value | json }}
-    </pre>
     <form [formGroup]="documents">
       <div
         class="my-3 grid col-12 justify-content-center align-items-center md:gy-4 gy-3 container"
@@ -937,7 +934,34 @@
   </ng-template>
 </p-dialog>
 
-<!-- Diupdate lagi kalo udah masuk ke db buat delete per experience -->
+<!-- Diupdate lagi kalo udah masuk ke db buat delete per skill -->
+<p-dialog
+  header="Are you sure want to delete this Skill?"
+  [(visible)]="modalDeleteSkill"
+  [modal]="true"
+  [style]="{ width: '40vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <ng-template pTemplate="footer">
+    <app-button
+      label="Yes"
+      classBtn="p-button-outlined p-button-danger"
+      border=""
+      (click)="deleteSkill()"
+    >
+    </app-button>
+
+    <app-button
+      label="Cancel"
+      classBtn="p-button-outlined p-button-secondary"
+      (click)="hideDeleteModalSkill()"
+      border=""
+    >
+    </app-button>
+  </ng-template>
+</p-dialog>
+
 <p-dialog
   header="Are you sure want to delete this Experience?"
   [(visible)]="modalDeleteExperience"

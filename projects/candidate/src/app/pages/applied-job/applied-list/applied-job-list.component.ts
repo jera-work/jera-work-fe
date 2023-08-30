@@ -44,6 +44,7 @@ export class AppliedJobListComponent implements OnInit {
         endIndex
       )
     ).then((result) => {
+      
       this.appliedVacancyWithLimit = result;
     });
   }

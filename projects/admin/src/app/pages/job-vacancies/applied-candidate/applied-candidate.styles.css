@@ -2,3 +2,8 @@
   background-color: #89d4f4;
   color: white;
 }
+
+::ng-deep .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  color: var(--PRIMARY);
+  border-color: var(--PRIMARY);
+}

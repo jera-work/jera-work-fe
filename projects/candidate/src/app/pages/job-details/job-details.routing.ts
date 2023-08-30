@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
 import { ButtonComponent } from '@components/button/button.component';
 import { UrlPipeAdmin } from '@pipes/url.pipe';
+import { MessageService } from 'primeng/api';
 
 const routes: Routes = [
   {

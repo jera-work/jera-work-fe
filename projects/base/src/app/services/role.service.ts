@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
 import { Observable } from 'rxjs';
 import { RoleResDto } from '../dto/data-master/role.res.dto';
-import { ADMIN_API, CANDIDATE_API } from '../constant/api.constant';
+import { ADMIN_API } from '../constant/api.constant';
 
 @Injectable({
   providedIn: 'root',

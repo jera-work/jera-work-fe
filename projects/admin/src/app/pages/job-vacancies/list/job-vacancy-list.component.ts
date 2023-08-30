@@ -20,7 +20,6 @@ export class JobVacancyListComponent implements OnInit {
   isAdmin = false;
 
   jobVacancies: JobVacancyResDto[] = [];
-  jobVacancy?: JobVacancyResDto;
 
   ngOnInit(): void {
     firstValueFrom(this.jobVacancyService.getAllJobsByCompany(0, 10)).then(
