@@ -10,8 +10,9 @@
 
   <p-card>
     <div class="flex justify-content-between mb-4">
-      <h1>test</h1>
+      <h1>{{ appliedVacancyCandidateDetails?.jobTitle }}</h1>
       <p-dropdown
+        *ngIf="isHr"
         [options]="progressStatusDropdown"
         [(ngModel)]="selectedProgress"
         [placeholder]="appliedVacancyCandidateDetails?.appliedProgress"
@@ -28,12 +29,6 @@
     ></p-steps>
 
     <ng-container *ngIf="appliedVacancyCandidateDetails">
-      <div>
-        <p class="text-2xl">
-          Applied: {{ appliedVacancyCandidateDetails.jobTitle }}
-        </p>
-      </div>
-
       <div class="mt-4 grid">
         <div
           class="flex justify-content-center align-items-center flex-column gap-3 col-3"
@@ -162,51 +157,58 @@
           </ng-template>
 
           <!-- Assessment -->
-          <div class="mt-4" *ngIf="assessmentVacancyResDto">
-            <h4>Assessment</h4>
+          <div class="mt-4">
+            <h2>Assessment</h2>
             <p-divider></p-divider>
 
-            <form [formGroup]="updateNotesAssessmentReqDto">
-              <div class="grid">
-                <div class="col-12 flex column-gap-3">
-                  <p>Notes</p>
-                  <span *ngIf="!toggleUpdateAssessment">
-                    <i
-                      class="pi pi-pencil cursor-pointer"
-                      (click)="toggleUpdateAssessment = true"
-                    ></i>
-                  </span>
-                  <span *ngIf="toggleUpdateAssessment">
-                    <i
-                      class="pi pi-times cursor-pointer"
-                      (click)="toggleUpdateAssessment = false"
-                    ></i>
-                  </span>
+            <ng-container *ngIf="!assessmentVacancyResDto">
+              <p>Candidate haven't reached assessment stage</p>
+            </ng-container>
+            <ng-container *ngIf="assessmentVacancyResDto">
+              <form [formGroup]="updateNotesAssessmentReqDto">
+                <div class="grid">
+                  <div class="col-12 flex column-gap-3">
+                    <p>Notes</p>
+                    <ng-container *ngIf="isHr">
+                      <span *ngIf="!toggleUpdateAssessment">
+                        <i
+                          class="pi pi-pencil cursor-pointer"
+                          (click)="toggleUpdateAssessment = true"
+                        ></i>
+                      </span>
+                      <span *ngIf="toggleUpdateAssessment">
+                        <i
+                          class="pi pi-times cursor-pointer"
+                          (click)="toggleUpdateAssessment = false"
+                        ></i>
+                      </span>
+                    </ng-container>
+                  </div>
+                  <div class="col-12">
+                    <textarea
+                      rows="5"
+                      cols="50"
+                      pInputTextarea
+                      [readOnly]="!toggleUpdateAssessment"
+                      formControlName="notes"
+                    ></textarea>
+                  </div>
+                  <div *ngIf="toggleUpdateAssessment" class="col-12">
+                    <app-button
+                      btnType="button"
+                      label="Update Notes"
+                      backgroundColor="var(--PRIMARY)"
+                      (click)="
+                        showDialogUpdateAssessment(
+                          assessmentVacancyResDto.assessmentId
+                        )
+                      "
+                    >
+                    </app-button>
+                  </div>
                 </div>
-                <div class="col-12">
-                  <textarea
-                    rows="5"
-                    cols="50"
-                    pInputTextarea
-                    [readOnly]="!toggleUpdateAssessment"
-                    formControlName="notes"
-                  ></textarea>
-                </div>
-                <div *ngIf="toggleUpdateAssessment" class="col-12">
-                  <app-button
-                    btnType="button"
-                    label="Update Notes"
-                    backgroundColor="var(--PRIMARY)"
-                    (click)="
-                      showDialogUpdateAssessment(
-                        assessmentVacancyResDto.assessmentId
-                      )
-                    "
-                  >
-                  </app-button>
-                </div>
-              </div>
-            </form>
+              </form>
+            </ng-container>
             <p-dialog
               header="Update Notes"
               [(visible)]="updateModalAssessment"
@@ -238,51 +240,59 @@
           </div>
 
           <!-- Interview User -->
-          <div *ngIf="interviewVacancyResDto">
-            <h4>Interview User</h4>
+          <div class="mt-5">
+            <h2>Interview User</h2>
             <p-divider></p-divider>
 
-            <form [formGroup]="updateNotesInterviewReqDto">
-              <div class="grid">
-                <div class="col-12 flex column-gap-3">
-                  <p>Notes</p>
-                  <span *ngIf="!toggleUpdateInterview">
-                    <i
-                      class="pi pi-pencil cursor-pointer"
-                      (click)="toggleUpdateInterview = true"
-                    ></i>
-                  </span>
-                  <span *ngIf="toggleUpdateInterview">
-                    <i
-                      class="pi pi-times cursor-pointer"
-                      (click)="toggleUpdateInterview = false"
-                    ></i>
-                  </span>
+            <ng-container *ngIf="!interviewVacancyResDto">
+              <p>Candidate haven't reached inteview user stage</p>
+            </ng-container>
+
+            <ng-container *ngIf="interviewVacancyResDto">
+              <form [formGroup]="updateNotesInterviewReqDto">
+                <div class="grid">
+                  <div class="col-12 flex column-gap-3">
+                    <p>Notes</p>
+                    <ng-container *ngIf="!isHr">
+                      <span *ngIf="!toggleUpdateInterview">
+                        <i
+                          class="pi pi-pencil cursor-pointer"
+                          (click)="toggleUpdateInterview = true"
+                        ></i>
+                      </span>
+                      <span *ngIf="toggleUpdateInterview">
+                        <i
+                          class="pi pi-times cursor-pointer"
+                          (click)="toggleUpdateInterview = false"
+                        ></i>
+                      </span>
+                    </ng-container>
+                  </div>
+                  <div class="col-12">
+                    <textarea
+                      rows="5"
+                      cols="50"
+                      [readOnly]="!toggleUpdateInterview"
+                      pInputTextarea
+                      formControlName="notes"
+                    ></textarea>
+                  </div>
+                  <div class="col-12" *ngIf="toggleUpdateInterview">
+                    <app-button
+                      btnType="button"
+                      label="Update Notes"
+                      backgroundColor="var(--PRIMARY)"
+                      (click)="
+                        showDialogUpdateInterview(
+                          interviewVacancyResDto.interviewId
+                        )
+                      "
+                    >
+                    </app-button>
+                  </div>
                 </div>
-                <div class="col-12">
-                  <textarea
-                    rows="5"
-                    cols="50"
-                    [readOnly]="!toggleUpdateInterview"
-                    pInputTextarea
-                    formControlName="notes"
-                  ></textarea>
-                </div>
-                <div class="col-12" *ngIf="toggleUpdateInterview">
-                  <app-button
-                    btnType="button"
-                    label="Update Notes"
-                    backgroundColor="var(--PRIMARY)"
-                    (click)="
-                      showDialogUpdateInterview(
-                        interviewVacancyResDto.interviewId
-                      )
-                    "
-                  >
-                  </app-button>
-                </div>
-              </div>
-            </form>
+              </form>
+            </ng-container>
 
             <!-- Confirm Modal -->
             <p-dialog
@@ -316,21 +326,49 @@
           </div>
 
           <!-- MCU -->
-          <div *ngIf="mcuVacancyResDto">
-            <h4>Medical Check Up</h4>
+          <div class="mt-5">
+            <h2>Medical Check Up</h2>
             <p-divider></p-divider>
+
+            <ng-container *ngIf="!mcuVacancyResDto">
+              <p>Candidate haven't reached medical check up stage</p>
+            </ng-container>
+
+            <ng-container *ngIf="mcuVacancyResDto">
+              <p>ada</p>
+            </ng-container>
           </div>
 
           <!-- Offering -->
-          <div *ngIf="offeringResDto">
-            <h4>Offering</h4>
+          <div class="mt-5">
+            <h2>Offering</h2>
             <p-divider></p-divider>
+
+            <ng-container *ngIf="!offeringResDto">
+              <p>Candidate haven't offering stage</p>
+            </ng-container>
+
+            <ng-container *ngIf="offeringResDto">
+              <p>ada</p>
+              <p>
+                Status:
+                {{ offeringResDto.approve ? "Approve" : "Not Approve" }}
+              </p>
+            </ng-container>
           </div>
 
           <!-- Hired -->
-          <div *ngIf="hiringResDto">
-            <h4>Hiring</h4>
+          <div class="mt-5">
+            <h2>Hiring</h2>
             <p-divider></p-divider>
+
+            <ng-container *ngIf="!hiringResDto">
+              <p>Candidate haven't hiring stage</p>
+            </ng-container>
+
+            <ng-container *ngIf="hiringResDto">
+              <p>ada</p>
+            </ng-container>
           </div>
         </p-tabPanel>
         <p-tabPanel header="Header II">

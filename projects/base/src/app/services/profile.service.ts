@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
-import { Observable } from 'rxjs';
+import { Observable, Observer } from 'rxjs';
 import { ProfileResDto } from '@dto/profile/profile.res.dto';
 import { ADMIN_API, CANDIDATE_API } from '@constant/api.constant';
 import {
@@ -19,12 +19,20 @@ import { CandidateSkillInsertReqDto } from '@dto/candidate/candidate-skill-inser
 import { CandidateDocumentResDto } from '@dto/candidate/candidate-document.res.dto';
 import { ProfileAdminResDto } from '@dto/profile/profile-admin.res.dto';
 import { CandidateProfileUpdateReqDto } from '@dto/candidate/candidate-profile-update.req.dto';
+import { DeleteResDto } from '@dto/delete.res.dto';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileService {
-  constructor(private base: BaseService) {}
+  data?: Observable<string>;
+  private dataObserver?: Observer<string>;
+
+  constructor(private base: BaseService) {
+    this.data = new Observable<string>(
+      (observer) => (this.dataObserver = observer)
+    );
+  }
 
   getProfile(): Observable<ProfileResDto> {
     return this.base.get(`${CANDIDATE_API}/candidates`);
@@ -83,4 +91,17 @@ export class ProfileService {
   getDocuments(): Observable<CandidateDocumentResDto[]> {
     return this.base.get(`${CANDIDATE_API}/documents`);
   }
+  // ================= GET DATA =================
+
+  // ================= DELETE DATA =================
+  deleteSkill(skillId: string): Observable<DeleteResDto> {
+    return this.base.delete(`${CANDIDATE_API}/skills?skillId=${skillId}`);
+  }
+
+  // ================= NAVBAR =================
+
+  navbarObservable(id: string) {
+    this.dataObserver?.next(id);
+  }
+  // ================= NAVBAR =================
 }

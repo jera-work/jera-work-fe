@@ -19,7 +19,7 @@ import { DegreeResDto } from '@dto/data-master/degree.res.dto';
 import { MajorsResDto } from '@dto/data-master/majors.res.dto';
 import { DocumentTypesResDto } from '@dto/data-master/document-types.res.dto';
 import { MasterDataService } from '@services/master-data.service';
-import { Subscription } from 'rxjs';
+import { Subscription, firstValueFrom } from 'rxjs';
 import { ProfileService } from '@services/profile.service';
 import { SkillResDto } from '@dto/data-master/skill.res.dto';
 import { CandidateEducationResDto } from '@dto/candidate/candidate-education.res.dto';
@@ -84,6 +84,7 @@ export class UserProfileComponent
 
   // modal boolean
   modalSkill = false;
+  modalDeleteSkill = false;
 
   // Subscriptions
   profileSubscription?: Subscription;
@@ -384,8 +385,29 @@ export class UserProfileComponent
       this.profileSubscription = this.profileServ
         .updateProfile(data)
         .subscribe((res) => {
-          console.log(res);
-          this.router.navigateByUrl('/dashboard');
+          // console.log(res);
+          // this.router.navigateByUrl('/dashboard');
+
+          firstValueFrom(this.profileServ.getProfile()).then((res) => {
+            console.log(res);
+            this.profileServ.navbarObservable(res.photoId);
+            if (res.photoId) {
+              this.imgUrl = res.photoId;
+            } else {
+              this.imgUrl = undefined;
+            }
+            this.profile.patchValue({
+              candidateEmail: res.candidateEmail,
+              profileName: res.profileName,
+              profileAddress: res.profileAddress,
+              phoneNumber: res.phoneNumber,
+              expectedSalary: res.expectedSalary,
+              genderId: res.genderId,
+              nationalityId: res.nationalityId,
+              maritalId: res.maritalId,
+              religionId: res.religionId,
+            });
+          });
         });
     }
   }
@@ -402,6 +424,7 @@ export class UserProfileComponent
       this.insertEducationSubscription = this.profileServ
         .insertEducations([data])
         .subscribe((res) => {
+          console.log('test');
           this.getEducationsSubscription = this.profileServ
             .getEducations()
             .subscribe((res) => (this.educationsData = res));
@@ -440,10 +463,10 @@ export class UserProfileComponent
   onCreateExperience() {
     if (this.experience.valid) {
       const data = this.experience.getRawValue();
-      this.experiences.push(this.fb.group(data));
       this.insertExperienceSubscription = this.profileServ
         .insertExperiences([data])
         .subscribe((res) => {
+          console.log('test');
           this.getExperiencesSubscription = this.profileServ
             .getExperiences()
             .subscribe((res) => (this.experiencesData = res));
@@ -473,6 +496,10 @@ export class UserProfileComponent
     this.modalDeleteExperience = true;
   }
 
+  // =========================== Experience ===========================
+
+  // =========================== Skills ===========================
+
   showModalSkill() {
     this.modalSkill = true;
   }
@@ -499,7 +526,32 @@ export class UserProfileComponent
   onCloseSkill() {
     this.modalSkill = false;
   }
-  // =========================== Experience ===========================
+
+  showDeleteModalSkill(skillId: string) {
+    this.modalDeleteSkill = true;
+    this.skillsReqDto.patchValue({
+      skillId,
+    });
+  }
+
+  deleteSkill() {
+    const data = this.skillsReqDto.getRawValue();
+    firstValueFrom(this.profileServ.deleteSkill(data.skillId)).then((res) => {
+      this.skillsReqDto.reset();
+      firstValueFrom(this.profileServ.getSkills()).then(
+        (res) => (this.skillsData = res)
+      );
+    });
+
+    this.modalDeleteSkill = false;
+  }
+
+  hideDeleteModalSkill() {
+    this.modalDeleteSkill = false;
+    this.skillsReqDto.reset();
+  }
+
+  // =========================== Skills ===========================
 
   // =========================== Documents ===========================
   showModalDocuments() {

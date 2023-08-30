@@ -1,0 +1,11 @@
+::ng-deep
+  .p-datatable.p-datatable-striped
+  .p-datatable-tbody
+  > tr:nth-child(even),
+::ng-deep .p-datatable .p-datatable-header {
+  background-color: #a4dcf471;
+}
+
+::ng-deep .p-datatable .p-datatable-thead > tr > th {
+  background-color: #a4dcf4;
+}

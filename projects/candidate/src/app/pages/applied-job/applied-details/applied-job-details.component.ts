@@ -10,6 +10,7 @@ import { firstValueFrom } from 'rxjs';
 import { ProgressStatus } from '@constant/progress.constant';
 import { JobVacancyService } from '@services/job-vacancy.service';
 import { JobVacancyResDto } from '@dto/job-vacancy/job-vacancy.res.dto';
+import { ProgressAppliedJobVacancyService } from '@services/progress-applied-job-vacancy.service';
 
 @Component({
   selector: 'applied-job-details',
@@ -20,22 +21,27 @@ export class AppliedJobDetailsComponent implements OnInit {
   jobStatus: MenuItem[] = [];
   progress?: AppliedVacancyProgressResDto;
   jobVacancy?: JobVacancyResDto;
+  offeringDataId?: string;
 
   activeIndex: number = 0;
   appliedId?: string;
+  modalApproveOffering = false;
+  isApprove = false;
 
   constructor(
     private title: Title,
     private masterDataService: MasterDataService,
     private appliedVacancyService: AppliedVacancyService,
     private jobVacancyService: JobVacancyService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private progressAppliedJobService: ProgressAppliedJobVacancyService
   ) {}
 
   ngOnInit(): void {
     this.title.setTitle('Job Title');
     this.getAppliedProgress();
-    this.getPogress();
+
+    this.getProgress();
   }
 
   onActiveIndexChange(event: number) {
@@ -49,14 +55,13 @@ export class AppliedJobDetailsComponent implements OnInit {
           const menuItem: MenuItem = {
             label: r.progressName,
           };
-
           this.jobStatus.push(menuItem);
         }
       }
     );
   }
 
-  getPogress() {
+  getProgress() {
     this.activatedRoute.params.subscribe((params) => {
       this.appliedId = params['id'];
       firstValueFrom(
@@ -80,7 +85,31 @@ export class AppliedJobDetailsComponent implements OnInit {
         ).then((result) => {
           this.jobVacancy = result;
         });
+
+        firstValueFrom(
+          this.progressAppliedJobService.getOffering(
+            result.appliedVacancyFromAdminId
+          )
+        ).then((res) => {
+          this.isApprove = res.approve;
+          this.offeringDataId = res.offeringId;
+        });
       });
     });
+  }
+
+  submitApproveOffering() {
+    if (this.offeringDataId) {
+      firstValueFrom(
+        this.progressAppliedJobService.updateOfferingFromCandidate(
+          this.offeringDataId
+        )
+      ).then((res) => {
+        console.log(res);
+        this.modalApproveOffering = false;
+      });
+    } else {
+      console.log('error');
+    }
   }
 }
