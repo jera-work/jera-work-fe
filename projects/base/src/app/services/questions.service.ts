@@ -17,7 +17,7 @@ export class QuestionsService {
     return this.base.post(`${ADMIN_API}/questions`, data)
   }
 
-  getQuestions(jobId: String): Observable<QuestionResDto[]> {
+  getQuestions(jobId: string): Observable<QuestionResDto[]> {
     return this.base.get(`${ADMIN_API}/questions/?jobId=${jobId}`)
   }
 
