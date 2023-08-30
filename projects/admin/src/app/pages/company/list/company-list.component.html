@@ -44,54 +44,34 @@
   <ng-template pTemplate="header">
     <tr>
       <th scope="col" class="md:col-1">No.</th>
-      <th scope="col" class="md:col-1">
+      <th pSortableColumn="companyCode" scope="col" class="md:col-1">
         <div class="flex align-items-center">
           Code
-          <p-columnFilter
-            type="text"
-            field="companyCode"
-            display="menu"
-          ></p-columnFilter>
+          <p-sortIcon field="companyCode"></p-sortIcon>
         </div>
       </th>
-      <th scope="col" class="md:col-1">
+      <th pSortableColumn="companyName" scope="col" class="md:col-1">
         <div class="flex align-items-center">
           Name
-          <p-columnFilter
-            type="text"
-            field="companyName"
-            display="menu"
-          ></p-columnFilter>
+          <p-sortIcon field="companyName"></p-sortIcon>
         </div>
       </th>
-      <th scope="col" class="md:col-4">
+      <th pSortableColumn="address" scope="col" class="md:col-4">
         <div class="flex align-items-center">
           Address
-          <p-columnFilter
-            type="text"
-            field="address"
-            display="menu"
-          ></p-columnFilter>
+          <p-sortIcon field="address"></p-sortIcon>
         </div>
       </th>
-      <th scope="col" class="md:col-3">
+      <th pSortableColumn="description" scope="col" class="md:col-3">
         <div class="flex align-items-center">
           Description
-          <p-columnFilter
-            type="text"
-            field="description"
-            display="menu"
-          ></p-columnFilter>
+          <p-sortIcon field="description"> </p-sortIcon>
         </div>
       </th>
-      <th scope="col" class="md:col-1">
+      <th pSortableColumn="phoneNumber" scope="col" class="md:col-1">
         <div class="flex align-items-center">
           Phone
-          <p-columnFilter
-            type="text"
-            field="phoneNumber"
-            display="menu"
-          ></p-columnFilter>
+          <p-sortIcon field="phoneNumber"> </p-sortIcon>
         </div>
       </th>
     </tr>

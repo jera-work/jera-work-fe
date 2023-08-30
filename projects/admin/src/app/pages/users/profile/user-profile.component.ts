@@ -84,6 +84,9 @@ export class UserProfileComponent implements OnInit {
       firstValueFrom(this.profileService.updateProfileAdmin(data)).then(
         (res) => {
           console.log(res);
+          firstValueFrom(this.profileService.getProfileAdmin()).then((res) => {
+            this.profileService.navbarObservable(res.photoId);
+          });
           this.loading = false;
           this.router.navigateByUrl('/dashboard');
         }

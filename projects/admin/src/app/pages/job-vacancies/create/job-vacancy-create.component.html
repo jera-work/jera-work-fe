@@ -1,13 +1,8 @@
-<pre>{{ jobVacancyInsertReqDto.value | json }}</pre>
-
-<p class="text-5xl px-5 pt-5">Create Job</p>
-
-<div class="flex flex-column justify-content-center align-items-center">
-  <form
-    [formGroup]="jobVacancyInsertReqDto"
-    (ngSubmit)="onSubmit()"
-    class="w-10"
-  >
+<div
+  class="flex flex-column justify-content-center align-items-center w-10 m-auto"
+>
+  <h1 class="my-4">Create Job</h1>
+  <form [formGroup]="jobVacancyInsertReqDto" (ngSubmit)="onSubmit()">
     <div class="grid">
       <div class="md:col-12 col-12">
         <label for="vacancy-title"
