@@ -1,6 +1,11 @@
-
-<div>
-
+<div class="w-10 m-auto">
+  <app-button
+    routerLink="/users/create"
+    icon="pi pi-plus"
+    label="Add User"
+    backgroundColor="var(--PRIMARY)"
+    classBtn="my-3"
+  ></app-button>
   <p-table
     #dt1
     [value]="users"
@@ -18,8 +23,7 @@
       'roleName'
     ]"
     selectionMode="single"
-    [tableStyle]="{ 'min-width': '50rem' }"
-    styleClass="p-datatable-gridlines p-datatable-striped mx-7 mt-5"
+    styleClass="p-datatable-gridlines p-datatable-striped"
   >
     <ng-template pTemplate="caption">
       <div class="flex flex-column md:flex-row md:align-items-center">
@@ -45,54 +49,34 @@
     <ng-template pTemplate="header">
       <tr>
         <th scope="col" class="md:col-1">No.</th>
-        <th scope="col" class="md:col-2">
+        <th pSortableColumn="profileName" scope="col" class="md:col-2">
           <div class="flex align-items-center">
             Name
-            <p-columnFilter
-              type="text"
-              field="profileName"
-              display="menu"
-            ></p-columnFilter>
+            <p-sortIcon field="profileName"></p-sortIcon>
           </div>
         </th>
-        <th scope="col" class="md:col-1">
+        <th pSortableColumn="phoneNumber" scope="col" class="md:col-1">
           <div class="flex align-items-center">
             Phone
-            <p-columnFilter
-              type="text"
-              field="profilePhone"
-              display="menu"
-            ></p-columnFilter>
+            <p-sortIcon field="phoneNumber"></p-sortIcon>
           </div>
         </th>
-        <th scope="col" class="md:col-5">
+        <th pSortableColumn="profileAddress" scope="col" class="md:col-5">
           <div class="flex align-items-center">
             Address
-            <p-columnFilter
-              type="text"
-              field="profileAddress"
-              display="menu"
-            ></p-columnFilter>
+            <p-sortIcon field="profileAddress"></p-sortIcon>
           </div>
         </th>
-        <th scope="col" class="md:col-2">
+        <th pSortableColumn="companyName" scope="col" class="md:col-2">
           <div class="flex align-items-center">
             Company
-            <p-columnFilter
-              type="text"
-              field="companyName"
-              display="menu"
-            ></p-columnFilter>
+            <p-sortIcon field="companyName"></p-sortIcon>
           </div>
         </th>
-        <th scope="col" class="md:col-1">
+        <th pSortableColumn="roleName" scope="col" class="md:col-1">
           <div class="flex align-items-center">
             Role
-            <p-columnFilter
-              type="text"
-              field="roleName"
-              display="menu"
-            ></p-columnFilter>
+            <p-sortIcon field="roleName"></p-sortIcon>
           </div>
         </th>
       </tr>

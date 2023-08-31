@@ -1,4 +1,5 @@
 export interface AppliedVacancyProgressResDto {
-	jobVacancyId: string
-	progressCode: string
+  jobVacancyId: string;
+  progressCode: string;
+  appliedVacancyFromAdminId: string;
 }

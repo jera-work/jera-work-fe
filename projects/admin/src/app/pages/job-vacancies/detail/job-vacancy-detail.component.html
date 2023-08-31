@@ -3,7 +3,6 @@
   <app-button label="Back" routerLink="/job-vacancies" icon="pi pi-angle-left" border=""
     classBtn="p-button-outlined p-button-secondary mb-3">
   </app-button>
-
   <div class="px-6 shadow-3 py-2 relative">
     <div *ngIf="jobVacancy">
       <div class="flex flex-column md:flex-row justify-content-between my-2 h-2rem">
@@ -136,43 +135,44 @@
           </div>
         </div>
       </ng-template>
-
-      <ng-template pTemplate="header">
-        <tr>
-          <th scope="col" class="md:col-1">No.</th>
-          <th scope="col" class="md:col-4">
-            <div class="flex align-items-center">
-              Candidate Name
-              <p-columnFilter type="text" field="profileName" display="menu"></p-columnFilter>
-            </div>
-          </th>
-          <th scope="col" class="md:col-4">
-            <div class="flex align-items-center">
-              Applied Time
-              <p-columnFilter type="text" field="candidateEmail" display="menu"></p-columnFilter>
-            </div>
-          </th>
-          <th scope="col" class="md:col-4">
-            <div class="flex align-items-center">
-              Progress
-              <p-columnFilter type="text" field="progressName" display="menu"></p-columnFilter>
-            </div>
-          </th>
-          <th scope="col" class="md:col-1">
-            <div class="flex align-items-center">
-              Status
-              <p-columnFilter type="text" field="statusName" display="menu"></p-columnFilter>
-            </div>
-          </th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-appliedVacancy let-i="rowIndex">
-        <tr routerLink="applied/{{ appliedVacancy.id }}" style="cursor: pointer">
-          <td>{{ i + 1 }}</td>
-          <td>{{ appliedVacancy.profileName }}</td>
-          <td>{{ appliedVacancy.createdAt | timeAgo }}</td>
-          <td>
-            <p-tag [value]="appliedVacancy.progressName" [style]="{
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" class="md:col-1">No.</th>
+        <th pSortableColumn="profileName" scope="col" class="md:col-4">
+          <div class="flex align-items-center">
+            Candidate Name
+            <p-sortIcon field="profileName"> </p-sortIcon>
+          </div>
+        </th>
+        <th pSortableColumn="createdAt" scope="col" class="md:col-4">
+          <div class="flex align-items-center">
+            Applied Time
+            <p-sortIcon field="createdAt"> </p-sortIcon>
+          </div>
+        </th>
+        <th pSortableColumn="progressName" scope="col" class="md:col-4">
+          <div class="flex align-items-center">
+            Progress
+            <p-sortIcon field="progressName"></p-sortIcon>
+          </div>
+        </th>
+        <th pSortableColumn="statusName" scope="col" class="md:col-1">
+          <div class="flex align-items-center">
+            Status
+            <p-sortIcon field="statusName"></p-sortIcon>
+          </div>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-appliedVacancy let-i="rowIndex">
+      <tr routerLink="applied/{{ appliedVacancy.id }}" style="cursor: pointer">
+        <td>{{ i + 1 }}</td>
+        <td>{{ appliedVacancy.profileName }}</td>
+        <td>{{ appliedVacancy.createdAt | timeAgo }}</td>
+        <td>
+          <p-tag
+            [value]="appliedVacancy.progressName"
+            [style]="{
               background: getProgressColor(appliedVacancy.progressCode)
             }"></p-tag>
           </td>

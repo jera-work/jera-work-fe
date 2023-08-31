@@ -1,4 +1,5 @@
 <div class="min-h-screen md:mx-8 sm:mx-6 mx-2">
+  <p-toast key="update"></p-toast>
   <app-button
     label="Back"
     icon="pi pi-arrow-left"
@@ -10,7 +11,14 @@
     <div class="flex flex-column">
       <!-- company img -->
       <div class="flex gap-2 justify-content-end my-3">
-        <i (click)="changeSavedStatus()" [ngClass]="isSaved ? 'pi text-2xl pi-bookmark-fill' : 'pi text-2xl pi-bookmark'" style="cursor: pointer" *ngIf="isLogin"></i>
+        <i
+          (click)="changeSavedStatus()"
+          [ngClass]="
+            isSaved ? 'pi text-2xl pi-bookmark-fill' : 'pi text-2xl pi-bookmark'
+          "
+          style="cursor: pointer"
+          *ngIf="isLogin"
+        ></i>
         <i class="pi pi-share-alt text-2xl"></i>
       </div>
       <div class="flex gap-3 mb-2 flex-column md:flex-row">
@@ -115,19 +123,41 @@
   </div>
 </div>
 
-  <p-dialog header="Header" [(visible)]="applyJobModalVisibility" styleClass="w-27rem" [modal]="true" [draggable]="false" [resizable]="false">
-      <ng-template pTemplate="header">
-          <span class="text-xl font-bold" *ngIf="isLogin">Apply for this job?</span>
-          <span class="text-xl font-bold" *ngIf="!isLogin">Oops! You need to sign in first!</span>
-      </ng-template>
-          <div class="flex gap-1 justify-content-end" *ngIf="isLogin">
-            <app-button type="button" (click)="applyJobModalVisibility = false" classBtn="p-button-danger"
-                label="Cancel"></app-button>
-            <app-button btnType="submit" label="Apply" (clickChange)="applyJob()"></app-button>
-          </div>
-          <div class="flex gap-1 justify-content-start" *ngIf="!isLogin" >
-            <img src="/assets/login-img.svg" class="md:w-4 w-6" alt="img" />
-            <app-button label="Click here to login" icon="pi pi-arrow-right" classBtn="p-button-secondary p-button-outlined my-5" border=""
-    routerLink="/login"></app-button>
-          </div>
-  </p-dialog>
+<p-dialog
+  header="Header"
+  [(visible)]="applyJobModalVisibility"
+  styleClass="w-27rem"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <ng-template pTemplate="header">
+    <span class="text-xl font-bold" *ngIf="isLogin">Apply for this job?</span>
+    <span class="text-xl font-bold" *ngIf="!isLogin"
+      >Oops! You need to sign in first!</span
+    >
+  </ng-template>
+  <div class="flex gap-1 justify-content-end" *ngIf="isLogin">
+    <app-button
+      btnType="submit"
+      label="Apply"
+      (clickChange)="applyJob()"
+    ></app-button>
+    <app-button
+      type="button"
+      (click)="applyJobModalVisibility = false"
+      classBtn="p-button-danger"
+      label="Cancel"
+    ></app-button>
+  </div>
+  <div class="flex gap-1 justify-content-start" *ngIf="!isLogin">
+    <img src="/assets/login-img.svg" class="md:w-4 w-6" alt="img" />
+    <app-button
+      label="Click here to login"
+      icon="pi pi-arrow-right"
+      classBtn="p-button-secondary p-button-outlined my-5"
+      border=""
+      routerLink="/login"
+    ></app-button>
+  </div>
+</p-dialog>

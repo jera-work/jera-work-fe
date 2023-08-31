@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { FormArray, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { QuestionAnswerInsertAnswerReqDto } from '@dto/question-answer/question-answer-insert-answer.req.dto';
 import { QuestionOptionResDto } from '@dto/question-option/question-option.res.dto';
 import { QuestionResDto } from '@dto/question/question.res.dto';
@@ -33,30 +33,42 @@ export class QuestionAnswerComponent implements OnInit{
         private questionAnswerService : QuestionAnswerService,
         private fb : NonNullableFormBuilder,
         private router : Router,
-        private title : Title
+        private title : Title,
+        private route: ActivatedRoute
     ){
         this.title.setTitle('Asessment Test')
     }
 
     ngOnInit(): void {
-        if(localStorage.getItem('data')){
-            firstValueFrom(this.questionService.getQuestions("ba7c9532-a579-42bd-b2b1-d66c101213aa")).then((res) => {
-                this.questions = res
-                
-                for(let i = 0; i < this.questions.length; i++){
-                    this.questionAnswerReq.push(this.fb.group({
-                        jobVacancyId: ['ba7c9532-a579-42bd-b2b1-d66c101213aa'],
-                        assesmentVacancyId: ['ce8aae45-7cdf-40e2-b811-3789662d41e2'],
-                        questionId : [this.questions.at(i)?.id],
-                        questionOptionId : [''],
-                        [`questionOptionIdTemp${i}`] : ['']                
-                }))
+        firstValueFrom(this.route.paramMap).then((res) => {
+            const jobId = res.get('jobId')
+            const assessmentId = res.get('assessmentId')
+            const candidateCode = res.get('candidateCode')
+
+            if(localStorage.getItem('candidateCode') == candidateCode){
+                if(jobId){
+                    firstValueFrom(this.questionService.getQuestions(jobId)).then((res) => {
+                        this.questions = res
+                        
+                        for(let i = 0; i < this.questions.length; i++){
+                            this.questionAnswerReq.push(this.fb.group({
+                                jobVacancyId: [jobId],
+                                assesmentVacancyId: [assessmentId],
+                                questionId : [this.questions.at(i)?.id],
+                                questionOptionId : [''],
+                                [`questionOptionIdTemp${i}`] : ['']                
+                        }))
+                        }
+                        console.log(res);
+                    })
+                } else {
+                    this.router.navigateByUrl('/questions-answer/login')
+                    localStorage.clear();
                 }
-                console.log(res);
-            })
-        } else {
-            this.router.navigateByUrl('/questions-answer/login')
-        }
+            }
+        })
+
+        
     }
 
     get questionAnswerReq() {
@@ -80,7 +92,7 @@ export class QuestionAnswerComponent implements OnInit{
         this.loading = true
         this.questionAnswerService.insertAnswer(this.questionAnswerInsertReqDto.get('answerReq')?.getRawValue()).subscribe(result => {
             localStorage.clear()
-            // this.router.navigateByUrl('/login')
+            this.router.navigateByUrl('/dashboard')
         })
     }
 }

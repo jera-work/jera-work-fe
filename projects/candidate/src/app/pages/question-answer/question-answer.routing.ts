@@ -15,12 +15,12 @@ import { ButtonComponent } from "@components/button/button.component"
 
 const routes: Routes = [
     {
-        path: '',
+        path: ':jobId/:assessmentId/:candidateCode',
         component: QuestionAnswerComponent
 
     },
     {
-        path: "login",
+        path: "login/:jobId/:assessmentId/:candidateCode",
         component: LoginQuestionAnswerComponent
     }
 ]

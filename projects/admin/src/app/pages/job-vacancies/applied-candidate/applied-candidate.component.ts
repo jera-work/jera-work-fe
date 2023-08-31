@@ -20,6 +20,7 @@ import { InterviewVacancyResDto } from '@dto/progress-job-vacancy/interview-vaca
 import { McuVacancyResDto } from '@dto/progress-job-vacancy/mcu-vacancy.res.dto';
 import { OfferingResDto } from '@dto/progress-job-vacancy/offering.res.dto';
 import { HiringVacancyResDto } from '@dto/progress-job-vacancy/hiring-vacancy.res.dto';
+import { AuthService } from '@services/auth.service';
 
 const convertUTCToLocalDateTime = function (date: Date) {
   const newDate = new Date(
@@ -53,6 +54,7 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
   hiredModal = false;
   updateModalAssessment = false;
   updateModalInterview = false;
+  isHr = false;
 
   progressStatusRes: ProgressStatusResDto[] = [];
   appliedVacancyCandidateDetails?: AppliedVacancyCandidateDetailsResDto;
@@ -75,7 +77,8 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
     private masterDataService: MasterDataService,
     private fb: NonNullableFormBuilder,
     private cd: ChangeDetectorRef,
-    private progressAppliedJobVacancyService: ProgressAppliedJobVacancyService
+    private progressAppliedJobVacancyService: ProgressAppliedJobVacancyService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -128,6 +131,7 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
         firstValueFrom(
           this.appliedVacancyService.getAppliedCandidateDetails(appliedId)
         ).then((res) => {
+          const loginData = this.authService.getProfile();
           this.appliedVacancyCandidateDetails = res;
           console.log(this.appliedVacancyCandidateDetails);
           if (res.appliedProgressCode === ProgressStatus.APPLICATION) {
@@ -146,6 +150,12 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
             this.activeIndex = 4;
           } else if (res.appliedProgressCode === ProgressStatus.HIRED) {
             this.activeIndex = 5;
+          }
+
+          if (loginData['id'] === res.picHrId) {
+            this.isHr = true;
+          } else {
+            this.isHr = false;
           }
         });
         this.jobVacancyId = jobVacancyIdParam;
@@ -176,20 +186,24 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
         firstValueFrom(
           this.progressAppliedJobVacancyService.getAssessment(appliedId)
         ).then((res) => {
-          this.updateNotesAssessmentReqDto.patchValue({
-            notes: res.notes,
-          });
-          this.assessmentVacancyResDto = res;
+          if (res) {
+            this.updateNotesAssessmentReqDto.patchValue({
+              notes: res.notes ? res.notes : '',
+            });
+            this.assessmentVacancyResDto = res;
+          }
         });
 
         // get interview user data
         firstValueFrom(
           this.progressAppliedJobVacancyService.getInterviewUser(appliedId)
         ).then((res) => {
-          this.updateNotesInterviewReqDto.patchValue({
-            notes: res.notes,
-          });
-          this.interviewVacancyResDto = res;
+          if (res) {
+            this.updateNotesInterviewReqDto.patchValue({
+              notes: res.notes ? res.notes : '',
+            });
+            this.interviewVacancyResDto = res;
+          }
         });
 
         // get mcu data
@@ -203,6 +217,8 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
         firstValueFrom(
           this.progressAppliedJobVacancyService.getOffering(appliedId)
         ).then((res) => {
+          console.log(res);
+
           this.offeringResDto = res;
         });
 
@@ -472,6 +488,7 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
         this.getProgressStatusData();
         this.updateNotesAssessmentReqDto.reset();
         this.updateModalAssessment = false;
+        this.toggleUpdateAssessment = false;
       });
     } else {
       console.log('please input value');
@@ -495,6 +512,7 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
         this.getProgressStatusData();
         this.updateNotesInterviewReqDto.reset();
         this.updateModalInterview = false;
+        this.toggleUpdateInterview = false;
       });
     } else {
       console.log('Please input');
@@ -526,6 +544,7 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
           )
         ).then((res) => {
           console.log(res);
+          this.getProgressStatusData();
         });
         firstValueFrom(
           this.progressAppliedJobVacancyService.updateAppliedVacancyDetailStatus(
@@ -555,6 +574,7 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
           )
         ).then((res) => {
           console.log(res);
+          this.getProgressStatusData();
         });
         firstValueFrom(
           this.progressAppliedJobVacancyService.updateAppliedVacancyDetailStatus(
@@ -583,6 +603,7 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
           this.progressAppliedJobVacancyService.insertMcu(insertProgressData)
         ).then((res) => {
           console.log(res);
+          this.getProgressStatusData();
         });
         firstValueFrom(
           this.progressAppliedJobVacancyService.updateAppliedVacancyDetailStatus(
@@ -612,6 +633,7 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
           )
         ).then((res) => {
           console.log(res);
+          this.getProgressStatusData();
         });
 
         firstValueFrom(
@@ -640,7 +662,7 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
         firstValueFrom(
           this.progressAppliedJobVacancyService.insertHiring(insertProgressData)
         ).then((res) => {
-          this.getLatestProgressStatus();
+          this.getProgressStatusData();
           console.log(res);
         });
 

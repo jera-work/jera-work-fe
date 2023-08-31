@@ -36,3 +36,20 @@
     border-bottom: 1px solid white;
   }
 }
+
+::ng-deep .p-menubar .p-menuitem.p-highlight > .p-menuitem-content {
+  background-color: var(--SECONDARY);
+}
+
+::ng-deep .p-menubar .p-submenu-list {
+  background-color: var(--SECONDARY);
+}
+
+::ng-deep
+  .p-menubar
+  .p-menuitem
+  > .p-menuitem-content
+  .p-menuitem-link
+  .p-menuitem-text {
+  color: white;
+}

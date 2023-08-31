@@ -14,6 +14,9 @@ export class VacancyDescriptionService {
   constructor(private base: BaseService) {}
 
   getDescCandidate(descId: string): Observable<VacancyDescriptionResDto> {
-    return this.base.get<VacancyDescriptionResDto>(`${CANDIDATE_API}/vacancy-descriptions/?descId=${descId}`,true);
+    return this.base.get<VacancyDescriptionResDto>(
+      `${CANDIDATE_API}/vacancy-descriptions/?descId=${descId}`,
+      true
+    );
   }
 }

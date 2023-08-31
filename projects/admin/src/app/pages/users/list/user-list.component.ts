@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NonNullableFormBuilder, Validators } from '@angular/forms';
+import { NonNullableFormBuilder } from '@angular/forms';
 import { UserResDto } from '@dto/user/user.res.dto';
 import { UsersService } from '@services/users.service';
-import { Table } from 'primeng/table';
 
 @Component({
   selector: 'user-list',
@@ -18,17 +17,8 @@ export class UserListComponent implements OnInit {
   users: UserResDto[] = [];
 
   ngOnInit(): void {
-    // this.usersService.getAllUsers().subscribe((res) => {
-    //   this.users = res;
-    // });
-
     this.usersService.getUsers().subscribe((res) => {
       this.users = res;
-      console.log(res);
     });
-  }
-
-  clear(table: Table) {
-    table.clear();
   }
 }
