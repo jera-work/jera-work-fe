@@ -14,104 +14,103 @@
     <div class="grid">
       <div class="grid col-6">
         <div class="col-4">
-          <p>Job Title:</p>
+          <p>Job Title</p>
         </div>
         <div class="col-8">
-          <p>
-            {{ jobVacancy.vacancyTitle }}
-          </p>
+          <p>: {{ jobVacancy.vacancyTitle }}</p>
         </div>
       </div>
       <div class="grid col-6">
         <div class="col-4">
-          <p>Degree:</p>
+          <p>Degree</p>
         </div>
         <div class="col-8">
-          <p>{{ jobVacancy.degreeName }}</p>
+          <p>: {{ jobVacancy.degreeName }}</p>
         </div>
       </div>
       <div class="grid col-6">
         <div class="col-4">
-          <p>Job Type:</p>
+          <p>Job Type</p>
         </div>
         <div class="col-8">
-          <p>{{ jobVacancy.jobTypeName }}</p>
+          <p>: {{ jobVacancy.jobTypeName }}</p>
         </div>
       </div>
       <div class="grid col-6">
         <div class="col-4">
-          <p>Job Level:</p>
+          <p>Job Level</p>
         </div>
         <div class="col-8">
-          <p>{{ jobVacancy.levelName }}</p>
+          <p>: {{ jobVacancy.levelName }}</p>
         </div>
       </div>
       <div class="grid col-6">
         <div class="col-4">
-          <p>City:</p>
+          <p>City</p>
         </div>
         <div class="col-8">
-          <p>{{ jobVacancy.cityName }}</p>
+          <p>: {{ jobVacancy.cityName }}</p>
         </div>
       </div>
       <div class="grid col-6">
         <div class="col-4">
-          <p>Salary:</p>
+          <p>Salary</p>
         </div>
         <div class="col-8">
-          <p>Rp. {{ jobVacancy.salary }}</p>
+          <p>: Rp. {{ jobVacancy.salary }}</p>
         </div>
       </div>
       <div class="grid col-6">
         <div class="col-4">
-          <p>Start Date:</p>
+          <p>Start Date</p>
         </div>
         <div class="col-8">
-          <p>{{ jobVacancy.startDate }}</p>
+          <p>: {{ jobVacancy.startDate }}</p>
         </div>
       </div>
       <div class="grid col-6">
         <div class="col-4">
-          <p>End Date:</p>
+          <p>End Date</p>
         </div>
         <div class="col-8">
-          <p>{{ jobVacancy.endDate }}</p>
+          <p>: {{ jobVacancy.endDate }}</p>
         </div>
       </div>
       <div class="grid col-6">
         <div class="col-4">
-          <p>Gender:</p>
+          <p>Gender</p>
         </div>
         <div class="col-8">
-          <p>{{ jobVacancy.genderName }}</p>
+          <p>: {{ jobVacancy.genderName }}</p>
         </div>
       </div>
       <div class="grid col-6">
         <div class="col-4">
-          <p>Status:</p>
+          <p>Status</p>
         </div>
         <div class="col-8">
-          <p>{{ jobVacancy.statusName }}</p>
+          <p>: {{ jobVacancy.statusName }}</p>
         </div>
       </div>
       <div class="grid col-6">
         <div class="col-4">
-          <p>PIC HR:</p>
+          <p>PIC HR</p>
         </div>
         <div class="col-8">
-          <p>{{ jobVacancy.hrName }}</p>
+          <p>: {{ jobVacancy.hrName }}</p>
         </div>
       </div>
       <div class="grid col-6">
         <div class="col-4">
-          <p>PIC User:</p>
+          <p>PIC User</p>
         </div>
         <div class="col-8">
-          <p>{{ jobVacancy.userName }}</p>
+          <p>: {{ jobVacancy.userName }}</p>
         </div>
       </div>
       <div class="col-2">Description</div>
-      <div class="col-10">
+      <div class="col-10 flex">
+        :
         <div [innerHTML]="jobVacancy.description"></div>
       </div>
     </div>
@@ -148,44 +147,28 @@
     <ng-template pTemplate="header">
       <tr>
         <th scope="col" class="md:col-1">No.</th>
-        <th scope="col" class="md:col-4">
+        <th pSortableColumn="profileName" scope="col" class="md:col-4">
           <div class="flex align-items-center">
             Candidate Name
-            <p-columnFilter
-              type="text"
-              field="profileName"
-              display="menu"
-            ></p-columnFilter>
+            <p-sortIcon field="profileName"> </p-sortIcon>
           </div>
         </th>
-        <th scope="col" class="md:col-4">
+        <th pSortableColumn="createdAt" scope="col" class="md:col-4">
           <div class="flex align-items-center">
             Applied Time
-            <p-columnFilter
-              type="text"
-              field="candidateEmail"
-              display="menu"
-            ></p-columnFilter>
+            <p-sortIcon field="createdAt"> </p-sortIcon>
           </div>
         </th>
-        <th scope="col" class="md:col-4">
+        <th pSortableColumn="progressName" scope="col" class="md:col-4">
           <div class="flex align-items-center">
             Progress
-            <p-columnFilter
-              type="text"
-              field="progressName"
-              display="menu"
-            ></p-columnFilter>
+            <p-sortIcon field="progressName"></p-sortIcon>
           </div>
         </th>
-        <th scope="col" class="md:col-1">
+        <th pSortableColumn="statusName" scope="col" class="md:col-1">
           <div class="flex align-items-center">
             Status
-            <p-columnFilter
-              type="text"
-              field="statusName"
-              display="menu"
-            ></p-columnFilter>
+            <p-sortIcon field="statusName"></p-sortIcon>
           </div>
         </th>
       </tr>

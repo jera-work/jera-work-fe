@@ -14,7 +14,10 @@
         [activeIndex]="activeIndex"
         (activeIndexChange)="onActiveIndexChange($event)"
       ></p-steps>
-      <h1 class="text-center">{{ jobStatus[activeIndex].label }}</h1>
+
+      <ng-container *ngIf="jobStatus.length">
+        <h1 class="text-center">{{ jobStatus[activeIndex].label }}</h1>
+      </ng-container>
 
       <!-- Application -->
       <div
@@ -123,6 +126,22 @@
             Please check your email for the offering letter and more details!
           </p>
         </div>
+        <div>
+          <app-button
+            *ngIf="!isApprove"
+            label="Approve"
+            (click)="modalApproveOffering = true"
+            backgroundColor="var(--PRIMARY)"
+          >
+          </app-button>
+          <app-button
+            *ngIf="isApprove"
+            label="Already Approve"
+            [isDisabled]="true"
+            backgroundColor="var(--PRIMARY)"
+          >
+          </app-button>
+        </div>
       </div>
 
       <!-- Hired -->
@@ -150,84 +169,116 @@
 
     <p-divider></p-divider>
     <!-- company img -->
-    <div>
-      <img src="{{ jobVacancy!.companyPhotoId | urlAdmin}}" alt="company" class="w-15rem h-10rem " style="object-fit:cover"/>
-    </div>
-    <!-- company name -->
-    <h2>{{ jobVacancy!.companyName }}</h2>
-    <!-- company desc -->
-    <p>{{ jobVacancy!.companyDesc }}
-    </p>
+    <ng-container *ngIf="jobVacancy">
+      <div>
+        <img
+          src="{{ jobVacancy.companyPhotoId | urlAdmin }}"
+          alt="company"
+          class="w-15rem h-10rem"
+          style="object-fit: cover"
+        />
+      </div>
+      <!-- company name -->
+      <h2>{{ jobVacancy!.companyName }}</h2>
+      <!-- company desc -->
+      <p>{{ jobVacancy!.companyDesc }}</p>
 
-    <!-- job title -->
-    <p>Open for you:</p>
-    <h2>{{ jobVacancy!.vacancyTitle }}</h2>
+      <!-- job title -->
+      <p>Open for you:</p>
+      <h2>{{ jobVacancy!.vacancyTitle }}</h2>
 
-    <div>
-      <h4>Details:</h4>
-      <div class="flex flex-column gap-2">
-        <!-- Degree -->
-        <div class="flex">
-          <span class="w-10rem">
-            <i class="pi pi-user"></i>
-            Degree
-          </span>
-          <span>: {{ jobVacancy!.degreeName }}</span>
-        </div>
+      <div>
+        <h4>Details:</h4>
+        <div class="flex flex-column gap-2">
+          <!-- Degree -->
+          <div class="flex">
+            <span class="w-10rem">
+              <i class="pi pi-user"></i>
+              Degree
+            </span>
+            <span>: {{ jobVacancy!.degreeName }}</span>
+          </div>
 
-        <!-- Gender -->
-        <div class="flex">
-          <span class="w-10rem">
-            <i class="pi pi-question"></i>
-            Gender
-          </span>
-          <span>: {{ jobVacancy!.genderName }}</span>
-        </div>
+          <!-- Gender -->
+          <div class="flex">
+            <span class="w-10rem">
+              <i class="pi pi-question"></i>
+              Gender
+            </span>
+            <span>: {{ jobVacancy!.genderName }}</span>
+          </div>
 
-        <!-- Ages -->
-        <div class="flex">
-          <span class="w-10rem">
-            <i class="pi pi-id-card"></i>
-            Ages
-          </span>
-          <span>: {{ jobVacancy!.ageVacancyName }}</span>
-        </div>
+          <!-- Ages -->
+          <div class="flex">
+            <span class="w-10rem">
+              <i class="pi pi-id-card"></i>
+              Ages
+            </span>
+            <span>: {{ jobVacancy!.ageVacancyName }}</span>
+          </div>
 
-        <!-- Job Type -->
-        <div class="flex">
-          <span class="w-10rem">
-            <i class="pi pi-briefcase"></i>
-            Job Type
-          </span>
-          <span>: {{ jobVacancy!.jobTypeName }}</span>
-        </div>
+          <!-- Job Type -->
+          <div class="flex">
+            <span class="w-10rem">
+              <i class="pi pi-briefcase"></i>
+              Job Type
+            </span>
+            <span>: {{ jobVacancy!.jobTypeName }}</span>
+          </div>
 
-        <!-- Payload -->
-        <div class="flex">
-          <span class="w-10rem">
-            <i class="pi pi-money-bill"></i>
-            Payload
-          </span>
-          <span>: {{ jobVacancy!.salary }}</span>
-        </div>
+          <!-- Payload -->
+          <div class="flex">
+            <span class="w-10rem">
+              <i class="pi pi-money-bill"></i>
+              Payload
+            </span>
+            <span>: {{ jobVacancy!.salary }}</span>
+          </div>
 
-        <!-- Map -->
-        <div class="flex">
-          <span class="mr-26rem">
-            <i class="pi pi-map-marker"></i>
-            Location
-          </span>
-          <span class="text-justify">
-            : {{ jobVacancy!.cityName }}
-          </span>
+          <!-- Map -->
+          <div class="flex">
+            <span class="mr-26rem">
+              <i class="pi pi-map-marker"></i>
+              Location
+            </span>
+            <span class="text-justify"> : {{ jobVacancy!.cityName }} </span>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- job desc -->
-    <div>
-      <h4>Description</h4>
-      <div [innerHTML]="jobVacancy?.description"></div>
-    </div>
+      <!-- job desc -->
+      <div>
+        <h4>Description</h4>
+        <div [innerHTML]="jobVacancy.description"></div>
+      </div>
+    </ng-container>
   </div>
 </div>
+
+<p-dialog
+  header="Header"
+  [(visible)]="modalApproveOffering"
+  styleClass="w-27rem"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <ng-template pTemplate="header">
+    <span class="text-xl font-bold"
+      >Are you sure want to approve this offering job?</span
+    >
+  </ng-template>
+  <div class="flex gap-1 justify-content-end">
+    <app-button
+      btnType="button"
+      (click)="submitApproveOffering()"
+      label="Apply"
+    ></app-button>
+    <app-button
+      type="button"
+      (click)="modalApproveOffering = false"
+      classBtn="p-button-danger"
+      label="Cancel"
+    ></app-button>
+  </div>
+</p-dialog>

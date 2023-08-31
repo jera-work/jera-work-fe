@@ -55,84 +55,52 @@
       <ng-template pTemplate="header">
         <tr>
           <th scope="col" class="md:col-1">No.</th>
-          <th scope="col" class="md:col-1">
+          <th pSortableColumn="vacancyTitle" scope="col" class="md:col-1">
             <div class="flex align-items-center">
               Title
-              <p-columnFilter
-                type="text"
-                field="vacancyTitle"
-                display="menu"
-              ></p-columnFilter>
+              <p-sortIcon field="vacancyTitle"> </p-sortIcon>
             </div>
           </th>
-          <th scope="col" class="md:col-2">
+          <th pSortableColumn="hrName" scope="col" class="md:col-2">
             <div class="flex align-items-center">
               PIC HR
-              <p-columnFilter
-                type="text"
-                field="picHrName"
-                display="menu"
-              ></p-columnFilter>
+              <p-sortIcon field="hrName"></p-sortIcon>
             </div>
           </th>
-          <th scope="col" class="md:col-2">
+          <th pSortableColumn="userName" scope="col" class="md:col-2">
             <div class="flex align-items-center">
               PIC User
-              <p-columnFilter
-                type="text"
-                field="picUserName"
-                display="menu"
-              ></p-columnFilter>
+              <p-sortIcon field="userName"></p-sortIcon>
             </div>
           </th>
-          <th scope="col" class="md:col-2">
+          <th pSortableColumn="startDate" scope="col" class="md:col-2">
+            <div class="flex align-items-center">
+              Start Date
+              <p-sortIcon field="startDate"></p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="endDate" scope="col" class="md:col-2">
             <div class="flex align-items-center">
               End Date
-              <p-columnFilter
-                type="text"
-                field="startDate"
-                display="menu"
-              ></p-columnFilter>
+              <p-sortIcon field="endDate"> </p-sortIcon>
             </div>
           </th>
-          <th scope="col" class="md:col-2">
+          <th pSortableColumn="levelName" scope="col" class="md:col-2">
             <div class="flex align-items-center">
-              End Date
-              <p-columnFilter
-                type="text"
-                field="endDate"
-                display="menu"
-              ></p-columnFilter>
+              Experience Level
+              <p-sortIcon field="levelName"></p-sortIcon>
             </div>
           </th>
-          <th scope="col" class="md:col-2">
-            <div class="flex align-items-center">
-              Exp Level
-              <p-columnFilter
-                type="text"
-                field="expLevelName"
-                display="menu"
-              ></p-columnFilter>
-            </div>
-          </th>
-          <th scope="col" class="md:col-1">
+          <th pSortableColumn="statusName" scope="col" class="md:col-1">
             <div class="flex align-items-center">
               Available Status
-              <p-columnFilter
-                type="text"
-                field="availableStatusName"
-                display="menu"
-              ></p-columnFilter>
+              <p-sortIcon field="statusName"> </p-sortIcon>
             </div>
           </th>
-          <th scope="col" class="md:col-1">
+          <th pSortableColumn="companyName" scope="col" class="md:col-1">
             <div class="flex align-items-center">
               Company Name
-              <p-columnFilter
-                type="text"
-                field="companyName"
-                display="menu"
-              ></p-columnFilter>
+              <p-sortIcon field="companyName"></p-sortIcon>
             </div>
           </th>
         </tr>

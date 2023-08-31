@@ -21,7 +21,6 @@ export class CompanyListComponent implements OnInit {
 
     firstValueFrom(this.companyService.getAllCompany())
       .then((res) => {
-        console.log(res);
         this.companies = res;
       })
       .catch((err) => console.log(err));

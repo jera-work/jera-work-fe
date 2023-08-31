@@ -1,8 +1,10 @@
-<pre>{{ userInsertReqDto.value | json }}</pre>
+<!-- <pre>{{ userInsertReqDto.value | json }}</pre> -->
 
-<div class="flex justify-content-center align-items-center flex-column">
-  <p class="text-5xl">Create New User</p>
-  <form [formGroup]="userInsertReqDto" (ngSubmit)="onCreate()" class="w-10">
+<div
+  class="flex align-items-center justify-content-center flex-column min-h-screen w-10 m-auto"
+>
+  <h2>Create New User</h2>
+  <form [formGroup]="userInsertReqDto" (ngSubmit)="onCreate()">
     <div class="grid">
       <div class="col-12">
         <label for="email">Email <span class="text-red-700">*</span></label>
@@ -77,6 +79,7 @@
       <app-button
         label="Back"
         routerLink="/users"
+        border=""
         classBtn="p-button-outlined p-button-secondary ml-3"
       >
       </app-button>
