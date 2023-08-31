@@ -1,4 +1,13 @@
 <!-- buat super admin -->
+
+<app-button
+  routerLink="/companies/create"
+  icon="pi pi-plus"
+  label="Add Company"
+  backgroundColor="var(--PRIMARY)"
+  styleClass="m-auto ml-2"
+></app-button>
+
 <p-table
   #dt1
   [value]="companies"
@@ -33,12 +42,6 @@
           placeholder="Search"
         />
       </div>
-      <p-button
-        routerLink="/companies/create"
-        icon="pi pi-plus"
-        label="Add Company"
-        styleClass="m-auto ml-2"
-      ></p-button>
     </div>
   </ng-template>
   <ng-template pTemplate="header">

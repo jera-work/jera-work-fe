@@ -1,0 +1,4 @@
+::ng-deep .p-radiobutton .p-radiobutton-box.p-highlight {
+  background: var(--PRIMARY);
+  border-color: var(--PRIMARY);
+}

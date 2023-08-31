@@ -5,27 +5,25 @@ import { UserCreateComponent } from './create/user-create.component';
 import { UserProfileComponent } from './profile/user-profile.component';
 import { UserChangePasswordComponent } from './change-password/user-changepassword.component';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
 
 import { SharedModule } from '@shared/shared.module';
 import { ButtonComponent } from '@components/button/button.component';
 import { UrlPipeAdmin } from '@pipes/url.pipe';
 import { Roles } from '@constant/role.constant';
-import { roleValidation } from 'projects/base/src/app/validation/role.validation';
+import { roleValidation } from '../../validation/role.validation';
 
 const routes: Routes = [
   {
     path: '',
     component: UserListComponent,
-    data: [Roles.SUPER_ADMIN],
-    canMatch: [roleValidation], 
+    data: [Roles.SUPER_ADMIN, Roles.ADMIN],
+    canMatch: [roleValidation],
   },
   {
     path: 'create',
     component: UserCreateComponent,
-    data: [Roles.SUPER_ADMIN],
-    canMatch: [roleValidation], 
+    data: [Roles.SUPER_ADMIN, Roles.ADMIN],
+    canMatch: [roleValidation],
   },
   {
     path: 'profile',

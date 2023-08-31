@@ -33,11 +33,7 @@
         <div
           class="flex justify-content-center align-items-center flex-column gap-3 col-3"
         >
-          <img
-            [src]="appliedVacancyCandidateDetails.photoId | urlAdmin"
-            alt="profilePhoto"
-            class="w-10rem"
-          />
+          <img [src]="photoProfile" alt="profilePhoto" class="w-10rem" />
           <p>{{ appliedVacancyCandidateDetails.candidateName }}</p>
         </div>
         <div class="col-9 grid">
@@ -95,7 +91,11 @@
               <input
                 pInputText
                 type="text"
-                value="{{ appliedVacancyCandidateDetails.genderName }}"
+                value="{{
+                  appliedVacancyCandidateDetails.genderName
+                    ? appliedVacancyCandidateDetails.genderName
+                    : 'Not Assign'
+                }}"
                 readonly
               />
             </div>
@@ -253,7 +253,7 @@
                 <div class="grid">
                   <div class="col-12 flex column-gap-3">
                     <p>Notes</p>
-                    <ng-container *ngIf="!isHr">
+                    <ng-container *ngIf="isUser">
                       <span *ngIf="!toggleUpdateInterview">
                         <i
                           class="pi pi-pencil cursor-pointer"
@@ -350,6 +350,9 @@
 
             <ng-container *ngIf="offeringResDto">
               <p>ada</p>
+              <div *ngIf="!offeringResDto.approve">
+                <p>Waiting candidate to approve the offering</p>
+              </div>
               <p>
                 Status:
                 {{ offeringResDto.approve ? "Approve" : "Not Approve" }}
@@ -376,15 +379,125 @@
             <i class="pi pi-user"></i>
             <span class="ml-2">Candidate</span>
           </ng-template>
-          <p>
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-            accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-            quae ab illo inventore veritatis et quasi architecto beatae vitae
-            dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-            aspernatur aut odit aut fugit, sed quia consequuntur magni dolores
-            eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci
-            velit, sed quia non numquam eius modi.
-          </p>
+
+          <!-- Educations -->
+          <div class="mt-5">
+            <h2>Educations</h2>
+            <p-divider></p-divider>
+
+            <div
+              class="mt-3"
+              *ngIf="appliedVacancyCandidateDetails.educations?.length"
+            >
+              <div *ngFor="let e of appliedVacancyCandidateDetails.educations">
+                <p-card
+                  class="relative mb-2"
+                  [header]="e.degreeId"
+                  styleClass="shadow-2 hover:shadow-4"
+                >
+                  <div>
+                    <h3>
+                      {{ e.majorId }}
+                    </h3>
+                  </div>
+                  <div>
+                    <h4>
+                      {{ e.institutionName }}
+                    </h4>
+                  </div>
+                  <div>
+                    <p class="w-5">
+                      {{ e.institutionAddress }}
+                    </p>
+                  </div>
+                  <ng-template pTemplate="footer">
+                    <p>{{ e.startYear }} - {{ e.endYear }}</p>
+                  </ng-template>
+
+                  <div class="absolute top-0 right-0 mr-2 mt-2">
+                    <p>GPA: {{ e.gpa }}</p>
+                  </div>
+                </p-card>
+              </div>
+            </div>
+          </div>
+
+          <!-- Experiences -->
+          <div class="mt-5">
+            <h2>Experiences</h2>
+            <p-divider></p-divider>
+
+            <div
+              *ngIf="appliedVacancyCandidateDetails.experiences.length"
+              class="mt-3"
+            >
+              <div *ngFor="let e of appliedVacancyCandidateDetails.experiences">
+                <p-card
+                  class="relative mb-2"
+                  [header]="e.formerPosition"
+                  styleClass="shadow-2 hover:shadow-4"
+                >
+                  <div>
+                    <h3>
+                      {{ e.formerPosition }}
+                    </h3>
+                  </div>
+                  <div>
+                    <h4>
+                      {{ e.formerInstitution }}
+                    </h4>
+                  </div>
+                  <div>
+                    <p class="w-5">
+                      {{ e.formerLocation }}
+                    </p>
+                  </div>
+                  <div>
+                    <p>Job Desc:</p>
+                    <div [innerHTML]="e.formerJobdesc"></div>
+                  </div>
+                  <ng-template pTemplate="footer">
+                    <p>{{ e.startDate }} - {{ e.endDate }}</p>
+                  </ng-template>
+                </p-card>
+              </div>
+            </div>
+          </div>
+
+          <!-- Skills -->
+          <div class="mt-5">
+            <h2>Skills</h2>
+            <p-divider></p-divider>
+
+            <div
+              *ngFor="
+                let s of appliedVacancyCandidateDetails.skills;
+                let i = index
+              "
+            >
+              <div class="flex">
+                <div class="relative">
+                  <p-badge
+                    [value]="s.skillName"
+                    size="large"
+                    severity="success"
+                  ></p-badge>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Documents -->
+          <div class="mt-5">
+            <h2>Documents</h2>
+            <p-divider></p-divider>
+
+            <div *ngFor="let d of appliedVacancyCandidateDetails.documents">
+              <a [href]="d.fileId | urlAdmin" target="_blank">{{
+                d.typeName
+              }}</a>
+            </div>
+          </div>
         </p-tabPanel>
       </p-tabView>
     </ng-container>

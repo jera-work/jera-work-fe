@@ -57,6 +57,7 @@ export class AppliedJobDetailsComponent implements OnInit {
           };
           this.jobStatus.push(menuItem);
         }
+        console.log(this.jobStatus);
       }
     );
   }
@@ -64,37 +65,41 @@ export class AppliedJobDetailsComponent implements OnInit {
   getProgress() {
     this.activatedRoute.params.subscribe((params) => {
       this.appliedId = params['id'];
-      firstValueFrom(
-        this.appliedVacancyService.getProgress(this.appliedId!)
-      ).then((result) => {
-        if (result.progressCode === ProgressStatus.APPLICATION) {
-          this.activeIndex = 0;
-        } else if (result.progressCode === ProgressStatus.ASSESSMENT) {
-          this.activeIndex = 1;
-        } else if (result.progressCode === ProgressStatus.INTERVIEW_USER) {
-          this.activeIndex = 2;
-        } else if (result.progressCode === ProgressStatus.MCU) {
-          this.activeIndex = 3;
-        } else if (result.progressCode === ProgressStatus.OFFERING_LETTER) {
-          this.activeIndex = 4;
-        } else if (result.progressCode === ProgressStatus.HIRED) {
-          this.activeIndex = 5;
-        }
-        firstValueFrom(
-          this.jobVacancyService.detailCandidate(result.jobVacancyId)
-        ).then((result) => {
-          this.jobVacancy = result;
-        });
 
+      if (this.appliedId) {
         firstValueFrom(
-          this.progressAppliedJobService.getOffering(
-            result.appliedVacancyFromAdminId
-          )
-        ).then((res) => {
-          this.isApprove = res.approve;
-          this.offeringDataId = res.offeringId;
+          this.appliedVacancyService.getProgress(this.appliedId!)
+        ).then((result) => {
+          if (result.progressCode === ProgressStatus.APPLICATION) {
+            this.activeIndex = 0;
+          } else if (result.progressCode === ProgressStatus.ASSESSMENT) {
+            this.activeIndex = 1;
+          } else if (result.progressCode === ProgressStatus.INTERVIEW_USER) {
+            this.activeIndex = 2;
+          } else if (result.progressCode === ProgressStatus.MCU) {
+            this.activeIndex = 3;
+          } else if (result.progressCode === ProgressStatus.OFFERING_LETTER) {
+            this.activeIndex = 4;
+          } else if (result.progressCode === ProgressStatus.HIRED) {
+            this.activeIndex = 5;
+          }
+          firstValueFrom(
+            this.jobVacancyService.detailCandidate(result.jobVacancyId)
+          ).then((result) => {
+            this.jobVacancy = result;
+          });
+          firstValueFrom(
+            this.progressAppliedJobService.getOffering(
+              result.appliedVacancyFromAdminId
+            )
+          ).then((res) => {
+            if (res) {
+              this.isApprove = res.approve;
+              this.offeringDataId = res.offeringId;
+            }
+          });
         });
-      });
+      }
     });
   }
 

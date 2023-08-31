@@ -1,24 +1,54 @@
-<img src="/assets/banner.svg" alt="application" class="w-full"/>
+<img src="/assets/banner.svg" alt="application" class="w-full" />
 <div class="min-h-screen md:mx-8 sm:mx-6 mx-2">
   <!-- Filter Jobs -->
   <div class="flex justify-content-center align-items-center my-4">
-    <form class="shadow-2 hover:shadow-3 p-2 border-round-xl" [formGroup]="searchReq" (ngSubmit)="searchJobs()">
+    <form
+      class="shadow-2 hover:shadow-3 p-2 border-round-xl"
+      [formGroup]="searchReq"
+      (ngSubmit)="searchJobs()"
+    >
       <div class="flex sm:flex-row flex-column gap-4 mb-3">
-        <input type="text" pInputText placeholder="Find your job type" formControlName="vacancyTitle" />
-        <p-dropdown [options]="cities" optionValue="id" optionLabel="cityName" placeholder="Location"
-          formControlName="cityId"></p-dropdown>
-        <p-dropdown [options]="degrees" optionValue="id" optionLabel="degreeName" placeholder="Degree"
-          formControlName="degreeId"></p-dropdown>
+        <input
+          type="text"
+          pInputText
+          placeholder="Find your job type"
+          formControlName="vacancyTitle"
+        />
+        <p-dropdown
+          [options]="cities"
+          optionValue="id"
+          optionLabel="cityName"
+          placeholder="Location"
+          formControlName="cityId"
+        ></p-dropdown>
+        <p-dropdown
+          [options]="degrees"
+          optionValue="id"
+          optionLabel="degreeName"
+          placeholder="Degree"
+          formControlName="degreeId"
+        ></p-dropdown>
       </div>
       <div class="flex gap-3">
         <!-- Job Type -->
-        <div class="flex align-items-center field-checkbox" *ngFor="let jt of jobTypes">
-          <p-radioButton formControlName="jobTypeId" [inputId]="jt.typeName" [value]="jt.id"></p-radioButton>
+        <div
+          class="flex align-items-center field-checkbox"
+          *ngFor="let jt of jobTypes"
+        >
+          <p-radioButton
+            formControlName="jobTypeId"
+            [inputId]="jt.typeName"
+            [value]="jt.id"
+          ></p-radioButton>
           <label [for]="jt.typeName" class="ml-2">{{ jt.typeName }}</label>
         </div>
 
         <div>
-          <app-button btnType="submit" label="Find Jobs" backgroundColor="var(--PRIMARY)"></app-button>
+          <app-button
+            btnType="submit"
+            label="Find Jobs"
+            backgroundColor="var(--PRIMARY)"
+          ></app-button>
         </div>
       </div>
     </form>
@@ -27,19 +57,31 @@
   <h1 class="text-center my-2">Latest Job</h1>
   <!-- Carousel Job List -->
   <div class="md:mx-2">
-    <p-carousel [value]="latestJobs" [numVisible]="4" [numScroll]="4" [circular]="true"
-      [responsiveOptions]="responsiveOptions" [autoplayInterval]="3000">
+    <p-carousel
+      [value]="latestJobs"
+      [numVisible]="4"
+      [numScroll]="4"
+      [circular]="true"
+      [responsiveOptions]="responsiveOptions"
+      [autoplayInterval]="3000"
+    >
       <ng-template let-job pTemplate="item" let-i="rowIndex">
-        <div routerLink="/job/{{ job.id }}"
-          class="border-3 p-4 surface-border border-round m-2 flex flex-column shadow-2 hover:shadow-5 cursor-pointer w-auto h-18rem">
+        <div
+          routerLink="/job/{{ job.id }}"
+          class="border-3 p-4 surface-border border-round m-2 flex flex-column shadow-2 hover:shadow-5 cursor-pointer w-auto h-18rem"
+        >
           <div class="mb-3">
             <div>
               <span class="font-bold text-xl">
                 {{ job.vacancyTitle }}
               </span>
             </div>
-            <div class="flex justify-content-center">
-              <img src="{{ job.companyPhotoId | urlAdmin }}" alt="companyLogo" class="md:w-full w-full sm:w-7" />
+            <div class="flex justify-content-center w-5rem">
+              <img
+                src="{{ job.companyPhotoId | urlAdmin }}"
+                alt="companyLogo"
+                class="md:w-full w-full sm:w-7"
+              />
             </div>
           </div>
 
@@ -79,12 +121,24 @@
   <div class="card flex flex-column justify-content-center">
     <div class="grid">
       <div class="col-12 lg:col-6 p-3" *ngFor="let job of allJobs">
-        <job-card (clickChange)="toDetail(job.id)" [company]="job.companyName" [companyImg]="job.companyPhotoId"
-          [degree]="job.degreeName" [jobType]="job.jobTypeName" [location]="job.cityName" [title]="job.vacancyTitle"
-          [salary]="job.salary" [time]="job.createdAt"></job-card>
+        <job-card
+          (clickChange)="toDetail(job.id)"
+          [company]="job.companyName"
+          [companyImg]="job.companyPhotoId"
+          [degree]="job.degreeName"
+          [jobType]="job.jobTypeName"
+          [location]="job.cityName"
+          [title]="job.vacancyTitle"
+          [salary]="job.salary"
+          [time]="job.createdAt"
+        ></job-card>
       </div>
     </div>
-    <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rowCounts"
-      [totalRecords]="length"></p-paginator>
+    <p-paginator
+      (onPageChange)="onPageChange($event)"
+      [first]="first"
+      [rows]="rowCounts"
+      [totalRecords]="length"
+    ></p-paginator>
   </div>
 </div>

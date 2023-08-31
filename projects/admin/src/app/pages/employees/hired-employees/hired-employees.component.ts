@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { EmployeesResDto } from '@dto/employees/employees.res.dto';
+import { EmployeesService } from '@services/employees.service';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
@@ -15,7 +16,18 @@ export class HiredEmployeeComponent implements OnInit {
     employeeId: ['', [Validators.required]],
   });
 
-  constructor(private fb: NonNullableFormBuilder) {}
+  constructor(
+    private fb: NonNullableFormBuilder,
+    private employeesService: EmployeesService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getData();
+  }
+
+  getData() {
+    firstValueFrom(this.employeesService.getHiredEmployees()).then((res) => {
+      this.hiredEmployees = res;
+    });
+  }
 }

@@ -18,6 +18,7 @@ import { MasterDataService } from '@services/master-data.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
+  styleUrls: ['dashboard.component.css'],
 })
 export class DashboardComponent implements AfterViewChecked {
   fullName: string = '';
@@ -117,7 +118,7 @@ export class DashboardComponent implements AfterViewChecked {
     console.log(event.first);
     console.log(event.rows);
     console.log(event.first + event.rows);
-    
+
     this.getPagination(event.first, this.rowCounts);
   }
 
