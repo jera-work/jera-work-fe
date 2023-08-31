@@ -33,12 +33,12 @@ export class JobVacancyService {
   ): Observable<JobSearchResDto[]> {
     return this.base.get<JobSearchResDto[]>(
       `${CANDIDATE_API}/jobs/search/?startIndex=${startIndex}&endIndex=${endIndex}&degreeId=${degreeId}&vacancyTitle=${vacancyTitle}&cityId=${cityId}&jobTypeId=${jobTypeId}`,
-      true
+      false
     );
   }
 
   getJobDetails(id: string): Observable<JobVacancyResDto> {
-    return this.base.get(`${ADMIN_API}/jobs/detail?jobId=${id}`);
+    return this.base.get(`${ADMIN_API}/jobs/detail/?jobId=${id}`, false);
   }
 
   getAllJobsByCompany(
@@ -51,14 +51,14 @@ export class JobVacancyService {
   }
 
   getAllJobsCandidate(): Observable<JobSearchResDto[]> {
-    return this.base.get<JobSearchResDto[]>(`${CANDIDATE_API}/jobs`);
+    return this.base.get<JobSearchResDto[]>(`${CANDIDATE_API}/jobs`, false);
   }
   getAllJobsWithPaginationCandidate(
     startIndex: number,
     endIndex: number
   ): Observable<JobSearchResDto[]> {
     return this.base.get<JobSearchResDto[]>(
-      `${CANDIDATE_API}/jobs/page/?startIndex=${startIndex}&endIndex=${endIndex}`
+      `${CANDIDATE_API}/jobs/page/?startIndex=${startIndex}&endIndex=${endIndex}`, false
     );
   }
   getLatestJobCandidate(
@@ -66,7 +66,7 @@ export class JobVacancyService {
     endIndex: number
   ): Observable<JobSearchResDto[]> {
     return this.base.get<JobSearchResDto[]>(
-      `${CANDIDATE_API}/jobs/latest/?startIndex=${startIndex}&endIndex=${endIndex}`
+      `${CANDIDATE_API}/jobs/latest/?startIndex=${startIndex}&endIndex=${endIndex}`, false
     );
   }
 }

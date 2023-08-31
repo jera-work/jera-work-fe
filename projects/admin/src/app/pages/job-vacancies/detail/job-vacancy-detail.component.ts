@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProgressStatus } from '@constant/progress.constant';
 import { Status } from '@constant/status.constant';
@@ -9,6 +9,7 @@ import {
 import { JobVacancyResDto } from '@dto/job-vacancy/job-vacancy.res.dto';
 import { AppliedVacancyService } from '@services/applied-vacancy.service';
 import { JobVacancyService } from '@services/job-vacancy.service';
+import { Dialog } from 'primeng/dialog';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
@@ -20,13 +21,17 @@ export class JobVacancyDetailComponent implements OnInit {
   jobVacancy!: JobVacancyResDto;
   jobVacancyId?: string;
   loading = false;
+  previewModalVisibility = false;
   appliedVacancies: AppliedVacancyAdminResDto[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private jobVacancyService: JobVacancyService,
-    private appliedVacancyService: AppliedVacancyService
-  ) {}
+    private appliedVacancyService: AppliedVacancyService,
+    private el: ElementRef
+  ) { }
+
+  hElement: HTMLElement = this.el.nativeElement;
 
   getData() {
     firstValueFrom(this.activatedRoute.paramMap).then((res) => {
@@ -58,6 +63,10 @@ export class JobVacancyDetailComponent implements OnInit {
     this.getData();
   }
 
+  showPreviewModal(dialog: Dialog) {
+    this.previewModalVisibility = true
+    dialog.maximized = true
+  }
   getProgressColor(progress: string): string {
     if (progress === ProgressStatus.APPLICATION) {
       return 'linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)';
