@@ -5,7 +5,7 @@
     #dt1
     [value]="users"
     dataKey="id"
-    [rows]="5"
+    [rows]="10"
     [showCurrentPageReport]="true"
     [rowsPerPageOptions]="[10, 25, 50]"
     [paginator]="true"
@@ -31,15 +31,15 @@
             pInputText
             type="text"
             (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
-            placeholder="Global Search"
+            placeholder="Search"
           />
-          <app-button
-            routerLink="/users/create"
-            icon="pi pi-plus"
-            label="Add User"
-            backgroundColor="var(--PRIMARY)"
-          ></app-button>
         </div>
+        <p-button
+          routerLink="/users/create"
+          icon="pi pi-plus"
+          label="Add User"
+          styleClass="m-auto ml-2"
+        ></p-button>
       </div>
     </ng-template>
     <ng-template pTemplate="header">

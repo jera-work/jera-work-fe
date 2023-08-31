@@ -69,4 +69,10 @@ export class AppliedVacancyService {
   ): Observable<AppliedVacancyCandidateDetailsResDto> {
     return this.base.get(`${ADMIN_API}/applied?appliedId=${id}`);
   }
+
+  getAppliedVacancyByProgress(
+    progressId: string
+  ): Observable<AppliedVacancyCandidateDetailsResDto> {
+    return this.base.get(`${ADMIN_API}/applied/progress/?progressId=${progressId}`);
+  }
 }

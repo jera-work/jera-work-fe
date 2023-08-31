@@ -19,6 +19,7 @@ import {
   authNonLoginValidation,
   authValidation,
 } from './validation/auth.validation';
+import { roleValidation } from 'projects/base/src/app/validation/role.validation';
 
 const routes: Routes = [
   {
@@ -26,14 +27,15 @@ const routes: Routes = [
     component: BaseComponent,
     loadChildren: () =>
       import('./pages/users/user.module').then((u) => u.UserModule),
-    canMatch: [authNonLoginValidation],
+    canMatch: [authNonLoginValidation], 
   },
   {
     path: 'companies',
     component: BaseComponent,
     loadChildren: () =>
       import('./pages/company/company.module').then((u) => u.CompanyModule),
-    canMatch: [authNonLoginValidation],
+      data: [Roles.SUPER_ADMIN],
+      canMatch: [authNonLoginValidation, roleValidation], 
   },
   {
     path: 'job-vacancies',
@@ -42,13 +44,16 @@ const routes: Routes = [
       import('./pages/job-vacancies/job-vacancy.module').then(
         (u) => u.JobVacancyModule
       ),
-    canMatch: [authNonLoginValidation],
+      data: [Roles.ADMIN, Roles.HR, Roles.USER],
+      canMatch: [authNonLoginValidation, roleValidation], 
   },
   {
     path: 'questions',
     component: BaseComponent,
     loadChildren: () =>
       import('./pages/questions/question.module').then((q) => q.QuestionModule),
+      data: [Roles.HR, Roles.USER],
+      canMatch: [authNonLoginValidation, roleValidation], 
   },
   {
     path: 'login',

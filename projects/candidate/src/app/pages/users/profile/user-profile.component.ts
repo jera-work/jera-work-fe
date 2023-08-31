@@ -26,6 +26,7 @@ import { CandidateEducationResDto } from '@dto/candidate/candidate-education.res
 import { CandidateExperienceResDto } from '@dto/candidate/candidate-experience.res.dto';
 import { CandidateSkillResDto } from '@dto/candidate/candidate-skill.res.dto';
 import { CandidateDocumentResDto } from '@dto/candidate/candidate-document.res.dto';
+import { FileUpload } from 'primeng/fileupload';
 
 const convertUTCToLocalDateTime = function (date: Date) {
   const newDate = new Date(
@@ -348,7 +349,7 @@ export class UserProfileComponent
   }
   // =================== Convert Date ===================
 
-  fileUpload(event: any) {
+  fileUpload(event: any, fileUpload: FileUpload) {
     const toBase64 = (file: File) =>
       new Promise<string>((resolve, reject) => {
         const reader = new FileReader();
@@ -374,6 +375,8 @@ export class UserProfileComponent
         this.profile.get('photoExt')?.setValue(resultExtension);
       });
     }
+
+    fileUpload.clear()
   }
 
   onUpdate() {
