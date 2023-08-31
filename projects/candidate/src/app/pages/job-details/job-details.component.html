@@ -1,5 +1,5 @@
+<p-toast key="update"></p-toast>
 <div class="min-h-screen md:mx-8 sm:mx-6 mx-2">
-  <p-toast key="update"></p-toast>
   <app-button
     label="Back"
     icon="pi pi-arrow-left"
@@ -113,11 +113,11 @@
       <p-divider></p-divider>
       <!-- buttons -->
       <div>
-        <p-button
+        <app-button
           label="Apply"
           backgroundColor="var(--PRIMARY)"
-          (onClick)="showApplyModal()"
-        ></p-button>
+          (click)="showApplyModal()"
+        ></app-button>
       </div>
     </div>
   </div>
@@ -137,19 +137,24 @@
       >Oops! You need to sign in first!</span
     >
   </ng-template>
-  <div class="flex gap-1 justify-content-end" *ngIf="isLogin">
-    <app-button
-      btnType="submit"
-      label="Apply"
-      (clickChange)="applyJob()"
-    ></app-button>
-    <app-button
-      type="button"
-      (click)="applyJobModalVisibility = false"
-      classBtn="p-button-danger"
-      label="Cancel"
-    ></app-button>
-  </div>
+
+  <ng-container *ngIf="isLogin">
+    <div class="flex gap-3 justify-content-end align-items-center">
+      <app-button
+        btnType="button"
+        label="Apply"
+        backgroundColor="var(--PRIMARY)"
+        (clickChange)="applyJob()"
+      ></app-button>
+      <app-button
+        type="button"
+        (click)="applyJobModalVisibility = false"
+        classBtn="p-button-danger p-button-outlined my-4"
+        border=""
+        label="Cancel"
+      ></app-button>
+    </div>
+  </ng-container>
   <div class="flex gap-1 justify-content-start" *ngIf="!isLogin">
     <img src="/assets/login-img.svg" class="md:w-4 w-6" alt="img" />
     <app-button

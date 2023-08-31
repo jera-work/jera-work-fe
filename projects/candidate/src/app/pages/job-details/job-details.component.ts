@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NonNullableFormBuilder } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { JobVacancyResDto } from '@dto/job-vacancy/job-vacancy.res.dto';
 import { SavedJobResDto } from '@dto/saved-vacancy/saved-vacancy-res.dto';
 import { VacancyDescriptionResDto } from '@dto/vacancy-desc/vacancy-description.res.dto';
@@ -38,7 +38,8 @@ export class JobDetailsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     private profileService: ProfileService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -96,9 +97,12 @@ export class JobDetailsComponent implements OnInit {
       data.jobVacancyId = this.jobId;
       this.applyJobModalVisibility = false;
       firstValueFrom(this.appliedVacancyService.insertApplied(data)).then(
-        (res) => {}
+        (res) => {
+          this.router.navigateByUrl('/dashboard');
+        }
       );
     } else {
+      this.messageService.clear();
       this.messageService.add({
         severity: 'warn',
         key: 'update',

@@ -7,12 +7,14 @@ import { ToastModule } from 'primeng/toast';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     ToastModule,
+    RouterModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     HttpClientModule,

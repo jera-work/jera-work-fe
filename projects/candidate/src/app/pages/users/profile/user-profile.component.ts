@@ -10,7 +10,7 @@ import { UsersService } from '@services/users.service';
 import { AuthService } from '@services/auth.service';
 import { FormArray, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { GenderResDto } from '@dto/data-master/gender.res.dto';
 import { NationalityResDto } from '@dto/data-master/nationality.res.dto';
 import { MaritalStatusResDto } from '@dto/data-master/marital-status.res.dto';
@@ -111,7 +111,9 @@ export class UserProfileComponent
     private router: Router,
     private master: MasterDataService,
     private cd: ChangeDetectorRef,
-    private profileServ: ProfileService
+    private profileServ: ProfileService,
+    private messageService: MessageService,
+    private authService: AuthService
   ) {}
 
   insertSkill = this.fb.group({
@@ -127,10 +129,10 @@ export class UserProfileComponent
     profileName: ['', Validators.required],
     phoneNumber: [''],
     profileAddress: [''],
-    genderId: [''],
-    nationalityId: [''],
-    maritalId: [''],
-    religionId: [''],
+    genderId: ['', Validators.required],
+    nationalityId: ['', Validators.required],
+    maritalId: ['', Validators.required],
+    religionId: ['', Validators.required],
     expectedSalary: [''],
     photoContent: [''],
     photoExt: [''],
@@ -305,7 +307,6 @@ export class UserProfileComponent
     this.getSkillsSubscription = this.profileServ
       .getSkills()
       .subscribe((res) => {
-        console.log(res);
         this.skillsData = res;
       });
 
@@ -377,22 +378,18 @@ export class UserProfileComponent
       });
     }
 
-    fileUpload.clear()
+    fileUpload.clear();
   }
 
   onUpdate() {
     if (this.profile.valid) {
       this.loading = true;
       const data = this.profile.getRawValue();
-      // console.log(data);
       this.profileSubscription = this.profileServ
         .updateProfile(data)
         .subscribe((res) => {
-          // console.log(res);
-          // this.router.navigateByUrl('/dashboard');
-
           firstValueFrom(this.profileServ.getProfile()).then((res) => {
-            console.log(res);
+            
             this.profileServ.navbarObservable(res.photoId);
             if (res.photoId) {
               this.imgUrl = res.photoId;
@@ -410,8 +407,16 @@ export class UserProfileComponent
               maritalId: res.maritalId,
               religionId: res.religionId,
             });
+            this.router.navigateByUrl('/dashboard');
           });
         });
+    } else {
+      this.messageService.clear();
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Warning',
+        detail: 'Please input all profile data!',
+      });
     }
   }
 

@@ -28,6 +28,10 @@ export class UsersService {
     return this.base.get(`${ADMIN_API}/users/all`);
   }
 
+  getUsersByCompany(): Observable<UserResDto[]> {
+    return this.base.get(`${ADMIN_API}/users/company`);
+  }
+
   changePassword(data: ChangePasswordReqDto): Observable<UpdateResDto> {
     return this.base.patch(`${ADMIN_API}/users/change-password`, data);
   }

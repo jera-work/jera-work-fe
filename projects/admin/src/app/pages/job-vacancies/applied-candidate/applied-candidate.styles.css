@@ -7,3 +7,9 @@
   color: var(--PRIMARY);
   border-color: var(--PRIMARY);
 }
+
+::ng-deep .p-badge.p-badge-success,
+::ng-deep .p-button.p-fileupload-choose {
+  background-color: var(--PRIMARY);
+  border: none;
+}

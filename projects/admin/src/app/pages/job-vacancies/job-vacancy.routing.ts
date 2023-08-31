@@ -7,7 +7,7 @@ import { AppliedCandidateComponent } from './applied-candidate/applied-candidate
 import { SharedModule } from '@shared/shared.module';
 import { ButtonComponent } from '@components/button/button.component';
 import { TimeAgoPipe } from '@pipes/timeago.pipe';
-import { UrlPipeAdmin } from '@pipes/url.pipe';
+import { UrlPipeAdmin, UrlPipeCandidate } from '@pipes/url.pipe';
 import { JobPreviewComponent } from '@components/job-preview/job-preview.component';
 
 const routes: Routes = [
@@ -42,7 +42,8 @@ const routes: Routes = [
     ButtonComponent,
     TimeAgoPipe,
     UrlPipeAdmin,
-    JobPreviewComponent
+    UrlPipeCandidate,
+    JobPreviewComponent,
   ],
   exports: [RouterModule],
 })
