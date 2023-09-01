@@ -296,7 +296,7 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
     startDateTemp: ['', [Validators.required]],
     endDate: ['', [Validators.required]],
     endDateTemp: ['', [Validators.required]],
-    description: ['', [Validators.required]],
+    description: ['description', [Validators.required]],
     offeringLocation: ['', [Validators.required]],
 
     companyDescription: ['', [Validators.required]],
