@@ -13,6 +13,7 @@ import {
 import { AppliedProgressResDto } from '@dto/data-master/applied-progress.res.dto';
 import { AppliedVacancyProgressResDto } from '@dto/applied-vacancy/applied-vacancy-progress.res.dto';
 import { AppliedVacancyCandidateDetailsResDto } from '@dto/applied-vacancy/applied-vacancy-candidate-details.res.dto';
+import { AppliedVacancyByProgressAdminResDto } from '@dto/applied-vacancy/applied-vacancy-by-progress-admin.res.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -71,8 +72,14 @@ export class AppliedVacancyService {
   }
 
   getAppliedVacancyByProgress(
-    progressId: string
-  ): Observable<AppliedVacancyCandidateDetailsResDto> {
-    return this.base.get(`${ADMIN_API}/applied/progress/?progressId=${progressId}`);
+    progressId: string, jobVacancyId: string
+  ): Observable<AppliedVacancyAdminResDto[]> {
+    return this.base.get(`${ADMIN_API}/applied/progress/?progressId=${progressId}&jobVacancyId=${jobVacancyId}`);
+  }
+
+  getProgressCount(jobVacancyId: string): Observable<AppliedVacancyByProgressAdminResDto[]> {
+    return this.base.get(`${ADMIN_API}/applied/counts/?jobVacancyId=${jobVacancyId}`)
   }
 }
+
+

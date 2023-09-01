@@ -1,5 +1,6 @@
 export interface OfferingResDto {
-  isApprove: boolean;
+  offeringId: string;
+  approve: boolean;
   startDate: string;
   endDate: string;
   description: string;

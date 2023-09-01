@@ -1,16 +1,19 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProgressStatus } from '@constant/progress.constant';
-import { Status } from '@constant/status.constant';
+import { AvailableStatusName, Status } from '@constant/status.constant';
+import { AppliedVacancyByProgressAdminResDto } from '@dto/applied-vacancy/applied-vacancy-by-progress-admin.res.dto';
 import {
   AppliedVacancyAdminResDto,
   AppliedVacancyResDto,
 } from '@dto/applied-vacancy/applied-vacancy.res.dto';
+import { AppliedProgressResDto } from '@dto/data-master/applied-progress.res.dto';
 import { JobVacancyResDto } from '@dto/job-vacancy/job-vacancy.res.dto';
 import { AppliedVacancyService } from '@services/applied-vacancy.service';
 import { JobVacancyService } from '@services/job-vacancy.service';
+import { MasterDataService } from '@services/master-data.service';
 import { Dialog } from 'primeng/dialog';
-import { firstValueFrom } from 'rxjs';
+import { first, firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'detail',
@@ -23,21 +26,23 @@ export class JobVacancyDetailComponent implements OnInit {
   loading = false;
   previewModalVisibility = false;
   appliedVacancies: AppliedVacancyAdminResDto[] = [];
+  appliedProgress: AppliedProgressResDto[] = [];
+  appliedVacancyPerProgressQty: AppliedVacancyByProgressAdminResDto[] = []
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private jobVacancyService: JobVacancyService,
     private appliedVacancyService: AppliedVacancyService,
-    private el: ElementRef
+    private masterDataService: MasterDataService,
+    private router: Router
   ) { }
-
-  hElement: HTMLElement = this.el.nativeElement;
 
   getData() {
     firstValueFrom(this.activatedRoute.paramMap).then((res) => {
       const id = res.get('id');
       if (id) {
         this.jobVacancyId = id;
+        this.getProgressQty()
       }
 
       if (this.jobVacancyId) {
@@ -61,6 +66,7 @@ export class JobVacancyDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.getData();
+    this.getProgressName()
   }
 
   showPreviewModal(dialog: Dialog) {
@@ -92,5 +98,31 @@ export class JobVacancyDetailComponent implements OnInit {
     } else {
       return 'linear-gradient(135deg, #0c32bb 14%, #FF0000 100%)';
     }
+  }
+
+  getProgressName() {
+    firstValueFrom(this.masterDataService.getProgressStatus()).then(res => {
+      this.appliedProgress = res
+    })
+  }
+  
+  getAppliedByProgressId(progressId: string) {
+    firstValueFrom(this.appliedVacancyService.getAppliedVacancyByProgress(progressId, this.jobVacancyId!)).then(res => {
+      this.appliedVacancies = res
+    })
+  }
+
+  toEdit(){
+    this.router.navigateByUrl(`/job-vacancies/${this.jobVacancyId}/edit`)
+  }
+
+  getProgressQty() {
+    firstValueFrom(this.appliedVacancyService.getProgressCount(this.jobVacancyId!)).then(res => {
+      this.appliedVacancyPerProgressQty = res
+    })
+  }
+
+  getAvailableStatus(): boolean {
+    return this.jobVacancy.statusName === AvailableStatusName.OPN
   }
 }

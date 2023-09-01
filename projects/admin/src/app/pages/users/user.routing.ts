@@ -12,7 +12,7 @@ import { SharedModule } from '@shared/shared.module';
 import { ButtonComponent } from '@components/button/button.component';
 import { UrlPipeAdmin } from '@pipes/url.pipe';
 import { Roles } from '@constant/role.constant';
-import { roleValidation } from 'projects/base/src/app/validation/role.validation';
+import { roleValidation } from '../../validation/role.validation';
 
 const routes: Routes = [
   {

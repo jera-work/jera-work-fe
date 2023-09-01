@@ -3,130 +3,35 @@
   <app-button label="Back" routerLink="/job-vacancies" icon="pi pi-angle-left" border=""
     classBtn="p-button-outlined p-button-secondary mb-3">
   </app-button>
-
   <div class="px-6 shadow-3 py-2 relative">
-    <div *ngIf="jobVacancy">
-      <div class="flex flex-column md:flex-row justify-content-between my-2 h-2rem">
-        <h3>Job Vacancy Detail</h3>
-        <div class="flex gap-2">
-          <p-button routerLink="" icon="pi pi-plus" label="Add" styleClass="m-auto p-button-success"></p-button>
-          <p-button routerLink="" icon="pi pi-pencil" label="Edit" styleClass="m-auto p-button-warning"></p-button>
-          <p-button icon="pi pi-eye" label="Preview" styleClass="m-auto"
-            (onClick)="showPreviewModal(previewModal)"></p-button>
-        </div>
-      </div>
-      <p-divider></p-divider>
-      <div class="grid">
-        <div class="grid col-6">
-          <div class="col-12">
-            <p>Job Title</p>
-          </div>
-          <div class="col-12">
-            <input [value]="jobVacancy.vacancyTitle" pInputText id="email" class="w-full" disabled />
-          </div>
-        </div>
-        <div class="grid col-6">
-          <div class="col-12">
-            <p>Degree</p>
-          </div>
-          <div class="col-12">
-            <input [value]="jobVacancy.degreeName" pInputText id="email" class="w-full" disabled />
-          </div>
-        </div>
-        <div class="grid col-6">
-          <div class="col-12">
-            <p>Job Type</p>
-          </div>
-          <div class="col-12">
-            <input [value]="jobVacancy.jobTypeName" pInputText id="email" class="w-full" disabled />
-          </div>
-        </div>
-        <div class="grid col-6">
-          <div class="col-12">
-            <p>Job Level</p>
-          </div>
-          <div class="col-12">
-            <input [value]="jobVacancy.levelName" pInputText id="email" class="w-full" disabled />
-          </div>
-        </div>
-        <div class="grid col-6">
-          <div class="col-12">
-            <p>City</p>
-          </div>
-          <div class="col-12">
-            <input [value]="jobVacancy.cityName" pInputText id="email" class="w-full" disabled />
-          </div>
-        </div>
-        <div class="grid col-6">
-          <div class="col-12">
-            <p>Salary</p>
-          </div>
-          <div class="col-12">
-            <input [value]="jobVacancy.salary" pInputText id="email" class="w-full" disabled />
-          </div>
-        </div>
-        <div class="grid col-6">
-          <div class="col-12">
-            <p>Start Date</p>
-          </div>
-          <div class="col-12">
-            <input [value]="jobVacancy.startDate" pInputText id="email" class="w-full" disabled />
-          </div>
-        </div>
-        <div class="grid col-6">
-          <div class="col-12">
-            <p>End Date</p>
-          </div>
-          <div class="col-12">
-            <input [value]="jobVacancy.endDate" pInputText id="email" class="w-full" disabled />
-          </div>
-        </div>
-        <div class="grid col-6">
-          <div class="col-12">
-            <p>Gender</p>
-          </div>
-          <div class="col-12">
-            <input [value]="jobVacancy.genderName" pInputText id="email" class="w-full" disabled />
-          </div>
-        </div>
-        <div class="grid col-6">
-          <div class="col-12">
-            <p>Status</p>
-          </div>
-          <div class="col-12">
-            <input [value]="jobVacancy.statusName" pInputText id="email" class="w-full" disabled />
-          </div>
-        </div>
-        <div class="grid col-6">
-          <div class="col-12">
-            <p>PIC HR</p>
-          </div>
-          <div class="col-12">
-            <input [value]="jobVacancy.hrName" pInputText id="email" class="w-full" disabled />
-          </div>
-        </div>
-        <div class="grid col-6">
-          <div class="col-12">
-            <p>PIC User</p>
-          </div>
-          <div class="col-12">
-            <input [value]="jobVacancy.hrName" pInputText id="email" class="w-full" disabled />
-          </div>
-        </div>
-        <div class="col-12">Description</div>
-        <div class="col-12">
-          <div [innerHTML]="jobVacancy.description"></div>
-        </div>
+    <div class="flex flex-column md:flex-row justify-content-between my-2 h-2rem">
+      <h3>Job Vacancy Detail</h3>
+      <div class="flex gap-2">
+        <p-button routerLink="" icon="pi pi-plus" label="Add" styleClass="m-auto p-button-success"></p-button>
+        <p-button (onClick)="toEdit()" icon="pi pi-pencil" label="Edit" styleClass="m-auto p-button-warning"></p-button>
+        <p-button icon="pi pi-eye" label="Preview" styleClass="m-auto"
+          (onClick)="showPreviewModal(previewModal)"></p-button>
       </div>
     </div>
-
-    <h3 class="mt-5">All applied candidate</h3>
     <p-divider></p-divider>
 
+    <h1 class="text-center">{{ jobVacancy.vacancyTitle }}</h1>
+    <h3 class="text-center text-green-500" *ngIf="getAvailableStatus()">Opened at : {{ jobVacancy.startDate }}</h3>
+    <h3 class="text-center text-red-500" *ngIf="!getAvailableStatus()">Closed at : {{ jobVacancy.endDate }}</h3>
+    <p-divider></p-divider>
+    <div class="flex flex-column gap-3">
+      <h3 class="mt-2">Filter by progress</h3>
+      <div class="flex gap-3 justify-content-center">
+        <p-button *ngFor="let qty of appliedVacancyPerProgressQty" [style]="{
+          background: getProgressColor(qty.progressCode)
+        }" label="{{ qty.progressName + '(' + qty.appliedCount +')' }}"
+          (onClick)="getAppliedByProgressId(qty.progressId)" class="white-space-nowrap"></p-button>
+      </div>
+    </div>
     <p-table #dt1 [value]="appliedVacancies" dataKey="id" [rows]="10" [showCurrentPageReport]="true" [paginator]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
       [globalFilterFields]="['profileName', 'statusName', 'progressName']" selectionMode="single"
-      styleClass="p-datatable-gridlines p-datatable-striped">
+      styleClass="p-datatable-gridlines p-datatable-striped mt-2">
       <ng-template pTemplate="caption">
         <div class="flex flex-column md:flex-row md:align-items-center">
           <div class="p-input-icon-left m-0 md:ml-auto flex mt-3 md:mt-0">
@@ -140,28 +45,28 @@
       <ng-template pTemplate="header">
         <tr>
           <th scope="col" class="md:col-1">No.</th>
-          <th scope="col" class="md:col-4">
+          <th pSortableColumn="profileName" scope="col" class="md:col-4">
             <div class="flex align-items-center">
               Candidate Name
-              <p-columnFilter type="text" field="profileName" display="menu"></p-columnFilter>
+              <p-sortIcon field="profileName"> </p-sortIcon>
             </div>
           </th>
-          <th scope="col" class="md:col-4">
+          <th pSortableColumn="createdAt" scope="col" class="md:col-4">
             <div class="flex align-items-center">
               Applied Time
-              <p-columnFilter type="text" field="candidateEmail" display="menu"></p-columnFilter>
+              <p-sortIcon field="createdAt"> </p-sortIcon>
             </div>
           </th>
-          <th scope="col" class="md:col-4">
+          <th pSortableColumn="progressName" scope="col" class="md:col-4">
             <div class="flex align-items-center">
               Progress
-              <p-columnFilter type="text" field="progressName" display="menu"></p-columnFilter>
+              <p-sortIcon field="progressName"></p-sortIcon>
             </div>
           </th>
-          <th scope="col" class="md:col-1">
+          <th pSortableColumn="statusName" scope="col" class="md:col-1">
             <div class="flex align-items-center">
               Status
-              <p-columnFilter type="text" field="statusName" display="menu"></p-columnFilter>
+              <p-sortIcon field="statusName"></p-sortIcon>
             </div>
           </th>
         </tr>
@@ -192,16 +97,9 @@
   <ng-template pTemplate="header">
     <span class="text-xl font-bold">Preview</span>
   </ng-template>
-  <job-preview #jobPreview
-    [ageVacancyName]="jobVacancy.ageVacancyName" 
-    [cityName]="jobVacancy.cityName"
-    [companyDesc]="jobVacancy.companyDesc"
-    [companyName]="jobVacancy.companyName"
-    [companyPhotoId]="jobVacancy.companyPhotoId"
-    [degreeName]="jobVacancy.degreeName"
-    [description]="jobVacancy.description"
-    [genderName]="jobVacancy.genderName"
-    [jobTypeName]="jobVacancy.jobTypeName"
-    [salary]="jobVacancy.salary"
-    [vacancyTitle]="jobVacancy.vacancyTitle"></job-preview>
+  <job-preview #jobPreview [ageVacancyName]="jobVacancy!.ageVacancyName" [cityName]="jobVacancy.cityName"
+    [companyDesc]="jobVacancy.companyDesc" [companyName]="jobVacancy.companyName"
+    [companyPhotoId]="jobVacancy.companyPhotoId" [degreeName]="jobVacancy.degreeName"
+    [description]="jobVacancy.description" [genderName]="jobVacancy.genderName" [jobTypeName]="jobVacancy.jobTypeName"
+    [salary]="jobVacancy.salary" [vacancyTitle]="jobVacancy.vacancyTitle"></job-preview>
 </p-dialog>

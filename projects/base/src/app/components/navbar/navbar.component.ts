@@ -4,6 +4,7 @@ import { MenuItem } from 'primeng/api';
 import { Roles } from '@constant/role.constant';
 import { AuthService } from '@services/auth.service';
 import { ADMIN_API, CANDIDATE_API } from '@constant/api.constant';
+import { ProfileService } from '@services/profile.service';
 
 @Component({
   selector: 'app-navbar',
@@ -18,7 +19,11 @@ export class NavbarComponent implements OnInit {
   navbar: MenuItem[] | undefined;
   profile: MenuItem[] | undefined;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private profileService: ProfileService
+  ) {}
 
   ngOnInit(): void {
     const profile = this.authService.getProfile();
@@ -45,9 +50,8 @@ export class NavbarComponent implements OnInit {
     } else {
       this.isLogin = false;
     }
-    
-    if(this.isLogin){
 
+    if (this.isLogin) {
       this.navbar = [
         {
           label: 'JERA-WORK',
@@ -56,35 +60,53 @@ export class NavbarComponent implements OnInit {
           styleClass: 'test',
           icon: 'pi pi-fw pi-slack pi-spin text-white',
         },
+
         {
           label: 'Applied Job',
           routerLink: '/applied-job',
           visible: !this.isAdminApp,
         },
+
         {
           label: 'Saved Job',
           routerLink: '/saved-job',
           visible: !this.isAdminApp,
         },
+
         {
           label: 'Users',
           routerLink: '/users',
           visible: this.isAdminApp && (this.isAdmin || this.isSuperAdmin),
         },
-  
+
         {
           label: 'Companies',
           routerLink: '/companies',
           visible: this.isAdminApp && this.isSuperAdmin,
         },
-  
+
         {
           label: 'Job Vacancies',
           routerLink: '/job-vacancies',
-          visible: this.isAdminApp && (this.isAdmin || this.isHr || this.isUser),
+          visible:
+            this.isAdminApp && (this.isAdmin || this.isHr || this.isUser),
+        },
+        {
+          label: 'Employees',
+          visible: this.isAdminApp && (this.isAdmin || this.isHr),
+          items: [
+            {
+              label: 'Hired',
+              routerLink: '/employees/hired',
+            },
+            {
+              label: 'Blacklist',
+              routerLink: '/employees/blacklist',
+            },
+          ],
         },
       ];
-  
+
       this.profile = [
         {
           label: 'Profile',
@@ -100,6 +122,19 @@ export class NavbarComponent implements OnInit {
         },
       ];
     }
+
+    this.profileService.data?.subscribe({
+      next: (e) => {
+        if (profile.roleCode) {
+          this.imgUrl = `${ADMIN_API}/files/${e}`;
+        } else {
+          this.imgUrl = `${CANDIDATE_API}/files/${e}`;
+        }
+      },
+      error(e) {
+        console.log(e);
+      },
+    });
   }
 
   onLogout(): void {
@@ -127,3 +162,7 @@ export class NavbarComponent implements OnInit {
     return Roles.CANDIDATE === this.roleCode;
   }
 }
+
+// function test() {}
+
+const test = () => {};

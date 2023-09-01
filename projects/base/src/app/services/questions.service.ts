@@ -10,15 +10,15 @@ import { ADMIN_API } from '@constant/api.constant';
   providedIn: 'root',
 })
 export class QuestionsService {
-
   constructor(private base: BaseService) {}
 
-  insertQuestion(data: QuestionInsertQuestionReqDto[]): Observable<InsertResDto> {
-    return this.base.post(`${ADMIN_API}/questions`, data)
+  insertQuestion(
+    data: QuestionInsertQuestionReqDto[]
+  ): Observable<InsertResDto> {
+    return this.base.post(`${ADMIN_API}/questions`, data);
   }
 
-  getQuestions(jobId: String): Observable<QuestionResDto[]> {
+  getQuestions(jobId: string): Observable<QuestionResDto[]> {
     return this.base.get(`${ADMIN_API}/questions/?jobId=${jobId}`)
   }
-
 }
