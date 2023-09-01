@@ -116,6 +116,12 @@ export class UserProfileComponent
     private authService: AuthService
   ) {}
 
+  // Loading
+  loadingCreateEducations = false;
+  loadingCreateExperiences = false;
+  loadingCreateSkill = false;
+  loadingCreateDocuments = false;
+
   insertSkill = this.fb.group({
     name: ['', Validators.required],
   });
@@ -210,7 +216,7 @@ export class UserProfileComponent
   isDeleteDocuments = false;
 
   documents = this.fb.group({
-    data: this.fb.array([]),
+    data: this.fb.array([], Validators.required),
   });
 
   get documentsArr() {
@@ -285,8 +291,8 @@ export class UserProfileComponent
             this.fb.group({
               name: res[i].typeName,
               documentTypeId: res[i].id,
-              fileContent: '',
-              fileExt: '',
+              fileContent: ['', Validators.required],
+              fileExt: ['', Validators.required],
             })
           );
         }
@@ -385,31 +391,32 @@ export class UserProfileComponent
     if (this.profile.valid) {
       this.loading = true;
       const data = this.profile.getRawValue();
-      this.profileSubscription = this.profileServ
-        .updateProfile(data)
-        .subscribe((res) => {
-          firstValueFrom(this.profileServ.getProfile()).then((res) => {
-            
-            this.profileServ.navbarObservable(res.photoId);
-            if (res.photoId) {
-              this.imgUrl = res.photoId;
-            } else {
-              this.imgUrl = undefined;
-            }
-            this.profile.patchValue({
-              candidateEmail: res.candidateEmail,
-              profileName: res.profileName,
-              profileAddress: res.profileAddress,
-              phoneNumber: res.phoneNumber,
-              expectedSalary: res.expectedSalary,
-              genderId: res.genderId,
-              nationalityId: res.nationalityId,
-              maritalId: res.maritalId,
-              religionId: res.religionId,
-            });
-            this.router.navigateByUrl('/dashboard');
+      firstValueFrom(this.profileServ.updateProfile(data)).then((res) => {
+        firstValueFrom(this.profileServ.getProfile()).then((res) => {
+          const data = this.authService.getProfile();
+          data['photoId'] = res.photoId;
+          console.log(data);
+          localStorage.setItem('data', JSON.stringify(data));
+          this.profileServ.navbarObservable(res.photoId);
+          if (res.photoId) {
+            this.imgUrl = res.photoId;
+          } else {
+            this.imgUrl = undefined;
+          }
+          this.profile.patchValue({
+            candidateEmail: res.candidateEmail,
+            profileName: res.profileName,
+            profileAddress: res.profileAddress,
+            phoneNumber: res.phoneNumber,
+            expectedSalary: res.expectedSalary,
+            genderId: res.genderId,
+            nationalityId: res.nationalityId,
+            maritalId: res.maritalId,
+            religionId: res.religionId,
           });
+          this.router.navigateByUrl('/dashboard');
         });
+      });
     } else {
       this.messageService.clear();
       this.messageService.add({
@@ -426,13 +433,14 @@ export class UserProfileComponent
   }
 
   onCreateEducation() {
-    if (this.education.valid) {
+    if (this.education) {
+      this.loadingCreateEducations = true;
       const data = this.education.getRawValue();
 
       this.insertEducationSubscription = this.profileServ
         .insertEducations([data])
         .subscribe((res) => {
-          console.log('test');
+          this.loadingCreateEducations = false;
           this.getEducationsSubscription = this.profileServ
             .getEducations()
             .subscribe((res) => (this.educationsData = res));
@@ -441,7 +449,12 @@ export class UserProfileComponent
       this.education.reset();
       this.modalEducation = false;
     } else {
-      console.log('Please input data!');
+      this.messageService.clear();
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Warning',
+        detail: 'Please input all education data!',
+      });
     }
   }
 
@@ -470,11 +483,12 @@ export class UserProfileComponent
 
   onCreateExperience() {
     if (this.experience.valid) {
+      this.loadingCreateExperiences = true;
       const data = this.experience.getRawValue();
       this.insertExperienceSubscription = this.profileServ
         .insertExperiences([data])
         .subscribe((res) => {
-          console.log('test');
+          this.loadingCreateExperiences = false;
           this.getExperiencesSubscription = this.profileServ
             .getExperiences()
             .subscribe((res) => (this.experiencesData = res));
@@ -483,7 +497,12 @@ export class UserProfileComponent
       this.experience.reset();
       this.modalExperience = false;
     } else {
-      console.log('Please input data!');
+      this.messageService.clear();
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Warning',
+        detail: 'Please input all experience data!',
+      });
     }
   }
 
@@ -514,12 +533,12 @@ export class UserProfileComponent
 
   onCreateSkill() {
     if (this.skillsReqDto.valid) {
+      this.loadingCreateSkill = true;
       const data = this.skillsReqDto.getRawValue();
-      console.log(data);
       this.insertSkillSubscription = this.profileServ
         .insertSkills([data])
         .subscribe((res) => {
-          console.log(res);
+          this.loadingCreateSkill = false;
           this.getSkillsSubscription = this.profileServ
             .getSkills()
             .subscribe((res) => (this.skillsData = res));
@@ -527,7 +546,12 @@ export class UserProfileComponent
       this.skillsReqDto.reset();
       this.modalSkill = false;
     } else {
-      console.log('Please input value!');
+      this.messageService.clear();
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Warning',
+        detail: 'Please input skill name!',
+      });
     }
   }
 
@@ -550,7 +574,6 @@ export class UserProfileComponent
         (res) => (this.skillsData = res)
       );
     });
-
     this.modalDeleteSkill = false;
   }
 
@@ -597,17 +620,28 @@ export class UserProfileComponent
   }
 
   onInsertDocuments() {
-    const data = this.documentsArr.getRawValue();
-    this.insertDocumentsSubscription = this.profileServ
-      .insertDocuments(data)
-      .subscribe((res) => {
-        console.log(res);
-        this.getDocumentsSubscription = this.profileServ
-          .getDocuments()
-          .subscribe((res) => (this.documentsData = res));
+    if (this.documentsArr.valid) {
+      this.loadingCreateDocuments = true;
+      const data = this.documentsArr.getRawValue();
+      this.insertDocumentsSubscription = this.profileServ
+        .insertDocuments(data)
+        .subscribe((res) => {
+          this.loadingCreateDocuments = false;
+          console.log(res);
+          this.getDocumentsSubscription = this.profileServ
+            .getDocuments()
+            .subscribe((res) => (this.documentsData = res));
+        });
+      this.documentsArr.reset();
+      this.modalDocuments = false;
+    } else {
+      this.messageService.clear();
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Warning',
+        detail: 'Please input all document data!',
       });
-    this.documentsArr.reset();
-    this.modalDocuments = false;
+    }
   }
 
   // =========================== Documents ===========================

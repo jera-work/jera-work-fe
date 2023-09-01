@@ -44,6 +44,8 @@ export class JobVacancyCreateComponent implements OnInit {
   jobType: JobTypeResDto[] = [];
   cities: CityResDto[] = [];
 
+  loading = false;
+
   constructor(
     private fb: NonNullableFormBuilder,
     private jobService: JobVacancyService,
@@ -128,11 +130,12 @@ export class JobVacancyCreateComponent implements OnInit {
 
   onSubmit() {
     if (this.jobVacancyInsertReqDto.valid) {
+      this.loading = true;
       firstValueFrom(
         this.jobService.insertJob(this.jobVacancyInsertReqDto.getRawValue())
       )
         .then((res) => {
-          console.log(res);
+          this.loading = false;
           this.router.navigateByUrl('/job-vacancies');
         })
         .catch((err) => {

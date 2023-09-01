@@ -15,6 +15,7 @@ import { AuthService } from '@services/auth.service';
 import { CompanyService } from '@services/company.service';
 import { RoleService } from '@services/role.service';
 import { UsersService } from '@services/users.service';
+import { MessageService } from 'primeng/api';
 import { firstValueFrom } from 'rxjs';
 // import { RoleResDto } from '../../../dto/role/role.res.dto';
 // import { RoleService } from '../../../services/role.service';
@@ -44,15 +45,15 @@ export class UserCreateComponent implements OnInit, AfterViewChecked {
     private userService: UsersService,
     private router: Router,
     private authService: AuthService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private messageService: MessageService
   ) {}
 
   getData() {
+    const data = this.authService.getProfile();
+    const roleLogin = data['roleCode'];
     firstValueFrom(this.roleService.getAllRole())
       .then((res) => {
-        const data = this.authService.getProfile();
-        const roleLogin = data['roleCode'];
-
         if (roleLogin === Roles.SUPER_ADMIN) {
           this.roles = res.filter(
             (role) =>
@@ -69,7 +70,19 @@ export class UserCreateComponent implements OnInit, AfterViewChecked {
       .catch((err) => console.log(err));
 
     firstValueFrom(this.companyService.getAllCompany())
-      .then((res) => (this.companies = res))
+      .then((res) => {
+        console.log(res);
+        if (roleLogin === Roles.SUPER_ADMIN) {
+          this.companies = res;
+        } else {
+          this.companies = res.filter(
+            (company) => company.id === data['companyId']
+          );
+          this.userInsertReqDto.patchValue({
+            companyId: this.companies[0].id,
+          });
+        }
+      })
       .catch((err) => console.log(err));
   }
 
@@ -94,7 +107,12 @@ export class UserCreateComponent implements OnInit, AfterViewChecked {
           this.loading = false;
         });
     } else {
-      console.log('ISI DULU');
+      this.messageService.clear();
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Warning',
+        detail: 'Please complete the data requirements!',
+      });
       this.loading = false;
     }
   }
