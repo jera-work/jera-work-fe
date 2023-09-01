@@ -3,3 +3,8 @@ export enum Status {
   CLS = 'CLS',
   RJC = 'RJC',
 }
+
+export enum AvailableStatusName {
+  OPN = 'Open',
+  CLS = 'Closed',
+}

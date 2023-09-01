@@ -22,7 +22,7 @@ export class JobVacancyListComponent implements OnInit {
   jobVacancies: JobVacancyResDto[] = [];
 
   ngOnInit(): void {
-    firstValueFrom(this.jobVacancyService.getAllJobsByCompany(0, 10)).then(
+    firstValueFrom(this.jobVacancyService.getAllJobsByCompany()).then(
       (res) => {
         this.jobVacancies = res;
       }

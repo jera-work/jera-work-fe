@@ -1,5 +1,5 @@
 export interface AvailableStatusResDto {
   id: string;
   statusCode: string;
-  statusName: string;
+  statusname: string;
 }

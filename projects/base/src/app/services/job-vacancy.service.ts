@@ -23,6 +23,10 @@ export class JobVacancyService {
     return this.base.post<InsertResDto>(`${ADMIN_API}/jobs`, data, true);
   }
 
+  editJob(data: JobVacancyInsertReqDto): Observable<JobVacancyInsertReqDto> {
+    return this.base.put<JobVacancyInsertReqDto>(`${ADMIN_API}/jobs/edit`, data, true);
+  }
+
   searchCandidate(
     startIndex: number,
     endIndex: number,
@@ -41,12 +45,9 @@ export class JobVacancyService {
     return this.base.get(`${ADMIN_API}/jobs/detail/?jobId=${id}`, false);
   }
 
-  getAllJobsByCompany(
-    startIndex: number,
-    endIndex: number
-  ): Observable<JobVacancyResDto[]> {
+  getAllJobsByCompany(): Observable<JobVacancyResDto[]> {
     return this.base.get(
-      `${ADMIN_API}/jobs/company-vacancy/?startIndex=${startIndex}&endIndex=${endIndex}`
+      `${ADMIN_API}/jobs/company-vacancy/`
     );
   }
 
@@ -69,4 +70,5 @@ export class JobVacancyService {
       `${CANDIDATE_API}/jobs/latest/?startIndex=${startIndex}&endIndex=${endIndex}`, false
     );
   }
+
 }

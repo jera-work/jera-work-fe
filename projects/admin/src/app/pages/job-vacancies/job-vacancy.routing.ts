@@ -9,6 +9,7 @@ import { ButtonComponent } from '@components/button/button.component';
 import { TimeAgoPipe } from '@pipes/timeago.pipe';
 import { UrlPipeAdmin, UrlPipeCandidate } from '@pipes/url.pipe';
 import { JobPreviewComponent } from '@components/job-preview/job-preview.component';
+import { JobVacancyEditComponent } from './edit/job-vacancy-edit.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,10 @@ const routes: Routes = [
     path: ':id/applied/:appliedId',
     component: AppliedCandidateComponent,
   },
+  {
+    path: ':id/edit',
+    component: JobVacancyEditComponent,
+  }
 ];
 
 @NgModule({
@@ -35,6 +40,7 @@ const routes: Routes = [
     JobVacancyCreateComponent,
     JobVacancyDetailComponent,
     AppliedCandidateComponent,
+    JobVacancyEditComponent
   ],
   imports: [
     RouterModule.forChild(routes),
