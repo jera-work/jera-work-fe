@@ -1,0 +1,32 @@
+<div class="min-h-screen w-10 m-auto mt-5">
+    <app-button
+        label="Back"
+        routerLink="/questions/{{jobId}}"
+        icon="pi pi-angle-left"
+        border=""
+        classBtn="p-button-outlined p-button-secondary mb-3 mr-3"
+    ></app-button>
+    <app-button 
+        type="submit" 
+        label="Create" 
+        backgroundColor="var(--PRIMARY)"
+        routerLink="/questions/create/{{jobId}}"
+        classBtn="mb-3">
+    </app-button>
+    <p><span class="text-red-500">*red</span> is correct</p>
+
+    <div class="px-6 shadow-3 py-2 relative">
+        <div *ngFor="let q of questions; let i = index">
+            <div class="md:col-12 mb-1">
+                {{ i+1 }}.
+                {{ q.questionBody }}
+            </div>
+            <div class="md:col-12 flex flex-wrap">
+                <div *ngFor="let o of q.options; let j = index" class="ml-3 mt-1">
+                    <p class="{{o.isCorrect ? 'text-red-500' : 'text-black-500'}}"> {{ j+1 }}. {{ o.optionLabel }} </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
