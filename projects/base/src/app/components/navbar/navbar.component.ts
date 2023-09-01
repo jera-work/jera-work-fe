@@ -125,10 +125,12 @@ export class NavbarComponent implements OnInit {
 
     this.profileService.data?.subscribe({
       next: (e) => {
-        if (profile.roleCode) {
-          this.imgUrl = `${ADMIN_API}/files/${e}`;
-        } else {
-          this.imgUrl = `${CANDIDATE_API}/files/${e}`;
+        if (e) {
+          if (profile.roleCode) {
+            this.imgUrl = `${ADMIN_API}/files/${e}`;
+          } else {
+            this.imgUrl = `${CANDIDATE_API}/files/${e}`;
+          }
         }
       },
       error(e) {

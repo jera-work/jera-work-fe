@@ -13,6 +13,7 @@
   {{ documentsArr.value | json }}
 </pre> -->
 
+<p-toast></p-toast>
 <div
   class="flex align-items-center justify-content-center flex-column container mt-4"
 >
@@ -81,7 +82,6 @@
             pInputTextarea
             class="form-control col-12"
             [value]="profile.get('profileAddress')?.value"
-            placeholder="jl. xxx"
             formControlName="profileAddress"
           ></textarea>
         </div>
@@ -97,7 +97,6 @@
             [value]="profile.get('phoneNumber')?.value"
             class="form-control col-12"
             id="phoneNumb"
-            placeholder="08xxxxx"
             formControlName="phoneNumber"
           />
         </div>
@@ -113,7 +112,6 @@
             formControlName="expectedSalary"
             class="form-control col-12"
             id="salary"
-            placeholder="Rp. 4.000.000"
           />
         </div>
 
@@ -128,6 +126,7 @@
                 <p-dropdown
                   [options]="genders"
                   id="genderId"
+                  placeholder="Select Gender"
                   optionValue="genderId"
                   optionLabel="genderName"
                   formControlName="genderId"
@@ -144,6 +143,7 @@
                 <p-dropdown
                   [options]="nationalities"
                   id="nationalityName"
+                  placeholder="Select Nationality"
                   optionLabel="nationalityName"
                   optionValue="id"
                   formControlName="nationalityId"
@@ -161,6 +161,7 @@
               <div class="col-12 col-md-9">
                 <p-dropdown
                   [options]="maritals"
+                  placeholder="Select Marital Status"
                   id="maritalName"
                   optionValue="id"
                   optionLabel="maritalName"
@@ -177,6 +178,7 @@
               <div class="col-12 col-md-9">
                 <p-dropdown
                   [options]="religions"
+                  placeholder="Select Religion"
                   id="religionName"
                   optionLabel="religionName"
                   optionValue="id"
@@ -596,7 +598,7 @@
       <div class="mt-4">
         <app-button
           type="submit"
-          label="Add"
+          label="Save"
           classBtn="p-button-success"
           (click)="onCreateEducation()"
         >
@@ -780,7 +782,7 @@
       <app-button
         type="submit"
         data-bs-dismiss="modal"
-        label="Add"
+        label="Save"
         classBtn="p-button-success"
         (click)="onCreateExperience()"
       >
@@ -831,7 +833,7 @@
       <app-button
         type="submit"
         data-bs-dismiss="modal"
-        label="Add"
+        label="Save"
         classBtn="p-button-success"
         (click)="onCreateSkill()"
       >
@@ -889,7 +891,7 @@
       <app-button
         type="submit"
         data-bs-dismiss="modal"
-        label="Add"
+        label="Save"
         classBtn="p-button-success"
         (click)="onInsertDocuments()"
       >

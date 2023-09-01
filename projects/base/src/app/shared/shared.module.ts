@@ -35,6 +35,7 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
 import { ColorPickerModule } from 'primeng/colorpicker';
 import { TabViewModule } from 'primeng/tabview';
 import { ToastModule } from 'primeng/toast';
+import { KeyFilterModule } from 'primeng/keyfilter';
 
 @NgModule({
   imports: [
@@ -74,6 +75,7 @@ import { ToastModule } from 'primeng/toast';
     ColorPickerModule,
     TabViewModule,
     ToastModule,
+    KeyFilterModule,
   ],
   exports: [
     MenubarModule,
@@ -112,6 +114,7 @@ import { ToastModule } from 'primeng/toast';
     ColorPickerModule,
     TabViewModule,
     ToastModule,
+    KeyFilterModule,
   ],
 })
 export class SharedModule {}

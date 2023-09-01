@@ -75,7 +75,7 @@
         <td>{{ hiredEmployee.jobTypeName }}</td>
         <td>{{ hiredEmployee.levelName }}</td>
         <td>{{ hiredEmployee.vacancyTitle }}</td>
-        <td>{{ hiredEmployee.createdAt }}</td>
+        <td>{{ hiredEmployee.createdAt | timeAgo }}</td>
       </tr>
     </ng-template>
   </p-table>

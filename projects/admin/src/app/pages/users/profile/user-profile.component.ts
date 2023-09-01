@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '@services/auth.service';
 import { ProfileService } from '@services/profile.service';
 import { firstValueFrom } from 'rxjs';
 
@@ -16,7 +17,8 @@ export class UserProfileComponent implements OnInit {
   constructor(
     private fb: NonNullableFormBuilder,
     private router: Router,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private authService: AuthService
   ) {}
 
   profile = this.fb.group({
@@ -33,7 +35,7 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit(): void {
     firstValueFrom(this.profileService.getProfileAdmin()).then((res) => {
-      // console.log(res);
+      console.log(res);
       if (res.photoId) {
         this.imgUrl = res.photoId;
       }
@@ -83,9 +85,12 @@ export class UserProfileComponent implements OnInit {
       const data = this.profile.getRawValue();
       firstValueFrom(this.profileService.updateProfileAdmin(data)).then(
         (res) => {
-          console.log(res);
           firstValueFrom(this.profileService.getProfileAdmin()).then((res) => {
             this.profileService.navbarObservable(res.photoId);
+            const data = this.authService.getProfile();
+            data['profileName'] = res.profileName;
+            data['photoId'] = res.photoId;
+            localStorage.setItem('data', JSON.stringify(data));
           });
           this.loading = false;
           this.router.navigateByUrl('/dashboard');

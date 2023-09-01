@@ -27,15 +27,15 @@ const routes: Routes = [
     component: BaseComponent,
     loadChildren: () =>
       import('./pages/users/user.module').then((u) => u.UserModule),
-    canMatch: [authNonLoginValidation], 
+    canMatch: [authNonLoginValidation],
   },
   {
     path: 'companies',
     component: BaseComponent,
     loadChildren: () =>
       import('./pages/company/company.module').then((u) => u.CompanyModule),
-      data: [Roles.SUPER_ADMIN],
-      canMatch: [authNonLoginValidation, roleValidation], 
+    data: [Roles.SUPER_ADMIN],
+    canMatch: [authNonLoginValidation, roleValidation],
   },
   {
     path: 'job-vacancies',
@@ -44,8 +44,8 @@ const routes: Routes = [
       import('./pages/job-vacancies/job-vacancy.module').then(
         (u) => u.JobVacancyModule
       ),
-      data: [Roles.ADMIN, Roles.HR, Roles.USER],
-      canMatch: [authNonLoginValidation, roleValidation], 
+    data: [Roles.ADMIN, Roles.HR, Roles.USER],
+    canMatch: [authNonLoginValidation, roleValidation],
   },
   {
     path: 'employees',

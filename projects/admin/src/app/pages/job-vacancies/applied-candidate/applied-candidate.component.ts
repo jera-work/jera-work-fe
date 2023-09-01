@@ -21,6 +21,7 @@ import { McuVacancyResDto } from '@dto/progress-job-vacancy/mcu-vacancy.res.dto'
 import { OfferingResDto } from '@dto/progress-job-vacancy/offering.res.dto';
 import { HiringVacancyResDto } from '@dto/progress-job-vacancy/hiring-vacancy.res.dto';
 import { AuthService } from '@services/auth.service';
+import { ADMIN_API } from '@constant/api.constant';
 
 const convertUTCToLocalDateTime = function (date: Date) {
   const newDate = new Date(
@@ -46,6 +47,7 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
   progressStatus: MenuItem[] | undefined;
   progressStatusDropdown: any[] = [];
   selectedProgress?: string;
+  photoProfile?: string;
   appliedModal = false;
   assessmentModal = false;
   interviewModal = false;
@@ -55,6 +57,7 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
   updateModalAssessment = false;
   updateModalInterview = false;
   isHr = false;
+  isUser = false;
 
   progressStatusRes: ProgressStatusResDto[] = [];
   appliedVacancyCandidateDetails?: AppliedVacancyCandidateDetailsResDto;
@@ -134,6 +137,13 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
           const loginData = this.authService.getProfile();
           this.appliedVacancyCandidateDetails = res;
           console.log(this.appliedVacancyCandidateDetails);
+
+          if (res.photoId) {
+            this.photoProfile = `${ADMIN_API}/files/${res.photoId}`;
+          } else {
+            this.photoProfile = '/assets/default.png';
+          }
+
           if (res.appliedProgressCode === ProgressStatus.APPLICATION) {
             this.activeIndex = 0;
           } else if (res.appliedProgressCode === ProgressStatus.ASSESSMENT) {
@@ -156,6 +166,12 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
             this.isHr = true;
           } else {
             this.isHr = false;
+          }
+
+          if (loginData['id'] === res.picUserId) {
+            this.isUser = true;
+          } else {
+            this.isUser = false;
           }
         });
         this.jobVacancyId = jobVacancyIdParam;
@@ -217,8 +233,6 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
         firstValueFrom(
           this.progressAppliedJobVacancyService.getOffering(appliedId)
         ).then((res) => {
-          console.log(res);
-
           this.offeringResDto = res;
         });
 

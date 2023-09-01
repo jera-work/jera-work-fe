@@ -8,8 +8,10 @@ import {
 } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Roles } from '@constant/role.constant';
 import { CompanyResDto } from '@dto/company/company.res.dto';
 import { RoleResDto } from '@dto/data-master/role.res.dto';
+import { AuthService } from '@services/auth.service';
 import { CompanyService } from '@services/company.service';
 import { RoleService } from '@services/role.service';
 import { UsersService } from '@services/users.service';
@@ -41,12 +43,29 @@ export class UserCreateComponent implements OnInit, AfterViewChecked {
     private fb: NonNullableFormBuilder,
     private userService: UsersService,
     private router: Router,
+    private authService: AuthService,
     private cd: ChangeDetectorRef
   ) {}
 
   getData() {
     firstValueFrom(this.roleService.getAllRole())
-      .then((res) => (this.roles = res))
+      .then((res) => {
+        const data = this.authService.getProfile();
+        const roleLogin = data['roleCode'];
+
+        if (roleLogin === Roles.SUPER_ADMIN) {
+          this.roles = res.filter(
+            (role) =>
+              role.roleCode === Roles.HR ||
+              role.roleCode === Roles.USER ||
+              role.roleCode === Roles.ADMIN
+          );
+        } else if (roleLogin === Roles.ADMIN) {
+          this.roles = res.filter(
+            (role) => role.roleCode === Roles.HR || role.roleCode === Roles.USER
+          );
+        }
+      })
       .catch((err) => console.log(err));
 
     firstValueFrom(this.companyService.getAllCompany())
