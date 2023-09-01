@@ -708,8 +708,6 @@
     [draggable]="false"
     [resizable]="false"
   >
-    <pre>{{ assessmentVacancyInsertReqDto.value | json }}</pre>
-    <!-- <pre>{{ appliedVacancyUpdateProgressReqDto.value | json }}</pre> -->
     <form
       [formGroup]="assessmentVacancyInsertReqDto"
       (ngSubmit)="submit(selectedProgress)"
@@ -762,6 +760,7 @@
               label="Submit"
               btnType="submit"
               backgroundColor="var(--PRIMARY)"
+              [isDisabled]="assessmentVacancyInsertReqDto.valid"
             ></app-button>
 
             <app-button
@@ -786,7 +785,6 @@
     [draggable]="false"
     [resizable]="false"
   >
-    <!-- <pre>{{ interviewVacancyInsertReqDto.value | json }}</pre> -->
     <form
       [formGroup]="interviewVacancyInsertReqDto"
       (ngSubmit)="submit(selectedProgress)"
@@ -830,6 +828,7 @@
               label="Submit"
               btnType="submit"
               backgroundColor="var(--PRIMARY)"
+              [isDisabled]="interviewVacancyInsertReqDto.valid"
             ></app-button>
 
             <app-button
@@ -889,6 +888,7 @@
                 label="Submit"
                 btnType="submit"
                 backgroundColor="var(--PRIMARY)"
+                [isDisabled]="!mcuVacancyInsertReqDto.valid"
               ></app-button>
 
               <app-button
@@ -1017,6 +1017,7 @@
               label="Submit"
               btnType="submit"
               backgroundColor="var(--PRIMARY)"
+              [isDisabled]="!offeringInsertReqDto.valid"
             ></app-button>
 
             <app-button
