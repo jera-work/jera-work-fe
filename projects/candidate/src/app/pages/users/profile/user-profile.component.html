@@ -1,18 +1,3 @@
-<!-- <pre>
-  {{ profile.value | json }}
-</pre>
-<pre>
-  {{ educationsReqDto.value | json }}
-</pre>
-
-<pre>
-  {{ experiencesReqDto.value | json }}
-</pre>
-
-<pre>
-  {{ documentsArr.value | json }}
-</pre> -->
-
 <p-toast></p-toast>
 <div
   class="flex align-items-center justify-content-center flex-column container mt-4"
@@ -49,7 +34,7 @@
             pInputText
             class="form-control col-12"
             id="email-address"
-            disabled
+            readonly
           />
         </div>
 
@@ -68,6 +53,26 @@
             required
             formControlName="profileName"
           />
+          <span
+            class="text-red-500 ml-2"
+            *ngIf="
+              profile.get('profileName')!.invalid &&
+              profile.get('profileName')!.value &&
+              (profile.get('profileName')!.dirty ||
+                profile.get('profileName')!.touched)
+            "
+            >Input exceeds characters</span
+          >
+          <span
+            class="text-red-500 ml-2"
+            *ngIf="
+              profile.get('profileName')!.invalid &&
+              !profile.get('profileName')!.value &&
+              (profile.get('profileName')!.dirty ||
+                profile.get('profileName')!.touched)
+            "
+            >Input can't be empty</span
+          >
         </div>
 
         <!-- Address -->
@@ -86,33 +91,43 @@
           ></textarea>
         </div>
 
-        <!-- phoneNumb -->
-        <div class="col-12 col-md-3">
-          <label for="phoneNumb" class="form-label">Phone Number </label>
-        </div>
-        <div class="col-12 col-md-9">
-          <input
-            type="text"
-            pInputText
-            [value]="profile.get('phoneNumber')?.value"
-            class="form-control col-12"
-            id="phoneNumb"
-            formControlName="phoneNumber"
-          />
-        </div>
+        <div class="col-12 grid">
+          <div class="col-6">
+            <!-- phoneNumb -->
+            <div class="col-12 col-md-3">
+              <label for="phoneNumb" class="form-label">Phone Number </label>
+            </div>
+            <div class="col-12 col-md-9">
+              <input
+                type="text"
+                pInputText
+                pKeyFilter="money"
+                [value]="profile.get('phoneNumber')?.value"
+                class="form-control col-12"
+                id="phoneNumb"
+                formControlName="phoneNumber"
+              />
+            </div>
+          </div>
 
-        <!-- Expected Salary -->
-        <div class="col-12 col-md-3">
-          <label for="salary" class="form-label">Expected Salary </label>
-        </div>
-        <div class="col-12 col-md-9">
-          <input
-            type="text"
-            pInputText
-            formControlName="expectedSalary"
-            class="form-control col-12"
-            id="salary"
-          />
+          <div class="col-6">
+            <!-- Expected Salary -->
+            <div class="col-12 col-md-3">
+              <label for="salary" class="form-label"
+                >Expected Salary (Rp.)</label
+              >
+            </div>
+            <div class="col-12 col-md-9">
+              <input
+                type="text"
+                pInputText
+                pKeyFilter="money"
+                formControlName="expectedSalary"
+                class="form-control col-12"
+                id="salary"
+              />
+            </div>
+          </div>
         </div>
 
         <div class="grid col-12">
@@ -428,7 +443,7 @@
     </div>
 
     <!-- Documents -->
-    <div class="w-10">
+    <div class="w-10 mt-4">
       <div class="border border-bottom-2 flex justify-content-between">
         <h2>Documents</h2>
         <app-button
@@ -437,11 +452,16 @@
           (clickChange)="showModalDocuments()"
         ></app-button>
       </div>
-      <div>
+      <div class="flex gap-4 justify-content-start w-5 mt-3 flex-wrap">
         <div *ngFor="let d of documentsData">
-          <a [href]="d.fileId | urlCandidate" target="_blank">{{
-            d.typeName
-          }}</a>
+          <a
+            [href]="d.fileId | urlCandidate"
+            target="_blank"
+            class="flex flex-column align-items-center transition-colors transition-duration-500"
+          >
+            <i class="pi pi-file" style="font-size: 2.5rem"></i>
+            {{ d.typeName }}
+          </a>
         </div>
       </div>
 
@@ -483,6 +503,26 @@
           id="institution-name"
           required
         />
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            education.get('institutionName')!.invalid &&
+            education.get('institutionName')!.value &&
+            (education.get('institutionName')!.dirty ||
+              education.get('institutionName')!.touched)
+          "
+          >Input exceeds characters</span
+        >
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            education.get('institutionName')!.invalid &&
+            !education.get('institutionName')!.value &&
+            (education.get('institutionName')!.dirty ||
+              education.get('institutionName')!.touched)
+          "
+          >Input can't be empty</span
+        >
       </div>
 
       <div class="grid col-12">
@@ -502,6 +542,26 @@
               [required]="true"
               (onSelect)="convertStartYear($event)"
             ></p-calendar>
+            <span
+              class="text-red-500 ml-2"
+              *ngIf="
+                education.get('startYearTemp')!.invalid &&
+                education.get('startYearTemp')!.value &&
+                (education.get('startYearTemp')!.dirty ||
+                  education.get('startYearTemp')!.touched)
+              "
+              >Input exceeds characters</span
+            >
+            <span
+              class="text-red-500 ml-2"
+              *ngIf="
+                education.get('startYearTemp')!.invalid &&
+                !education.get('startYearTemp')!.value &&
+                (education.get('startYearTemp')!.dirty ||
+                  education.get('startYearTemp')!.touched)
+              "
+              >Input can't be empty</span
+            >
           </div>
         </div>
 
@@ -521,6 +581,26 @@
               [required]="true"
               (onSelect)="convertEndYear($event)"
             ></p-calendar>
+            <span
+              class="text-red-500 ml-2"
+              *ngIf="
+                education.get('endYearTemp')!.invalid &&
+                education.get('endYearTemp')!.value &&
+                (education.get('endYearTemp')!.dirty ||
+                  education.get('endYearTemp')!.touched)
+              "
+              >Input exceeds characters</span
+            >
+            <span
+              class="text-red-500 ml-2"
+              *ngIf="
+                education.get('endYearTemp')!.invalid &&
+                !education.get('endYearTemp')!.value &&
+                (education.get('endYearTemp')!.dirty ||
+                  education.get('endYearTemp')!.touched)
+              "
+              >Input can't be empty</span
+            >
           </div>
         </div>
       </div>
@@ -540,6 +620,26 @@
           pInputTextarea
           formControlName="institutionAddress"
         ></textarea>
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            education.get('institutionAddress')!.invalid &&
+            education.get('institutionAddress')!.value &&
+            (education.get('institutionAddress')!.dirty ||
+              education.get('institutionAddress')!.touched)
+          "
+          >Input exceeds characters</span
+        >
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            education.get('institutionAddress')!.invalid &&
+            !education.get('institutionAddress')!.value &&
+            (education.get('institutionAddress')!.dirty ||
+              education.get('institutionAddress')!.touched)
+          "
+          >Input can't be empty</span
+        >
       </div>
 
       <!-- Degree -->
@@ -558,6 +658,26 @@
           placeholder="Select Degree"
           formControlName="degreeId"
         ></p-dropdown>
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            education.get('degreeId')!.invalid &&
+            education.get('degreeId')!.value &&
+            (education.get('degreeId')!.dirty ||
+              education.get('degreeId')!.touched)
+          "
+          >Input exceeds characters</span
+        >
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            education.get('degreeId')!.invalid &&
+            !education.get('degreeId')!.value &&
+            (education.get('degreeId')!.dirty ||
+              education.get('degreeId')!.touched)
+          "
+          >Input can't be empty</span
+        >
       </div>
 
       <!-- Majors -->
@@ -576,6 +696,26 @@
           placeholder="Select Major"
           formControlName="majorId"
         ></p-dropdown>
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            education.get('majorId')!.invalid &&
+            education.get('majorId')!.value &&
+            (education.get('majorId')!.dirty ||
+              education.get('majorId')!.touched)
+          "
+          >Input exceeds characters</span
+        >
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            education.get('majorId')!.invalid &&
+            !education.get('majorId')!.value &&
+            (education.get('majorId')!.dirty ||
+              education.get('majorId')!.touched)
+          "
+          >Input can't be empty</span
+        >
       </div>
 
       <!-- GPA -->
@@ -593,6 +733,24 @@
           class="form-control col-12"
           id="gpa"
         />
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            education.get('gpa')!.invalid &&
+            education.get('gpa')!.value &&
+            (education.get('gpa')!.dirty || education.get('gpa')!.touched)
+          "
+          >Input exceeds characters</span
+        >
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            education.get('gpa')!.invalid &&
+            !education.get('gpa')!.value &&
+            (education.get('gpa')!.dirty || education.get('gpa')!.touched)
+          "
+          >Input can't be empty</span
+        >
       </div>
 
       <div class="mt-4">
@@ -601,6 +759,8 @@
           label="Save"
           classBtn="p-button-success"
           (click)="onCreateEducation()"
+          [isDisabled]="!education.valid"
+          [loading]="loadingCreateEducations"
         >
         </app-button>
         <app-button
@@ -645,6 +805,26 @@
           id="institution-name-experience"
           required
         />
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            experience.get('formerInstitution')!.invalid &&
+            experience.get('formerInstitution')!.value &&
+            (experience.get('formerInstitution')!.dirty ||
+              experience.get('formerInstitution')!.touched)
+          "
+          >Input exceeds characters</span
+        >
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            experience.get('formerInstitution')!.invalid &&
+            !experience.get('formerInstitution')!.value &&
+            (experience.get('formerInstitution')!.dirty ||
+              experience.get('formerInstitution')!.touched)
+          "
+          >Input can't be empty</span
+        >
       </div>
 
       <!-- Position -->
@@ -662,6 +842,26 @@
           class="form-control col-12"
           id="position"
         />
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            experience.get('formerPosition')!.invalid &&
+            experience.get('formerPosition')!.value &&
+            (experience.get('formerPosition')!.dirty ||
+              experience.get('formerPosition')!.touched)
+          "
+          >Input exceeds characters</span
+        >
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            experience.get('formerPosition')!.invalid &&
+            !experience.get('formerPosition')!.value &&
+            (experience.get('formerPosition')!.dirty ||
+              experience.get('formerPosition')!.touched)
+          "
+          >Input can't be empty</span
+        >
       </div>
 
       <!-- Dates -->
@@ -683,6 +883,26 @@
               dateFormat="mm/yy"
               (onSelect)="convertStartDate($event)"
             ></p-calendar>
+            <span
+              class="text-red-500 ml-2"
+              *ngIf="
+                experience.get('startDateTemp')!.invalid &&
+                experience.get('startDateTemp')!.value &&
+                (experience.get('startDateTemp')!.dirty ||
+                  experience.get('startDateTemp')!.touched)
+              "
+              >Input exceeds characters</span
+            >
+            <span
+              class="text-red-500 ml-2"
+              *ngIf="
+                experience.get('startDateTemp')!.invalid &&
+                !experience.get('startDateTemp')!.value &&
+                (experience.get('startDateTemp')!.dirty ||
+                  experience.get('startDateTemp')!.touched)
+              "
+              >Input can't be empty</span
+            >
           </div>
         </div>
 
@@ -703,6 +923,26 @@
               [required]="true"
               (onSelect)="convertEndDate($event)"
             ></p-calendar>
+            <span
+              class="text-red-500 ml-2"
+              *ngIf="
+                experience.get('endDateTemp')!.invalid &&
+                experience.get('endDateTemp')!.value &&
+                (experience.get('endDateTemp')!.dirty ||
+                  experience.get('endDateTemp')!.touched)
+              "
+              >Input exceeds characters</span
+            >
+            <span
+              class="text-red-500 ml-2"
+              *ngIf="
+                experience.get('endDateTemp')!.invalid &&
+                !experience.get('endDateTemp')!.value &&
+                (experience.get('endDateTemp')!.dirty ||
+                  experience.get('endDateTemp')!.touched)
+              "
+              >Input can't be empty</span
+            >
           </div>
         </div>
       </div>
@@ -723,6 +963,26 @@
           pInputTextarea
           formControlName="formerLocation"
         ></textarea>
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            experience.get('formerLocation')!.invalid &&
+            experience.get('formerLocation')!.value &&
+            (experience.get('formerLocation')!.dirty ||
+              experience.get('formerLocation')!.touched)
+          "
+          >Input exceeds characters</span
+        >
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            experience.get('formerLocation')!.invalid &&
+            !experience.get('formerLocation')!.value &&
+            (experience.get('formerLocation')!.dirty ||
+              experience.get('formerLocation')!.touched)
+          "
+          >Input can't be empty</span
+        >
       </div>
 
       <div class="col-12">
@@ -775,6 +1035,26 @@
           </ng-template>
                </p-editor
         >
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            experience.get('formerJobdesc')!.invalid &&
+            experience.get('formerJobdesc')!.value &&
+            (experience.get('formerJobdesc')!.dirty ||
+              experience.get('formerJobdesc')!.touched)
+          "
+          >Input exceeds characters</span
+        >
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            experience.get('formerJobdesc')!.invalid &&
+            !experience.get('formerJobdesc')!.value &&
+            (experience.get('formerJobdesc')!.dirty ||
+              experience.get('formerJobdesc')!.touched)
+          "
+          >Input can't be empty</span
+        >
       </div>
     </form>
 
@@ -785,6 +1065,8 @@
         label="Save"
         classBtn="p-button-success"
         (click)="onCreateExperience()"
+        [loading]="loadingCreateExperiences"
+        [isDisabled]="!experience.valid"
       >
       </app-button>
       <app-button
@@ -827,6 +1109,26 @@
           optionValue="id"
           optionLabel="skillName"
         ></p-dropdown>
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            skillsReqDto.get('skillId')!.invalid &&
+            skillsReqDto.get('skillId')!.value &&
+            (skillsReqDto.get('skillId')!.dirty ||
+              skillsReqDto.get('skillId')!.touched)
+          "
+          >Input exceeds characters</span
+        >
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            skillsReqDto.get('skillId')!.invalid &&
+            !skillsReqDto.get('skillId')!.value &&
+            (skillsReqDto.get('skillId')!.dirty ||
+              skillsReqDto.get('skillId')!.touched)
+          "
+          >Input can't be empty</span
+        >
       </div>
     </form>
     <div class="mt-4">
@@ -836,6 +1138,8 @@
         label="Save"
         classBtn="p-button-success"
         (click)="onCreateSkill()"
+        [loading]="loadingCreateSkill"
+        [isDisabled]="!skillsReqDto.valid"
       >
       </app-button>
       <app-button
@@ -894,6 +1198,8 @@
         label="Save"
         classBtn="p-button-success"
         (click)="onInsertDocuments()"
+        [isDisabled]="!documents.valid"
+        [loading]="loadingCreateDocuments"
       >
       </app-button>
       <app-button

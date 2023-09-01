@@ -119,6 +119,7 @@
                 formControlName="startDateTemp"
                 (onSelect)="convertStartDate($event)"
                 styleClass="md:col-5 col-12 m-0 p-0"
+                [showTime]="true"
               ></p-calendar>
             </div>
           </div>
@@ -133,6 +134,7 @@
                 formControlName="endDateTemp"
                 (onSelect)="convertEndDate($event)"
                 styleClass="md:col-5 col-12 m-0 p-0"
+                [showTime]="true"
               ></p-calendar>
             </div>
           </div>
@@ -250,15 +252,13 @@
       </div>
 
       <div class="md:col-12 col-12">
-        <label for="salary">Salary <span class="text-red-700">*</span></label>
+        <label for="salary"
+          >Salary (Rp.) <span class="text-red-700">*</span></label
+        >
       </div>
       <div class="md:col-12 col-12">
         <input
           type="text"
-          mode="currency"
-          inputId="currency-germany"
-          currency="EUR"
-          locale="de-DE"
           pInputText
           pKeyFilter="money"
           id="salary"
@@ -266,14 +266,6 @@
           required
           formControlName="salary"
         />
-        <p-inputNumber
-          formControlName="salary"
-          mode="currency"
-          inputId="currency-indonesian"
-          currency="IDR"
-          locale="id-ID"
-        >
-        </p-inputNumber>
         <span
           class="text-red-500 ml-2"
           *ngIf="
@@ -332,7 +324,8 @@
 
       <div class="md:col-12 col-12">
         <label for="description"
-          >Description <span class="text-red-700">*</span></label
+          >Description (Requirements & Benefits)
+          <span class="text-red-700">*</span></label
         >
       </div>
       <div class="md:col-12 col-12">
@@ -400,6 +393,7 @@
           label="Create Job"
           backgroundColor="var(--PRIMARY)"
           btnType="submit"
+          [loading]="loading"
           [isDisabled]="jobVacancyInsertReqDto.invalid"
         >
         </app-button>
