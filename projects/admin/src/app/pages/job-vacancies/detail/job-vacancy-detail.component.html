@@ -14,24 +14,11 @@
     >
       <h3>Job Vacancy Detail</h3>
       <div class="flex gap-2">
-        <p-button
-          routerLink=""
-          icon="pi pi-plus"
-          label="Add"
-          styleClass="m-auto p-button-success"
-        ></p-button>
-        <p-button
-          (onClick)="toEdit()"
-          icon="pi pi-pencil"
-          label="Edit"
-          styleClass="m-auto p-button-warning"
-        ></p-button>
-        <p-button
-          icon="pi pi-eye"
-          label="Preview"
-          styleClass="m-auto"
-          (onClick)="showPreviewModal(previewModal)"
-        ></p-button>
+
+        <p-button routerLink="/questions/{{jobVacancy.vacancyId}}" icon="pi pi-plus" label="Add Questions" styleClass="m-auto p-button-success"></p-button>
+        <p-button (onClick)="toEdit()" icon="pi pi-pencil" label="Edit" styleClass="m-auto p-button-warning"></p-button>
+        <p-button icon="pi pi-eye" label="Preview" styleClass="m-auto"
+          (onClick)="showPreviewModal(previewModal)"></p-button>
       </div>
     </div>
     <p-divider></p-divider>
