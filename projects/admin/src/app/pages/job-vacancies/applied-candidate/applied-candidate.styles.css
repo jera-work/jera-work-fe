@@ -13,3 +13,17 @@
   background-color: var(--PRIMARY);
   border: none;
 }
+
+a {
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+
+a:hover {
+  color: var(--PRIMARY);
+}
+
+::ng-deep .p-selectbutton .p-button.p-highlight {
+  background-color: var(--PRIMARY);
+}

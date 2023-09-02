@@ -1,6 +1,6 @@
 export interface AssessmentVacancyResDto {
   assessmentId: string;
-  isQuestion: boolean;
+  question: boolean;
   score: number;
   notes: string;
   startDate: string;

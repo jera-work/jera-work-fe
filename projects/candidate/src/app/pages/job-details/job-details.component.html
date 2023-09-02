@@ -41,6 +41,13 @@
       </div>
       <p-divider></p-divider>
       <!-- job title -->
+      <div>
+        <app-button
+          label="Apply"
+          backgroundColor="var(--PRIMARY)"
+          (click)="showApplyModal()"
+        ></app-button>
+      </div>
       <p>Open for you:</p>
       <h2>{{ jobDetail?.vacancyTitle }}</h2>
 
@@ -112,13 +119,6 @@
 
       <p-divider></p-divider>
       <!-- buttons -->
-      <div>
-        <app-button
-          label="Apply"
-          backgroundColor="var(--PRIMARY)"
-          (click)="showApplyModal()"
-        ></app-button>
-      </div>
     </div>
   </div>
 </div>

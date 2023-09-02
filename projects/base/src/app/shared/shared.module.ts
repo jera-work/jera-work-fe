@@ -26,7 +26,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { BadgeModule } from 'primeng/badge';
 import { ChipModule } from 'primeng/chip';
 import { TabMenuModule } from 'primeng/tabmenu';
-import { DataViewModule, DataViewLayoutOptions } from 'primeng/dataview';
+import { DataViewModule } from 'primeng/dataview';
 import { RippleModule } from 'primeng/ripple';
 import { PaginatorModule } from 'primeng/paginator';
 import { DividerModule } from 'primeng/divider';
@@ -36,6 +36,9 @@ import { ColorPickerModule } from 'primeng/colorpicker';
 import { TabViewModule } from 'primeng/tabview';
 import { ToastModule } from 'primeng/toast';
 import { KeyFilterModule } from 'primeng/keyfilter';
+import { ScrollTopModule } from 'primeng/scrolltop';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 @NgModule({
   imports: [
@@ -76,6 +79,9 @@ import { KeyFilterModule } from 'primeng/keyfilter';
     TabViewModule,
     ToastModule,
     KeyFilterModule,
+    ScrollTopModule,
+    ScrollPanelModule,
+    SelectButtonModule,
   ],
   exports: [
     MenubarModule,
@@ -115,6 +121,9 @@ import { KeyFilterModule } from 'primeng/keyfilter';
     TabViewModule,
     ToastModule,
     KeyFilterModule,
+    ScrollTopModule,
+    ScrollPanelModule,
+    SelectButtonModule,
   ],
 })
 export class SharedModule {}

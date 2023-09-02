@@ -59,6 +59,11 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
   isHr = false;
   isUser = false;
 
+  stateOptions: any[] = [
+    { label: 'Yes', value: 'true' },
+    { label: 'No', value: 'false' },
+  ];
+
   progressStatusRes: ProgressStatusResDto[] = [];
   appliedVacancyCandidateDetails?: AppliedVacancyCandidateDetailsResDto;
 
@@ -136,7 +141,6 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
         ).then((res) => {
           const loginData = this.authService.getProfile();
           this.appliedVacancyCandidateDetails = res;
-          console.log(this.appliedVacancyCandidateDetails);
 
           if (res.photoId) {
             this.photoProfile = `${ADMIN_API}/files/${res.photoId}`;
@@ -292,7 +296,7 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
     startDateTemp: ['', [Validators.required]],
     endDate: ['', [Validators.required]],
     endDateTemp: ['', [Validators.required]],
-    description: ['', [Validators.required]],
+    description: ['description', [Validators.required]],
     offeringLocation: ['', [Validators.required]],
 
     companyDescription: ['', [Validators.required]],

@@ -10,7 +10,7 @@
     <div class="my-4">
       <p-steps
         [model]="jobStatus"
-        [readonly]="true"
+        [readonly]="false"
         [activeIndex]="activeIndex"
         (activeIndexChange)="onActiveIndexChange($event)"
       ></p-steps>
@@ -51,7 +51,7 @@
       <!-- Assesment -->
       <div
         *ngIf="activeIndex == 1"
-        class="flex justify-content-center align-items-center md:flex-row flex-column"
+        class="flex justify-content-around align-items-center md:flex-row flex-column"
         style="min-height: 50vh"
       >
         <img
@@ -70,7 +70,7 @@
       <!-- Interview User -->
       <div
         *ngIf="activeIndex == 2"
-        class="flex justify-content-center align-items-center md:flex-row flex-column"
+        class="flex justify-content-around align-items-center md:flex-row flex-column"
         style="min-height: 50vh"
       >
         <img
@@ -89,7 +89,7 @@
       <!-- MCU -->
       <div
         *ngIf="activeIndex == 3"
-        class="flex justify-content-center align-items-center md:flex-row flex-column"
+        class="flex justify-content-around align-items-center md:flex-row flex-column"
         style="min-height: 50vh"
       >
         <img
@@ -109,7 +109,7 @@
       <!-- Offering -->
       <div
         *ngIf="activeIndex == 4"
-        class="flex justify-content-center align-items-center md:flex-row flex-column"
+        class="flex justify-content-around align-items-center md:flex-row flex-column"
         style="min-height: 50vh"
       >
         <img
@@ -147,7 +147,7 @@
       <!-- Hired -->
       <div
         *ngIf="activeIndex == 5"
-        class="flex justify-content-center align-items-center md:flex-row flex-column"
+        class="flex justify-content-around align-items-center md:flex-row flex-column"
         style="min-height: 50vh"
       >
         <img

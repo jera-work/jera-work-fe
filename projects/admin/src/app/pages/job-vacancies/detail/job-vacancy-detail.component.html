@@ -9,9 +9,12 @@
   >
   </app-button>
   <div class="px-6 shadow-3 py-2 relative">
-    <div class="flex flex-column md:flex-row justify-content-between my-2 h-2rem">
+    <div
+      class="flex flex-column md:flex-row justify-content-between my-2 h-2rem"
+    >
       <h3>Job Vacancy Detail</h3>
       <div class="flex gap-2">
+
         <p-button routerLink="/questions/{{jobVacancy.vacancyId}}" icon="pi pi-plus" label="Add Questions" styleClass="m-auto p-button-success"></p-button>
         <p-button (onClick)="toEdit()" icon="pi pi-pencil" label="Edit" styleClass="m-auto p-button-warning"></p-button>
         <p-button icon="pi pi-eye" label="Preview" styleClass="m-auto"
@@ -19,24 +22,42 @@
       </div>
     </div>
     <p-divider></p-divider>
-
-    <h1 class="text-center">{{ jobVacancy.vacancyTitle }}</h1>
-    <h3 class="text-center text-green-500" *ngIf="getAvailableStatus()">Opened at : {{ jobVacancy.startDate }}</h3>
-    <h3 class="text-center text-red-500" *ngIf="!getAvailableStatus()">Closed at : {{ jobVacancy.endDate }}</h3>
-    <p-divider></p-divider>
-    <div class="flex flex-column gap-3">
-      <h3 class="mt-2">Filter by progress</h3>
-      <div class="flex gap-3 justify-content-center">
-        <p-button *ngFor="let qty of appliedVacancyPerProgressQty" [style]="{
-          background: getProgressColor(qty.progressCode)
-        }" label="{{ qty.progressName + '(' + qty.appliedCount +')' }}"
-          (onClick)="getAppliedByProgressId(qty.progressId)" class="white-space-nowrap"></p-button>
+    <ng-container *ngIf="jobVacancy">
+      <h1 class="text-center">{{ jobVacancy.vacancyTitle }}</h1>
+      <h3 class="text-center text-green-500" *ngIf="getAvailableStatus()">
+        Opened at : {{ jobVacancy.startDate }}
+      </h3>
+      <h3 class="text-center text-red-500" *ngIf="!getAvailableStatus()">
+        Closed at : {{ jobVacancy.endDate }}
+      </h3>
+      <p-divider></p-divider>
+      <div class="flex flex-column gap-3">
+        <h3 class="mt-2">Filter by progress</h3>
+        <div class="flex gap-3 justify-content-center">
+          <p-button
+            *ngFor="let qty of appliedVacancyPerProgressQty"
+            [style]="{
+              background: getProgressColor(qty.progressCode)
+            }"
+            label="{{ qty.progressName + '(' + qty.appliedCount + ')' }}"
+            (onClick)="getAppliedByProgressId(qty.progressId)"
+            class="white-space-nowrap"
+          ></p-button>
+        </div>
       </div>
-    </div>
-    <p-table #dt1 [value]="appliedVacancies" dataKey="id" [rows]="10" [showCurrentPageReport]="true" [paginator]="true"
+    </ng-container>
+    <p-table
+      #dt1
+      [value]="appliedVacancies"
+      dataKey="id"
+      [rows]="10"
+      [showCurrentPageReport]="true"
+      [paginator]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-      [globalFilterFields]="['profileName', 'statusName', 'progressName']" selectionMode="single"
-      styleClass="p-datatable-gridlines p-datatable-striped mt-2">
+      [globalFilterFields]="['profileName', 'statusName', 'progressName']"
+      selectionMode="single"
+      styleClass="p-datatable-gridlines p-datatable-striped mt-2"
+    >
       <ng-template pTemplate="caption">
         <div class="flex flex-column md:flex-row md:align-items-center">
           <div class="p-input-icon-left m-0 md:ml-auto flex mt-3 md:mt-0">
@@ -89,9 +110,12 @@
           <td>{{ appliedVacancy.profileName }}</td>
           <td>{{ appliedVacancy.createdAt | timeAgo }}</td>
           <td>
-            <p-tag [value]="appliedVacancy.progressName" [style]="{
-              background: getProgressColor(appliedVacancy.progressCode)
-            }"></p-tag>
+            <p-tag
+              [value]="appliedVacancy.progressName"
+              [style]="{
+                background: getProgressColor(appliedVacancy.progressCode)
+              }"
+            ></p-tag>
           </td>
           <td>
             <p-tag
@@ -119,9 +143,21 @@
   <ng-template pTemplate="header">
     <span class="text-xl font-bold">Preview</span>
   </ng-template>
-  <job-preview #jobPreview [ageVacancyName]="jobVacancy!.ageVacancyName" [cityName]="jobVacancy.cityName"
-    [companyDesc]="jobVacancy.companyDesc" [companyName]="jobVacancy.companyName"
-    [companyPhotoId]="jobVacancy.companyPhotoId" [degreeName]="jobVacancy.degreeName"
-    [description]="jobVacancy.description" [genderName]="jobVacancy.genderName" [jobTypeName]="jobVacancy.jobTypeName"
-    [salary]="jobVacancy.salary" [vacancyTitle]="jobVacancy.vacancyTitle"></job-preview>
+
+  <ng-container *ngIf="jobVacancy">
+    <job-preview
+      #jobPreview
+      [ageVacancyName]="jobVacancy!.ageVacancyName"
+      [cityName]="jobVacancy.cityName"
+      [companyDesc]="jobVacancy.companyDesc"
+      [companyName]="jobVacancy.companyName"
+      [companyPhotoId]="jobVacancy.companyPhotoId"
+      [degreeName]="jobVacancy.degreeName"
+      [description]="jobVacancy.description"
+      [genderName]="jobVacancy.genderName"
+      [jobTypeName]="jobVacancy.jobTypeName"
+      [salary]="jobVacancy.salary"
+      [vacancyTitle]="jobVacancy.vacancyTitle"
+    ></job-preview>
+  </ng-container>
 </p-dialog>

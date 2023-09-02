@@ -1,6 +1,7 @@
 <img src="/assets/banner.svg" alt="application" class="w-full" />
 <div class="min-h-screen md:mx-8 sm:mx-6 mx-2">
   <!-- Filter Jobs -->
+
   <div class="flex justify-content-center align-items-center my-4">
     <form
       class="shadow-2 hover:shadow-3 p-2 border-round-xl"
@@ -59,8 +60,8 @@
   <div class="md:mx-2">
     <p-carousel
       [value]="latestJobs"
-      [numVisible]="4"
-      [numScroll]="4"
+      [numVisible]="3"
+      [numScroll]="3"
       [circular]="true"
       [responsiveOptions]="responsiveOptions"
       [autoplayInterval]="3000"
@@ -141,4 +142,6 @@
       [totalRecords]="length"
     ></p-paginator>
   </div>
+
+  <p-scrollTop></p-scrollTop>
 </div>

@@ -14,11 +14,30 @@
           type="email"
           pInputText
           id="email"
-          placeholder="email@email.com"
           class="w-full"
           required
           formControlName="userEmail"
         />
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            userInsertReqDto.get('userEmail')!.invalid &&
+            userInsertReqDto.get('userEmail')!.value &&
+            (userInsertReqDto.get('userEmail')!.dirty ||
+              userInsertReqDto.get('userEmail')!.touched)
+          "
+          >Input exceeds characters</span
+        >
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            userInsertReqDto.get('userEmail')!.invalid &&
+            !userInsertReqDto.get('userEmail')!.value &&
+            (userInsertReqDto.get('userEmail')!.dirty ||
+              userInsertReqDto.get('userEmail')!.touched)
+          "
+          >Input can't be empty</span
+        >
       </div>
 
       <div class="col-12">
@@ -35,6 +54,26 @@
           required
           formControlName="profileName"
         />
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            userInsertReqDto.get('profileName')!.invalid &&
+            userInsertReqDto.get('profileName')!.value &&
+            (userInsertReqDto.get('profileName')!.dirty ||
+              userInsertReqDto.get('profileName')!.touched)
+          "
+          >Input exceeds characters</span
+        >
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            userInsertReqDto.get('profileName')!.invalid &&
+            !userInsertReqDto.get('profileName')!.value &&
+            (userInsertReqDto.get('profileName')!.dirty ||
+              userInsertReqDto.get('profileName')!.touched)
+          "
+          >Input can't be empty</span
+        >
       </div>
 
       <div class="col-12">
@@ -75,6 +114,7 @@
         label="Create"
         backgroundColor="var(--PRIMARY)"
         btnType="Submit"
+        [isDisabled]="!userInsertReqDto.valid"
       ></app-button>
       <app-button
         label="Back"

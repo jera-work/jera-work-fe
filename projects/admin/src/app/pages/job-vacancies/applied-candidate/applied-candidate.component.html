@@ -167,44 +167,109 @@
             <ng-container *ngIf="assessmentVacancyResDto">
               <form [formGroup]="updateNotesAssessmentReqDto">
                 <div class="grid">
-                  <div class="col-12 flex column-gap-3">
-                    <p>Notes</p>
-                    <ng-container *ngIf="isHr">
-                      <span *ngIf="!toggleUpdateAssessment">
-                        <i
-                          class="pi pi-pencil cursor-pointer"
-                          (click)="toggleUpdateAssessment = true"
-                        ></i>
-                      </span>
-                      <span *ngIf="toggleUpdateAssessment">
-                        <i
-                          class="pi pi-times cursor-pointer"
-                          (click)="toggleUpdateAssessment = false"
-                        ></i>
-                      </span>
-                    </ng-container>
+                  <div class="col-12">
+                    <p>Location:</p>
                   </div>
                   <div class="col-12">
                     <textarea
                       rows="5"
                       cols="50"
                       pInputTextarea
-                      [readOnly]="!toggleUpdateAssessment"
-                      formControlName="notes"
+                      readOnly
+                      [value]="assessmentVacancyResDto.location"
                     ></textarea>
                   </div>
-                  <div *ngIf="toggleUpdateAssessment" class="col-12">
-                    <app-button
-                      btnType="button"
-                      label="Update Notes"
-                      backgroundColor="var(--PRIMARY)"
-                      (click)="
-                        showDialogUpdateAssessment(
-                          assessmentVacancyResDto.assessmentId
-                        )
-                      "
-                    >
-                    </app-button>
+
+                  <div class="col-12 grid">
+                    <div class="col-6 grid">
+                      <div class="col-12">
+                        <p>Start Date:</p>
+                      </div>
+                      <div class="col-12">
+                        <input
+                          pInputText
+                          type="text"
+                          [value]="assessmentVacancyResDto.startDate"
+                          readonly
+                        />
+                      </div>
+                    </div>
+                    <div class="col-6 grid">
+                      <div class="col-12">
+                        <p>End Date:</p>
+                      </div>
+                      <div class="col-12">
+                        <input
+                          pInputText
+                          type="text"
+                          [value]="assessmentVacancyResDto.endDate"
+                          readonly
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-12 grid">
+                    <div class="col-6 grid">
+                      <div class="col-12 flex column-gap-3">
+                        <p>Notes</p>
+                        <ng-container *ngIf="isHr">
+                          <span *ngIf="!toggleUpdateAssessment">
+                            <i
+                              class="pi pi-pencil cursor-pointer"
+                              (click)="toggleUpdateAssessment = true"
+                            ></i>
+                          </span>
+                          <span *ngIf="toggleUpdateAssessment">
+                            <i
+                              class="pi pi-times cursor-pointer"
+                              (click)="toggleUpdateAssessment = false"
+                            ></i>
+                          </span>
+                        </ng-container>
+                      </div>
+                      <div class="col-12">
+                        <textarea
+                          rows="5"
+                          cols="50"
+                          pInputTextarea
+                          [readOnly]="!toggleUpdateAssessment"
+                          formControlName="notes"
+                        ></textarea>
+                      </div>
+                      <div *ngIf="toggleUpdateAssessment" class="col-12">
+                        <app-button
+                          btnType="button"
+                          label="Update Notes"
+                          backgroundColor="var(--PRIMARY)"
+                          (click)="
+                            showDialogUpdateAssessment(
+                              assessmentVacancyResDto.assessmentId
+                            )
+                          "
+                        >
+                        </app-button>
+                      </div>
+                    </div>
+                    <div class="col-6 grid">
+                      <div
+                        class="col-12"
+                        *ngIf="assessmentVacancyResDto.question"
+                      >
+                        <p>Question Score:</p>
+                      </div>
+                      <div
+                        class="col-12"
+                        *ngIf="assessmentVacancyResDto.question"
+                      >
+                        <input
+                          pInputText
+                          type="text"
+                          [value]="assessmentVacancyResDto.score"
+                          readonly
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </form>
@@ -251,6 +316,49 @@
             <ng-container *ngIf="interviewVacancyResDto">
               <form [formGroup]="updateNotesInterviewReqDto">
                 <div class="grid">
+                  <div class="col-12">
+                    <p>Location:</p>
+                  </div>
+                  <div class="col-12">
+                    <textarea
+                      rows="5"
+                      cols="50"
+                      pInputTextarea
+                      readOnly
+                      [value]="interviewVacancyResDto.location"
+                    ></textarea>
+                  </div>
+
+                  <div class="col-12 grid">
+                    <div class="col-6 grid">
+                      <div class="col-12">
+                        <p>Start Date:</p>
+                      </div>
+                      <div class="col-12">
+                        <input
+                          pInputText
+                          type="text"
+                          [value]="interviewVacancyResDto.startDate"
+                          readonly
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-6 grid">
+                      <div class="col-12">
+                        <p>End Date:</p>
+                      </div>
+                      <div class="col-12">
+                        <input
+                          pInputText
+                          type="text"
+                          [value]="interviewVacancyResDto.endDate"
+                          readonly
+                        />
+                      </div>
+                    </div>
+                  </div>
+
                   <div class="col-12 flex column-gap-3">
                     <p>Notes</p>
                     <ng-container *ngIf="isUser">
@@ -335,7 +443,36 @@
             </ng-container>
 
             <ng-container *ngIf="mcuVacancyResDto">
-              <p>ada</p>
+              <div class="grid">
+                <div class="col-12 grid">
+                  <div class="col-6 grid">
+                    <div class="col-12">
+                      <p>Start Date:</p>
+                    </div>
+                    <div class="col-12">
+                      <input
+                        pInputText
+                        type="text"
+                        [value]="mcuVacancyResDto.startDate"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                  <div class="col-6 grid">
+                    <div class="col-12">
+                      <p>End Date:</p>
+                    </div>
+                    <div class="col-12">
+                      <input
+                        pInputText
+                        type="text"
+                        [value]="mcuVacancyResDto.endDate"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </ng-container>
           </div>
 
@@ -349,14 +486,61 @@
             </ng-container>
 
             <ng-container *ngIf="offeringResDto">
-              <p>ada</p>
-              <div *ngIf="!offeringResDto.approve">
-                <p>Waiting candidate to approve the offering</p>
+              <div class="grid">
+                <div class="col-12">
+                  <p>Location:</p>
+                </div>
+                <div class="col-12">
+                  <textarea
+                    rows="5"
+                    cols="50"
+                    pInputTextarea
+                    readOnly
+                    [value]="offeringResDto.location"
+                  ></textarea>
+                </div>
+
+                <div class="col-12 grid">
+                  <div class="col-6 grid">
+                    <div class="col-12">
+                      <p>Start Date:</p>
+                    </div>
+                    <div class="col-12">
+                      <input
+                        pInputText
+                        type="text"
+                        [value]="offeringResDto.startDate"
+                        readonly
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-6 grid">
+                    <div class="col-12">
+                      <p>End Date:</p>
+                    </div>
+                    <div class="col-12">
+                      <input
+                        pInputText
+                        type="text"
+                        [value]="offeringResDto.endDate"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
-              <p>
-                Status:
-                {{ offeringResDto.approve ? "Approve" : "Not Approve" }}
-              </p>
+
+              <div class="col-12">Approvement from Candidate</div>
+
+              <div class="col-12">
+                <input
+                  pInputText
+                  type="text"
+                  [value]="offeringResDto.approve ? 'Approve' : 'Not Approve'"
+                  readonly
+                />
+              </div>
             </ng-container>
           </div>
 
@@ -370,7 +554,11 @@
             </ng-container>
 
             <ng-container *ngIf="hiringResDto">
-              <p>ada</p>
+              <h3>Yeay!</h3>
+              <h3>
+                Candidate is officially employer since
+                {{ hiringResDto.createdAt }}
+              </h3>
             </ng-container>
           </div>
         </p-tabPanel>
@@ -391,9 +579,9 @@
             >
               <div *ngFor="let e of appliedVacancyCandidateDetails.educations">
                 <p-card
-                  class="relative mb-2"
+                  class="relative"
                   [header]="e.degreeId"
-                  styleClass="shadow-2 hover:shadow-4"
+                  styleClass="shadow-2 mb-3 hover:shadow-4"
                 >
                   <div>
                     <h3>
@@ -433,9 +621,8 @@
             >
               <div *ngFor="let e of appliedVacancyCandidateDetails.experiences">
                 <p-card
-                  class="relative mb-2"
                   [header]="e.formerPosition"
-                  styleClass="shadow-2 hover:shadow-4"
+                  styleClass="shadow-2 mb-3 hover:shadow-4"
                 >
                   <div>
                     <h3>
@@ -454,7 +641,7 @@
                   </div>
                   <div>
                     <p>Job Desc:</p>
-                    <div [innerHTML]="e.formerJobdesc"></div>
+                    <div class="p-3" [innerHTML]="e.formerJobdesc"></div>
                   </div>
                   <ng-template pTemplate="footer">
                     <p>{{ e.startDate }} - {{ e.endDate }}</p>
@@ -469,14 +656,14 @@
             <h2>Skills</h2>
             <p-divider></p-divider>
 
-            <div
-              *ngFor="
-                let s of appliedVacancyCandidateDetails.skills;
-                let i = index
-              "
-            >
-              <div class="flex">
-                <div class="relative">
+            <div class="flex gap-3 w-5">
+              <div
+                *ngFor="
+                  let s of appliedVacancyCandidateDetails.skills;
+                  let i = index
+                "
+              >
+                <div>
                   <p-badge
                     [value]="s.skillName"
                     size="large"
@@ -492,10 +679,17 @@
             <h2>Documents</h2>
             <p-divider></p-divider>
 
-            <div *ngFor="let d of appliedVacancyCandidateDetails.documents">
-              <a [href]="d.fileId | urlAdmin" target="_blank">{{
-                d.typeName
-              }}</a>
+            <div class="flex gap-3 justify-content-around w-5">
+              <div *ngFor="let d of appliedVacancyCandidateDetails.documents">
+                <a
+                  [href]="d.fileId | urlAdmin"
+                  target="_blank"
+                  class="flex flex-column align-items-center transition-colors transition-duration-500"
+                >
+                  <i class="pi pi-file" style="font-size: 2.5rem"></i>
+                  {{ d.typeName }}
+                </a>
+              </div>
             </div>
           </div>
         </p-tabPanel>
@@ -514,8 +708,6 @@
     [draggable]="false"
     [resizable]="false"
   >
-    <!-- <pre>{{ assessmentVacancyInsertReqDto.value | json }}</pre>
-    <pre>{{ appliedVacancyUpdateProgressReqDto.value | json }}</pre> -->
     <form
       [formGroup]="assessmentVacancyInsertReqDto"
       (ngSubmit)="submit(selectedProgress)"
@@ -546,17 +738,15 @@
               </div>
             </div>
           </div>
-          <!-- <div class="col-12">With Question</div>
-          <div class="col-12 flex">
-            <div *ngFor="let isQuestion of isQuestions" class="mr-4 mb-2">
-              <p-radioButton
-                [inputId]="isQuestion.label"
-                [value]="isQuestion.value"
-                [label]="isQuestion.label"
-                formControlName="isQuestion"
-              ></p-radioButton>
-            </div>
-          </div> -->
+          <div class="col-12">With Question</div>
+          <div class="col-12">
+            <p-selectButton
+              [options]="stateOptions"
+              formControlName="isQuestion"
+              optionLabel="label"
+              optionValue="value"
+            ></p-selectButton>
+          </div>
           <div class="col-12">Location</div>
           <div class="col-12">
             <textarea
@@ -570,6 +760,7 @@
               label="Submit"
               btnType="submit"
               backgroundColor="var(--PRIMARY)"
+              [isDisabled]="assessmentVacancyInsertReqDto.valid"
             ></app-button>
 
             <app-button
@@ -594,7 +785,6 @@
     [draggable]="false"
     [resizable]="false"
   >
-    <!-- <pre>{{ interviewVacancyInsertReqDto.value | json }}</pre> -->
     <form
       [formGroup]="interviewVacancyInsertReqDto"
       (ngSubmit)="submit(selectedProgress)"
@@ -638,6 +828,7 @@
               label="Submit"
               btnType="submit"
               backgroundColor="var(--PRIMARY)"
+              [isDisabled]="interviewVacancyInsertReqDto.valid"
             ></app-button>
 
             <app-button
@@ -697,6 +888,7 @@
                 label="Submit"
                 btnType="submit"
                 backgroundColor="var(--PRIMARY)"
+                [isDisabled]="!mcuVacancyInsertReqDto.valid"
               ></app-button>
 
               <app-button
@@ -722,7 +914,6 @@
     [draggable]="false"
     [resizable]="false"
   >
-    <!-- <pre>{{ offeringInsertReqDto.value | json }}</pre> -->
     <form
       [formGroup]="offeringInsertReqDto"
       (ngSubmit)="submit(selectedProgress)"
@@ -753,14 +944,6 @@
               </div>
             </div>
           </div>
-          <div class="col-12">Description</div>
-          <div class="col-12">
-            <textarea
-              pInputTextarea
-              class="w-full"
-              formControlName="description"
-            ></textarea>
-          </div>
           <div class="col-12">Location</div>
           <div class="col-12">
             <textarea
@@ -769,7 +952,9 @@
               formControlName="offeringLocation"
             ></textarea>
           </div>
-          <div class="col-12">For Offering Letter Email</div>
+          <div class="col-12 mt-5">
+            <h3>For Offering Letter Email</h3>
+          </div>
 
           <div class="col-12">Company Name Color</div>
           <div class="col-12 grid">
@@ -789,7 +974,7 @@
             </div>
           </div>
 
-          <div class="col-12">Short Company Description</div>
+          <div class="col-12">Short Description About Company</div>
           <div class="col-12">
             <textarea
               rows="5"
@@ -798,7 +983,7 @@
               formControlName="companyDescription"
             ></textarea>
           </div>
-          <div class="col-12">Company Name Color</div>
+          <div class="col-12">Description Color</div>
           <div class="col-12 grid">
             <div class="col-2">
               <p-colorPicker
@@ -832,6 +1017,7 @@
               label="Submit"
               btnType="submit"
               backgroundColor="var(--PRIMARY)"
+              [isDisabled]="!offeringInsertReqDto.valid"
             ></app-button>
 
             <app-button
@@ -852,11 +1038,10 @@
     header="Move To Hired"
     [(visible)]="hiredModal"
     [modal]="true"
-    [style]="{ width: '90vw' }"
+    [style]="{ width: '60vw' }"
     [draggable]="false"
     [resizable]="false"
   >
-    <pre>{{ hiringVacancyInsertReqDto.value | json }}</pre>
     <h4>Are you sure to hire this candidate?</h4>
 
     <ng-template pTemplate="footer">

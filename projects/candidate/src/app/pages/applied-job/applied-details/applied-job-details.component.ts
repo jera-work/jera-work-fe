@@ -57,7 +57,6 @@ export class AppliedJobDetailsComponent implements OnInit {
           };
           this.jobStatus.push(menuItem);
         }
-        console.log(this.jobStatus);
       }
     );
   }
@@ -110,8 +109,8 @@ export class AppliedJobDetailsComponent implements OnInit {
           this.offeringDataId
         )
       ).then((res) => {
-        console.log(res);
         this.modalApproveOffering = false;
+        this.getProgress();
       });
     } else {
       console.log('error');

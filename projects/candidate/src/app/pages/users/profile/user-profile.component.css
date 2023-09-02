@@ -23,3 +23,13 @@
   top: -1.4rem;
   right: -1.4rem;
 }
+
+a {
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+
+a:hover {
+  color: var(--PRIMARY);
+}

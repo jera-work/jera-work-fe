@@ -28,6 +28,7 @@ export class JobDetailsComponent implements OnInit {
   isSaved?: boolean;
   isLogin?: boolean;
   applyJobModalVisibility = false;
+  loading = false;
 
   constructor(
     private fb: NonNullableFormBuilder,
@@ -93,15 +94,18 @@ export class JobDetailsComponent implements OnInit {
     ).then((res) => (res.length > 0 ? true : false));
 
     if (isEducations && isExperiences && isDocuments) {
+      this.loading = true;
       const data = this.AppliedVacancyInsertReqDto.getRawValue();
       data.jobVacancyId = this.jobId;
       this.applyJobModalVisibility = false;
       firstValueFrom(this.appliedVacancyService.insertApplied(data)).then(
         (res) => {
+          this.loading = false;
           this.router.navigateByUrl('/dashboard');
         }
       );
     } else {
+      this.loading = false;
       this.messageService.clear();
       this.messageService.add({
         severity: 'warn',

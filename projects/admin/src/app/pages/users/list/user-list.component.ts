@@ -26,7 +26,6 @@ export class UserListComponent implements OnInit {
     if (data['roleCode'] === Roles.ADMIN) {
       firstValueFrom(this.usersService.getUsersByCompany()).then((res) => {
         this.users = res;
-        console.log(res);
       });
     } else {
       this.usersService.getUsers().subscribe((res) => {
