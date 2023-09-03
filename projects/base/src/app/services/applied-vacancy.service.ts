@@ -14,6 +14,8 @@ import { AppliedProgressResDto } from '@dto/data-master/applied-progress.res.dto
 import { AppliedVacancyProgressResDto } from '@dto/applied-vacancy/applied-vacancy-progress.res.dto';
 import { AppliedVacancyCandidateDetailsResDto } from '@dto/applied-vacancy/applied-vacancy-candidate-details.res.dto';
 import { AppliedVacancyByProgressAdminResDto } from '@dto/applied-vacancy/applied-vacancy-by-progress-admin.res.dto';
+import { AppliedStatusResDto } from '@dto/applied-vacancy/applied-status.res.dto';
+import { updateAppliedVacancyStatusReqDto } from '@dto/applied-vacancy/applied-vacancy-update-status.req.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -33,6 +35,12 @@ export class AppliedVacancyService {
     data: AppliedVacancyUpdateReqDto
   ): Observable<UpdateResDto> {
     return this.base.put<UpdateResDto>(`${ADMIN_API}/applied`, data, true);
+  }
+
+  changeAppliedStatus(
+    data: updateAppliedVacancyStatusReqDto
+  ): Observable<UpdateResDto> {
+    return this.base.put(`${ADMIN_API}/applied/change-status`, data);
   }
 
   getAppliedVacancyWithLimit(
@@ -59,6 +67,10 @@ export class AppliedVacancyService {
     );
   }
 
+  getAppliedStatus(): Observable<AppliedStatusResDto[]> {
+    return this.base.get(`${ADMIN_API}/applied-status`);
+  }
+
   getAppliedCandidatesByJobId(
     id: string
   ): Observable<AppliedVacancyAdminResDto[]> {
@@ -72,14 +84,19 @@ export class AppliedVacancyService {
   }
 
   getAppliedVacancyByProgress(
-    progressId: string, jobVacancyId: string
+    progressId: string,
+    jobVacancyId: string
   ): Observable<AppliedVacancyAdminResDto[]> {
-    return this.base.get(`${ADMIN_API}/applied/progress/?progressId=${progressId}&jobVacancyId=${jobVacancyId}`);
+    return this.base.get(
+      `${ADMIN_API}/applied/progress/?progressId=${progressId}&jobVacancyId=${jobVacancyId}`
+    );
   }
 
-  getProgressCount(jobVacancyId: string): Observable<AppliedVacancyByProgressAdminResDto[]> {
-    return this.base.get(`${ADMIN_API}/applied/counts/?jobVacancyId=${jobVacancyId}`)
+  getProgressCount(
+    jobVacancyId: string
+  ): Observable<AppliedVacancyByProgressAdminResDto[]> {
+    return this.base.get(
+      `${ADMIN_API}/applied/counts/?jobVacancyId=${jobVacancyId}`
+    );
   }
 }
-
-

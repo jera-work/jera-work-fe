@@ -1,5 +1,5 @@
 export interface AgeVacancyResDto {
-    id : string
-	ageCode : string
-	ageName : string
+  id: string;
+  ageCode: string;
+  ageName: string;
 }
