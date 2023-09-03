@@ -7,6 +7,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Roles } from '@constant/role.constant';
 import { CompanyResDto } from '@dto/company/company.res.dto';
@@ -46,6 +47,7 @@ export class UserCreateComponent implements OnInit, AfterViewChecked {
     private router: Router,
     private authService: AuthService,
     private cd: ChangeDetectorRef,
+    private title: Title,
     private messageService: MessageService
   ) {}
 
@@ -87,6 +89,7 @@ export class UserCreateComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit(): void {
+    this.title.setTitle('Create User');
     this.getData();
   }
 

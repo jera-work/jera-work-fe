@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProgressStatus } from '@constant/progress.constant';
 import { AvailableStatusName, Status } from '@constant/status.constant';
@@ -34,7 +35,8 @@ export class JobVacancyDetailComponent implements OnInit {
     private jobVacancyService: JobVacancyService,
     private appliedVacancyService: AppliedVacancyService,
     private masterDataService: MasterDataService,
-    private router: Router
+    private router: Router,
+    private title: Title
   ) {}
 
   getData() {
@@ -50,6 +52,7 @@ export class JobVacancyDetailComponent implements OnInit {
           this.jobVacancyService.getJobDetails(this.jobVacancyId)
         ).then((res) => {
           this.jobVacancy = res;
+          this.title.setTitle(`${res.companyName} - ${res.vacancyTitle}`);
         });
 
         firstValueFrom(

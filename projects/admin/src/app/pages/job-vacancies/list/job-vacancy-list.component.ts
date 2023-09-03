@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Roles } from '@constant/role.constant';
 import { JobVacancyResDto } from '@dto/job-vacancy/job-vacancy.res.dto';
 import { AuthService } from '@services/auth.service';
@@ -22,11 +23,11 @@ export class JobVacancyListComponent implements OnInit {
   jobVacancies: JobVacancyResDto[] = [];
 
   ngOnInit(): void {
-    firstValueFrom(this.jobVacancyService.getAllJobsByCompany()).then(
-      (res) => {
-        this.jobVacancies = res;
-      }
-    );
+    this.title.setTitle('Vacancy Job List');
+
+    firstValueFrom(this.jobVacancyService.getAllJobsByCompany()).then((res) => {
+      this.jobVacancies = res;
+    });
 
     const profile = this.authService.getProfile();
     if (profile.roleCode === Roles.ADMIN) {
@@ -38,7 +39,8 @@ export class JobVacancyListComponent implements OnInit {
 
   constructor(
     private jobVacancyService: JobVacancyService,
-    private authService: AuthService
+    private authService: AuthService,
+    private title: Title
   ) {}
 
   getStatusSeverity(status: string) {

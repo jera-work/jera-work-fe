@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NonNullableFormBuilder } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Roles } from '@constant/role.constant';
 import { UserResDto } from '@dto/user/user.res.dto';
 import { AuthService } from '@services/auth.service';
@@ -13,14 +13,16 @@ import { firstValueFrom } from 'rxjs';
 })
 export class UserListComponent implements OnInit {
   constructor(
+    private title: Title,
     private usersService: UsersService,
-    private fb: NonNullableFormBuilder,
     private authService: AuthService
   ) {}
 
   users: UserResDto[] = [];
 
   ngOnInit(): void {
+    this.title.setTitle('User List');
+
     const data = this.authService.getProfile();
 
     if (data['roleCode'] === Roles.ADMIN) {

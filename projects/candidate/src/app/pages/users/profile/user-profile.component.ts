@@ -27,6 +27,7 @@ import { CandidateExperienceResDto } from '@dto/candidate/candidate-experience.r
 import { CandidateSkillResDto } from '@dto/candidate/candidate-skill.res.dto';
 import { CandidateDocumentResDto } from '@dto/candidate/candidate-document.res.dto';
 import { FileUpload } from 'primeng/fileupload';
+import { Title } from '@angular/platform-browser';
 
 const convertUTCToLocalDateTime = function (date: Date) {
   const newDate = new Date(
@@ -107,6 +108,7 @@ export class UserProfileComponent
   getDocumentsSubscription?: Subscription;
 
   constructor(
+    private title: Title,
     private fb: NonNullableFormBuilder,
     private router: Router,
     private master: MasterDataService,
@@ -325,6 +327,7 @@ export class UserProfileComponent
 
   ngOnInit(): void {
     this.getData();
+    this.title.setTitle('Profile');
   }
 
   onActiveItemChange(event: MenuItem) {

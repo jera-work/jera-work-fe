@@ -3,7 +3,7 @@ import { BaseService } from './base.service';
 import { UserInsertReqDto } from '@dto/user/user-insert.req.dto';
 import { Observable } from 'rxjs';
 import { InsertResDto } from '@dto/insert.res.dto';
-import { ADMIN_API } from '@constant/api.constant';
+import { ADMIN_API, CANDIDATE_API } from '@constant/api.constant';
 import { UserResDto } from '@dto/user/user.res.dto';
 import { ChangePasswordReqDto } from '@dto/user/user-change-password.req.dto';
 import { UpdateResDto } from '@dto/update.res.dto';
@@ -34,5 +34,11 @@ export class UsersService {
 
   changePassword(data: ChangePasswordReqDto): Observable<UpdateResDto> {
     return this.base.patch(`${ADMIN_API}/users/change-password`, data);
+  }
+
+  changePasswordCandidate(
+    data: ChangePasswordReqDto
+  ): Observable<UpdateResDto> {
+    return this.base.patch(`${CANDIDATE_API}/candidates`, data);
   }
 }

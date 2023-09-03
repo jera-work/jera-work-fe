@@ -43,7 +43,6 @@ export class JobDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.title.setTitle('Job Title');
     this.getDetail();
 
     const auth = this.authService.getProfile();
@@ -75,6 +74,9 @@ export class JobDetailsComponent implements OnInit {
             style: 'currency',
             currency: 'IDR',
           });
+
+          this.title.setTitle(`${result.companyName} - ${result.vacancyTitle}`);
+
           this.companyPhotoId = result.companyPhotoId;
           this.jobDetail = result;
         });

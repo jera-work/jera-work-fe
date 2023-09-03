@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { AuthService } from '@services/auth.service';
 import { firstValueFrom } from 'rxjs';
 
@@ -9,9 +10,10 @@ import { firstValueFrom } from 'rxjs';
 export class DashboardComponent implements OnInit {
   profileName?: string;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private title: Title) {}
 
   ngOnInit(): void {
+    this.title.setTitle('Jera Work Admin');
     const profile = this.authService.getProfile();
     console.log(profile);
     if (profile) {
