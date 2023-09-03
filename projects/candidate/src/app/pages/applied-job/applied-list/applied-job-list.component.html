@@ -1,11 +1,17 @@
-<div class="min-h-screen md:mx-8 sm:mx-6 mx-2">
-  <div class="flex flex-column md:flex-row md:justify-content-between">
-    <div class="flex justify-content-center align-items-center flex-column">
-      <img src="/assets/applied-job.svg" alt="saved" />
+<div class="min-h-screen w-10 m-auto">
+  <h2 class="my-2 text-center">Applied Jobs</h2>
+  <div class="flex flex-column md:flex-row gap-5 md:justify-content-between">
+    <div
+      class="flex justify-content-center align-items-center flex-column md:h-screen md:sticky top-0"
+    >
+      <img
+        src="/assets/applied-job.svg"
+        class="lg:w-30rem md:w-20rem w-15rem"
+        alt="saved"
+      />
     </div>
-    <div class="flex flex-column">
+    <div class="flex flex-column ml-4 mt-3 md:mt-0">
       <!-- Job Vacancies -->
-      <h2 class="my-2 text-center">Applied Jobs</h2>
       <div class="grid">
         <!-- Job Vacancy Card -->
         <div class="col-12" *ngFor="let av of appliedVacancyWithLimit">
@@ -31,10 +37,10 @@
               ></p-tag>
             </span>
             <div class="flex flex-row">
-              <div class="mr-4">
+              <div class="mr-4 flex justify-content-center align-items-center">
                 <img
                   src="{{ av.companyPhotoId | urlAdmin }}"
-                  class="w-10rem sm:w-13rem"
+                  class="w-10rem h-8rem cover"
                   alt="company"
                 />
               </div>

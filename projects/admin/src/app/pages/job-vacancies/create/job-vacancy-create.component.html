@@ -4,12 +4,12 @@
   <h1 class="my-4">Create Job</h1>
   <form [formGroup]="jobVacancyInsertReqDto" (ngSubmit)="onSubmit()">
     <div class="grid">
-      <div class="md:col-12 col-12">
+      <div class="col-12">
         <label for="vacancy-title"
           >Vacancy Title <span class="text-red-700">*</span></label
         >
       </div>
-      <div class="md:col-12 col-12">
+      <div class="col-12">
         <input
           type="text"
           pInputText
@@ -40,12 +40,12 @@
         >
       </div>
 
-      <div class="md:col-12 col-12">
+      <div class="col-12">
         <label for="vacancy-code"
           >Vacancy Code <span class="text-red-700">*</span></label
         >
       </div>
-      <div class="md:col-12 col-12">
+      <div class="col-12">
         <input
           type="text"
           pInputText
@@ -76,80 +76,169 @@
         >
       </div>
 
-      <div class="md:col-12 col-12">
-        <label for="pic-hr">Pic HR <span class="text-red-700">*</span></label>
-      </div>
-      <div class="md:col-12 col-12">
-        <p-dropdown
-          [options]="picHr"
-          optionLabel="profileName"
-          placeholder="Select Pic"
-          optionValue="id"
-          styleClass="w-full"
-          formControlName="picHrId"
-        ></p-dropdown>
-      </div>
+      <div class="col-12 p-0">
+        <div class="grid">
+          <div class="grid md:col-6 col-12">
+            <div class="col-12">
+              <label for="pic-hr"
+                >Pic HR <span class="text-red-700">*</span></label
+              >
+            </div>
+            <div class="col-12">
+              <p-dropdown
+                [options]="picHr"
+                optionLabel="profileName"
+                placeholder="Select Pic"
+                optionValue="id"
+                styleClass="w-full"
+                formControlName="picHrId"
+              ></p-dropdown>
+              <span
+                class="text-red-500 ml-2"
+                *ngIf="
+                  jobVacancyInsertReqDto.get('picHrId')!.invalid &&
+                  jobVacancyInsertReqDto.get('picHrId')!.value &&
+                  (jobVacancyInsertReqDto.get('picHrId')!.dirty ||
+                    jobVacancyInsertReqDto.get('picHrId')!.touched)
+                "
+                >Input exceeds characters</span
+              >
+              <span
+                class="text-red-500 ml-2"
+                *ngIf="
+                  jobVacancyInsertReqDto.get('picHrId')!.invalid &&
+                  !jobVacancyInsertReqDto.get('picHrId')!.value &&
+                  (jobVacancyInsertReqDto.get('picHrId')!.dirty ||
+                    jobVacancyInsertReqDto.get('picHrId')!.touched)
+                "
+                >Input can't be empty</span
+              >
+            </div>
+          </div>
 
-      <div class="md:col-12 col-12">
-        <label for="pic-user"
-          >Pic User <span class="text-red-700">*</span></label
-        >
+          <div class="md:col-6 col-12 grid">
+            <div class="col-12">
+              <label for="pic-user"
+                >Pic User <span class="text-red-700">*</span></label
+              >
+            </div>
+            <div class="col-12">
+              <p-dropdown
+                [options]="picUser"
+                optionLabel="profileName"
+                placeholder="Select Pic"
+                optionValue="id"
+                styleClass="w-full"
+                formControlName="picUserId"
+              ></p-dropdown>
+              <span
+                class="text-red-500 ml-2"
+                *ngIf="
+                  jobVacancyInsertReqDto.get('picUserId')!.invalid &&
+                  jobVacancyInsertReqDto.get('picUserId')!.value &&
+                  (jobVacancyInsertReqDto.get('picUserId')!.dirty ||
+                    jobVacancyInsertReqDto.get('picUserId')!.touched)
+                "
+                >Input exceeds characters</span
+              >
+              <span
+                class="text-red-500 ml-2"
+                *ngIf="
+                  jobVacancyInsertReqDto.get('picUserId')!.invalid &&
+                  !jobVacancyInsertReqDto.get('picUserId')!.value &&
+                  (jobVacancyInsertReqDto.get('picUserId')!.dirty ||
+                    jobVacancyInsertReqDto.get('picUserId')!.touched)
+                "
+                >Input can't be empty</span
+              >
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="md:col-12 col-12">
-        <p-dropdown
-          [options]="picUser"
-          optionLabel="profileName"
-          placeholder="Select Pic"
-          optionValue="id"
-          styleClass="w-full"
-          formControlName="picUserId"
-        ></p-dropdown>
-      </div>
-
-      <div class="md:col-12 col-12 p-0">
+      <div class="col-12 p-0">
         <div class="grid">
           <div class="md:col-6 col-12">
-            <div class="md:col-12 col-12">
+            <div class="col-12">
               <label for="start-date"
                 >Start Date <span class="text-red-700">*</span></label
               >
             </div>
-            <div class="md:col-12 col-12">
+            <div class="col-12">
               <p-calendar
                 formControlName="startDateTemp"
                 (onSelect)="convertStartDate($event)"
                 styleClass="md:col-5 col-12 m-0 p-0"
                 [showTime]="true"
               ></p-calendar>
+              <span
+                class="text-red-500 ml-2"
+                *ngIf="
+                  jobVacancyInsertReqDto.get('startDateTemp')!.invalid &&
+                  jobVacancyInsertReqDto.get('startDateTemp')!.value &&
+                  (jobVacancyInsertReqDto.get('startDateTemp')!.dirty ||
+                    jobVacancyInsertReqDto.get('startDateTemp')!.touched)
+                "
+                >Input exceeds characters</span
+              >
+              <span
+                class="text-red-500 ml-2"
+                *ngIf="
+                  jobVacancyInsertReqDto.get('startDateTemp')!.invalid &&
+                  !jobVacancyInsertReqDto.get('startDateTemp')!.value &&
+                  (jobVacancyInsertReqDto.get('startDateTemp')!.dirty ||
+                    jobVacancyInsertReqDto.get('startDateTemp')!.touched)
+                "
+                >Input can't be empty</span
+              >
             </div>
           </div>
           <div class="md:col-6 col-12">
-            <div class="md:col-12 col-12">
+            <div class="col-12">
               <label for="end-date"
                 >End Date <span class="text-red-700">*</span></label
               >
             </div>
-            <div class="md:col-12 col-12">
+            <div class="col-12">
               <p-calendar
                 formControlName="endDateTemp"
                 (onSelect)="convertEndDate($event)"
                 styleClass="md:col-5 col-12 m-0 p-0"
                 [showTime]="true"
               ></p-calendar>
+              <span
+                class="text-red-500 ml-2"
+                *ngIf="
+                  jobVacancyInsertReqDto.get('endDateTemp')!.invalid &&
+                  jobVacancyInsertReqDto.get('endDateTemp')!.value &&
+                  (jobVacancyInsertReqDto.get('endDateTemp')!.dirty ||
+                    jobVacancyInsertReqDto.get('endDateTemp')!.touched)
+                "
+                >Input exceeds characters</span
+              >
+              <span
+                class="text-red-500 ml-2"
+                *ngIf="
+                  jobVacancyInsertReqDto.get('endDateTemp')!.invalid &&
+                  !jobVacancyInsertReqDto.get('endDateTemp')!.value &&
+                  (jobVacancyInsertReqDto.get('endDateTemp')!.dirty ||
+                    jobVacancyInsertReqDto.get('endDateTemp')!.touched)
+                "
+                >Input can't be empty</span
+              >
             </div>
           </div>
         </div>
       </div>
 
-      <div class="md:col-12 col-12 p-0">
+      <div class="col-12 p-0">
         <div class="grid">
           <div class="lg:col-4 md:col-6 col-12">
-            <div class="md:col-12 col-12">
+            <div class="col-12">
               <label for="gender"
                 >Gender <span class="text-red-700">*</span></label
               >
             </div>
-            <div class="md:col-12 col-12">
+            <div class="col-12">
               <p-dropdown
                 [options]="genders"
                 optionLabel="genderName"
@@ -158,16 +247,36 @@
                 styleClass="w-full"
                 formControlName="genderId"
               ></p-dropdown>
+              <span
+                class="text-red-500 ml-2"
+                *ngIf="
+                  jobVacancyInsertReqDto.get('genderId')!.invalid &&
+                  jobVacancyInsertReqDto.get('genderId')!.value &&
+                  (jobVacancyInsertReqDto.get('genderId')!.dirty ||
+                    jobVacancyInsertReqDto.get('genderId')!.touched)
+                "
+                >Input exceeds characters</span
+              >
+              <span
+                class="text-red-500 ml-2"
+                *ngIf="
+                  jobVacancyInsertReqDto.get('genderId')!.invalid &&
+                  !jobVacancyInsertReqDto.get('genderId')!.value &&
+                  (jobVacancyInsertReqDto.get('genderId')!.dirty ||
+                    jobVacancyInsertReqDto.get('genderId')!.touched)
+                "
+                >Input can't be empty</span
+              >
             </div>
           </div>
 
           <div class="lg:col-4 md:col-6 col-12">
-            <div class="md:col-12 col-12">
+            <div class="col-12">
               <label for="ageVacancy"
                 >Age <span class="text-red-700">*</span></label
               >
             </div>
-            <div class="md:col-12 col-12">
+            <div class="col-12">
               <p-dropdown
                 [options]="ageVacancy"
                 optionLabel="ageName"
@@ -176,16 +285,36 @@
                 styleClass="w-full"
                 formControlName="ageVacancyId"
               ></p-dropdown>
+              <span
+                class="text-red-500 ml-2"
+                *ngIf="
+                  jobVacancyInsertReqDto.get('ageVacancyId')!.invalid &&
+                  jobVacancyInsertReqDto.get('ageVacancyId')!.value &&
+                  (jobVacancyInsertReqDto.get('ageVacancyId')!.dirty ||
+                    jobVacancyInsertReqDto.get('ageVacancyId')!.touched)
+                "
+                >Input exceeds characters</span
+              >
+              <span
+                class="text-red-500 ml-2"
+                *ngIf="
+                  jobVacancyInsertReqDto.get('ageVacancyId')!.invalid &&
+                  !jobVacancyInsertReqDto.get('ageVacancyId')!.value &&
+                  (jobVacancyInsertReqDto.get('ageVacancyId')!.dirty ||
+                    jobVacancyInsertReqDto.get('ageVacancyId')!.touched)
+                "
+                >Input can't be empty</span
+              >
             </div>
           </div>
 
           <div class="lg:col-4 md:col-6 col-12">
-            <div class="md:col-12 col-12">
+            <div class="col-12">
               <label for="degree"
                 >Degree <span class="text-red-700">*</span></label
               >
             </div>
-            <div class="md:col-12 col-12">
+            <div class="col-12">
               <p-dropdown
                 [options]="degrees"
                 optionLabel="degreeName"
@@ -194,14 +323,34 @@
                 styleClass="w-full"
                 formControlName="degreeId"
               ></p-dropdown>
+              <span
+                class="text-red-500 ml-2"
+                *ngIf="
+                  jobVacancyInsertReqDto.get('degreeId')!.invalid &&
+                  jobVacancyInsertReqDto.get('degreeId')!.value &&
+                  (jobVacancyInsertReqDto.get('degreeId')!.dirty ||
+                    jobVacancyInsertReqDto.get('degreeId')!.touched)
+                "
+                >Input exceeds characters</span
+              >
+              <span
+                class="text-red-500 ml-2"
+                *ngIf="
+                  jobVacancyInsertReqDto.get('degreeId')!.invalid &&
+                  !jobVacancyInsertReqDto.get('degreeId')!.value &&
+                  (jobVacancyInsertReqDto.get('degreeId')!.dirty ||
+                    jobVacancyInsertReqDto.get('degreeId')!.touched)
+                "
+                >Input can't be empty</span
+              >
             </div>
           </div>
 
           <div class="lg:col-4 md:col-6 col-12">
-            <div class="md:col-12 col-12">
+            <div class="col-12">
               <label for="city">City <span class="text-red-700">*</span></label>
             </div>
-            <div class="md:col-12 col-12">
+            <div class="col-12">
               <p-dropdown
                 [options]="cities"
                 optionLabel="cityName"
@@ -210,16 +359,36 @@
                 styleClass="w-full"
                 formControlName="cityId"
               ></p-dropdown>
+              <span
+                class="text-red-500 ml-2"
+                *ngIf="
+                  jobVacancyInsertReqDto.get('cityId')!.invalid &&
+                  jobVacancyInsertReqDto.get('cityId')!.value &&
+                  (jobVacancyInsertReqDto.get('cityId')!.dirty ||
+                    jobVacancyInsertReqDto.get('cityId')!.touched)
+                "
+                >Input exceeds characters</span
+              >
+              <span
+                class="text-red-500 ml-2"
+                *ngIf="
+                  jobVacancyInsertReqDto.get('cityId')!.invalid &&
+                  !jobVacancyInsertReqDto.get('cityId')!.value &&
+                  (jobVacancyInsertReqDto.get('cityId')!.dirty ||
+                    jobVacancyInsertReqDto.get('cityId')!.touched)
+                "
+                >Input can't be empty</span
+              >
             </div>
           </div>
 
           <div class="lg:col-4 md:col-6 col-12">
-            <div class="md:col-12 col-12">
+            <div class="col-12">
               <label for="jobType"
                 >Job Type <span class="text-red-700">*</span></label
               >
             </div>
-            <div class="md:col-12 col-12">
+            <div class="col-12">
               <p-dropdown
                 [options]="jobType"
                 optionLabel="typeName"
@@ -228,16 +397,36 @@
                 styleClass="w-full"
                 formControlName="jobTypeId"
               ></p-dropdown>
+              <span
+                class="text-red-500 ml-2"
+                *ngIf="
+                  jobVacancyInsertReqDto.get('jobTypeId')!.invalid &&
+                  jobVacancyInsertReqDto.get('jobTypeId')!.value &&
+                  (jobVacancyInsertReqDto.get('jobTypeId')!.dirty ||
+                    jobVacancyInsertReqDto.get('jobTypeId')!.touched)
+                "
+                >Input exceeds characters</span
+              >
+              <span
+                class="text-red-500 ml-2"
+                *ngIf="
+                  jobVacancyInsertReqDto.get('jobTypeId')!.invalid &&
+                  !jobVacancyInsertReqDto.get('jobTypeId')!.value &&
+                  (jobVacancyInsertReqDto.get('jobTypeId')!.dirty ||
+                    jobVacancyInsertReqDto.get('jobTypeId')!.touched)
+                "
+                >Input can't be empty</span
+              >
             </div>
           </div>
 
           <div class="lg:col-4 md:col-6 col-12">
-            <div class="md:col-12 col-12">
+            <div class="col-12">
               <label for="exp-level"
                 >Experience Level <span class="text-red-700">*</span></label
               >
             </div>
-            <div class="md:col-12 col-12">
+            <div class="col-12">
               <p-dropdown
                 [options]="expLevel"
                 optionLabel="levelName"
@@ -246,17 +435,37 @@
                 styleClass="w-full"
                 formControlName="expLevelId"
               ></p-dropdown>
+              <span
+                class="text-red-500 ml-2"
+                *ngIf="
+                  jobVacancyInsertReqDto.get('expLevelId')!.invalid &&
+                  jobVacancyInsertReqDto.get('expLevelId')!.value &&
+                  (jobVacancyInsertReqDto.get('expLevelId')!.dirty ||
+                    jobVacancyInsertReqDto.get('expLevelId')!.touched)
+                "
+                >Input exceeds characters</span
+              >
+              <span
+                class="text-red-500 ml-2"
+                *ngIf="
+                  jobVacancyInsertReqDto.get('expLevelId')!.invalid &&
+                  !jobVacancyInsertReqDto.get('expLevelId')!.value &&
+                  (jobVacancyInsertReqDto.get('expLevelId')!.dirty ||
+                    jobVacancyInsertReqDto.get('expLevelId')!.touched)
+                "
+                >Input can't be empty</span
+              >
             </div>
           </div>
         </div>
       </div>
 
-      <div class="md:col-12 col-12">
+      <div class="col-12">
         <label for="salary"
           >Salary (Rp.) <span class="text-red-700">*</span></label
         >
       </div>
-      <div class="md:col-12 col-12">
+      <div class="col-12">
         <input
           type="text"
           pInputText
@@ -288,10 +497,10 @@
         >
       </div>
 
-      <div class="md:col-12 col-12">
+      <div class="col-12">
         <label for="address">Address <span class="text-red-700">*</span></label>
       </div>
-      <div class="md:col-12 col-12">
+      <div class="col-12">
         <textarea
           id="address"
           rows="3"
@@ -322,13 +531,13 @@
         >
       </div>
 
-      <div class="md:col-12 col-12">
+      <div class="col-12">
         <label for="description"
           >Description (Requirements & Benefits)
           <span class="text-red-700">*</span></label
         >
       </div>
-      <div class="md:col-12 col-12">
+      <div class="col-12">
         <p-editor formControlName="description" [style]="{ height: '320px' }">
           <ng-template pTemplate="header">
             <span class="ql-formats">
@@ -388,7 +597,7 @@
         >
       </div>
 
-      <div class="md:col-12 col-12 mt-2">
+      <div class="col-12 mt-2">
         <app-button
           label="Create Job"
           backgroundColor="var(--PRIMARY)"

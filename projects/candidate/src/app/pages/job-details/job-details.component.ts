@@ -3,20 +3,19 @@ import { NonNullableFormBuilder } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JobVacancyResDto } from '@dto/job-vacancy/job-vacancy.res.dto';
-import { SavedJobResDto } from '@dto/saved-vacancy/saved-vacancy-res.dto';
 import { VacancyDescriptionResDto } from '@dto/vacancy-desc/vacancy-description.res.dto';
 import { AppliedVacancyService } from '@services/applied-vacancy.service';
 import { AuthService } from '@services/auth.service';
 import { JobVacancyService } from '@services/job-vacancy.service';
 import { ProfileService } from '@services/profile.service';
 import { SavedVacancyService } from '@services/saved-vacancy.service';
-import { VacancyDescriptionService } from '@services/vacancy-description.service';
 import { MessageService } from 'primeng/api';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'job-details',
   templateUrl: './job-details.component.html',
+  styleUrls: ['./job-details.style.css'],
   providers: [MessageService],
 })
 export class JobDetailsComponent implements OnInit {
@@ -72,6 +71,10 @@ export class JobDetailsComponent implements OnInit {
       this.jobVacancyService
         .detailCandidate(params['id'])
         .subscribe((result) => {
+          result.salary = Number(result.salary).toLocaleString('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+          });
           this.companyPhotoId = result.companyPhotoId;
           this.jobDetail = result;
         });
@@ -153,8 +156,4 @@ export class JobDetailsComponent implements OnInit {
       this.deleteSaved();
     }
   }
-
-  test = this.fb.group({
-    text: '',
-  });
 }

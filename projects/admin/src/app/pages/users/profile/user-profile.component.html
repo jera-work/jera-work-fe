@@ -74,34 +74,39 @@
         ></textarea>
       </div>
 
-      <div class="col-12">
-        <label for="company" class="form-label">Company</label>
-      </div>
-      <div class="col-12">
-        <input
-          [value]="profile.get('companyName')?.value"
-          type="text"
-          id="company"
-          pInputText
-          class="w-full"
-          readonly
-        />
-      </div>
+      <div class="col-12 grid">
+        <div class="col-6 grid">
+          <div class="col-12">
+            <label for="company" class="form-label">Company</label>
+          </div>
+          <div class="col-12">
+            <input
+              [value]="profile.get('companyName')?.value"
+              type="text"
+              id="company"
+              pInputText
+              class="w-full"
+              readonly
+            />
+          </div>
+        </div>
 
-      <div class="col-12">
-        <label for="role" class="form-label">Role</label>
+        <div class="col-6 grid">
+          <div class="col-12">
+            <label for="role" class="form-label">Role</label>
+          </div>
+          <div class="col-12">
+            <input
+              [value]="profile.get('roleName')?.value"
+              type="text"
+              id="role"
+              pInputText
+              class="w-full"
+              readonly
+            />
+          </div>
+        </div>
       </div>
-      <div class="col-12">
-        <input
-          [value]="profile.get('roleName')?.value"
-          type="text"
-          id="role"
-          pInputText
-          class="w-full"
-          readonly
-        />
-      </div>
-
       <div class="col-12">
         <app-button
           [loading]="loading"

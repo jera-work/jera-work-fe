@@ -25,15 +25,13 @@
         <img
           src="{{ companyPhotoId | urlAdmin }}"
           alt="company"
-          class="w-15rem h-10rem"
+          class="sm:w-15rem sm:h-10rem"
           style="object-fit: cover"
         />
         <div class="flex flex-column w-full">
           <!-- company name -->
           <h1>{{ jobDetail?.companyName }}</h1>
           <!-- company desc -->
-
-          <h3>Company Description</h3>
           <p>
             {{ jobDetail?.companyDesc }}
           </p>
@@ -41,15 +39,16 @@
       </div>
       <p-divider></p-divider>
       <!-- job title -->
+      <p>Open for you:</p>
+      <h2>{{ jobDetail?.vacancyTitle }}</h2>
       <div>
         <app-button
           label="Apply"
           backgroundColor="var(--PRIMARY)"
+          classBtn="my-2"
           (click)="showApplyModal()"
         ></app-button>
       </div>
-      <p>Open for you:</p>
-      <h2>{{ jobDetail?.vacancyTitle }}</h2>
 
       <div>
         <h4>Details:</h4>
@@ -113,8 +112,8 @@
       <p-divider></p-divider>
       <!-- job desc -->
       <div>
-        <h4>Description</h4>
-        <div [innerHTML]="jobDetail?.description"></div>
+        <h4>Description:</h4>
+        <div class="pl-3" [innerHTML]="jobDetail?.description"></div>
       </div>
 
       <p-divider></p-divider>

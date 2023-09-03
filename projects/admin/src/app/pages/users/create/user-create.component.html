@@ -76,36 +76,42 @@
         >
       </div>
 
-      <div class="col-12">
-        <label for="company" class="form-label"
-          >Company <span class="text-red-700">*</span></label
-        >
-      </div>
-      <div class="col-12">
-        <p-dropdown
-          [options]="companies"
-          optionLabel="companyName"
-          placeholder="Select company..."
-          optionValue="id"
-          styleClass="w-full"
-          formControlName="companyId"
-        ></p-dropdown>
-      </div>
+      <div class="col-12 grid">
+        <div class="col-6 grid">
+          <div class="col-12">
+            <label for="company" class="form-label"
+              >Company <span class="text-red-700">*</span></label
+            >
+          </div>
+          <div class="col-12">
+            <p-dropdown
+              [options]="companies"
+              optionLabel="companyName"
+              placeholder="Select company..."
+              optionValue="id"
+              styleClass="w-full"
+              formControlName="companyId"
+            ></p-dropdown>
+          </div>
+        </div>
 
-      <div class="col-12">
-        <label for="role" class="form-label"
-          >Role <span class="text-red-700">*</span></label
-        >
-      </div>
-      <div class="col-12">
-        <p-dropdown
-          [options]="roles"
-          optionLabel="roleName"
-          placeholder="Select role..."
-          optionValue="id"
-          styleClass="w-full"
-          formControlName="roleId"
-        ></p-dropdown>
+        <div class="col-6 grid">
+          <div class="col-12">
+            <label for="role" class="form-label"
+              >Role <span class="text-red-700">*</span></label
+            >
+          </div>
+          <div class="col-12">
+            <p-dropdown
+              [options]="roles"
+              optionLabel="roleName"
+              placeholder="Select role..."
+              optionValue="id"
+              styleClass="w-full"
+              formControlName="roleId"
+            ></p-dropdown>
+          </div>
+        </div>
       </div>
     </div>
     <div class="mt-2">

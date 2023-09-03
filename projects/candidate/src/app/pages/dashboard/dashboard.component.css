@@ -2,3 +2,42 @@
   background: var(--PRIMARY);
   border-color: var(--PRIMARY);
 }
+
+::ng-deep
+  .p-carousel
+  .p-carousel-indicators
+  .p-carousel-indicator.p-highlight
+  button {
+  background-color: var(--PRIMARY);
+}
+
+.company-img {
+  object-fit: cover;
+}
+
+.filter {
+  width: 40rem;
+  margin: auto;
+}
+
+@media only screen and (max-width: 768px) {
+  .filter {
+    width: auto;
+    margin: auto;
+    margin: 0 1rem;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .filter {
+    margin-top: 0;
+    width: 38rem;
+    position: absolute;
+    bottom: -50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    z-index: 555;
+    background-color: white;
+  }
+}

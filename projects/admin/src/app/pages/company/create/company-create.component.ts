@@ -1,9 +1,9 @@
-
 import { Component, OnInit } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { CompanyService } from '@services/company.service';
+import { MessageService } from 'primeng/api';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
@@ -12,11 +12,14 @@ import { firstValueFrom } from 'rxjs';
   styleUrls: ['company-create.styles.css'],
 })
 export class CompanyCreateComponent implements OnInit {
+  loading = false;
+
   constructor(
     private fb: NonNullableFormBuilder,
     private title: Title,
     private router: Router,
-    private companyService: CompanyService
+    private companyService: CompanyService,
+    private messageService: MessageService
   ) {}
 
   companyInsertReqDto = this.fb.group({
@@ -63,6 +66,7 @@ export class CompanyCreateComponent implements OnInit {
   }
   onSubmit() {
     if (this.companyInsertReqDto.valid) {
+      this.loading = true;
       const data = this.companyInsertReqDto.getRawValue();
 
       firstValueFrom(this.companyService.insertCompany(data))
@@ -74,8 +78,13 @@ export class CompanyCreateComponent implements OnInit {
           console.log(err);
         });
     } else {
-      console.log('Please input value!');
+      this.messageService.clear();
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Warning',
+        detail: 'Please complete the data requirements!',
+      });
+      this.loading = false;
     }
-
   }
 }

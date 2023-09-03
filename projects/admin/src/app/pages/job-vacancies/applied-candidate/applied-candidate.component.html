@@ -9,7 +9,9 @@
   </app-button>
 
   <p-card>
-    <div class="flex justify-content-between mb-4">
+    <div
+      class="flex justify-content-between md:flex-row flex-column row-gap-4 mb-4"
+    >
       <h1>{{ appliedVacancyCandidateDetails?.jobTitle }}</h1>
       <p-dropdown
         *ngIf="isHr"
@@ -31,14 +33,14 @@
     <ng-container *ngIf="appliedVacancyCandidateDetails">
       <div class="mt-4 grid">
         <div
-          class="flex justify-content-center align-items-center flex-column gap-3 col-3"
+          class="flex justify-content-center align-items-center flex-column gap-3 md:col-3 col-12"
         >
           <img [src]="photoProfile" alt="profilePhoto" class="w-10rem" />
           <p>{{ appliedVacancyCandidateDetails.candidateName }}</p>
         </div>
-        <div class="col-9 grid">
+        <div class="md:col-9 col-12 grid">
           <!-- Phone Number -->
-          <div class="col-6 grid">
+          <div class="sm:col-6 col-12 grid">
             <div class="col-12">
               <span>Phone Number</span>
             </div>
@@ -48,12 +50,13 @@
                 type="text"
                 [value]="appliedVacancyCandidateDetails.phoneNumber"
                 readonly
+                class="col-12"
               />
             </div>
           </div>
 
           <!-- Expected Salary -->
-          <div class="col-6 grid">
+          <div class="sm:col-6 col-12 grid">
             <div class="col-12">
               <span>Expected Salary</span>
             </div>
@@ -63,12 +66,13 @@
                 type="text"
                 value="Rp. {{ appliedVacancyCandidateDetails.expectedSalary }}"
                 readonly
+                class="col-12"
               />
             </div>
           </div>
 
           <!-- Nationality -->
-          <div class="col-6 grid">
+          <div class="sm:col-6 col-12 grid">
             <div class="col-12">
               <span>Nationality</span>
             </div>
@@ -78,12 +82,13 @@
                 type="text"
                 [value]="appliedVacancyCandidateDetails.nationalityName"
                 readonly
+                class="col-12"
               />
             </div>
           </div>
 
           <!-- Gender -->
-          <div class="col-6 grid">
+          <div class="sm:col-6 col-12 grid">
             <div class="col-12">
               <span>Gender</span>
             </div>
@@ -97,12 +102,13 @@
                     : 'Not Assign'
                 }}"
                 readonly
+                class="col-12"
               />
             </div>
           </div>
 
           <!-- Marital -->
-          <div class="col-6 grid">
+          <div class="sm:col-6 col-12 grid">
             <div class="col-12">
               <span>Marital</span>
             </div>
@@ -112,12 +118,13 @@
                 type="text"
                 [value]="appliedVacancyCandidateDetails.maritalName"
                 readonly
+                class="col-12"
               />
             </div>
           </div>
 
           <!-- Religion -->
-          <div class="col-6 grid">
+          <div class="sm:col-6 col-12 grid">
             <div class="col-12">
               <span>Religion</span>
             </div>
@@ -127,6 +134,7 @@
                 type="text"
                 value="{{ appliedVacancyCandidateDetails.religionName }}"
                 readonly
+                class="col-12"
               />
             </div>
           </div>
@@ -143,6 +151,7 @@
                 pInputTextarea
                 value="{{ appliedVacancyCandidateDetails.profileAddress }}"
                 readonly
+                class="col-12"
               ></textarea>
             </div>
           </div>
@@ -177,11 +186,12 @@
                       pInputTextarea
                       readOnly
                       [value]="assessmentVacancyResDto.location"
+                      class="md:col-6 col-12"
                     ></textarea>
                   </div>
 
                   <div class="col-12 grid">
-                    <div class="col-6 grid">
+                    <div class="md:col-6 col-12 grid">
                       <div class="col-12">
                         <p>Start Date:</p>
                       </div>
@@ -194,7 +204,7 @@
                         />
                       </div>
                     </div>
-                    <div class="col-6 grid">
+                    <div class="md:col-6 col-12 grid">
                       <div class="col-12">
                         <p>End Date:</p>
                       </div>
@@ -209,66 +219,64 @@
                     </div>
                   </div>
 
-                  <div class="col-12 grid">
-                    <div class="col-6 grid">
-                      <div class="col-12 flex column-gap-3">
-                        <p>Notes</p>
-                        <ng-container *ngIf="isHr">
-                          <span *ngIf="!toggleUpdateAssessment">
-                            <i
-                              class="pi pi-pencil cursor-pointer"
-                              (click)="toggleUpdateAssessment = true"
-                            ></i>
-                          </span>
-                          <span *ngIf="toggleUpdateAssessment">
-                            <i
-                              class="pi pi-times cursor-pointer"
-                              (click)="toggleUpdateAssessment = false"
-                            ></i>
-                          </span>
-                        </ng-container>
-                      </div>
-                      <div class="col-12">
-                        <textarea
-                          rows="5"
-                          cols="50"
-                          pInputTextarea
-                          [readOnly]="!toggleUpdateAssessment"
-                          formControlName="notes"
-                        ></textarea>
-                      </div>
-                      <div *ngIf="toggleUpdateAssessment" class="col-12">
-                        <app-button
-                          btnType="button"
-                          label="Update Notes"
-                          backgroundColor="var(--PRIMARY)"
-                          (click)="
-                            showDialogUpdateAssessment(
-                              assessmentVacancyResDto.assessmentId
-                            )
-                          "
-                        >
-                        </app-button>
-                      </div>
+                  <div class="col-12 flex column-gap-3">
+                    <p>Notes</p>
+                    <ng-container *ngIf="isHr">
+                      <span *ngIf="!toggleUpdateAssessment">
+                        <i
+                          class="pi pi-pencil cursor-pointer"
+                          (click)="toggleUpdateAssessment = true"
+                        ></i>
+                      </span>
+                      <span *ngIf="toggleUpdateAssessment">
+                        <i
+                          class="pi pi-times cursor-pointer"
+                          (click)="toggleUpdateAssessment = false"
+                        ></i>
+                      </span>
+                    </ng-container>
+                  </div>
+                  <div class="col-12">
+                    <textarea
+                      rows="5"
+                      cols="50"
+                      pInputTextarea
+                      [readOnly]="!toggleUpdateAssessment"
+                      formControlName="notes"
+                      class="md:col-6 col-12"
+                    ></textarea>
+                  </div>
+                  <div *ngIf="toggleUpdateAssessment" class="col-12">
+                    <app-button
+                      btnType="button"
+                      label="Update Notes"
+                      backgroundColor="var(--PRIMARY)"
+                      (click)="
+                        showDialogUpdateAssessment(
+                          assessmentVacancyResDto.assessmentId
+                        )
+                      "
+                    >
+                    </app-button>
+                  </div>
+
+                  <div class="col-6 grid">
+                    <div
+                      class="col-12"
+                      *ngIf="assessmentVacancyResDto.question"
+                    >
+                      <p>Question Score:</p>
                     </div>
-                    <div class="col-6 grid">
-                      <div
-                        class="col-12"
-                        *ngIf="assessmentVacancyResDto.question"
-                      >
-                        <p>Question Score:</p>
-                      </div>
-                      <div
-                        class="col-12"
-                        *ngIf="assessmentVacancyResDto.question"
-                      >
-                        <input
-                          pInputText
-                          type="text"
-                          [value]="assessmentVacancyResDto.score"
-                          readonly
-                        />
-                      </div>
+                    <div
+                      class="col-12"
+                      *ngIf="assessmentVacancyResDto.question"
+                    >
+                      <input
+                        pInputText
+                        type="text"
+                        [value]="assessmentVacancyResDto.score"
+                        readonly
+                      />
                     </div>
                   </div>
                 </div>
@@ -326,11 +334,12 @@
                       pInputTextarea
                       readOnly
                       [value]="interviewVacancyResDto.location"
+                      class="md:col-6 col-12"
                     ></textarea>
                   </div>
 
                   <div class="col-12 grid">
-                    <div class="col-6 grid">
+                    <div class="md:col-6 col-12 grid">
                       <div class="col-12">
                         <p>Start Date:</p>
                       </div>
@@ -344,7 +353,7 @@
                       </div>
                     </div>
 
-                    <div class="col-6 grid">
+                    <div class="md:col-6 col-12 grid">
                       <div class="col-12">
                         <p>End Date:</p>
                       </div>
@@ -383,6 +392,7 @@
                       [readOnly]="!toggleUpdateInterview"
                       pInputTextarea
                       formControlName="notes"
+                      class="md:col-6 col-12"
                     ></textarea>
                   </div>
                   <div class="col-12" *ngIf="toggleUpdateInterview">
@@ -445,7 +455,7 @@
             <ng-container *ngIf="mcuVacancyResDto">
               <div class="grid">
                 <div class="col-12 grid">
-                  <div class="col-6 grid">
+                  <div class="md:col-6 col-12 grid">
                     <div class="col-12">
                       <p>Start Date:</p>
                     </div>
@@ -458,7 +468,7 @@
                       />
                     </div>
                   </div>
-                  <div class="col-6 grid">
+                  <div class="md:col-6 col-12 grid">
                     <div class="col-12">
                       <p>End Date:</p>
                     </div>
@@ -497,11 +507,12 @@
                     pInputTextarea
                     readOnly
                     [value]="offeringResDto.location"
+                    class="md:col-6 col-12"
                   ></textarea>
                 </div>
 
                 <div class="col-12 grid">
-                  <div class="col-6 grid">
+                  <div class="md:col-6 col-12 grid">
                     <div class="col-12">
                       <p>Start Date:</p>
                     </div>
@@ -515,7 +526,7 @@
                     </div>
                   </div>
 
-                  <div class="col-6 grid">
+                  <div class="md:col-6 col-12 grid">
                     <div class="col-12">
                       <p>End Date:</p>
                     </div>
@@ -554,11 +565,11 @@
             </ng-container>
 
             <ng-container *ngIf="hiringResDto">
-              <h3>Yeay!</h3>
-              <h3>
+              <h4>Yeay!</h4>
+              <h4>
                 Candidate is officially employer since
                 {{ hiringResDto.createdAt }}
-              </h3>
+              </h4>
             </ng-container>
           </div>
         </p-tabPanel>
@@ -656,7 +667,7 @@
             <h2>Skills</h2>
             <p-divider></p-divider>
 
-            <div class="flex gap-3 w-5">
+            <div class="flex gap-3 md:w-6 flex-wrap">
               <div
                 *ngFor="
                   let s of appliedVacancyCandidateDetails.skills;
@@ -679,7 +690,7 @@
             <h2>Documents</h2>
             <p-divider></p-divider>
 
-            <div class="flex gap-3 justify-content-around w-5">
+            <div class="flex gap-3 justify-content-around flex-wrap md:w-5">
               <div *ngFor="let d of appliedVacancyCandidateDetails.documents">
                 <a
                   [href]="d.fileId | urlAdmin"
@@ -704,7 +715,7 @@
     header="Move To Assessment"
     [(visible)]="assessmentModal"
     [modal]="true"
-    [style]="{ width: '90vw', height: '90vh' }"
+    [style]="{ width: '90vw', height: '100vh' }"
     [draggable]="false"
     [resizable]="false"
   >
@@ -724,6 +735,33 @@
                   [showTime]="true"
                   formControlName="startDateTemp"
                 ></p-calendar>
+                <span
+                  class="text-red-500 ml-2"
+                  *ngIf="
+                    assessmentVacancyInsertReqDto.get('startDateTemp')!
+                      .invalid &&
+                    assessmentVacancyInsertReqDto.get('startDateTemp')!.value &&
+                    (assessmentVacancyInsertReqDto.get('startDateTemp')!
+                      .dirty ||
+                      assessmentVacancyInsertReqDto.get('startDateTemp')!
+                        .touched)
+                  "
+                  >Input exceeds characters</span
+                >
+                <span
+                  class="text-red-500 ml-2"
+                  *ngIf="
+                    assessmentVacancyInsertReqDto.get('startDateTemp')!
+                      .invalid &&
+                    !assessmentVacancyInsertReqDto.get('startDateTemp')!
+                      .value &&
+                    (assessmentVacancyInsertReqDto.get('startDateTemp')!
+                      .dirty ||
+                      assessmentVacancyInsertReqDto.get('startDateTemp')!
+                        .touched)
+                  "
+                  >Input can't be empty</span
+                >
               </div>
             </div>
             <div class="md:col-6 col-12">
@@ -735,6 +773,26 @@
                   [showTime]="true"
                   formControlName="endDateTemp"
                 ></p-calendar>
+                <span
+                  class="text-red-500 ml-2"
+                  *ngIf="
+                    assessmentVacancyInsertReqDto.get('endDateTemp')!.invalid &&
+                    assessmentVacancyInsertReqDto.get('endDateTemp')!.value &&
+                    (assessmentVacancyInsertReqDto.get('endDateTemp')!.dirty ||
+                      assessmentVacancyInsertReqDto.get('endDateTemp')!.touched)
+                  "
+                  >Input exceeds characters</span
+                >
+                <span
+                  class="text-red-500 ml-2"
+                  *ngIf="
+                    assessmentVacancyInsertReqDto.get('endDateTemp')!.invalid &&
+                    !assessmentVacancyInsertReqDto.get('endDateTemp')!.value &&
+                    (assessmentVacancyInsertReqDto.get('endDateTemp')!.dirty ||
+                      assessmentVacancyInsertReqDto.get('endDateTemp')!.touched)
+                  "
+                  >Input can't be empty</span
+                >
               </div>
             </div>
           </div>
@@ -754,26 +812,64 @@
               class="w-full"
               formControlName="assessmentLocation"
             ></textarea>
+            <span
+              class="text-red-500 ml-2"
+              *ngIf="
+                assessmentVacancyInsertReqDto.get('assessmentLocation')!
+                  .invalid &&
+                assessmentVacancyInsertReqDto.get('assessmentLocation')!
+                  .value &&
+                (assessmentVacancyInsertReqDto.get('assessmentLocation')!
+                  .dirty ||
+                  assessmentVacancyInsertReqDto.get('assessmentLocation')!
+                    .touched)
+              "
+              >Input exceeds characters</span
+            >
+            <span
+              class="text-red-500 ml-2"
+              *ngIf="
+                assessmentVacancyInsertReqDto.get('assessmentLocation')!
+                  .invalid &&
+                !assessmentVacancyInsertReqDto.get('assessmentLocation')!
+                  .value &&
+                (assessmentVacancyInsertReqDto.get('assessmentLocation')!
+                  .dirty ||
+                  assessmentVacancyInsertReqDto.get('assessmentLocation')!
+                    .touched)
+              "
+              >Input can't be empty</span
+            >
           </div>
           <div class="col-12">
             <app-button
-              label="Submit"
+              classBtn="opacity-0"
               btnType="submit"
               backgroundColor="var(--PRIMARY)"
-              [isDisabled]="assessmentVacancyInsertReqDto.valid"
-            ></app-button>
-
-            <app-button
-              label="Cancel"
-              btnType="button"
-              classBtn="p-button-outlined p-button-secondary ml-4"
-              border=""
-              (click)="assessmentModal = false"
+              [isDisabled]="!assessmentVacancyInsertReqDto.valid"
             ></app-button>
           </div>
         </div>
       </div>
+      <div class="h-20rem"></div>
     </form>
+    <ng-template pTemplate="footer">
+      <app-button
+        label="Submit"
+        btnType="submit"
+        (click)="submit(selectedProgress)"
+        backgroundColor="var(--PRIMARY)"
+        [isDisabled]="!assessmentVacancyInsertReqDto.valid"
+      ></app-button>
+
+      <app-button
+        label="Cancel"
+        btnType="button"
+        classBtn="p-button-outlined p-button-secondary ml-4"
+        border=""
+        (click)="assessmentModal = false"
+      ></app-button>
+    </ng-template>
   </p-dialog>
 
   <!-- Modal Interview -->
@@ -781,7 +877,8 @@
     header="Move To Interview"
     [(visible)]="interviewModal"
     [modal]="true"
-    [style]="{ width: '90vw', height: '95vh' }"
+    [style]="{ width: '90vw', height: '100vh' }"
+    class="h-auto"
     [draggable]="false"
     [resizable]="false"
   >
@@ -801,6 +898,30 @@
                   [showTime]="true"
                   formControlName="startDateTemp"
                 ></p-calendar>
+                <span
+                  class="text-red-500 ml-2"
+                  *ngIf="
+                    interviewVacancyInsertReqDto.get('startDateTemp')!
+                      .invalid &&
+                    interviewVacancyInsertReqDto.get('startDateTemp')!.value &&
+                    (interviewVacancyInsertReqDto.get('startDateTemp')!.dirty ||
+                      interviewVacancyInsertReqDto.get('startDateTemp')!
+                        .touched)
+                  "
+                  >Input exceeds characters</span
+                >
+                <span
+                  class="text-red-500 ml-2"
+                  *ngIf="
+                    interviewVacancyInsertReqDto.get('startDateTemp')!
+                      .invalid &&
+                    !interviewVacancyInsertReqDto.get('startDateTemp')!.value &&
+                    (interviewVacancyInsertReqDto.get('startDateTemp')!.dirty ||
+                      interviewVacancyInsertReqDto.get('startDateTemp')!
+                        .touched)
+                  "
+                  >Input can't be empty</span
+                >
               </div>
             </div>
             <div class="md:col-6 col-12">
@@ -808,10 +929,31 @@
               <div class="col-12">
                 <p-calendar
                   (onSelect)="convertEndDate($event, selectedProgress)"
-                  styleClass="md:col-10 col-12 m-0 p-0"
+                  styleClass="md:col-10 col-12 m-0 p-0 z-0"
                   [showTime]="true"
                   formControlName="endDateTemp"
+                  [touchUI]="true"
                 ></p-calendar>
+                <span
+                  class="text-red-500 ml-2"
+                  *ngIf="
+                    interviewVacancyInsertReqDto.get('endDateTemp')!.invalid &&
+                    interviewVacancyInsertReqDto.get('endDateTemp')!.value &&
+                    (interviewVacancyInsertReqDto.get('endDateTemp')!.dirty ||
+                      interviewVacancyInsertReqDto.get('endDateTemp')!.touched)
+                  "
+                  >Input exceeds characters</span
+                >
+                <span
+                  class="text-red-500 ml-2"
+                  *ngIf="
+                    interviewVacancyInsertReqDto.get('endDateTemp')!.invalid &&
+                    !interviewVacancyInsertReqDto.get('endDateTemp')!.value &&
+                    (interviewVacancyInsertReqDto.get('endDateTemp')!.dirty ||
+                      interviewVacancyInsertReqDto.get('endDateTemp')!.touched)
+                  "
+                  >Input can't be empty</span
+                >
               </div>
             </div>
           </div>
@@ -822,26 +964,61 @@
               class="w-full"
               formControlName="interviewLocation"
             ></textarea>
+            <span
+              class="text-red-500 ml-2"
+              *ngIf="
+                interviewVacancyInsertReqDto.get('interviewLocation')!
+                  .invalid &&
+                interviewVacancyInsertReqDto.get('interviewLocation')!.value &&
+                (interviewVacancyInsertReqDto.get('interviewLocation')!.dirty ||
+                  interviewVacancyInsertReqDto.get('interviewLocation')!
+                    .touched)
+              "
+              >Input exceeds characters</span
+            >
+            <span
+              class="text-red-500 ml-2"
+              *ngIf="
+                interviewVacancyInsertReqDto.get('interviewLocation')!
+                  .invalid &&
+                !interviewVacancyInsertReqDto.get('interviewLocation')!.value &&
+                (interviewVacancyInsertReqDto.get('interviewLocation')!.dirty ||
+                  interviewVacancyInsertReqDto.get('interviewLocation')!
+                    .touched)
+              "
+              >Input can't be empty</span
+            >
           </div>
           <div class="col-12">
             <app-button
               label="Submit"
               btnType="submit"
+              classBtn="opacity-0"
               backgroundColor="var(--PRIMARY)"
-              [isDisabled]="interviewVacancyInsertReqDto.valid"
-            ></app-button>
-
-            <app-button
-              label="Cancel"
-              btnType="button"
-              classBtn="p-button-outlined p-button-secondary ml-4"
-              border=""
-              (click)="interviewModal = false"
+              [isDisabled]="!interviewVacancyInsertReqDto.valid"
             ></app-button>
           </div>
         </div>
       </div>
+      <div class="h-20rem"></div>
     </form>
+    <ng-template pTemplate="footer">
+      <app-button
+        label="Submit"
+        btnType="submit"
+        (click)="submit(selectedProgress)"
+        backgroundColor="var(--PRIMARY)"
+        [isDisabled]="!interviewVacancyInsertReqDto.valid"
+      ></app-button>
+
+      <app-button
+        label="Cancel"
+        btnType="button"
+        classBtn="p-button-outlined p-button-secondary ml-4"
+        border=""
+        (click)="interviewModal = false"
+      ></app-button>
+    </ng-template>
   </p-dialog>
 
   <!-- Modal Medical Checkup -->
@@ -849,11 +1026,10 @@
     header="Move To Medical Checkup"
     [(visible)]="mcuModal"
     [modal]="true"
-    [style]="{ width: '90vw', height: '90vh' }"
+    [style]="{ width: '90vw', height: '100vh' }"
     [draggable]="false"
     [resizable]="false"
   >
-    <!-- <pre>{{ mcuVacancyInsertReqDto.value | json }}</pre> -->
     <form
       [formGroup]="mcuVacancyInsertReqDto"
       (ngSubmit)="submit(selectedProgress)"
@@ -870,6 +1046,26 @@
                   [showTime]="true"
                   formControlName="startDateTemp"
                 ></p-calendar>
+                <span
+                  class="text-red-500 ml-2"
+                  *ngIf="
+                    mcuVacancyInsertReqDto.get('startDateTemp')!.invalid &&
+                    mcuVacancyInsertReqDto.get('startDateTemp')!.value &&
+                    (mcuVacancyInsertReqDto.get('startDateTemp')!.dirty ||
+                      mcuVacancyInsertReqDto.get('startDateTemp')!.touched)
+                  "
+                  >Input exceeds characters</span
+                >
+                <span
+                  class="text-red-500 ml-2"
+                  *ngIf="
+                    mcuVacancyInsertReqDto.get('startDateTemp')!.invalid &&
+                    !mcuVacancyInsertReqDto.get('startDateTemp')!.value &&
+                    (mcuVacancyInsertReqDto.get('startDateTemp')!.dirty ||
+                      mcuVacancyInsertReqDto.get('startDateTemp')!.touched)
+                  "
+                  >Input can't be empty</span
+                >
               </div>
             </div>
             <div class="md:col-6 col-12">
@@ -881,28 +1077,59 @@
                   [showTime]="true"
                   formControlName="endDateTemp"
                 ></p-calendar>
+                <span
+                  class="text-red-500 ml-2"
+                  *ngIf="
+                    mcuVacancyInsertReqDto.get('endDateTemp')!.invalid &&
+                    mcuVacancyInsertReqDto.get('endDateTemp')!.value &&
+                    (mcuVacancyInsertReqDto.get('endDateTemp')!.dirty ||
+                      mcuVacancyInsertReqDto.get('endDateTemp')!.touched)
+                  "
+                  >Input exceeds characters</span
+                >
+                <span
+                  class="text-red-500 ml-2"
+                  *ngIf="
+                    mcuVacancyInsertReqDto.get('endDateTemp')!.invalid &&
+                    !mcuVacancyInsertReqDto.get('endDateTemp')!.value &&
+                    (mcuVacancyInsertReqDto.get('endDateTemp')!.dirty ||
+                      mcuVacancyInsertReqDto.get('endDateTemp')!.touched)
+                  "
+                  >Input can't be empty</span
+                >
               </div>
             </div>
             <div class="col-12">
               <app-button
                 label="Submit"
                 btnType="submit"
+                classBtn="opacity-0"
                 backgroundColor="var(--PRIMARY)"
                 [isDisabled]="!mcuVacancyInsertReqDto.valid"
-              ></app-button>
-
-              <app-button
-                label="Cancel"
-                btnType="button"
-                classBtn="p-button-outlined p-button-secondary ml-4"
-                border=""
-                (click)="mcuModal = false"
               ></app-button>
             </div>
           </div>
         </div>
       </div>
+      <div class="h-20rem"></div>
     </form>
+    <ng-template pTemplate="footer">
+      <app-button
+        label="Submit"
+        btnType="submit"
+        (click)="submit(selectedProgress)"
+        backgroundColor="var(--PRIMARY)"
+        [isDisabled]="!mcuVacancyInsertReqDto.valid"
+      ></app-button>
+
+      <app-button
+        label="Cancel"
+        btnType="button"
+        classBtn="p-button-outlined p-button-secondary ml-4"
+        border=""
+        (click)="mcuModal = false"
+      ></app-button>
+    </ng-template>
   </p-dialog>
 
   <!-- Modal Offering -->
@@ -1016,21 +1243,31 @@
             <app-button
               label="Submit"
               btnType="submit"
+              classBtn="opacity-0"
               backgroundColor="var(--PRIMARY)"
               [isDisabled]="!offeringInsertReqDto.valid"
-            ></app-button>
-
-            <app-button
-              label="Cancel"
-              btnType="button"
-              classBtn="p-button-outlined p-button-secondary ml-4"
-              border=""
-              (click)="offeringModal = false"
             ></app-button>
           </div>
         </div>
       </div>
     </form>
+    <ng-template pTemplate="footer">
+      <app-button
+        label="Submit"
+        btnType="submit"
+        (click)="submit(selectedProgress)"
+        backgroundColor="var(--PRIMARY)"
+        [isDisabled]="!offeringInsertReqDto.valid"
+      ></app-button>
+
+      <app-button
+        label="Cancel"
+        btnType="button"
+        classBtn="p-button-outlined p-button-secondary ml-4"
+        border=""
+        (click)="offeringModal = false"
+      ></app-button>
+    </ng-template>
   </p-dialog>
 
   <!-- Modal Hired -->

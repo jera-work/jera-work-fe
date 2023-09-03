@@ -10,21 +10,21 @@ import { CardModule } from 'primeng/card';
     <div (click)="clickBtn()">
       <p-card
         class="w-full relative cursor-pointer"
-        styleClass="hover:shadow-4 h-17rem"
+        styleClass="hover:shadow-4 min-h-17rem"
       >
         <span class="absolute top-0 right-0 mr-3 mt-3">
           <i class="pi pi-clock"></i>
           {{ time | timeAgo }}
         </span>
-        <div class="flex flex-row ">
-          <div class="align-content-center mr-4">
+        <div class="flex sm:flex-row flex-column">
+          <div class="flex justify-content-center align-items-center mr-4">
             <img
               src="{{ companyImg | urlAdmin }}"
-              class="w-10rem sm:w-13rem "
+              class="w-10rem h-8rem cover"
               alt="company"
             />
           </div>
-          <div class="flex flex-column w-6 flex-1">
+          <div class="flex flex-column w-6 flex-1  justify-content-between">
             <!-- Job Vacancy Title -->
             <div class="flex flex-column row-gap-2 mb-1">
               <span class="text-2xl font-bold">{{ title }}</span>

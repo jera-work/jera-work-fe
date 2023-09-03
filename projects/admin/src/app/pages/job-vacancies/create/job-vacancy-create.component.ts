@@ -14,6 +14,7 @@ import { JobVacancyService } from '@services/job-vacancy.service';
 import { MasterDataService } from '@services/master-data.service';
 import { UsersService } from '@services/users.service';
 import { firstValueFrom } from 'rxjs';
+import { MessageService } from 'primeng/api';
 
 const convertUTCToLocalDateTime = function (date: Date) {
   const newDate = new Date(
@@ -51,7 +52,8 @@ export class JobVacancyCreateComponent implements OnInit {
     private jobService: JobVacancyService,
     private userService: UsersService,
     private masterDataService: MasterDataService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {}
 
   jobVacancyInsertReqDto = this.fb.group({
@@ -100,12 +102,10 @@ export class JobVacancyCreateComponent implements OnInit {
     });
 
     firstValueFrom(this.masterDataService.getExperiencesLevel()).then((res) => {
-      console.log(res);
       this.expLevel = res;
     });
 
     firstValueFrom(this.masterDataService.getAgeVacancies()).then((res) => {
-      console.log(res);
       this.ageVacancy = res;
     });
   }
@@ -142,7 +142,13 @@ export class JobVacancyCreateComponent implements OnInit {
           console.log(err);
         });
     } else {
-      console.log('Please input value!');
+      this.messageService.clear();
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Warning',
+        detail: 'Please complete the data requirements!',
+      });
+      this.loading = false;
     }
   }
 }

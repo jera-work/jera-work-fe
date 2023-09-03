@@ -27,7 +27,7 @@ export class JobVacancyDetailComponent implements OnInit {
   previewModalVisibility = false;
   appliedVacancies: AppliedVacancyAdminResDto[] = [];
   appliedProgress: AppliedProgressResDto[] = [];
-  appliedVacancyPerProgressQty: AppliedVacancyByProgressAdminResDto[] = []
+  appliedVacancyPerProgressQty: AppliedVacancyByProgressAdminResDto[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -35,14 +35,14 @@ export class JobVacancyDetailComponent implements OnInit {
     private appliedVacancyService: AppliedVacancyService,
     private masterDataService: MasterDataService,
     private router: Router
-  ) { }
+  ) {}
 
   getData() {
     firstValueFrom(this.activatedRoute.paramMap).then((res) => {
       const id = res.get('id');
       if (id) {
         this.jobVacancyId = id;
-        this.getProgressQty()
+        this.getProgressQty();
       }
 
       if (this.jobVacancyId) {
@@ -50,7 +50,6 @@ export class JobVacancyDetailComponent implements OnInit {
           this.jobVacancyService.getJobDetails(this.jobVacancyId)
         ).then((res) => {
           this.jobVacancy = res;
-          console.log(res);
         });
 
         firstValueFrom(
@@ -66,12 +65,12 @@ export class JobVacancyDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.getData();
-    this.getProgressName()
+    this.getProgressName();
   }
 
   showPreviewModal(dialog: Dialog) {
-    this.previewModalVisibility = true
-    dialog.maximized = true
+    this.previewModalVisibility = true;
+    dialog.maximized = true;
   }
   getProgressColor(progress: string): string {
     if (progress === ProgressStatus.APPLICATION) {
@@ -101,28 +100,35 @@ export class JobVacancyDetailComponent implements OnInit {
   }
 
   getProgressName() {
-    firstValueFrom(this.masterDataService.getProgressStatus()).then(res => {
-      this.appliedProgress = res
-    })
-  }
-  
-  getAppliedByProgressId(progressId: string) {
-    firstValueFrom(this.appliedVacancyService.getAppliedVacancyByProgress(progressId, this.jobVacancyId!)).then(res => {
-      this.appliedVacancies = res
-    })
+    firstValueFrom(this.masterDataService.getProgressStatus()).then((res) => {
+      this.appliedProgress = res;
+    });
   }
 
-  toEdit(){
-    this.router.navigateByUrl(`/job-vacancies/${this.jobVacancyId}/edit`)
+  getAppliedByProgressId(progressId: string) {
+    firstValueFrom(
+      this.appliedVacancyService.getAppliedVacancyByProgress(
+        progressId,
+        this.jobVacancyId!
+      )
+    ).then((res) => {
+      this.appliedVacancies = res;
+    });
+  }
+
+  toEdit() {
+    this.router.navigateByUrl(`/job-vacancies/${this.jobVacancyId}/edit`);
   }
 
   getProgressQty() {
-    firstValueFrom(this.appliedVacancyService.getProgressCount(this.jobVacancyId!)).then(res => {
-      this.appliedVacancyPerProgressQty = res
-    })
+    firstValueFrom(
+      this.appliedVacancyService.getProgressCount(this.jobVacancyId!)
+    ).then((res) => {
+      this.appliedVacancyPerProgressQty = res;
+    });
   }
 
   getAvailableStatus(): boolean {
-    return this.jobVacancy.statusName === AvailableStatusName.OPN
+    return this.jobVacancy.statusName === AvailableStatusName.OPN;
   }
 }

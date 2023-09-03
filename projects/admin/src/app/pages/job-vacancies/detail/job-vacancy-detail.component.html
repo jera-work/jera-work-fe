@@ -1,28 +1,39 @@
 <!-- buat hr -->
-<div class="min-h-screen w-10 m-auto mt-5">
+<div class="min-h-screen w-10 m-auto">
   <app-button
     label="Back"
     routerLink="/job-vacancies"
     icon="pi pi-angle-left"
     border=""
-    classBtn="p-button-outlined p-button-secondary mb-3"
+    classBtn="p-button-outlined p-button-secondary my-3"
   >
   </app-button>
   <div class="px-6 shadow-3 py-2 relative">
-    <div
-      class="flex flex-column md:flex-row justify-content-between my-2 h-2rem"
-    >
-      <h3>Job Vacancy Detail</h3>
-      <div class="flex gap-2">
-
-        <p-button routerLink="/questions/{{jobVacancy.vacancyId}}" icon="pi pi-plus" label="Add Questions" styleClass="m-auto p-button-success"></p-button>
-        <p-button (onClick)="toEdit()" icon="pi pi-pencil" label="Edit" styleClass="m-auto p-button-warning"></p-button>
-        <p-button icon="pi pi-eye" label="Preview" styleClass="m-auto"
-          (onClick)="showPreviewModal(previewModal)"></p-button>
-      </div>
-    </div>
-    <p-divider></p-divider>
     <ng-container *ngIf="jobVacancy">
+      <div class="flex flex-column md:flex-row justify-content-between my-2">
+        <h3>Job Vacancy Detail</h3>
+        <div class="flex gap-2 flex-wrap">
+          <p-button
+            routerLink="/questions/{{ jobVacancy.vacancyId }}"
+            icon="pi pi-plus"
+            label="Add Questions"
+            styleClass="m-auto p-button-success"
+          ></p-button>
+          <p-button
+            (onClick)="toEdit()"
+            icon="pi pi-pencil"
+            label="Edit"
+            styleClass="m-auto p-button-warning"
+          ></p-button>
+          <p-button
+            icon="pi pi-eye"
+            label="Preview"
+            styleClass="m-auto"
+            (onClick)="showPreviewModal(previewModal)"
+          ></p-button>
+        </div>
+      </div>
+      <p-divider></p-divider>
       <h1 class="text-center">{{ jobVacancy.vacancyTitle }}</h1>
       <h3 class="text-center text-green-500" *ngIf="getAvailableStatus()">
         Opened at : {{ jobVacancy.startDate }}
@@ -32,8 +43,8 @@
       </h3>
       <p-divider></p-divider>
       <div class="flex flex-column gap-3">
-        <h3 class="mt-2">Filter by progress</h3>
-        <div class="flex gap-3 justify-content-center">
+        <h3 class="mt-2">Filter by progress:</h3>
+        <div class="flex gap-3 justify-content-center flex-wrap my-3">
           <p-button
             *ngFor="let qty of appliedVacancyPerProgressQty"
             [style]="{
@@ -60,6 +71,7 @@
     >
       <ng-template pTemplate="caption">
         <div class="flex flex-column md:flex-row md:align-items-center">
+          <h3>Applied Candidate</h3>
           <div class="p-input-icon-left m-0 md:ml-auto flex mt-3 md:mt-0">
             <i class="pi pi-search"></i>
             <input
