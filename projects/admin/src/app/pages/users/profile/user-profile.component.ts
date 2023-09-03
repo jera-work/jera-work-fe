@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AuthService } from '@services/auth.service';
 import { ProfileService } from '@services/profile.service';
@@ -18,7 +19,8 @@ export class UserProfileComponent implements OnInit {
     private fb: NonNullableFormBuilder,
     private router: Router,
     private profileService: ProfileService,
-    private authService: AuthService
+    private authService: AuthService,
+    private title: Title
   ) {}
 
   profile = this.fb.group({
@@ -34,8 +36,9 @@ export class UserProfileComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    this.title.setTitle('Profile');
+
     firstValueFrom(this.profileService.getProfileAdmin()).then((res) => {
-      console.log(res);
       if (res.photoId) {
         this.imgUrl = res.photoId;
       }

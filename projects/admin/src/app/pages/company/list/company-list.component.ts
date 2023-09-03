@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { CompanyResDto } from '@dto/company/company.res.dto';
 import { CompanyService } from '@services/company.service';
 import { Table } from 'primeng/table';
@@ -14,9 +15,11 @@ export class CompanyListComponent implements OnInit {
 
   companies: CompanyResDto[] = [];
 
-  constructor(private companyService: CompanyService) {}
+  constructor(private companyService: CompanyService, private title: Title) {}
 
   ngOnInit(): void {
+    this.title.setTitle('Company List');
+
     this.loading = false;
 
     firstValueFrom(this.companyService.getAllCompany())

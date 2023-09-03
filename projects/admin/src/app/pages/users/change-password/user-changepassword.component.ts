@@ -40,14 +40,12 @@ export class UserChangePasswordComponent implements OnInit {
 
       firstValueFrom(this.userService.changePassword(data))
         .then((res) => {
-          console.log(res);
           this.loading = false;
           localStorage.clear();
           this.router.navigateByUrl('/login');
         })
         .catch((err) => {
           this.loading = false;
-          console.log(err);
         });
     } else {
       console.log('Please input value!');

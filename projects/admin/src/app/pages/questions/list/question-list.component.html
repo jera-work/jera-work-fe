@@ -23,7 +23,7 @@
       </div>
       <div class="md:col-12 flex flex-wrap">
         <div *ngFor="let o of q.options; let j = index" class="ml-3 mt-1">
-          <p class="{{ o.isCorrect ? 'text-red-500' : 'text-black-500' }}">
+          <p class="{{ o.isCorrect ? 'text-green-500' : 'text-black-500' }}">
             {{ j + 1 }}. {{ o.optionLabel }}
           </p>
         </div>

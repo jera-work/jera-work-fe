@@ -38,7 +38,6 @@ export class AppliedJobDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.title.setTitle('Job Title');
     this.getAppliedProgress();
 
     this.getProgress();
@@ -86,6 +85,9 @@ export class AppliedJobDetailsComponent implements OnInit {
             this.jobVacancyService.detailCandidate(result.jobVacancyId)
           ).then((result) => {
             this.jobVacancy = result;
+            this.title.setTitle(
+              `${result.companyName} - ${result.vacancyTitle}`
+            );
           });
           firstValueFrom(
             this.progressAppliedJobService.getOffering(

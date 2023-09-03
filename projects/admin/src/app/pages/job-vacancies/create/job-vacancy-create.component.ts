@@ -15,6 +15,7 @@ import { MasterDataService } from '@services/master-data.service';
 import { UsersService } from '@services/users.service';
 import { firstValueFrom } from 'rxjs';
 import { MessageService } from 'primeng/api';
+import { Title } from '@angular/platform-browser';
 
 const convertUTCToLocalDateTime = function (date: Date) {
   const newDate = new Date(
@@ -53,7 +54,8 @@ export class JobVacancyCreateComponent implements OnInit {
     private userService: UsersService,
     private masterDataService: MasterDataService,
     private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private title: Title
   ) {}
 
   jobVacancyInsertReqDto = this.fb.group({
@@ -111,6 +113,7 @@ export class JobVacancyCreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.title.setTitle('Create Job Vacancy');
     this.getData();
   }
 
