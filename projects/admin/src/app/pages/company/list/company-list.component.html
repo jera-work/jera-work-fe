@@ -14,11 +14,8 @@
     [value]="companies"
     dataKey="id"
     [rows]="5"
-    [showCurrentPageReport]="true"
-    [rowsPerPageOptions]="[10, 25, 50]"
     [paginator]="true"
     [loading]="loading"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     [globalFilterFields]="[
       'companyCode',
       'companyName',
@@ -50,7 +47,7 @@
         <th scope="col" class="md:col-1">No.</th>
         <th pSortableColumn="companyCode" scope="col" class="md:col-1">
           <div class="flex align-items-center">
-            Code
+            Image
             <p-sortIcon field="companyCode"></p-sortIcon>
           </div>
         </th>
@@ -83,7 +80,14 @@
     <ng-template pTemplate="body" let-company let-i="rowIndex">
       <tr>
         <td>{{ i + 1 }}</td>
-        <td>{{ company.companyCode }}</td>
+        <td>
+          <img
+            [src]="company.photoId | urlAdmin"
+            [alt]="company.companyName"
+            width="120"
+            class="shadow-3 p-2"
+          />
+        </td>
         <td>{{ company.companyName }}</td>
         <td>{{ company.address }}</td>
         <td>{{ company.description }}</td>

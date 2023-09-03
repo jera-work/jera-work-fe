@@ -5,7 +5,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppliedVacancyCandidateDetailsResDto } from '@dto/applied-vacancy/applied-vacancy-candidate-details.res.dto';
 import { ProgressStatusResDto } from '@dto/data-master/progress-status.res.dto';
 import { AppliedVacancyService } from '@services/applied-vacancy.service';
@@ -93,7 +93,8 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
     private fb: NonNullableFormBuilder,
     private cd: ChangeDetectorRef,
     private progressAppliedJobVacancyService: ProgressAppliedJobVacancyService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -114,7 +115,6 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
           this.appliedVacancyService.getAppliedCandidateDetails(appliedId)
         ).then((res) => {
           this.appliedVacancyCandidateDetails = res;
-          console.log(this.appliedVacancyCandidateDetails);
           if (res.appliedProgressCode === ProgressStatus.APPLICATION) {
             this.activeIndex = 0;
           } else if (res.appliedProgressCode === ProgressStatus.ASSESSMENT) {
@@ -341,7 +341,6 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
   }
 
   onCompanyColorInputChange(event: any) {
-    console.log(event);
     this.offeringInsertReqDto.patchValue({
       companyNameFontColor: event.target.value,
     });
@@ -354,7 +353,6 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
   }
 
   onCompanyDescColorInputChange(event: any) {
-    console.log(event);
     this.offeringInsertReqDto.patchValue({
       companyDescriptionFontColor: event.target.value,
     });
@@ -516,7 +514,6 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
       firstValueFrom(
         this.progressAppliedJobVacancyService.updateNotesAssessment(data)
       ).then((res) => {
-        console.log(res);
         this.getProgressStatusData();
         this.updateNotesAssessmentReqDto.reset();
         this.updateModalAssessment = false;
@@ -540,7 +537,6 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
       firstValueFrom(
         this.progressAppliedJobVacancyService.updateNotesInterviewUser(data)
       ).then((res) => {
-        console.log(res);
         this.getProgressStatusData();
         this.updateNotesInterviewReqDto.reset();
         this.updateModalInterview = false;
@@ -558,19 +554,20 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
       if (appliedId) {
         firstValueFrom(this.appliedVacancyService.getAppliedStatus()).then(
           (res) => {
-            rejectId = res.find((s) => (s.statusCode = Status.RJC))?.id;
-            console.log(rejectId);
+            rejectId = res.find((s) => s.statusCode === Status.RJC)?.id;
+
             this.rejectStatusReqDto.patchValue({
               appliedVacancyId: appliedId,
               appliedStatusId: rejectId,
             });
             if (this.rejectStatusReqDto.valid) {
               const data = this.rejectStatusReqDto.getRawValue();
-              console.log(data);
               firstValueFrom(
                 this.appliedVacancyService.changeAppliedStatus(data)
               ).then((res) => {
-                console.log(res);
+                this.router.navigateByUrl(
+                  `/job-vacancies/${this.jobVacancyId}`
+                );
               });
             }
           }
@@ -631,7 +628,6 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
             insertProgressData
           )
         ).then((res) => {
-          console.log(res);
           this.getProgressStatusData();
         });
         firstValueFrom(
@@ -640,7 +636,6 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
           )
         ).then((res) => {
           this.getLatestProgressStatus();
-          console.log(res);
         });
         this.interviewModal = false;
       } else {
@@ -660,7 +655,6 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
         firstValueFrom(
           this.progressAppliedJobVacancyService.insertMcu(insertProgressData)
         ).then((res) => {
-          console.log(res);
           this.getProgressStatusData();
         });
         firstValueFrom(
@@ -668,7 +662,6 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
             updateStatus
           )
         ).then((res) => {
-          console.log(res);
           this.getLatestProgressStatus();
         });
         this.mcuModal = false;
@@ -690,7 +683,6 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
             insertProgressData
           )
         ).then((res) => {
-          console.log(res);
           this.getProgressStatusData();
         });
 
@@ -700,7 +692,6 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
           )
         ).then((res) => {
           this.getLatestProgressStatus();
-          // console.log(res);
         });
         this.offeringModal = false;
       } else {
@@ -721,7 +712,6 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
           this.progressAppliedJobVacancyService.insertHiring(insertProgressData)
         ).then((res) => {
           this.getProgressStatusData();
-          console.log(res);
         });
 
         firstValueFrom(
@@ -730,7 +720,6 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
           )
         ).then((res) => {
           this.getLatestProgressStatus();
-          console.log(res);
         });
         this.hiredModal = false;
       }
