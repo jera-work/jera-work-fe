@@ -12,8 +12,9 @@
         [model]="jobStatus"
         [readonly]="false"
         [activeIndex]="activeIndex"
-        (activeIndexChange)="onActiveIndexChange($event)"
+        styleClass="mb-7"
       ></p-steps>
+      <!-- (activeIndexChange)="onActiveIndexChange($event)" -->
 
       <ng-container *ngIf="jobStatus.length">
         <h1 class="text-center">{{ jobStatus[activeIndex].label }}</h1>
@@ -56,7 +57,7 @@
       >
         <img
           src="/assets/assesment.svg"
-          class="w-20rem fadeinleft animation-duration-1000 w-20rem"
+          class="w-20rem fadeinleft animation-duration-1000 md:w-20rem sm:w-15rem w-13rem"
           alt="interview-assesment"
         />
         <div class="fadeinright animation-duration-1000 w-20rem">
@@ -75,7 +76,7 @@
       >
         <img
           src="/assets/interview.svg"
-          class="w-20rem fadeinleft animation-duration-1000 w-20rem"
+          class="w-20rem fadeinleft animation-duration-1000 md:w-20rem sm:w-15rem w-13rem"
           alt="interview-assesment"
         />
         <div class="fadeinright animation-duration-1000 w-20rem">
@@ -94,7 +95,7 @@
       >
         <img
           src="/assets/mcu.svg"
-          class="w-20rem fadeinleft animation-duration-1000 w-20rem"
+          class="fadeinleft animation-duration-1000 md:w-20rem sm:w-15rem w-13rem"
           alt="interview-assesment"
         />
         <div class="fadeinright animation-duration-1000 w-20rem">
@@ -114,7 +115,7 @@
       >
         <img
           src="/assets/offering.svg"
-          class="w-24rem fadeinleft animation-duration-1000 w-20rem"
+          class="w-24rem fadeinleft animation-duration-1000 md:w-20rem sm:w-15rem w-13rem"
           alt="interview-assesment"
         />
         <div class="fadeinright animation-duration-1000 w-20rem">
@@ -152,7 +153,7 @@
       >
         <img
           src="/assets/hired.svg"
-          class="fadeinleft animation-duration-1000 w-18rem"
+          class="fadeinleft animation-duration-1000 md:w-18rem sm:w-15rem w-13rem"
           alt="interview-assesment"
         />
         <div class="fadeinright animation-duration-1000">

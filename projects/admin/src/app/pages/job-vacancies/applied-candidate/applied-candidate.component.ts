@@ -561,7 +561,6 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
             insertProgressData
           )
         ).then((res) => {
-          console.log(res);
           this.getProgressStatusData();
         });
         firstValueFrom(
@@ -570,7 +569,6 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
           )
         ).then((res) => {
           this.getLatestProgressStatus();
-          console.log(res);
         });
         this.assessmentModal = false;
       }

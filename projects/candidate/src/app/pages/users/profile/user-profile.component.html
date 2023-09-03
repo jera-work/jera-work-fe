@@ -10,71 +10,76 @@
       <!-- email -->
       <div class="my-3 grid align-items-center gy-md-4 container gy-3">
         <!-- Photo Profile -->
-        <div class="col-12 col-md-3 align-items-start d-flex flex-column">
-          <img [src]="imgUrl | urlCandidate" alt="profile" class="w-1" />
-        </div>
-        <div class="col-12 col-md-9">
-          <p-fileUpload
-            mode="basic"
-            chooseLabel="Choose Photo"
-            #file
-            (onSelect)="fileUpload($event, file)"
-          ></p-fileUpload>
-        </div>
+        <div class="grid col-12">
+          <div class="grid col-6">
+            <div class="col-12 align-items-start d-flex flex-column">
+              <img [src]="imgUrl | urlCandidate" alt="profile" class="w-4" />
+            </div>
+            <div class="col-12">
+              <p-fileUpload
+                mode="basic"
+                chooseLabel="Choose Photo"
+                #file
+                (onSelect)="fileUpload($event, file)"
+              ></p-fileUpload>
+            </div>
+          </div>
 
-        <!-- Username -->
-        <div class="col-12 col-md-3">
-          <label for="email-address" class="form-label">Username</label>
-        </div>
-        <div class="col-12 col-md-9">
-          <!-- disabled -->
-          <input
-            type="email"
-            [value]="profile.get('candidateEmail')?.value"
-            pInputText
-            class="form-control col-12"
-            id="email-address"
-            readonly
-          />
-        </div>
+          <div class="grid col-6">
+            <!-- Username -->
+            <div class="col-12 col-md-3">
+              <label for="email-address" class="form-label">Username</label>
+            </div>
+            <div class="col-12 col-md-9">
+              <!-- disabled -->
+              <input
+                type="email"
+                [value]="profile.get('candidateEmail')?.value"
+                pInputText
+                class="form-control col-12"
+                id="email-address"
+                readonly
+              />
+            </div>
 
-        <!-- fullname -->
-        <div class="col-12 col-md-3">
-          <label for="fullname" class="form-label"
-            >User Fullname <span class="text-red-600">*</span></label
-          >
+            <!-- fullname -->
+            <div class="col-12 col-md-3">
+              <label for="fullname" class="form-label"
+                >User Fullname <span class="text-red-600">*</span></label
+              >
+            </div>
+            <div class="col-12 col-md-9">
+              <input
+                type="text"
+                class="form-control col-12"
+                id="fullname"
+                pInputText
+                required
+                formControlName="profileName"
+              />
+              <span
+                class="text-red-500 ml-2"
+                *ngIf="
+                  profile.get('profileName')!.invalid &&
+                  profile.get('profileName')!.value &&
+                  (profile.get('profileName')!.dirty ||
+                    profile.get('profileName')!.touched)
+                "
+                >Input exceeds characters</span
+              >
+              <span
+                class="text-red-500 ml-2"
+                *ngIf="
+                  profile.get('profileName')!.invalid &&
+                  !profile.get('profileName')!.value &&
+                  (profile.get('profileName')!.dirty ||
+                    profile.get('profileName')!.touched)
+                "
+                >Input can't be empty</span
+              >
+            </div>
+          </div>
         </div>
-        <div class="col-12 col-md-9">
-          <input
-            type="text"
-            class="form-control col-12"
-            id="fullname"
-            pInputText
-            required
-            formControlName="profileName"
-          />
-          <span
-            class="text-red-500 ml-2"
-            *ngIf="
-              profile.get('profileName')!.invalid &&
-              profile.get('profileName')!.value &&
-              (profile.get('profileName')!.dirty ||
-                profile.get('profileName')!.touched)
-            "
-            >Input exceeds characters</span
-          >
-          <span
-            class="text-red-500 ml-2"
-            *ngIf="
-              profile.get('profileName')!.invalid &&
-              !profile.get('profileName')!.value &&
-              (profile.get('profileName')!.dirty ||
-                profile.get('profileName')!.touched)
-            "
-            >Input can't be empty</span
-          >
-        </div>
-
         <!-- Address -->
         <div class="col-12 col-md-3">
           <label for="address" class="form-label">Address </label>
@@ -452,7 +457,7 @@
           (clickChange)="showModalDocuments()"
         ></app-button>
       </div>
-      <div class="flex gap-4 justify-content-start w-5 mt-3 flex-wrap">
+      <div class="flex gap-4 justify-content-start md:w-5 mt-3 flex-wrap">
         <div *ngFor="let d of documentsData">
           <a
             [href]="d.fileId | urlCandidate"
@@ -527,7 +532,7 @@
 
       <div class="grid col-12">
         <!-- Start Year -->
-        <div class="grid col-6">
+        <div class="grid md:col-6 col-12">
           <div class="col-12">
             <label for="startYear" class="form-label"
               >Start Year <span class="text-red-600">*</span></label
@@ -566,7 +571,7 @@
         </div>
 
         <!-- End Year -->
-        <div class="grid col-6">
+        <div class="grid md:col-6 col-12">
           <div class="col-12">
             <label for="endYear" class="form-label"
               >End Year <span class="text-red-600">*</span></label
@@ -642,127 +647,124 @@
         >
       </div>
 
-      <!-- Degree -->
-      <div class="col-12 col-md-3">
-        <label for="degree" class="form-label"
-          >Degree <span class="text-red-600">*</span></label
-        >
-      </div>
-      <div class="col-12 col-md-9">
-        <p-dropdown
-          [options]="degree"
-          id="degree"
-          optionLabel="degreeName"
-          optionValue="id"
-          [required]="true"
-          placeholder="Select Degree"
-          formControlName="degreeId"
-        ></p-dropdown>
-        <span
-          class="text-red-500 ml-2"
-          *ngIf="
-            education.get('degreeId')!.invalid &&
-            education.get('degreeId')!.value &&
-            (education.get('degreeId')!.dirty ||
-              education.get('degreeId')!.touched)
-          "
-          >Input exceeds characters</span
-        >
-        <span
-          class="text-red-500 ml-2"
-          *ngIf="
-            education.get('degreeId')!.invalid &&
-            !education.get('degreeId')!.value &&
-            (education.get('degreeId')!.dirty ||
-              education.get('degreeId')!.touched)
-          "
-          >Input can't be empty</span
-        >
-      </div>
+      <div class="col-12 grid">
+        <div class="grid md:col-4 col-12">
+          <!-- Degree -->
+          <div class="col-12">
+            <label for="degree" class="form-label"
+              >Degree <span class="text-red-600">*</span></label
+            >
+          </div>
+          <div class="col-12">
+            <p-dropdown
+              [options]="degree"
+              id="degree"
+              optionLabel="degreeName"
+              optionValue="id"
+              [required]="true"
+              placeholder="Select Degree"
+              formControlName="degreeId"
+            ></p-dropdown>
+            <span
+              class="text-red-500 ml-2"
+              *ngIf="
+                education.get('degreeId')!.invalid &&
+                education.get('degreeId')!.value &&
+                (education.get('degreeId')!.dirty ||
+                  education.get('degreeId')!.touched)
+              "
+              >Input exceeds characters</span
+            >
+            <span
+              class="text-red-500 ml-2"
+              *ngIf="
+                education.get('degreeId')!.invalid &&
+                !education.get('degreeId')!.value &&
+                (education.get('degreeId')!.dirty ||
+                  education.get('degreeId')!.touched)
+              "
+              >Input can't be empty</span
+            >
+          </div>
+        </div>
+        <!-- Majors -->
+        <div class="grid md:col-4 col-12">
+          <div class="col-12">
+            <label for="majors" class="form-label"
+              >Majors <span class="text-red-600">*</span></label
+            >
+          </div>
+          <div class="col-12">
+            <p-dropdown
+              [options]="majors"
+              id="majors"
+              optionLabel="majorName"
+              optionValue="id"
+              [required]="true"
+              placeholder="Select Major"
+              formControlName="majorId"
+            ></p-dropdown>
+            <span
+              class="text-red-500 ml-2"
+              *ngIf="
+                education.get('majorId')!.invalid &&
+                education.get('majorId')!.value &&
+                (education.get('majorId')!.dirty ||
+                  education.get('majorId')!.touched)
+              "
+              >Input exceeds characters</span
+            >
+            <span
+              class="text-red-500 ml-2"
+              *ngIf="
+                education.get('majorId')!.invalid &&
+                !education.get('majorId')!.value &&
+                (education.get('majorId')!.dirty ||
+                  education.get('majorId')!.touched)
+              "
+              >Input can't be empty</span
+            >
+          </div>
+        </div>
 
-      <!-- Majors -->
-      <div class="col-12 col-md-3">
-        <label for="majors" class="form-label"
-          >Majors <span class="text-red-600">*</span></label
-        >
+        <!-- GPA -->
+        <div class="md:col-4 col-12 grid">
+          <div class="col-12 col-md-3">
+            <label for="gpa" class="form-label"
+              >GPA <span class="text-red-600">*</span></label
+            >
+          </div>
+          <div class="col-12 col-md-9">
+            <input
+              type="number"
+              formControlName="gpa"
+              pInputText
+              required
+              class="form-control col-12"
+              id="gpa"
+            />
+            <span
+              class="text-red-500 ml-2"
+              *ngIf="
+                education.get('gpa')!.invalid &&
+                education.get('gpa')!.value &&
+                (education.get('gpa')!.dirty || education.get('gpa')!.touched)
+              "
+              >Input exceeds characters</span
+            >
+            <span
+              class="text-red-500 ml-2"
+              *ngIf="
+                education.get('gpa')!.invalid &&
+                !education.get('gpa')!.value &&
+                (education.get('gpa')!.dirty || education.get('gpa')!.touched)
+              "
+              >Input can't be empty</span
+            >
+          </div>
+        </div>
       </div>
-      <div class="col-12 col-md-9">
-        <p-dropdown
-          [options]="majors"
-          id="majors"
-          optionLabel="majorName"
-          optionValue="id"
-          [required]="true"
-          placeholder="Select Major"
-          formControlName="majorId"
-        ></p-dropdown>
-        <span
-          class="text-red-500 ml-2"
-          *ngIf="
-            education.get('majorId')!.invalid &&
-            education.get('majorId')!.value &&
-            (education.get('majorId')!.dirty ||
-              education.get('majorId')!.touched)
-          "
-          >Input exceeds characters</span
-        >
-        <span
-          class="text-red-500 ml-2"
-          *ngIf="
-            education.get('majorId')!.invalid &&
-            !education.get('majorId')!.value &&
-            (education.get('majorId')!.dirty ||
-              education.get('majorId')!.touched)
-          "
-          >Input can't be empty</span
-        >
-      </div>
-
-      <!-- GPA -->
-      <div class="col-12 col-md-3">
-        <label for="gpa" class="form-label"
-          >GPA <span class="text-red-600">*</span></label
-        >
-      </div>
-      <div class="col-12 col-md-9">
-        <input
-          type="number"
-          formControlName="gpa"
-          pInputText
-          required
-          class="form-control col-12"
-          id="gpa"
-        />
-        <span
-          class="text-red-500 ml-2"
-          *ngIf="
-            education.get('gpa')!.invalid &&
-            education.get('gpa')!.value &&
-            (education.get('gpa')!.dirty || education.get('gpa')!.touched)
-          "
-          >Input exceeds characters</span
-        >
-        <span
-          class="text-red-500 ml-2"
-          *ngIf="
-            education.get('gpa')!.invalid &&
-            !education.get('gpa')!.value &&
-            (education.get('gpa')!.dirty || education.get('gpa')!.touched)
-          "
-          >Input can't be empty</span
-        >
-      </div>
-
-      <div class="mt-4">
-        <app-button
-          type="submit"
-          label="Save"
-          classBtn="p-button-success"
-          (click)="onCreateEducation()"
-          [isDisabled]="!education.valid"
-          [loading]="loadingCreateEducations"
-        >
-        </app-button>
+      <div class="mt-4 col-12 flex flex-row-reverse">
         <app-button
           type="button"
           classBtn="p-button-outlined p-button-secondary ml-4"
@@ -770,6 +772,15 @@
           data-bs-dismiss="modal"
           label="Cancel"
           (click)="onCloseEducation()"
+        >
+        </app-button>
+        <app-button
+          type="submit"
+          label="Submit"
+          classBtn="p-button-success"
+          (click)="onCreateEducation()"
+          [isDisabled]="!education.valid"
+          [loading]="loadingCreateEducations"
         >
         </app-button>
       </div>
@@ -867,7 +878,7 @@
       <!-- Dates -->
       <div class="grid col-12">
         <!-- Start Year -->
-        <div class="grid col-6">
+        <div class="grid md:col-6 col-12">
           <div class="col-12">
             <label for="startDate" class="form-label"
               >Start Date <span class="text-red-600">*</span></label
@@ -907,7 +918,7 @@
         </div>
 
         <!-- End Year -->
-        <div class="grid col-6">
+        <div class="grid md:col-6 col-12">
           <div class="col-12">
             <label for="endDate" class="form-label"
               >End Date <span class="text-red-600">*</span></label
@@ -1058,17 +1069,7 @@
       </div>
     </form>
 
-    <div class="mt-4">
-      <app-button
-        type="submit"
-        data-bs-dismiss="modal"
-        label="Save"
-        classBtn="p-button-success"
-        (click)="onCreateExperience()"
-        [loading]="loadingCreateExperiences"
-        [isDisabled]="!experience.valid"
-      >
-      </app-button>
+    <div class="mt-4 col-12 flex flex-row-reverse">
       <app-button
         type="button"
         classBtn="p-button-outlined p-button-secondary ml-4"
@@ -1076,6 +1077,16 @@
         data-bs-dismiss="modal"
         label="Cancel"
         (click)="onCloseExperience()"
+      >
+      </app-button>
+      <app-button
+        type="submit"
+        data-bs-dismiss="modal"
+        label="Submit"
+        classBtn="p-button-success"
+        (click)="onCreateExperience()"
+        [loading]="loadingCreateExperiences"
+        [isDisabled]="!experience.valid"
       >
       </app-button>
     </div>
@@ -1131,28 +1142,28 @@
         >
       </div>
     </form>
-    <div class="mt-4">
-      <app-button
-        type="submit"
-        data-bs-dismiss="modal"
-        label="Save"
-        classBtn="p-button-success"
-        (click)="onCreateSkill()"
-        [loading]="loadingCreateSkill"
-        [isDisabled]="!skillsReqDto.valid"
-      >
-      </app-button>
-      <app-button
-        type="button"
-        classBtn="p-button-outlined p-button-secondary ml-4"
-        border=""
-        data-bs-dismiss="modal"
-        label="Cancel"
-        (click)="onCloseSkill()"
-      >
-      </app-button>
-    </div>
   </div>
+  <ng-template pTemplate="footer">
+    <app-button
+      type="submit"
+      data-bs-dismiss="modal"
+      label="Submit"
+      classBtn="p-button-success"
+      (click)="onCreateSkill()"
+      [loading]="loadingCreateSkill"
+      [isDisabled]="!skillsReqDto.valid"
+    >
+    </app-button>
+    <app-button
+      type="button"
+      classBtn="p-button-outlined p-button-secondary ml-2"
+      border=""
+      data-bs-dismiss="modal"
+      label="Cancel"
+      (click)="onCloseSkill()"
+    >
+    </app-button>
+  </ng-template>
 </p-dialog>
 
 <!-- Modal for Add Documents -->
@@ -1191,17 +1202,7 @@
         </div>
       </div>
     </form>
-    <div class="mt-4">
-      <app-button
-        type="submit"
-        data-bs-dismiss="modal"
-        label="Save"
-        classBtn="p-button-success"
-        (click)="onInsertDocuments()"
-        [isDisabled]="!documents.valid"
-        [loading]="loadingCreateDocuments"
-      >
-      </app-button>
+    <div class="mt-4 col-12 flex flex-row-reverse">
       <app-button
         type="button"
         classBtn="p-button-outlined p-button-secondary ml-4"
@@ -1209,6 +1210,16 @@
         data-bs-dismiss="modal"
         label="Cancel"
         (click)="modalDocuments = false"
+      >
+      </app-button>
+      <app-button
+        type="submit"
+        data-bs-dismiss="modal"
+        label="Submit"
+        classBtn="p-button-success"
+        (click)="onInsertDocuments()"
+        [isDisabled]="!documents.valid"
+        [loading]="loadingCreateDocuments"
       >
       </app-button>
     </div>

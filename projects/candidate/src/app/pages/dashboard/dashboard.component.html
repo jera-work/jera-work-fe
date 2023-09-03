@@ -1,63 +1,67 @@
-<img src="/assets/banner.svg" alt="application" class="w-full" />
-<div class="min-h-screen md:mx-8 sm:mx-6 mx-2">
-  <!-- Filter Jobs -->
-
-  <div class="flex justify-content-center align-items-center my-4">
+<div class="relative">
+  <img src="/assets/banner.svg" alt="application" class="w-full" />
+  <div class="filter">
     <form
-      class="shadow-2 hover:shadow-3 p-2 border-round-xl"
+      class="shadow-2 hover:shadow-3 border-round-xl p-5 mt-3 lg:mt-0"
       [formGroup]="searchReq"
       (ngSubmit)="searchJobs()"
     >
-      <div class="flex sm:flex-row flex-column gap-4 mb-3">
-        <input
-          type="text"
-          pInputText
-          placeholder="Find your job type"
-          formControlName="vacancyTitle"
-        />
-        <p-dropdown
-          [options]="cities"
-          optionValue="id"
-          optionLabel="cityName"
-          placeholder="Location"
-          formControlName="cityId"
-        ></p-dropdown>
-        <p-dropdown
-          [options]="degrees"
-          optionValue="id"
-          optionLabel="degreeName"
-          placeholder="Degree"
-          formControlName="degreeId"
-        ></p-dropdown>
-      </div>
-      <div class="flex gap-3">
-        <!-- Job Type -->
-        <div
-          class="flex align-items-center field-checkbox"
-          *ngFor="let jt of jobTypes"
-        >
-          <p-radioButton
-            formControlName="jobTypeId"
-            [inputId]="jt.typeName"
-            [value]="jt.id"
-          ></p-radioButton>
-          <label [for]="jt.typeName" class="ml-2">{{ jt.typeName }}</label>
+      <div class="grid">
+        <div class="flex flex-wrap gap-3">
+          <div>
+            <input
+              type="text"
+              pInputText
+              placeholder="Find your job type"
+              formControlName="vacancyTitle"
+            />
+          </div>
+          <div>
+            <p-dropdown
+              [options]="cities"
+              optionValue="id"
+              optionLabel="cityName"
+              placeholder="Location"
+              formControlName="cityId"
+            ></p-dropdown>
+          </div>
+          <div>
+            <p-dropdown
+              [options]="degrees"
+              optionValue="id"
+              optionLabel="degreeName"
+              placeholder="Degree"
+              formControlName="degreeId"
+            ></p-dropdown>
+          </div>
         </div>
-
-        <div>
-          <app-button
-            btnType="submit"
-            label="Find Jobs"
-            backgroundColor="var(--PRIMARY)"
-          ></app-button>
+        <div class="flex flex-wrap gap-3 mt-2">
+          <!-- Job Type -->
+          <div class="field-checkbox" *ngFor="let jt of jobTypes">
+            <p-radioButton
+              formControlName="jobTypeId"
+              [inputId]="jt.typeName"
+              [value]="jt.id"
+            ></p-radioButton>
+            <label [for]="jt.typeName" class="ml-2">{{ jt.typeName }}</label>
+          </div>
+          <div>
+            <app-button
+              btnType="submit"
+              label="Find Jobs"
+              backgroundColor="var(--PRIMARY)"
+            ></app-button>
+          </div>
         </div>
       </div>
     </form>
   </div>
+</div>
 
-  <h1 class="text-center my-2">Latest Job</h1>
+<div class="min-h-screen w-10 m-auto">
   <!-- Carousel Job List -->
-  <div class="md:mx-2">
+  <div class="md:mx-2 mt-8">
+    <h1 class="text-center">Latest Job</h1>
     <p-carousel
       [value]="latestJobs"
       [numVisible]="3"
@@ -69,7 +73,7 @@
       <ng-template let-job pTemplate="item" let-i="rowIndex">
         <div
           routerLink="/job/{{ job.id }}"
-          class="border-3 p-4 surface-border border-round m-2 flex flex-column shadow-2 hover:shadow-5 cursor-pointer w-auto h-18rem"
+          class="border-3 p-4 surface-border border-round m-2 flex flex-column justify-content-between shadow-2 hover:shadow-5 cursor-pointer w-auto"
         >
           <div class="mb-3">
             <div>
@@ -77,7 +81,7 @@
                 {{ job.vacancyTitle }}
               </span>
             </div>
-            <div class="flex justify-content-center w-5rem">
+            <div class="flex justify-content-center h-9rem company-img">
               <img
                 src="{{ job.companyPhotoId | urlAdmin }}"
                 alt="companyLogo"
@@ -86,32 +90,34 @@
             </div>
           </div>
 
-          <!-- Company Name -->
           <div>
-            <span class="white-space-nowrap">
-              <i class="pi pi-building"> </i>
-              {{ job.companyName }}
-            </span>
-          </div>
-          <p-divider></p-divider>
-          <!-- Job Req -->
-          <div class="flex justify-content-between gap-2">
-            <span class="white-space-nowrap">
-              <i class="pi pi-user"></i>
-              {{ job.degreeName }}
-            </span>
-            <span class="white-space-nowrap">
-              <i class="pi pi-briefcase"></i>
-              {{ job.jobTypeName }}
-            </span>
-          </div>
-          <p-divider></p-divider>
-          <!-- Location -->
-          <div>
-            <span class="white-space-nowrap">
-              <i class="pi pi-map-marker"></i>
-              {{ job.cityName }}
-            </span>
+            <!-- Company Name -->
+            <div class="border-bottom-1">
+              <span>
+                <i class="pi pi-building"> </i>
+                {{ job.companyName }}
+              </span>
+            </div>
+
+            <!-- Job Req -->
+            <div class="flex justify-content-between gap-2 border-bottom-1">
+              <span>
+                <i class="pi pi-user"></i>
+                {{ job.degreeName }}
+              </span>
+              <span>
+                <i class="pi pi-briefcase"></i>
+                {{ job.jobTypeName }}
+              </span>
+            </div>
+
+            <!-- Location -->
+            <div class="border-bottom-1">
+              <span>
+                <i class="pi pi-map-marker"></i>
+                {{ job.cityName }}
+              </span>
+            </div>
           </div>
         </div>
       </ng-template>

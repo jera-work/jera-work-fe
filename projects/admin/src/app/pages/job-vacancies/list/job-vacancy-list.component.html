@@ -1,128 +1,125 @@
-<div class="min-h-screen">
-  <div class="mx-7 mt-5">
-    <app-button
-      *ngIf="isAdmin"
-      routerLink="/job-vacancies/create"
-      icon="pi pi-plus"
-      label="Add Job"
-      backgroundColor="var(--PRIMARY)"
-    ></app-button>
-    <p-table
-      #dt1
-      [value]="jobVacancies"
-      dataKey="id"
-      [rows]="5"
-      [showCurrentPageReport]="true"
-      [rowsPerPageOptions]="[10, 25, 50]"
-      [paginator]="true"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-      [globalFilterFields]="[
-        'vacancyCode',
-        'vacancyTitle',
-        'picUserName',
-        'picHrName',
-        'startDate',
-        'endDate',
-        'expLevelName',
-        'availableStatusName',
-        'companyName'
-      ]"
-      selectionMode="single"
-      styleClass="p-datatable-gridlines p-datatable-striped mt-2"
-    >
-      <ng-template pTemplate="caption">
-        <div
-          class="flex flex-column md:flex-row lg:flex-row md:align-items-center"
-        >
-          <h2>Job Vacancy List</h2>
-          <div class="m-0 md:ml-auto flex flex-column">
-            <div class="p-input-icon-left mt-2">
-              <i class="pi pi-search"></i>
-              <input
-                class="w-full"
-                pInputText
-                type="text"
-                (input)="
-                  dt1.filterGlobal($any($event.target).value, 'contains')
-                "
-                placeholder="Search"
-              />
-            </div>
+<div class="min-h-screen w-10 m-auto">
+  <app-button
+    *ngIf="isAdmin"
+    routerLink="/job-vacancies/create"
+    icon="pi pi-plus"
+    label="Add Job"
+    backgroundColor="var(--PRIMARY)"
+    classBtn="my-3"
+  ></app-button>
+  <p-table
+    #dt1
+    [value]="jobVacancies"
+    dataKey="id"
+    [rows]="5"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [globalFilterFields]="[
+      'vacancyCode',
+      'vacancyTitle',
+      'picUserName',
+      'picHrName',
+      'startDate',
+      'endDate',
+      'expLevelName',
+      'availableStatusName',
+      'companyName'
+    ]"
+    selectionMode="single"
+    styleClass="p-datatable-gridlines p-datatable-striped"
+  >
+    <ng-template pTemplate="caption">
+      <div
+        class="flex flex-column md:flex-row lg:flex-row md:align-items-center"
+      >
+        <h2>Job Vacancy List</h2>
+        <div class="m-0 md:ml-auto flex flex-column">
+          <div class="p-input-icon-left mt-2">
+            <i class="pi pi-search"></i>
+            <input
+              class="w-full"
+              pInputText
+              type="text"
+              (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
+              placeholder="Search"
+            />
           </div>
         </div>
-      </ng-template>
+      </div>
+    </ng-template>
 
-      <ng-template pTemplate="header">
-        <tr>
-          <th scope="col" class="md:col-1">No.</th>
-          <th pSortableColumn="vacancyTitle" scope="col" class="md:col-1">
-            <div class="flex align-items-center">
-              Title
-              <p-sortIcon field="vacancyTitle"> </p-sortIcon>
-            </div>
-          </th>
-          <th pSortableColumn="hrName" scope="col" class="md:col-2">
-            <div class="flex align-items-center">
-              PIC HR
-              <p-sortIcon field="hrName"></p-sortIcon>
-            </div>
-          </th>
-          <th pSortableColumn="userName" scope="col" class="md:col-2">
-            <div class="flex align-items-center">
-              PIC User
-              <p-sortIcon field="userName"></p-sortIcon>
-            </div>
-          </th>
-          <th pSortableColumn="startDate" scope="col" class="md:col-2">
-            <div class="flex align-items-center">
-              Start Date
-              <p-sortIcon field="startDate"></p-sortIcon>
-            </div>
-          </th>
-          <th pSortableColumn="endDate" scope="col" class="md:col-2">
-            <div class="flex align-items-center">
-              End Date
-              <p-sortIcon field="endDate"> </p-sortIcon>
-            </div>
-          </th>
-          <th pSortableColumn="levelName" scope="col" class="md:col-2">
-            <div class="flex align-items-center">
-              Experience Level
-              <p-sortIcon field="levelName"></p-sortIcon>
-            </div>
-          </th>
-          <th pSortableColumn="statusName" scope="col" class="md:col-1">
-            <div class="flex align-items-center">
-              Available Status
-              <p-sortIcon field="statusName"> </p-sortIcon>
-            </div>
-          </th>
-          <th pSortableColumn="companyName" scope="col" class="md:col-1">
-            <div class="flex align-items-center">
-              Company Name
-              <p-sortIcon field="companyName"></p-sortIcon>
-            </div>
-          </th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-jobVacancy let-i="rowIndex">
-        <tr routerLink="{{ jobVacancy.vacancyId }}" style="cursor: pointer">
-          <td>{{ i + 1 }}</td>
-          <td>{{ jobVacancy.vacancyTitle }}</td>
-          <td>{{ jobVacancy.hrName }}</td>
-          <td>{{ jobVacancy.userName }}</td>
-          <td>{{ jobVacancy.startDate }}</td>
-          <td>{{ jobVacancy.endDate }}</td>
-          <td>{{ jobVacancy.levelName }}</td>
-          <td>
-            <p-tag
-              [value]="jobVacancy.statusName"
-              [severity]="getStatusSeverity(jobVacancy.statusName)"
-            ></p-tag>
-          </td>
-          <td>{{ jobVacancy.companyName }}</td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" class="md:col-1">No.</th>
+        <th pSortableColumn="vacancyTitle" scope="col" class="md:col-1">
+          <div class="flex align-items-center">
+            Title
+            <p-sortIcon field="vacancyTitle"> </p-sortIcon>
+          </div>
+        </th>
+        <th pSortableColumn="hrName" scope="col" class="md:col-2">
+          <div class="flex align-items-center">
+            PIC HR
+            <p-sortIcon field="hrName"></p-sortIcon>
+          </div>
+        </th>
+        <th pSortableColumn="userName" scope="col" class="md:col-2">
+          <div class="flex align-items-center">
+            PIC User
+            <p-sortIcon field="userName"></p-sortIcon>
+          </div>
+        </th>
+        <th pSortableColumn="startDate" scope="col" class="md:col-2">
+          <div class="flex align-items-center">
+            Start Date
+            <p-sortIcon field="startDate"></p-sortIcon>
+          </div>
+        </th>
+        <th pSortableColumn="endDate" scope="col" class="md:col-2">
+          <div class="flex align-items-center">
+            End Date
+            <p-sortIcon field="endDate"> </p-sortIcon>
+          </div>
+        </th>
+        <th pSortableColumn="levelName" scope="col" class="md:col-2">
+          <div class="flex align-items-center">
+            Experience Level
+            <p-sortIcon field="levelName"></p-sortIcon>
+          </div>
+        </th>
+        <th pSortableColumn="statusName" scope="col" class="md:col-1">
+          <div class="flex align-items-center">
+            Available Status
+            <p-sortIcon field="statusName"> </p-sortIcon>
+          </div>
+        </th>
+        <th pSortableColumn="companyName" scope="col" class="md:col-1">
+          <div class="flex align-items-center">
+            Company Name
+            <p-sortIcon field="companyName"></p-sortIcon>
+          </div>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-jobVacancy let-i="rowIndex">
+      <tr routerLink="{{ jobVacancy.vacancyId }}" style="cursor: pointer">
+        <td>{{ i + 1 }}</td>
+        <td>{{ jobVacancy.vacancyTitle }}</td>
+        <td>{{ jobVacancy.hrName }}</td>
+        <td>{{ jobVacancy.userName }}</td>
+        <td>{{ jobVacancy.startDate }}</td>
+        <td>{{ jobVacancy.endDate }}</td>
+        <td>{{ jobVacancy.levelName }}</td>
+        <td>
+          <p-tag
+            [value]="jobVacancy.statusName"
+            [severity]="getStatusSeverity(jobVacancy.statusName)"
+          ></p-tag>
+        </td>
+        <td>{{ jobVacancy.companyName }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>

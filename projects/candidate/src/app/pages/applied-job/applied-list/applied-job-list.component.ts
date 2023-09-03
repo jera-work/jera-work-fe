@@ -44,8 +44,13 @@ export class AppliedJobListComponent implements OnInit {
         endIndex
       )
     ).then((result) => {
-      
-      this.appliedVacancyWithLimit = result;
+      this.appliedVacancyWithLimit = result.map((res) => {
+        res.salary = Number(res.salary).toLocaleString('id-ID', {
+          style: 'currency',
+          currency: 'IDR',
+        });
+        return res;
+      });
     });
   }
   onPageChange(event: any) {

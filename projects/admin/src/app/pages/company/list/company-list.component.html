@@ -1,92 +1,94 @@
 <!-- buat super admin -->
 
-<app-button
-  routerLink="/companies/create"
-  icon="pi pi-plus"
-  label="Add Company"
-  backgroundColor="var(--PRIMARY)"
-  styleClass="m-auto ml-2"
-></app-button>
+<div class="w-10 m-auto min-h-screen">
+  <app-button
+    routerLink="/companies/create"
+    icon="pi pi-plus"
+    label="Add Company"
+    backgroundColor="var(--PRIMARY)"
+    classBtn="my-3"
+  ></app-button>
 
-<p-table
-  #dt1
-  [value]="companies"
-  dataKey="id"
-  [rows]="5"
-  [showCurrentPageReport]="true"
-  [rowsPerPageOptions]="[10, 25, 50]"
-  [paginator]="true"
-  [loading]="loading"
-  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-  [globalFilterFields]="[
-    'companyCode',
-    'companyName',
-    'address',
-    'description',
-    'phoneNumber'
-  ]"
-  selectionMode="single"
-  [tableStyle]="{ 'min-width': '50rem' }"
-  styleClass="p-datatable-gridlines p-datatable-striped mx-7 mt-5"
->
-  <ng-template pTemplate="caption">
-    <div class="flex flex-column md:flex-row md:align-items-center">
-      <span>Company List</span>
-      <div class="p-input-icon-left m-0 md:ml-auto flex mt-3 md:mt-0">
-        <i class="pi pi-search"></i>
-        <input
-          class="w-full"
-          pInputText
-          type="text"
-          (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
-          placeholder="Search"
-        />
+  <p-table
+    #dt1
+    [value]="companies"
+    dataKey="id"
+    [rows]="5"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [paginator]="true"
+    [loading]="loading"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [globalFilterFields]="[
+      'companyCode',
+      'companyName',
+      'address',
+      'description',
+      'phoneNumber'
+    ]"
+    selectionMode="single"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    styleClass="p-datatable-gridlines p-datatable-striped"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex flex-column md:flex-row md:align-items-center">
+        <span>Company List</span>
+        <div class="p-input-icon-left m-0 md:ml-auto flex mt-3 md:mt-0">
+          <i class="pi pi-search"></i>
+          <input
+            class="w-full"
+            pInputText
+            type="text"
+            (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
+            placeholder="Search"
+          />
+        </div>
       </div>
-    </div>
-  </ng-template>
-  <ng-template pTemplate="header">
-    <tr>
-      <th scope="col" class="md:col-1">No.</th>
-      <th pSortableColumn="companyCode" scope="col" class="md:col-1">
-        <div class="flex align-items-center">
-          Code
-          <p-sortIcon field="companyCode"></p-sortIcon>
-        </div>
-      </th>
-      <th pSortableColumn="companyName" scope="col" class="md:col-1">
-        <div class="flex align-items-center">
-          Name
-          <p-sortIcon field="companyName"></p-sortIcon>
-        </div>
-      </th>
-      <th pSortableColumn="address" scope="col" class="md:col-4">
-        <div class="flex align-items-center">
-          Address
-          <p-sortIcon field="address"></p-sortIcon>
-        </div>
-      </th>
-      <th pSortableColumn="description" scope="col" class="md:col-3">
-        <div class="flex align-items-center">
-          Description
-          <p-sortIcon field="description"> </p-sortIcon>
-        </div>
-      </th>
-      <th pSortableColumn="phoneNumber" scope="col" class="md:col-1">
-        <div class="flex align-items-center">
-          Phone
-          <p-sortIcon field="phoneNumber"> </p-sortIcon>
-        </div>
-      </th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-company let-i="rowIndex">
-    <tr>
-      <td>{{ i + 1 }}</td>
-      <td>{{ company.companyCode }}</td>
-      <td>{{ company.companyName }}</td>
-      <td>{{ company.address }}</td>
-      <td>{{ company.description }}</td>
-      <td>{{ company.phoneNumber }}</td>
-    </tr>
-  </ng-template>
-</p-table>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" class="md:col-1">No.</th>
+        <th pSortableColumn="companyCode" scope="col" class="md:col-1">
+          <div class="flex align-items-center">
+            Code
+            <p-sortIcon field="companyCode"></p-sortIcon>
+          </div>
+        </th>
+        <th pSortableColumn="companyName" scope="col" class="md:col-1">
+          <div class="flex align-items-center">
+            Name
+            <p-sortIcon field="companyName"></p-sortIcon>
+          </div>
+        </th>
+        <th pSortableColumn="address" scope="col" class="md:col-4">
+          <div class="flex align-items-center">
+            Address
+            <p-sortIcon field="address"></p-sortIcon>
+          </div>
+        </th>
+        <th pSortableColumn="description" scope="col" class="md:col-3">
+          <div class="flex align-items-center">
+            Description
+            <p-sortIcon field="description"> </p-sortIcon>
+          </div>
+        </th>
+        <th pSortableColumn="phoneNumber" scope="col" class="md:col-1">
+          <div class="flex align-items-center">
+            Phone
+            <p-sortIcon field="phoneNumber"> </p-sortIcon>
+          </div>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-company let-i="rowIndex">
+      <tr>
+        <td>{{ i + 1 }}</td>
+        <td>{{ company.companyCode }}</td>
+        <td>{{ company.companyName }}</td>
+        <td>{{ company.address }}</td>
+        <td>{{ company.description }}</td>
+        <td>{{ company.phoneNumber }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

@@ -3,6 +3,10 @@
   color: white;
 }
 
+::ng-deep .p-steps ul {
+  flex-wrap: wrap;
+}
+
 ::ng-deep .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
   color: var(--PRIMARY);
   border-color: var(--PRIMARY);
@@ -26,4 +30,13 @@ a:hover {
 
 ::ng-deep .p-selectbutton .p-button.p-highlight {
   background-color: var(--PRIMARY);
+}
+
+ng::deep
+  p-component-overlay
+  p-datepicker-mask
+  p-datepicker-mask-scrollblocker
+  p-component-overlay-enter
+  ng-tns-c185893541-6 {
+  z-index: 0 !important;
 }
