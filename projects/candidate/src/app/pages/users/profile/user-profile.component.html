@@ -45,7 +45,7 @@
             <!-- fullname -->
             <div class="col-12 col-md-3">
               <label for="fullname" class="form-label"
-                >User Fullname <span class="text-red-600">*</span></label
+                >Fullname <span class="text-red-600">*</span></label
               >
             </div>
             <div class="col-12 col-md-9">
@@ -308,7 +308,7 @@
                 border=""
                 pTooltip="Delete Education"
                 [showDelay]="1000"
-                (clickChange)="showDeleteFuncEducation()"
+                (clickChange)="showDeleteFuncEducation(e.id)"
               >
               </app-button>
             </div>
@@ -386,7 +386,7 @@
                 icon="pi pi-times"
                 classBtn="p-button-rounded p-button-danger p-button-outlined"
                 border=""
-                (clickChange)="showDeleteFuncExperience()"
+                (clickChange)="showDeleteFuncExperience(e.id)"
               >
               </app-button>
             </div>
@@ -1240,6 +1240,7 @@
       label="Yes"
       classBtn="p-button-outlined p-button-danger"
       border=""
+      (click)="deleteEducation()"
     >
     </app-button>
 
@@ -1294,6 +1295,7 @@
       label="Yes"
       classBtn="p-button-outlined p-button-danger"
       border=""
+      (click)="deleteExperience()"
     >
     </app-button>
 

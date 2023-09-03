@@ -22,6 +22,7 @@ import { OfferingResDto } from '@dto/progress-job-vacancy/offering.res.dto';
 import { HiringVacancyResDto } from '@dto/progress-job-vacancy/hiring-vacancy.res.dto';
 import { AuthService } from '@services/auth.service';
 import { ADMIN_API } from '@constant/api.constant';
+import { Status } from '@constant/status.constant';
 
 const convertUTCToLocalDateTime = function (date: Date) {
   const newDate = new Date(
@@ -54,6 +55,7 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
   mcuModal = false;
   offeringModal = false;
   hiredModal = false;
+  rejectModal = false;
   updateModalAssessment = false;
   updateModalInterview = false;
   isHr = false;
@@ -69,6 +71,11 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
 
   toggleUpdateAssessment = false;
   toggleUpdateInterview = false;
+
+  rejectStatusReqDto = this.fb.group({
+    appliedVacancyId: ['', Validators.required],
+    appliedStatusId: ['', Validators.required],
+  });
 
   // progress data res
   assessmentVacancyResDto?: AssessmentVacancyResDto;
@@ -140,6 +147,13 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
           this.appliedVacancyService.getAppliedCandidateDetails(appliedId)
         ).then((res) => {
           const loginData = this.authService.getProfile();
+          res.expectedSalary = Number(res.expectedSalary).toLocaleString(
+            'id-ID',
+            {
+              style: 'currency',
+              currency: 'IDR',
+            }
+          );
           this.appliedVacancyCandidateDetails = res;
 
           if (res.photoId) {
@@ -535,6 +549,34 @@ export class AppliedCandidateComponent implements OnInit, AfterViewChecked {
     } else {
       console.log('Please input');
     }
+  }
+
+  showDialogReject() {
+    let rejectId;
+    firstValueFrom(this.activatedRoute.paramMap).then((res) => {
+      const appliedId = res.get('appliedId');
+      if (appliedId) {
+        firstValueFrom(this.appliedVacancyService.getAppliedStatus()).then(
+          (res) => {
+            rejectId = res.find((s) => (s.statusCode = Status.RJC))?.id;
+            console.log(rejectId);
+            this.rejectStatusReqDto.patchValue({
+              appliedVacancyId: appliedId,
+              appliedStatusId: rejectId,
+            });
+            if (this.rejectStatusReqDto.valid) {
+              const data = this.rejectStatusReqDto.getRawValue();
+              console.log(data);
+              firstValueFrom(
+                this.appliedVacancyService.changeAppliedStatus(data)
+              ).then((res) => {
+                console.log(res);
+              });
+            }
+          }
+        );
+      }
+    });
   }
 
   submit(event: any) {

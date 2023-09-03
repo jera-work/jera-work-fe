@@ -15,7 +15,6 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.title.setTitle('Jera Work Admin');
     const profile = this.authService.getProfile();
-    console.log(profile);
     if (profile) {
       this.profileName = profile.profileName;
     }

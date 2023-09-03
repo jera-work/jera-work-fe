@@ -1,7 +1,3 @@
-<pre>
-  {{ profile.value | json }}
-</pre>
-
 <div class="flex flex-column justify-content-center align-items-center">
   <p class="text-5xl">Profile</p>
   <form [formGroup]="profile" (ngSubmit)="onUpdate()" class="w-10">

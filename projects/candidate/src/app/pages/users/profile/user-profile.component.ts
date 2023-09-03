@@ -169,6 +169,10 @@ export class UserProfileComponent
     educations: this.fb.array([]),
   });
 
+  deleteEducationReqDto = this.fb.group({
+    educationId: ['', Validators.required],
+  });
+
   get educations() {
     return this.educationsReqDto.get('educations') as FormArray;
   }
@@ -197,6 +201,10 @@ export class UserProfileComponent
 
   experiencesReqDto = this.fb.group({
     experiences: this.fb.array([]),
+  });
+
+  deleteExperienceReqDto = this.fb.group({
+    experienceId: ['', Validators.required],
   });
 
   get experiences() {
@@ -474,9 +482,23 @@ export class UserProfileComponent
     this.isDeleteEducation = false;
   }
 
-  showDeleteFuncEducation() {
+  showDeleteFuncEducation(educationId: string) {
+    this.deleteEducationReqDto.patchValue({ educationId });
     this.modalDeleteEducation = true;
   }
+
+  deleteEducation() {
+    if (this.deleteEducationReqDto.valid) {
+      const data = this.deleteEducationReqDto.getRawValue().educationId;
+      firstValueFrom(this.profileServ.deleteEducation(data)).then((res) => {
+        this.modalDeleteEducation = false;
+        this.getData();
+      });
+    } else {
+      console.log('Fail delete');
+    }
+  }
+
   // =========================== Education ===========================
 
   // =========================== Experience ===========================
@@ -522,8 +544,26 @@ export class UserProfileComponent
     this.isDeleteExperience = false;
   }
 
-  showDeleteFuncExperience() {
+  showDeleteFuncExperience(experienceId: string) {
+    this.deleteExperienceReqDto.patchValue({
+      experienceId,
+    });
     this.modalDeleteExperience = true;
+  }
+
+  deleteExperience() {
+    if (this.deleteExperienceReqDto.valid) {
+      const data = this.deleteExperienceReqDto.getRawValue();
+      console.log(data.experienceId);
+      firstValueFrom(this.profileServ.deleteExperience(data.experienceId)).then(
+        (res) => {
+          this.modalDeleteExperience = false;
+          this.getData();
+        }
+      );
+    } else {
+      console.log('Fail delete');
+    }
   }
 
   // =========================== Experience ===========================

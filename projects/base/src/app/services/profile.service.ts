@@ -98,6 +98,18 @@ export class ProfileService {
     return this.base.delete(`${CANDIDATE_API}/skills?skillId=${skillId}`);
   }
 
+  deleteEducation(skillId: string): Observable<DeleteResDto> {
+    return this.base.delete(
+      `${CANDIDATE_API}/educations?educationId=${skillId}`
+    );
+  }
+
+  deleteExperience(skillId: string): Observable<DeleteResDto> {
+    return this.base.delete(
+      `${CANDIDATE_API}/experiences?experienceId=${skillId}`
+    );
+  }
+
   // ================= NAVBAR =================
 
   navbarObservable(id: string) {

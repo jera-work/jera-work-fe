@@ -1,12 +1,22 @@
 <div class="min-h-screen w-10 m-auto mt-5">
-  <app-button
-    label="Back"
-    routerLink="/job-vacancies/{{ jobVacancyId }}"
-    icon="pi pi-angle-left"
-    border=""
-    classBtn="p-button-outlined p-button-secondary my-4"
-  >
-  </app-button>
+  <div class="flex justify-content-between my-4">
+    <app-button
+      label="Back"
+      routerLink="/job-vacancies/{{ jobVacancyId }}"
+      icon="pi pi-angle-left"
+      border=""
+      classBtn="p-button-outlined p-button-secondary"
+    >
+    </app-button>
+
+    <app-button
+      label="Reject"
+      classBtn="p-button-outlined p-button-danger"
+      border=""
+      (click)="showDialogReject()"
+    >
+    </app-button>
+  </div>
 
   <p-card>
     <div
@@ -64,7 +74,7 @@
               <input
                 pInputText
                 type="text"
-                value="Rp. {{ appliedVacancyCandidateDetails.expectedSalary }}"
+                value="{{ appliedVacancyCandidateDetails.expectedSalary }}"
                 readonly
                 class="col-12"
               />
@@ -1299,6 +1309,43 @@
           label="Cancel"
           btnType="button"
           (click)="hiredModal = false"
+          classBtn="p-button-outlined p-button-secondary ml-4"
+          border=""
+        >
+        </app-button>
+      </div>
+    </ng-template>
+  </p-dialog>
+
+  <!-- Modal Reject -->
+  <p-dialog
+    header="Reject"
+    [(visible)]="rejectModal"
+    [modal]="true"
+    [style]="{ width: '60vw' }"
+    [draggable]="false"
+    [resizable]="false"
+  >
+    <h4>Are you sure to hire this candidate?</h4>
+
+    <ng-template pTemplate="footer">
+      <div class="flex">
+        <form
+          [formGroup]="assessmentVacancyInsertReqDto"
+          (ngSubmit)="submit(selectedProgress)"
+        >
+          <!-- <app-button label="SUBMIT" btnType="Submit"></app-button> -->
+          <app-button
+            label="Submit"
+            btnType="submit"
+            backgroundColor="var(--PRIMARY)"
+          >
+          </app-button>
+        </form>
+        <app-button
+          label="Cancel"
+          btnType="button"
+          (click)="rejectModal = false"
           classBtn="p-button-outlined p-button-secondary ml-4"
           border=""
         >

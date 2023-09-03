@@ -1,13 +1,23 @@
 <!-- buat hr -->
 <div class="min-h-screen w-10 m-auto">
-  <app-button
-    label="Back"
-    routerLink="/job-vacancies"
-    icon="pi pi-angle-left"
-    border=""
-    classBtn="p-button-outlined p-button-secondary my-3"
-  >
-  </app-button>
+  <div class="flex justify-content-between my-3">
+    <app-button
+      label="Back"
+      routerLink="/job-vacancies"
+      icon="pi pi-angle-left"
+      border=""
+      classBtn="p-button-outlined  p-button-secondary"
+    >
+    </app-button>
+
+    <app-button
+      icon="pi pi-envelope
+  "
+      label="Report"
+      backgroundColor="var(--PRIMARY)"
+    >
+    </app-button>
+  </div>
   <div class="px-6 shadow-3 py-2 relative">
     <ng-container *ngIf="jobVacancy">
       <div class="flex flex-column md:flex-row justify-content-between my-2">
@@ -62,9 +72,7 @@
       [value]="appliedVacancies"
       dataKey="id"
       [rows]="10"
-      [showCurrentPageReport]="true"
       [paginator]="true"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
       [globalFilterFields]="['profileName', 'statusName', 'progressName']"
       selectionMode="single"
       styleClass="p-datatable-gridlines p-datatable-striped mt-2"

@@ -1,17 +1,23 @@
-<div class="mx-7 mt-5">
+<div class="w-10 m-auto">
+  <app-button
+    icon="pi pi-envelope
+"
+    label="Report"
+    backgroundColor="var(--PRIMARY)"
+    classBtn="my-3"
+  >
+  </app-button>
+
   <p-table
     #dt1
     [value]="blacklistEmployees"
     dataKey="id"
     [rows]="5"
-    [showCurrentPageReport]="true"
-    [rowsPerPageOptions]="[10, 25, 50]"
     [paginator]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     [globalFilterFields]="['candidateName', 'companyName']"
     selectionMode="single"
     [tableStyle]="{ 'min-width': '50rem' }"
-    styleClass="p-datatable-gridlines p-datatable-striped mt-2"
+    styleClass="p-datatable-gridlines p-datatable-striped "
   >
     <ng-template pTemplate="caption">
       <div

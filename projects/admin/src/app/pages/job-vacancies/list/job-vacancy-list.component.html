@@ -1,21 +1,28 @@
 <div class="min-h-screen w-10 m-auto">
-  <app-button
-    *ngIf="isAdmin"
-    routerLink="/job-vacancies/create"
-    icon="pi pi-plus"
-    label="Add Job"
-    backgroundColor="var(--PRIMARY)"
-    classBtn="my-3"
-  ></app-button>
+  <div class="flex justify-content-between my-3">
+    <app-button
+      *ngIf="isAdmin"
+      routerLink="/job-vacancies/create"
+      icon="pi pi-plus"
+      label="Add Job"
+      backgroundColor="var(--PRIMARY)"
+    ></app-button>
+
+    <app-button
+      icon="pi pi-envelope
+"
+      label="Report"
+      backgroundColor="var(--PRIMARY)"
+    >
+    </app-button>
+  </div>
+
   <p-table
     #dt1
     [value]="jobVacancies"
     dataKey="id"
     [rows]="5"
-    [showCurrentPageReport]="true"
-    [rowsPerPageOptions]="[10, 25, 50]"
     [paginator]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     [globalFilterFields]="[
       'vacancyCode',
       'vacancyTitle',
@@ -35,6 +42,7 @@
         class="flex flex-column md:flex-row lg:flex-row md:align-items-center"
       >
         <h2>Job Vacancy List</h2>
+
         <div class="m-0 md:ml-auto flex flex-column">
           <div class="p-input-icon-left mt-2">
             <i class="pi pi-search"></i>
