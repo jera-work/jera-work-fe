@@ -1,4 +1,9 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  AfterViewChecked,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Roles } from '@constant/role.constant';
@@ -18,6 +23,7 @@ import { AppliedVacancyService } from '@services/applied-vacancy.service';
 import { JobVacancyResDto } from '@dto/job-vacancy/job-vacancy.res.dto';
 import * as moment from 'moment';
 import { AvailableStatusResDto } from '@dto/available-status/available-status.res.dto';
+import { Title } from '@angular/platform-browser';
 
 const convertUTCToLocalDateTime = function (date: Date) {
   const newDate = new Date(
@@ -36,12 +42,12 @@ const convertUTCToLocalDateTime = function (date: Date) {
   selector: 'job-vacancy-edit',
   templateUrl: './job-vacancy-edit.component.html',
 })
-export class JobVacancyEditComponent implements OnInit, AfterViewChecked  {
+export class JobVacancyEditComponent implements OnInit, AfterViewChecked {
   jobVacancy!: JobVacancyResDto;
   jobVacancyId?: string;
   loading = false;
   disabled = true;
-  previewModalVisibility = false
+  previewModalVisibility = false;
   picUser: UserResDto[] = [];
   picHr: UserResDto[] = [];
   expLevel: ExperienceLevelResDto[] = [];
@@ -51,11 +57,11 @@ export class JobVacancyEditComponent implements OnInit, AfterViewChecked  {
   ageVacancy: AgeVacancyResDto[] = [];
   jobType: JobTypeResDto[] = [];
   cities: CityResDto[] = [];
-  availableStatuses: AvailableStatusResDto[] = []
-  startDateTempAsDate?: Date
-  endDateTempAsDate?: Date
-  startDateUTCFromDB?: Date
-  endDateUTCFromDB?: Date
+  availableStatuses: AvailableStatusResDto[] = [];
+  startDateTempAsDate?: Date;
+  endDateTempAsDate?: Date;
+  startDateUTCFromDB?: Date;
+  endDateUTCFromDB?: Date;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -63,11 +69,13 @@ export class JobVacancyEditComponent implements OnInit, AfterViewChecked  {
     private userService: UsersService,
     private masterDataService: MasterDataService,
     private fb: NonNullableFormBuilder,
-    private cd: ChangeDetectorRef
-  ) { }
+    private cd: ChangeDetectorRef,
+    private router: Router,
+    private title: Title
+  ) {}
 
   ngAfterViewChecked(): void {
-    this.cd.detectChanges()
+    this.cd.detectChanges();
   }
 
   getData() {
@@ -82,16 +90,16 @@ export class JobVacancyEditComponent implements OnInit, AfterViewChecked  {
           this.jobVacancyService.getJobDetails(this.jobVacancyId)
         ).then((res) => {
           this.jobVacancy = res;
-          console.log(res);
-
-          this.startDateTempAsDate = moment(res.startDate, "DD-MM-yyyy hh:mm:ss").toDate();
-          this.endDateTempAsDate = moment(res.endDate, "DD-MM-yyyy hh:mm:ss").toDate();
-
-          console.log(res.endDate);
-          console.log(res.startDate);
-          console.log(this.endDateTempAsDate);
-          console.log(this.startDateTempAsDate)
-          if(res){
+          this.title.setTitle(`${res.companyName} - ${res.vacancyTitle}`);
+          this.startDateTempAsDate = moment(
+            res.startDate,
+            'DD-MM-yyyy hh:mm:ss'
+          ).toDate();
+          this.endDateTempAsDate = moment(
+            res.endDate,
+            'DD-MM-yyyy hh:mm:ss'
+          ).toDate();
+          if (res) {
             this.jobVacancyUpdateReqDto.patchValue({
               jobVacancyId: this.jobVacancyId,
               vacancyTitle: res.vacancyTitle,
@@ -109,8 +117,8 @@ export class JobVacancyEditComponent implements OnInit, AfterViewChecked  {
               salary: res.salary,
               startDate: convertUTCToLocalDateTime(this.startDateTempAsDate),
               vacancyCode: res.vacancyCode,
-              availableStatusId: res.statusId
-            })
+              availableStatusId: res.statusId,
+            });
           }
         });
       }
@@ -136,7 +144,7 @@ export class JobVacancyEditComponent implements OnInit, AfterViewChecked  {
     cityId: ['', Validators.required],
     address: ['', Validators.required],
     description: ['', Validators.required],
-    availableStatusId: ['', Validators.required]
+    availableStatusId: ['', Validators.required],
   });
 
   convertStartDate(event: any) {
@@ -184,31 +192,29 @@ export class JobVacancyEditComponent implements OnInit, AfterViewChecked  {
     });
 
     firstValueFrom(this.masterDataService.getExperiencesLevel()).then((res) => {
-      console.log(res);
       this.expLevel = res;
     });
 
     firstValueFrom(this.masterDataService.getAgeVacancies()).then((res) => {
-      console.log(res);
       this.ageVacancy = res;
     });
 
     firstValueFrom(this.masterDataService.getAvailableStatus()).then((res) => {
-      console.log(res);
-      this.availableStatuses = res
+      this.availableStatuses = res;
     });
   }
 
-  saveEdit(){
-    this.loading = true
-    const data = this.jobVacancyUpdateReqDto.getRawValue()
-    firstValueFrom(this.jobVacancyService.editJob(data)).then((res) => {
-      console.log(res);
-      this.loading = false
-    })
-    .catch((err) => {
-      console.log(err);
-      this.loading = false
-    });
+  saveEdit() {
+    this.loading = true;
+    const data = this.jobVacancyUpdateReqDto.getRawValue();
+    firstValueFrom(this.jobVacancyService.editJob(data))
+      .then((res) => {
+        this.router.navigateByUrl(`/job-vacancies/${this.jobVacancyId}`);
+        this.loading = false;
+      })
+      .catch((err) => {
+        console.log(err);
+        this.loading = false;
+      });
   }
 }

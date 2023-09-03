@@ -45,17 +45,14 @@ export class RegisterComponent implements OnInit {
       this.sending = true;
       this.candidateService.register(data).subscribe({
         next: (res) => {
-          console.log(res);
           this.router.navigateByUrl('/login');
           this.sending = false;
-          console.log('SUCCESSSSS');
         },
         error: () => {
           this.sending = false;
         },
       });
     } else {
-      console.log('ISI DULU');
       this.sending = false;
     }
   }

@@ -1,3 +1,7 @@
+<pre>
+  {{ questionInsertReqDto.value | json }}
+</pre>
+
 <div class="min-h-screen w-10 m-auto mt-5">
   <app-button
     label="Back"
@@ -135,7 +139,7 @@
           <app-button
             class="my-1"
             label="Create"
-            [isDisabled]="!questionInsertReqDto.invalid"
+            [isDisabled]="questionInsertReqDto.valid"
             [loading]="loading"
             backgroundColor="var(--PRIMARY)"
             (click)="submit()"

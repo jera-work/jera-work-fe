@@ -13,6 +13,7 @@
 "
       label="Report"
       backgroundColor="var(--PRIMARY)"
+      (click)="reportModal = true"
     >
     </app-button>
   </div>
@@ -117,8 +118,8 @@
         <td>{{ jobVacancy.vacancyTitle }}</td>
         <td>{{ jobVacancy.hrName }}</td>
         <td>{{ jobVacancy.userName }}</td>
-        <td>{{ jobVacancy.startDate }}</td>
-        <td>{{ jobVacancy.endDate }}</td>
+        <td>{{ jobVacancy.startDate }} WIB</td>
+        <td>{{ jobVacancy.endDate }} WIB</td>
         <td>{{ jobVacancy.levelName }}</td>
         <td>
           <p-tag
@@ -131,3 +132,62 @@
     </ng-template>
   </p-table>
 </div>
+
+<p-dialog
+  header="Report Job Vacancies"
+  [(visible)]="reportModal"
+  [modal]="true"
+  [style]="{ width: '80vw', height: '50vh' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <form [formGroup]="reportReqDto">
+      <!-- Input New Experience -->
+
+      <!-- Dates -->
+      <div class="grid col-12">
+        <!-- Start Year -->
+        <div class="grid md:col-6 col-12">
+          <div class="col-12">
+            <label for="reportDate" class="form-label"
+              >Report Date <span class="text-red-600">*</span></label
+            >
+          </div>
+          <div class="col-12">
+            <p-calendar
+              formControlName="reportDateTemp"
+              id="reportDate"
+              [required]="true"
+              view="year"
+              view="month"
+              dateFormat="mm/yy"
+              (onSelect)="convertReportDate($event)"
+            ></p-calendar>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <ng-template pTemplate="footer">
+    <app-button
+      type="submit"
+      data-bs-dismiss="modal"
+      label="Submit"
+      classBtn="p-button-success"
+      (click)="onCreateReport()"
+      [loading]="reportLoading"
+      [isDisabled]="!reportReqDto.valid"
+    >
+    </app-button>
+    <app-button
+      type="button"
+      classBtn="p-button-outlined p-button-secondary ml-4"
+      border=""
+      data-bs-dismiss="modal"
+      label="Cancel"
+      (click)="onCloseReportModal()"
+    >
+    </app-button>
+  </ng-template>
+</p-dialog>

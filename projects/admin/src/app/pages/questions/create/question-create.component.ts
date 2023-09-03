@@ -64,7 +64,6 @@ export class QuestionCreateComponent implements OnInit, AfterViewChecked {
   }
 
   addQuestion() {
-    // JOB VACANCY ID DIAMBIL DARI ROUTERLINK
     this.questionsReq.push(
       this.fb.group({
         jobVacancyId: [this.jobId],
@@ -95,7 +94,7 @@ export class QuestionCreateComponent implements OnInit, AfterViewChecked {
 
   submit(): void {
     // console.log(this.questionInsertReqDto.get('questionsReq')?.getRawValue())
-    if (this.questionInsertReqDto.valid) {
+    if (this.questionsReq.valid) {
       this.loading = true;
       this.questionService
         .insertQuestion(

@@ -240,7 +240,6 @@ export class UserProfileComponent
     this.profileSubscription = this.profileServ
       .getProfile()
       .subscribe((res) => {
-        console.log(res);
         if (res.photoId) {
           this.imgUrl = res.photoId;
         } else {

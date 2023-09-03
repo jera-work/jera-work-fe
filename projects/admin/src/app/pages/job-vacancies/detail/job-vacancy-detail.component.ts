@@ -1,7 +1,9 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
+import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProgressStatus } from '@constant/progress.constant';
+import { Roles } from '@constant/role.constant';
 import { AvailableStatusName, Status } from '@constant/status.constant';
 import { AppliedVacancyByProgressAdminResDto } from '@dto/applied-vacancy/applied-vacancy-by-progress-admin.res.dto';
 import {
@@ -11,10 +13,26 @@ import {
 import { AppliedProgressResDto } from '@dto/data-master/applied-progress.res.dto';
 import { JobVacancyResDto } from '@dto/job-vacancy/job-vacancy.res.dto';
 import { AppliedVacancyService } from '@services/applied-vacancy.service';
+import { AuthService } from '@services/auth.service';
 import { JobVacancyService } from '@services/job-vacancy.service';
 import { MasterDataService } from '@services/master-data.service';
+import { ReportService } from '@services/report.service';
 import { Dialog } from 'primeng/dialog';
-import { first, firstValueFrom } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
+
+const convertUTCToLocalDateTime = function (date: Date) {
+  const newDate = new Date(
+    Date.UTC(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      date.getHours(),
+      date.getMinutes(),
+      date.getSeconds()
+    )
+  );
+  return newDate.toISOString();
+};
 
 @Component({
   selector: 'detail',
@@ -29,17 +47,41 @@ export class JobVacancyDetailComponent implements OnInit {
   appliedVacancies: AppliedVacancyAdminResDto[] = [];
   appliedProgress: AppliedProgressResDto[] = [];
   appliedVacancyPerProgressQty: AppliedVacancyByProgressAdminResDto[] = [];
+  isAdmin = false;
+  isHr = false;
+
+  // report
+  reportModal = false;
+  reportLoading = false;
+  reportReqDto = this.fb.group({
+    jobId: ['', Validators.required],
+    date: ['', Validators.required],
+    dateTemp: ['', Validators.required],
+  });
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private authService: AuthService,
     private jobVacancyService: JobVacancyService,
     private appliedVacancyService: AppliedVacancyService,
     private masterDataService: MasterDataService,
+    private reportService: ReportService,
     private router: Router,
-    private title: Title
+    private title: Title,
+    private fb: NonNullableFormBuilder
   ) {}
 
   getData() {
+    const data = this.authService.getProfile();
+    const userRole = data['roleCode'];
+    if (userRole === Roles.ADMIN) {
+      this.isAdmin = true;
+      this.isHr = false;
+    } else if (userRole === Roles.HR) {
+      this.isHr = true;
+      this.isAdmin = false;
+    }
+
     firstValueFrom(this.activatedRoute.paramMap).then((res) => {
       const id = res.get('id');
       if (id) {
@@ -87,8 +129,10 @@ export class JobVacancyDetailComponent implements OnInit {
       return 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)';
     } else if (progress === ProgressStatus.OFFERING_LETTER) {
       return 'linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%)';
-    } else {
+    } else if (progress === ProgressStatus.HIRED) {
       return 'linear-gradient(45deg, #85FFBD 0%, #FFFB7D 100%)';
+    } else {
+      return 'linear-gradient(90deg, hsla(206, 91%, 66%, 1) 0%, hsla(190, 90%, 51%, 1) 100%)';
     }
   }
 
@@ -133,5 +177,42 @@ export class JobVacancyDetailComponent implements OnInit {
 
   getAvailableStatus(): boolean {
     return this.jobVacancy.statusName === AvailableStatusName.OPN;
+  }
+
+  // Report
+  convertReportDate(e: any) {
+    this.reportReqDto.patchValue({
+      date: convertUTCToLocalDateTime(e),
+    });
+  }
+
+  onShowReportModal() {
+    this.reportModal = true;
+    this.reportReqDto.patchValue({
+      jobId: this.jobVacancyId,
+    });
+    console.log(this.reportReqDto.getRawValue());
+  }
+
+  onCloseReportModal() {
+    this.reportModal = false;
+    this.reportReqDto.reset();
+  }
+
+  onCreateReport() {
+    if (this.reportReqDto.valid) {
+      this.reportLoading = true;
+      const { date, jobId } = this.reportReqDto.getRawValue();
+
+      firstValueFrom(this.reportService.getAppliedCandidate(jobId, date)).then(
+        (res) => {
+          this.reportLoading = false;
+          this.reportModal = false;
+          this.reportReqDto.reset();
+        }
+      );
+    } else {
+      console.log('Error');
+    }
   }
 }

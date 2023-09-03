@@ -4,6 +4,7 @@ import { CompanyCreateComponent } from './create/company-create.component';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
 import { ButtonComponent } from '@components/button/button.component';
+import { UrlPipeAdmin } from '@pipes/url.pipe';
 
 const routes: Routes = [
   {
@@ -18,7 +19,12 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [CompanyListComponent, CompanyCreateComponent],
-  imports: [RouterModule.forChild(routes), SharedModule, ButtonComponent],
+  imports: [
+    RouterModule.forChild(routes),
+    SharedModule,
+    ButtonComponent,
+    UrlPipeAdmin,
+  ],
   exports: [RouterModule],
 })
 export class CompanyRouting {}

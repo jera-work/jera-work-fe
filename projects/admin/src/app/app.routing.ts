@@ -59,7 +59,8 @@ const routes: Routes = [
   {
     path: 'questions',
     component: BaseComponent,
-    loadChildren: () => import('./pages/questions/question.module').then((q) => q.QuestionModule)
+    loadChildren: () =>
+      import('./pages/questions/question.module').then((q) => q.QuestionModule),
   },
   {
     path: 'login',

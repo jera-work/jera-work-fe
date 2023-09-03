@@ -3,7 +3,8 @@ import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { EmployeesResDto } from '@dto/employees/employees.res.dto';
 import { EmployeesService } from '@services/employees.service';
-import { firstValueFrom } from 'rxjs';
+import { ReportService } from '@services/report.service';
+import { first, firstValueFrom } from 'rxjs';
 
 @Component({
   selector: '',
@@ -12,6 +13,8 @@ import { firstValueFrom } from 'rxjs';
 })
 export class HiredEmployeeComponent implements OnInit {
   hiredEmployees!: EmployeesResDto[];
+  reportModal = false;
+  reportLoading = false;
 
   blacklistEmployeeInsertReqDto = this.fb.group({
     employeeId: ['', [Validators.required]],
@@ -20,7 +23,8 @@ export class HiredEmployeeComponent implements OnInit {
   constructor(
     private fb: NonNullableFormBuilder,
     private employeesService: EmployeesService,
-    private title: Title
+    private title: Title,
+    private reportService: ReportService
   ) {}
 
   ngOnInit(): void {
@@ -32,5 +36,17 @@ export class HiredEmployeeComponent implements OnInit {
     firstValueFrom(this.employeesService.getHiredEmployees()).then((res) => {
       this.hiredEmployees = res;
     });
+  }
+
+  createReport() {
+    this.reportLoading = true;
+    firstValueFrom(this.reportService.getHiredEmployee())
+      .then((res) => {
+        this.reportLoading = false;
+        this.reportModal = false;
+      })
+      .catch((err) => {
+        this.reportLoading = false;
+      });
   }
 }

@@ -609,43 +609,6 @@
           </div>
         </div>
       </div>
-      <!-- Address -->
-      <div class="col-12 col-md-3">
-        <label for="address-education" class="form-label"
-          >Address <span class="text-red-600">*</span></label
-        >
-      </div>
-      <div class="col-12 col-md-9">
-        <textarea
-          class="col-12"
-          id="address-education"
-          rows="5"
-          cols="30"
-          required
-          pInputTextarea
-          formControlName="institutionAddress"
-        ></textarea>
-        <span
-          class="text-red-500 ml-2"
-          *ngIf="
-            education.get('institutionAddress')!.invalid &&
-            education.get('institutionAddress')!.value &&
-            (education.get('institutionAddress')!.dirty ||
-              education.get('institutionAddress')!.touched)
-          "
-          >Input exceeds characters</span
-        >
-        <span
-          class="text-red-500 ml-2"
-          *ngIf="
-            education.get('institutionAddress')!.invalid &&
-            !education.get('institutionAddress')!.value &&
-            (education.get('institutionAddress')!.dirty ||
-              education.get('institutionAddress')!.touched)
-          "
-          >Input can't be empty</span
-        >
-      </div>
 
       <div class="col-12 grid">
         <div class="grid md:col-4 col-12">
@@ -764,6 +727,45 @@
           </div>
         </div>
       </div>
+
+      <!-- Address -->
+      <div class="col-12 col-md-3">
+        <label for="address-education" class="form-label"
+          >Address <span class="text-red-600">*</span></label
+        >
+      </div>
+      <div class="col-12 col-md-9">
+        <textarea
+          class="col-12"
+          id="address-education"
+          rows="5"
+          cols="30"
+          required
+          pInputTextarea
+          formControlName="institutionAddress"
+        ></textarea>
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            education.get('institutionAddress')!.invalid &&
+            education.get('institutionAddress')!.value &&
+            (education.get('institutionAddress')!.dirty ||
+              education.get('institutionAddress')!.touched)
+          "
+          >Input exceeds characters</span
+        >
+        <span
+          class="text-red-500 ml-2"
+          *ngIf="
+            education.get('institutionAddress')!.invalid &&
+            !education.get('institutionAddress')!.value &&
+            (education.get('institutionAddress')!.dirty ||
+              education.get('institutionAddress')!.touched)
+          "
+          >Input can't be empty</span
+        >
+      </div>
+
       <div class="mt-4 col-12 flex flex-row-reverse">
         <app-button
           type="button"

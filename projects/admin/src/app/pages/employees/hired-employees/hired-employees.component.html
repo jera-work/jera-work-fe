@@ -5,6 +5,7 @@
     label="Report"
     backgroundColor="var(--PRIMARY)"
     classBtn="my-3"
+    (click)="reportModal = true"
   >
   </app-button>
 
@@ -86,3 +87,36 @@
     </ng-template>
   </p-table>
 </div>
+
+<p-dialog
+  header="Report Hired Employees"
+  [(visible)]="reportModal"
+  [modal]="true"
+  [style]="{ width: '50vw',  }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <p>Are you sure want to create this report?</p>
+  </div>
+  <ng-template pTemplate="footer">
+    <app-button
+      type="submit"
+      data-bs-dismiss="modal"
+      label="Yes"
+      classBtn="p-button-success"
+      (click)="createReport()"
+      [loading]="reportLoading"
+    >
+    </app-button>
+    <app-button
+      type="button"
+      classBtn="p-button-outlined p-button-secondary ml-3"
+      border=""
+      data-bs-dismiss="modal"
+      label="Cancel"
+      (click)="reportModal = false"
+    >
+    </app-button>
+  </ng-template>
+</p-dialog>

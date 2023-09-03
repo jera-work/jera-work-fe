@@ -1,11 +1,26 @@
 import { Component, OnInit } from '@angular/core';
+import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Roles } from '@constant/role.constant';
 import { JobVacancyResDto } from '@dto/job-vacancy/job-vacancy.res.dto';
 import { AuthService } from '@services/auth.service';
 import { JobVacancyService } from '@services/job-vacancy.service';
-import { Table } from 'primeng/table';
+import { ReportService } from '@services/report.service';
 import { firstValueFrom } from 'rxjs';
+
+const convertUTCToLocalDateTime = function (date: Date) {
+  const newDate = new Date(
+    Date.UTC(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      date.getHours(),
+      date.getMinutes(),
+      date.getSeconds()
+    )
+  );
+  return newDate.toISOString();
+};
 
 @Component({
   selector: 'job-vacancy-list',
@@ -21,6 +36,14 @@ export class JobVacancyListComponent implements OnInit {
   isAdmin = false;
 
   jobVacancies: JobVacancyResDto[] = [];
+
+  reportModal = false;
+  reportLoading = false;
+
+  reportReqDto = this.fb.group({
+    reportDate: ['', Validators.required],
+    reportDateTemp: ['', Validators.required],
+  });
 
   ngOnInit(): void {
     this.title.setTitle('Vacancy Job List');
@@ -40,7 +63,9 @@ export class JobVacancyListComponent implements OnInit {
   constructor(
     private jobVacancyService: JobVacancyService,
     private authService: AuthService,
-    private title: Title
+    private title: Title,
+    private fb: NonNullableFormBuilder,
+    private reportService: ReportService
   ) {}
 
   getStatusSeverity(status: string) {
@@ -51,6 +76,31 @@ export class JobVacancyListComponent implements OnInit {
         return 'danger';
       default:
         return 'danger';
+    }
+  }
+
+  convertReportDate(e: any) {
+    this.reportReqDto.patchValue({
+      reportDate: convertUTCToLocalDateTime(e),
+    });
+  }
+
+  onCloseReportModal() {
+    this.reportModal = false;
+  }
+
+  onCreateReport() {
+    if (this.reportReqDto.valid) {
+      this.reportLoading = true;
+      const data = this.reportReqDto.getRawValue().reportDate;
+
+      firstValueFrom(this.reportService.getJobVacancy(data)).then((res) => {
+        this.reportLoading = false;
+        this.reportReqDto.reset();
+        this.reportModal = false;
+      });
+    } else {
+      console.log('Error');
     }
   }
 }

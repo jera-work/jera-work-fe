@@ -15,6 +15,7 @@
   "
       label="Report"
       backgroundColor="var(--PRIMARY)"
+      (click)="onShowReportModal()"
     >
     </app-button>
   </div>
@@ -24,18 +25,21 @@
         <h3>Job Vacancy Detail</h3>
         <div class="flex gap-2 flex-wrap">
           <p-button
+            *ngIf="isAdmin || isHr"
             routerLink="/questions/{{ jobVacancy.vacancyId }}"
             icon="pi pi-plus"
             label="Add Questions"
             styleClass="m-auto p-button-success"
           ></p-button>
           <p-button
+            *ngIf="isAdmin"
             (onClick)="toEdit()"
             icon="pi pi-pencil"
             label="Edit"
             styleClass="m-auto p-button-warning"
           ></p-button>
           <p-button
+            *ngIf="isAdmin"
             icon="pi pi-eye"
             label="Preview"
             styleClass="m-auto"
@@ -55,6 +59,14 @@
       <div class="flex flex-column gap-3">
         <h3 class="mt-2">Filter by progress:</h3>
         <div class="flex gap-3 justify-content-center flex-wrap my-3">
+          <p-button
+            label="Get All Progress"
+            [style]="{
+              background: getProgressColor('getall')
+            }"
+            (onClick)="getData()"
+          >
+          </p-button>
           <p-button
             *ngFor="let qty of appliedVacancyPerProgressQty"
             [style]="{
@@ -151,6 +163,7 @@
   </div>
 </div>
 
+<!-- Preview -->
 <p-dialog
   #previewModal
   header="Header"
@@ -180,4 +193,62 @@
       [vacancyTitle]="jobVacancy.vacancyTitle"
     ></job-preview>
   </ng-container>
+</p-dialog>
+
+<!-- Report Dialog -->
+<p-dialog
+  header="Report Applied Job Vacancy"
+  [(visible)]="reportModal"
+  [modal]="true"
+  [style]="{ width: '80vw', height: '50vh' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <form [formGroup]="reportReqDto">
+      <!-- Dates -->
+      <div class="grid col-12">
+        <!-- Start Year -->
+        <div class="grid md:col-6 col-12">
+          <div class="col-12">
+            <label for="reportDate" class="form-label"
+              >Report Date <span class="text-red-600">*</span></label
+            >
+          </div>
+          <div class="col-12">
+            <p-calendar
+              formControlName="dateTemp"
+              id="reportDate"
+              [required]="true"
+              view="year"
+              view="month"
+              dateFormat="mm/yy"
+              (onSelect)="convertReportDate($event)"
+            ></p-calendar>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <ng-template pTemplate="footer">
+    <app-button
+      type="submit"
+      data-bs-dismiss="modal"
+      label="Submit"
+      classBtn="p-button-success"
+      (click)="onCreateReport()"
+      [loading]="reportLoading"
+      [isDisabled]="!reportReqDto.valid"
+    >
+    </app-button>
+    <app-button
+      type="button"
+      classBtn="p-button-outlined p-button-secondary ml-4"
+      border=""
+      data-bs-dismiss="modal"
+      label="Cancel"
+      (click)="onCloseReportModal()"
+    >
+    </app-button>
+  </ng-template>
 </p-dialog>

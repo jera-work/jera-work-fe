@@ -23,8 +23,4 @@ export class ReportService {
   getHiredEmployee(): Observable<InsertResDto> {
     return this.base.get(`${ADMIN_API}/hired-employees/report`);
   }
-
-  getBlacklistEmployee(): Observable<InsertResDto> {
-    return this.base.get(`${ADMIN_API}/blacklists/report`);
-  }
 }
